@@ -1,0 +1,112 @@
+Rebuso - kod:
+Pomysły:
+!a - andromeda, akrecja
+!b - bób, Belzebub
+!c - Cadillac, chłopiec, cyberprzemoc, czterozgłoskowiec
+!d - deltoid
+!e - elektonarzędzie eliminacje, Écaille, Effie (nagroda), województwo elbląskie
+!f - fotograf, fermentograf (http://zbpp.com.pl/files/File/urzadzenia%20laboratoryjne/fermentograflaserowynowy1-d.jpg), filozof, fonograf
+!g - gastrolog, gazociąg, geolog, głowonóg, grubociąg
+!h - hash, heyah, Hannah (miasto w USA, 48°58′23″N 98°41′26″W)
+!i - illuminati
+!j - jaśniej (Jantaj jest miastem, ale raczej nazywa się je "Yantai"), Jastrzębie-Zdrój
+!k - kajak, kciuk
+!l - latorośl, Liverpool, lokal
+!m - metrokilogram (1m * 1kg), modem, muzeum, magnetyzm
+!n - neutron, neuron
+!o - obozowisko, okienko, oregano
+!p - peryskop, pseudostop
+!r - radar, rower
+!s - Sagittarius, spirytus, sofokles
+!t - tybet, TNT (przepis w minecraftcie), trakt, transplant
+!u - Uluru, Ubuntu
+!w - wpływ, wrocław
+y - yyyyyyy, yoldiowy (????)
+!z - zakaz, zielarz
+[ - 
+] - 
+
+
+e|A|m H|d|r z|f|g
+-+-+- -+-+- -+-+-
+k| |j  | |  T| |s
+-+-+- -+-+- -+-+-
+C|u|i p|l|b o|w|n
+
+Wybrane:
+!a - andromeda (M31)
+!b - bób (\,)
+!c - czterozgłoskowiec (wiersz!)
+!d - deltoid (\,)
+!e - elbląskie (\,)
+!f - fermentograf (\,)
+!g - gazociąg (\,)
+!h - Hannah (48°58′23″N 98°41′26″W)
+!i - illuminati (\,)
+!j - Jastrzębie-Zdrój (\,)
+!k - kciuk (\,)
+!l - latorośl (\,)
+!m - muzeum (\,)
+!n - neutron (\,)
+!o - okno (\,)
+!p - peryskop (\,)
+!r - radar (\,)
+!s - Sagittarius (\,)
+!t - tybet (བོད་)
+!u - Uluru (\,)
+!w - Wrocław (\,)
+!z - zakaz (\,)
+[ - 
+] - 
+
+Adv:
+e - c>
+a - g<
+d - a>
+r - w<
+z - c<
+k - o<
+t - i>
+c - k<
+u - s>
+i - e>
+l - u<
+o - p>
+n - <a
+[ - [
+] - ]
+
+eadrzktcuilon
+
+klucz[delator cukrzenia]
+k  l  u  c  z  [ d  e  l  a  t  o  r  | c  u  k  r  z  e  n  i  a ]
+o< u< s> k< c< [ a> c> u< g< i> p> w< | k< s> o< w< c< c> <a e> g<
+
+Czterozgłoskowiec:
+
+Cechę pewną
+Deskryptywną
+Wersy mają
+Choć ją tają.
+Jeśli liczyć
+Umiesz, zmądrzyć
+Szybko zdążysz.
+Dokąd dążysz
+Prędko dotrzesz
+Gdy się uprzesz.
+
+
+hasło:
+klucz[boja druk figa hart menu opis wiza]
+
+Plus trudniejszy format, z całym alfabetem
+
+e|A|m H|d|r z|f|g
+-+-+- -+-+- -+-+-
+k| |j  | |  T| |s
+-+-+- -+-+- -+-+-
+C|u|i p|l|b o|w|n
+
+
+Light: 03D0D9
+Dark: 034761

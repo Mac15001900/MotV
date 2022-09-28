@@ -1,0 +1,28 @@
+Liczby pierwsze:
+
+"Matematycy na próżno starali się odkryć jakiś porządek występowania liczb pierwszych i mamy powody by przypuszczać, że jest to tajemnica, którą ludzki umysł nigdy nie zgłębi."
+-- Leonhard Euler 
+Źródło: G. Simmons, Calculus Gems (1992)
+
+2 | 3 | 5 | 7 | 11 | 13 | 17 | 19 | 23 | 29 | 31 | 37 | 41 | 43 | 47 | 53 | 59 | 61 | 67 | 71 | 73 | 79 | 83 | 89 | 97 | 101 | 103 | 107 | 109 | 113 (30 primes)
+
+klucz[eulerowsko]
+ 
+-XX-X-X---X-X---X-X---X-----X-X-----X---X-X---X-----X-----X-X-----X---X-X-----X---X-----X-------X
+-XX-X-X---X-X---X-k---l-----u-c-----z---[-e---u-----l-----e-r-----o---w-s-----k---o-----]-------X
+Od ósmej zacznij wkreślać tłuściej wzór [wehikułów albedometrów czołgowisk błękitnookich]-------X
+Od ósmej zacznij wkreślać tłuściej wzór [ ewolucja albedometrów czołgowisk błękitnookich]-------X
+Od siódmej początek  
+
+Od ósmej zacznij wkreślać tłuściej wzór [wehikułów albedometrów czołgowisk błękitnookich]
+Matematycy na próżno starali się odkryć jakiś porządek ████████████ █████ ██████████ i mamy powody by przypuszczać, że jest to tajemnica, którą ludzki umysł nigdy nie zgłębi
+
+Matematycy na próżno starali się odkryć jakiś porządek występowania liczb pierwszych i mamy powody by przypuszczać, że jest to tajemnica, którą ludzki umysł nigdy nie zgłębi.
+
+Bonus: polskie znaki o pierwszych pozycjach w alfabecie: ąbćehjmńryź
+
+Tekst:
+Znajdujesz tu kartkę z napisem:
+
+Od ósmej zacznij wkreślać tłuściej wzór [wehikułów albedometrów czołgowisk błękitnookich]
+Matematycy na próżno starali się odkryć jakiś porządek ████████████ █████ ██████████ i mamy powody by przypuszczać, że jest to tajemnica, którą ludzki umysł nigdy nie zgłębi.

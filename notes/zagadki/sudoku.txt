@@ -1,0 +1,29 @@
+[ k z ] a l u c n
+] a c n z u k l [
+n u l c [ k a z ]
+c z [ l k ] n a u
+u n k a c z ] [ l
+a l ] u n [ c k z
+l c a [ u n z ] k
+z ] u k l c [ n a
+k [ n z ] a l u c
+
+
+1 - k
+2 - l
+3 - ]
+4 - c
+5 - z
+6 - [
+7 - u
+8 - a
+9 - n
+
+
+klucz[zaznaczacz]
+
+Flavour:
+Znajdujesz magazyn z łamigłówkami sudoku. Jedna z nich różni się od pozostałych...
+
+Docs:
+https://docs.google.com/document/d/1FuZPRwXfWzF48DcvxH5Q07eLy9mVZuBdNGViYT3DQQk/edit

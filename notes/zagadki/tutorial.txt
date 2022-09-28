@@ -1,0 +1,36 @@
+
+Tutorialowa zagadka (stara):
+
+klu
+cz[p
+owo
+dzen
+ia]
+
+k_l_u_ | _cz_[p | _o__wo | dz_e_n | i_a__] | 
+kxltue | rcz,[p | uo.iwo | dzoe'n | ijayj]
+
+kxltue
+rcz,[p
+uo.iwo
+dzoe'n
+ijayj]
+
+Nowa:
+
+klucz[otoczenie]
+
+klu
+cz[c
+to
+zen
+ie]
+
+k_l_u_ | _cz_[p | _o__wo | dz_e_n | i_a__] | 
+kxltue | rcz,[p | uo.iwo | dzoe'n | ijayj]
+
+kxltue
+rcz,[p
+uo.iwo
+dzoe'n
+ijayj]

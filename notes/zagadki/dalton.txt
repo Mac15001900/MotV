@@ -1,0 +1,78 @@
+
+John Dalton:
+Symbols: https://www.alchemywebsite.com/dalton_s.html
+
+klucz[deuteranopia]
+
+Oxygen, Hydrogen, Nitrogen, Carbon, Sulphur, Phosphorus, Gold, Platinum, Silver, Mercury, Copper, Iron, Nickel, Tin, Lead, 
+Zinc, Bismuth, Antimony, Arsenic, Cobalt, Manganese, Uranium, Tungsten, Titanium, Cerium, Potassium, Sodium, Calcium,
+Magnesium, Barium, Strontium, Aluminium, Silicon, Yttrium, Beryllium, Zirconium, 
+
+Związki chemiczne
+
+''.join(map(lambda x: x if x in ''.lower() else '_', 'acdeiklnoprtuz'))
+acdeiklnoprtuz - Needed
+______l_opr___ - Propofol : C12 H18 O
+ac_e___n__rt_z - Cetyryzyna: C21 H25 Cl N2 O3
+a___ikln______ - Kalamina: Fe2 O4 Zn
+a_de_k______u_ - Sugammadeks : C72 H104 Na8 O48 S8
+
+a___ik_no_rt__ - Krotamiton: C13 H17 N O
+_c_e___no_r___ - Ferrocen: C10 H10 Fe
+_c_e___n___t__ - Cementyt : Fe3 C
+
+Potrzebne pierwiastki:
+C H O Cl N S Fe Zn Na  
+
+acdeiklnoprtuz
+______l_opr___ - Propofol    - lop 
+ac_e___n__rt_z - Cetyryzyna  - ctrz
+a___ikln______ - Kalamina    - kin
+a_de_k______u_ - Sugammadeks - adeu
+
+propofol | cetyryzyna | kalamina | sugammade k  s
+12345678 | 1234567890 | 12345678 | 123456789 10 11
+
+k  l  u  c  z  [  d  e  u  t  e  r  a  n  o  p  i  a  ]
+K1 P8 S2 C1 C7 [1 S8 S9 S2 C3 C2 P2 K4 K7 P3 P1 K6 S7 [2 
+1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19
+
+
+
+S:
+2 -> 3
+8 -> 7
+9 -> 8
+2 -> 9
+7 -> 18
+
+2 -> 3  |  8 -> 7  |  9 -> 8  |  2 -> 9  |  7 -> 18
+
+P:
+8 -> 2
+2 -> 12
+3 -> 15
+1 -> 16
+
+C:
+1 -> 4
+7 -> 5
+3 -> 10
+2 -> 11
+
+K:
+1 -> 1
+4 -> 13
+7 -> 14
+6 -> 17
+
+
+
+
+
+Jakaś ciekawsza podpowiedź na Manchester Central Library? (Druga największa biblioteka w UK?) 
+Odnajdź oryginalny manuskrypt "How the fourth floor came to Crowley Castle". Następnie wyjdź z biblioteki. Przejdź przez tory trawmajowe i idź cały czas prosto. Po przejściu pod mostem kolejowym skręć w prawo w trzecią ulicę. Potem skręć w lewo, w ścieżkę przecinającą trawnik. 
+Na jej końcu, na kamiennym krześle, spotkasz kogoś, kto zna te symbole.
+
+
+

@@ -1,0 +1,101 @@
+Ogarnianie liczb:
+
+Użyć liter jako cyfr!
+
+klucz[kalkulacja]
+4b8a7345b48b5a956 = 920420472767259090
+
+0 O
+1 X
+2 Y
+3 [
+4 K
+5 A
+6 ]
+7 Z
+8 U
+9 J
+10 C
+11 L
+
+klucz[]
+
+
+4 + 1 = 5
+
+1 * 7 = 7 
+
+4 + 5 = 3 * 3
+
+3*3 - 3/3 - 3 = 5
+
+4*5 + 3 - 1 + 3*1 - 4*4*3 + 5*3*3 = 3*3*3 - 5
+
+Pozwalają ustalić 1, 3, 4, 5
+
+5 * 5 + 5 = 26
+
+3 + 4 + 5 + 7 = 17 (12 + n= 1n)
+
+7 + 7 = 12
+
+A * A = 84 
+=> 8*8 daje 54, 5 znamy. 4*4=14, 4 znamy. Zostaje a*a=84.
+
+Pozwalają ustalić, że chodzi o bazę 12, plus 2, 6, 7, A i 8 (trudniej).
+Mamy 1,2,3,4,5,6,7,8,A
+
+79b * 0 = (45 * 2 - 8a) * b => Introduces 0
+19*bb = 18a3
+
+Logika ostatniego:
+(12 + x) * 13y = 3003
+156y + 13xy = 3003
+156 + 13x = 3003/y
+
+3003 = 3×7×11×13 (4 distinct prime factors) => y = 11
+
+Znamy 0 do b.
+
+Ostateczne działanie:
+
+920420472767259090 = 2×3×5×11×1283×7687×282806113 
+
+5 * 6 * a * (100 + 76*11 - 27) * (34 * 34 * 5 - 221) * (29 * b89 * b89 * b89 / 3ab + 16797a)
+5 * 6 *11 * (144 + 90*13 - 31) * (40 * 40 * 5 - 313) * (33 * 1689^3/563 +386734)
+
+Wykorzystane cyrfy: 0,1,2,3,4,5,6,7, , ,a,
+
+
+Rezultat:
+klucz[kalkulacja]
+
+Na stole zapisanych jest kilka dziwnych równań:
+
+k + x = a
+
+x * z = z 
+
+k + a = [ * [
+
+[ * [ - [ / [ - [ = a
+
+k * a + [ - x + [ * x - k * k * [ + a * [ * [ = [ * [ * [ - a
+
+
+
+a * a + a = y]
+
+[ + k + a + z = xz
+
+z + z = xy
+
+c * c = uk 
+
+
+zjl * o = (ka * y - uc) * l
+
+xj * ll = xuc[
+
+
+a * ] * c * (xoo + z] * xx - yz) * ([k * [k * a - yyx) * (yj * luj * luj * luj / [cl + x]zjzc)

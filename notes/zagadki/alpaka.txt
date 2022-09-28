@@ -1,0 +1,51 @@
+
+Alpaka:
+argentan, pakfong, melchior, alpaka, alfenid, arfenil, neusilber, srebro Schefildskiego, chińskie srebro, metal Christofle'a
+
+
+KLUCZ : alpaKa arfeniL neUsilber melChior warsZawa 
+NOWE: alfeNid pakfOng warszaWa argEntan
+SREBRO: chińskie SREBRO
+
+argEntan
+pakfOng
+melChior
+alpaKa
+alfeNid
+arfeniL
+neUsilber
+warsZaWa (ورشو)
+chińskie SREBRO
+
+Klucz[Nowe Srebro]
+ABCDE[FGHI JKLMNO]
+
+alp_A_
+arf___B
+neC______
+me_D____
+war_E_H_ (ورشو)
+alf_F__
+pak_G__
+argI____
+chi_____ JKLMNO
+
+--metal Christofle'a
+--srebro Schefildskiego
+
++obrazek alpaki
+
+Flavour:
+Znajdujesz jedną wydrukowaną kartkę:
+
+ABCDE[FGHI JKLMNO]
+
+alp_A_
+arf___B
+neC______
+me_D____
+war_E_H_ (ورشو)
+alf_F__
+pak_G__
+argI____
+chi_____ JKLMNO

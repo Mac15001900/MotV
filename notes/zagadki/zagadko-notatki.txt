@@ -1,0 +1,102 @@
+abcdefghijklmnoprstuwyz
+ABCDEFGHIJKLMNOPRSTUWYZ
+AąBCćDEęFGHIJKLłMNńOóPRSśTUWYZźż
+
+
+
+
+
+
+Stopy: https://www.greelane.com/pl/nauka-tech-math/nauka/list-of-alloys-by-base-metal-603716/
+
+Kowar (30% niklu, 20% kobaltu i 50% żelaza)
+Landsbergit https://pl.wikipedia.org/wiki/Landsbergit
+
+
+klucz[całkiemjakżycie]
+
+Rebus
+klucz[marakuja]
+
+Klut - cloth po norwersku (płótno nie działa w druga stronę :( ))
+Klup - frisian, klub
+klus - dutch, praca dowrywcza (chyba), też nie działa w druga stronę
+kluk - czech, chłopiec, też nie
+
+kluc
+
+kle - norweski, sukienka, działa w druga stronę, ale jak drugi rezultat
+ucak - turecki, samolot, działa!
+
+zio - włoski, wujek
+
+mara - comorian, time, occasion
+nosa - "to provide (animals) with water"
+uku - night
+
+kuja - fiński, zaułek, "mała droga lub ścieżka / wąska uliczka, zwykle wyłożona domami lub drzewami" (alley działa, alejka nie)
+
+
+Odwracanie:
+
+Wioska "Rdzów", odwrotność "gubić", znajduje się w Gminie Potworów. Coś trzeba z tym zrobić.
+
+
+aąbcćdeęfghijklłmnńoóprsśtuwyzźż
+abcdefghijklmnoprstuwyz
+
+
+Link do gathera:
+
+eg.
+https://www.w3schools.com/python/ref_string_isdigit.asp
+
+grroaL..qqq,q2axgiika,xin.otrgin.
+
+https://www.gather.town/app/E4LB6YjBZHN4WiEY/skarbiec
+grroaL..qqq,f'rgwe,riqb.'oo.W3KV5Tz
+
+`= q] a' z/
+
+"Klucz do oszyfrowania może znajduwać się gdzieś pod Twoim nosem..."
+
+
+
+Zasoby:
+Spaceship: ansimuz, https://ansimuz.itch.io/warped-vehicles
+Tła gwiezdne: Screaming Brain Studios, https://opengameart.org/content/seamless-space-backgrounds
+Paper: Donny Beals https://opengameart.org/content/paper-icons
+Check out - crosshead studios
+
+GIMP fonts:
+C:\Users\MaciejBogacki\.gimp-2.8\fonts
+C:\Program Files\GIMP 2\share\gimp\2.0\fonts
+
+Countdown:
+Krzyczący FREE: https://www.youtube.com/watch?v=Ysfc6Rw8tc4
+Mniejszy czerwony: https://www.youtube.com/watch?v=x3qbnnHbDwM
+Duży, długi, zielony countdown: https://youtu.be/3IwVRkcJYS8?t=25200
+2 godziny, idealny: https://www.youtube.com/watch?v=SKBf6gBNvNA
+
+
+Dane do Gathera:
+Grzyb - grosin.unum@gmail.com
+Muffin_boi - oliwer.plaskowicki@gmail.com
+Pikpik - pik.dominika@gmail.com
+Piotrek - nowosielski.piotr.23@gmail.com
+
+Notatki: https://board.net/p/Skarbco-notatki
+
+Śmieszne rzeczy znalezione dzięki puzzleUtils:
+cezar("hocki"): 'kreml'
+cezar("komuch"): 'mrozek'
+cezar("sowa", 3, alphabet): 'wsad'
+Pary cezarowe: 'bosu-druz', 'bzik-dalm', 'efez-giga', 'fach-icek', 'fifo-ilir', 'foch-irek', 'icmp-leoś', 'imam-loco', 'kfor-mirt', 'meno-ogór', 'mezo-ogar', 'poty-śryż', 'roch-trek', 'roma-troc', 'roth-tryk', 'rzaz-taca', 'sica-ulec', 'szor-uart', 'xxxv-xxxv', 'żomp-broś', 'hocki-kreml', 'komuch-mrozek'
+
+
+TODO:
+Dopiąć wątek z tlenem
+Teksty na Discorda
+Usunąć portal z CDN
+Pełna automatyzacja mapy
+Sprawdzać format klucza po usunięciu spacji

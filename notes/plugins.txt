@@ -1,0 +1,61 @@
+Bind Pictures To Map - for parallax mapping 
+https://forums.rpgmakerweb.com/index.php?threads/bind-pictures-to-map.46776/
+
+Quxios - some useful stuff, including keyboard support for name entry: https://quxios.github.io/plugins (using for keyboard support)
+Also here: https://github.com/CuteThalia/RPG-Maker-MV
+
+Clever Colors - make certain phrases always a specific color, https://github.com/gimmer/RPG-Maker-MV-Plugins/tree/master/Plugins/Gimmer_CleverColors
+https://github.com/gimmer/RPG-Maker-MV-Plugins - other useful things, including a "drunk" plugin
+
+32x32 tiles support: https://forums.rpgmakerweb.com/index.php?threads/change-tile-size.46748/
+
+Tiled in RPGMaker (?): https://forums.rpgmakerweb.com/index.php?threads/tiled-plugin.104705/
+
+Screen shake: https://theoallen.itch.io/rmmv-screenshake
+
+Hime plugins, lots of useful things: https://himeworks.com/mv-plugins/
+
+Yanfly plugins (paid :/): http://www.yanfly.moe/wiki/Category:Yanfly_Engine_Plugins#Utility_Plugins
+Credits page: http://www.yanfly.moe/wiki/Credits_Page_(YEP)
+
+Nice git stuff: https://forums.rpgmakerweb.com/index.php?threads/automatically-pretty-json-files-for-clean-git-commit-diffs-using-git-hooks.108122/
+
+Text input: https://forums.rpgmakerweb.com/index.php?threads/text-input-window.52197/
+
+Moar useful things: http://sumrndm.site/mv-plugins/ | Credits: SumRndmDde
+Shaking text: http://sumrndm.site/shaking-text/
+Spellcheck: http://sumrndm.site/spell-check/
+
+Chat box: https://synrec.itch.io/rpg-maker-mv-chat-box
+
+MBS - Map Zoom: https://forums.rpgmakerweb.com/index.php?threads/mbs-map-zoom.48267/
+
+Alt Menu Screen: Info Box - makes a nicer menu, might want to remove faces though
+
+Tiled scripting: https://doc.mapeditor.org/en/stable/reference/scripting/
+(EXPORT_RASTER might be helpful?)
+
+Footstep sounds (and more things): https://www.premiumbeat.com/blog/40-free-footstep-foley-sound-effects/
+
+Fancy display windows: http://sumrndm.site/window-upgrade/
+
+Translation engine: potentially useful http://sumrndm.site/translation-engine/
+
+Notepad (incompatible with QInput): https://forums.rpgmakerweb.com/index.php?threads/player-notepad-in-game-text-editor-for-the-player.91259/
+
+Alpaca image: Eva Hejda http://fotos.naturspot.de/
+
+Assets: Random rpg tiles: https://pipoya.itch.io/pipoya-rpg-tileset-32x32
+Neat battle sprites: https://holder-anibat.itch.io/holders-animated-battlers-free-enemies-pack-1
+
+JitterFix: https://forums.rpgmakerweb.com/index.php?threads/bug-fix-event-jitter-display-rounding-error.107752/
+If this becomes an issue, with events and tiles out of sync when scrolling slowly. Credits to NeonBlack and Liquidize
+
+Number pad: https://forums.rpgmakerweb.com/index.php?threads/eis-cecilia-numerical-pad-updated-version-1-03.66032/ (by Kino)
+
+Top 6 pixels don't render ¯\_(ツ)_/¯ 
+When using PIXI textures, always call .destroy() on them when no longer needed. (then probably set the variable holding it to undefined if it's still in scope)
+
+Proper scripting tutorials: https://www.youtube.com/watch?v=2DnYEfScybo&list=PL3Fv4Z54bWaGjcORlYg6TKsnoQDf2no3d&index=3
+Potential alternative to ocRam's layers: https://forums.rpgmakerweb.com/index.php?threads/galvs-layer-graphics-fogs-parallaxes-mapping.48483/
+

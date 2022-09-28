@@ -1,0 +1,11 @@
+Hisotria komunikacji:
+
+"ASCII" zakodowane morsem: .- ... -.-. .. ..
+"Unicode" zakodowane w kodach ASCII: 85 110 105 99 111 100 101
+🔑[🚀🍕🌈] w kodach unicode: 01f511 5b 01f680 01f355 01f308 5d
+Klucz[rakieta pizza tęcza]
+
+
+.- ... -.-. .. ..
+85 110 105 99 111 100 101
+01f511 5b 01f680 01f355 01f308 5d

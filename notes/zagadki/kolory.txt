@@ -1,0 +1,33 @@
+Kolory:
+
+klucz[miód malina]
+
+#A2007B : 3-4 (cyKLamen)
+#CF2942 : 3 (trUskawkowy)
+#FFFFF0 : 4-5 (mleCZny)
+[
+#E3AF34 : 1-2 (MIodowy)
+#F5ACCB : 13 (cukierkowy rÓż)
+#8B4726 : 8 (czekolaDowy)
+
+#EB0165 : 1-5 (MALINowy)
+#9D5B03 : 4 (cynAmonowy)
+]
+
+
+3-4#A2007B 3#CF2942 4-5#FFFFF0 [
+1-2#E3AF34 13#F5ACCB 8#8B4726 
+1-5#EB0165 4#9D5B03 ]
+
++obrazek: \,
+
+Flavour:
+Jedna z puszek zamiast składu ma napisane:
+
+3-4#A2007B 3#CF2942 4-5#FFFFF0 [
+1-2#E3AF34 13#F5ACCB 8#8B4726 
+1-5#EB0165 4#9D5B03 ]
+
+-----------------------
+
+✖: Spójrz na dziwną etykietę

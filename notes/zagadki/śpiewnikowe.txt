@@ -1,0 +1,15 @@
+
+Śpiewnikowe:
+
+klucz[ognisko]
+
+Krajka [Lecące|Leluchów] Ułan [Czarny Blues] [Zbroja|Znów wędrujemy] "[" Ocean Gloria [Niebieskooki sen] [Irlandzki żeglarz] [Szanta narciarska] [Ku chwale...] [Opadły mgły]
+Chorałem [obudzić|wyjedź] niech czwarta [dałeś|znów] "[" oceanie chwała przed wśród nazywali dziwny ]
+
+Krajka Lecące Ułan [Czarny Blues] Zbroja "[" Ocean Gloria [Niebieskooki sen] [Irlandzki żeglarz] [Szanta narciarska] [Ku chwale...] [Opadły mgły]
+Chorałem obudzić niech czwarta dałeś [oceanie chwała przed wśród nazywali dziwny opadły]
+
+Flavour:
+Z tyłu tostera znajdujesz napis:
+
+Chorałem obudzić niech czwarta dałeś [oceanie chwała przed wśród nazywali dziwny opadły]

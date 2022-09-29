@@ -3,3 +3,40 @@ Louis Beel
 Una Merkel
 Cary Grant
 Zang Kejia
+Fred Lawrence Whipple (-> [)
+Pierre Mendès France
+Olivier Messiaen
+William Penney
+Omar Abu Risha
+Dudley Senanayake
+Zohra Sehgal
+Everett Parker
+Norman Borlaug
+Irving Gordon
+Arsène Tchakarian (->])
+
+
+Sorted:
+    Arsène Tchakarian    
+    Cary Grant    
+    Dudley Senanayake    
+    Everett Parker    
+    Fred Lawrence Whipple    
+        
+    Ilya Prigogine    
+    Irving Gordon    
+    Kiyoshi Oka    
+    Louis Beel    
+        
+    Norman Borlaug    
+    Olivier Messiaen    
+    Omar Abu Risha    
+    Pierre Mendès France    
+        
+    Una Merkel    
+    William Penney    
+    Zang Kejia    
+    Zohra Sehgal    
+
+F -> [
+A -> ]

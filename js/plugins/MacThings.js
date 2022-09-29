@@ -24,7 +24,7 @@ try {
     throw "The JavaScript version is too old.";
 }
 
-const MAC_DEBUG = true;
+const MAC_DEBUG = false;
 const DEBUG_STAGE = 10;
 window.g = window.g || {}
 g.gameInitialised = false;
@@ -32,7 +32,7 @@ g.gameInitialised = false;
 let $gv;
 let $gs;
 
-const SECRET_KEYS = ["nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietapizzatęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "ognisko", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
+const SECRET_KEYS = ["otoczenie", "nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietapizzatęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "ognisko", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
 const VOLUME_INCREMENT = 5;
 const ENCRYPT_LIST = "aąbcćdeęfghijklłmnńoóprsśtuwyzźż[]"
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
@@ -75,21 +75,21 @@ macThingsInit = function () {
         }
     });
 
-    $gameSwitches.setValue(1, true); //Set the 'True' switch to always be true
+    $gs[1] = true; //Set the 'True' switch to always be true
 
-    if ($gameVariables.value(1) === 0) {
+    if ($gv[1] === 0) {
         g.data = g.data || initialiseGData();
-        $gameVariables.setValue(1, g.data);
+        $gv[1] = g.data;
     } else {
-        g.data = $gameVariables.value(1);
+        g.data = $gv[1];
     }
     if (MAC_DEBUG) {
-        $gameSwitches.setValue(2, true); //Set the debug switch
+        $gs[2] = true; //Set the debug switch
         $gv[41] = DEBUG_STAGE;
     }
     g.interpteter = new Game_Interpreter();
     g.gameInitialised = true;
-    console.log("MacThings init complete", $gameVariables.value(1));
+    console.log("MacThings init complete", $gv[1]);
 }
 
 initialiseGData = function () {
@@ -209,6 +209,12 @@ runNearbyEvent = function (interpreter, dx, dy) {
     else console.warn(`No event found at x:${x + dx}, y:${y + dy}`);
 }
 
+runEvent = function (interpreter, eventId) {
+    let event = $gameMap._events[eventId];
+    if (event) interpreter.setupChild(event.list(), eventId);
+    else console.warn(`No event with id ${eventId} found.`);
+}
+
 //===================================== Multi image display =====================================
 
 g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
@@ -216,7 +222,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
     text = text || ["Strzałka w lewo", "Strzałka w prawo", "Strzałka w górę", "Strzałka w dół", "Odejdź"];
     let x = 0;
     let y = 0;
-    $gameVariables.setValue(3, 0); //Clear player choice
+    $gv[3] = 0; //Clear player choice
 
     this.moveUp = function (amount = 1) {
         if (y + amount < columns && y + amount >= 0) y += amount;
@@ -243,19 +249,19 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
         textOptions.push(text[text.length - 1]);
         choices.push(-1); //The cancel option
 
-        let startingOption = choices.indexOf($gameVariables.value(3)); //If previously chosen option is available, it will start selected
+        let startingOption = choices.indexOf($gv[3]); //If previously chosen option is available, it will start selected
         if (startingOption < 0) startingOption = 0; //Otheriwse use the first option
 
         $gameMessage.setChoices(textOptions, startingOption, choices.length - 1);
         $gameMessage.setChoiceBackground(0);
         $gameMessage.setChoicePositionType(2);
-        $gameMessage.setChoiceCallback(n => $gameVariables.setValue(3, choices[n]));
+        $gameMessage.setChoiceCallback(n => $gv[3] = choices[n]);
         if (description) $gameMessage.add(description);
         interpreter.setWaitMode('message');
     };
 
     this.updatePos = function () {
-        let choice = $gameVariables.value(3);
+        let choice = $gv[3];
         switch (choice) {
             case -1: break;
             case 0: self.moveLeft(); break;

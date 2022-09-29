@@ -1,0 +1,14 @@
+GameStages:
+0 - start
+1 - tutorial left unlocked
+2 - tutorial right unlocked
+3 - hallway & hangar unlocked
+4 - living room unlocked
+5 - chemistry lab unlocked
+6 - sleep room unlocked
+7 - computer lab unlocked
+8 - lower-right tiles puzzle unlocked
+9 - grobowiec unlocked
+10 - not yet implemented
+
+

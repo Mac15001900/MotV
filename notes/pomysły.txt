@@ -1,0 +1,41 @@
+Pomysły na zagadki:
+
++Game of Life 
+(plus bardziej zaawansowana wersja z innymi zasadami)
++Klawiatura telefonu
++Pierwiastki chemiczne
++ALPAKA
++Blok z cyframi parzystymi/nieparzystymi
++Historia komunikacji (mors -> ascii -> unicode)
++Szyfr z obracaniem
++Parzystość
++Liczby pierwsze (pozycje liter w tekście) - jakiś cytat o liczbach pierwszych w ramach inspiracji
++Co łączy te cztery słowa? (mini Decrypto)
++Kolejne litery w słowach (pierwsza z pierwszego itd)
++Lista kolorów, których n-te litery tworzą hasło
++Matematyka w bazie 12
++Klawisze na klawiaturze
++Brakujące części wyrazów
++Sudoku
++Nakładanie
++Szyfr grobowcowy, dokończyć
++Mors z mebli
++https://en.wikipedia.org/wiki/John_Dalton i jego symbole pierwiastków
++Litery w różnych kolorach gradientu, ułożyć według niego
++Ilość różnych tile'i 
+
+Zamienianie liter
+Triangulacja
+rebus, ze słowami w różnych językach
+Numery seryjne wskazujące na konkretne litery + teksty, tylko trochę ich trzeba połączyć
+Liczby w bazie 60 (https://planetcalc.com/9216/, lub https://ovid.github.io/blog/babylonian-numbers-for-8-year-olds.html)
+Numer liter w słowach (aghZi oIpjl + 42 = zi)
+Jakaś książka telefoniczna
+Coś z sekwencjami na http://oeis.org/
+Minesweeper (każde pole ma literę, bomby tworzą hasło)
+System liczb z cyfrą (-1) : np. 39 = 4(-1)
+Liczby wskazujące na obiekty w katalogu Messiera
+zagadka eninsteina, pierwsze litery tworzą rozwiązanie - eksperymenty chemiczne
+Braille?
+Rzymskie cyfry ukryte w tekście
+

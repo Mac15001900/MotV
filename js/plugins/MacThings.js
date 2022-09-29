@@ -25,6 +25,7 @@ try {
 }
 
 const MAC_DEBUG = true;
+const DEBUG_STAGE = 10;
 window.g = window.g || {}
 g.gameInitialised = false;
 //Shorhands for $gameVariables and $gameSwitches
@@ -82,7 +83,10 @@ macThingsInit = function () {
     } else {
         g.data = $gameVariables.value(1);
     }
-    if (MAC_DEBUG) $gameSwitches.setValue(2, true); //Set the debug switch
+    if (MAC_DEBUG) {
+        $gameSwitches.setValue(2, true); //Set the debug switch
+        $gv[41] = DEBUG_STAGE;
+    }
     g.interpteter = new Game_Interpreter();
     g.gameInitialised = true;
     console.log("MacThings init complete", $gameVariables.value(1));
@@ -109,6 +113,11 @@ checkKey = function (input) {
         g.data.keysCollected[key] = true;
         g.data.keysCurrent += 1;
         g.data.keysTotal += 1;
+        switch (g.data.keysTotal) {
+            case 1: $gv[41] = 1; break;
+            case 2: $gv[41] = 2; break;
+            case 3: $gv[41] = 3; break;
+        }
         return 3; //Correct, and not collected yet!
     }
 }

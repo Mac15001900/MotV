@@ -12,3 +12,12 @@ GameStages:
 10 - not yet implemented
 
 
+Old text input: (Plugin command) enter_text 3 20 false Wprowadź_Klucz x
+
+English "klucz" equivalent:
+☄ - comet
+👑 - crown
+♥ - heart
+⏰ - clock
+guide, index, nexus (❇)
+piece - each key is a piece of a big thing

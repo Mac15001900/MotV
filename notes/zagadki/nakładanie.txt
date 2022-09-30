@@ -1,0 +1,79 @@
+Trzeba wziąć konkretne litery z tekstu, i złączyć wszystko.
+W pierwszym przypadku co 2, potem co 3,5,7,11 i 13. '-' nic nie robią i je nadpisujemy.
+
+klucz[Wielka Unifikacja Haseł]
+
+_klucz[Wielka Un_i_fik_acja _H_aseł]
+
+_k_u_-_W_-_-_-_n_-_-_-_-_-_-_-_a_e_-
+__l__z__i__k__-__i__-__a__a__-__-__]
+____c____e____U____f____c____H____-_
+______[______ ______i______ ______ł_
+__________l__________k__________s___
+____________a____________j__________
+
+
+
+_X_X_Y_X_Y_Y_Y_X_Y_Y_Y_Y_Y_Y_Y_X_X_Y
+__X__X__X__X__Y__X__Y__X__X__Y__Y__X
+____X____X____X____X____X____X____Y_
+______X______X______X______X______X_
+__________X__________X__________X___
+____________X____________X__________
+
+
+1st line, withou extra '-': 
+5KŁUI-FW1-2-F-PN0-4-2-4-1-9-D-1ABEÓ-
+
+The rest:
+0-LW6ZKDI-ŚK96-Ń5IĄ2--5A2TA66-D1-P9]
+5I37CRN6DE0N69U3Y5ŁFÓ3R-CH126HRO8--1
+K0-911[5Ą65GM 566LG5I-PŁR-M 6Ł-0-FŁ0
+7Ó509Ń81UŹL204571T09ŚKWZ13-3ÓWJ-SP8P
+ZUŹ-ŚT3Ć410HA5ĄT-68ZŃ57-NJ7-B902A6-R'
+
+Enchanced (extra spacebars, one more column):
+5KŁUI-FW1-2-F-PN0-4-2-4-1-9-D-1ABEÓ-9
+0-LW6ZKDI-ŚK96-Ń5IĄ2-75A TA66-D1-P9]K
+5I3 CRN6DE0N69U3Y5ŁFÓ3R-CH126HRO8--12
+K0-911[5Ą65GM 566LG5I-PŁR-M 6Ł-0-FŁ07
+7Ó509Ń81UŹL204 71T09ŚKWZ13-3ÓWJ-SP8PL
+ZUŹ-ŚT Ć410HA5ĄT-68ZŃ57-NJ7-B902A6-RR
+
+Flavour:
+Stabilizator vX (X=2,3,5,7,11 lub 13)
+Numer seryjny: ...
+
+Stabilizator v2
+Numer seryjny: 5KŁUI-FW1-2-F-PN0-4-2-4-1-9-D-1ABEÓ-9
+
+Stabilizator v3
+Numer seryjny: 0-LW6ZKDI-ŚK96-Ń5IĄ2-75A TA66-D1-P9]K
+
+Stabilizator v5
+Numer seryjny: 5I3 CRN6DE0N69U3Y5ŁFÓ3R-CH126HRO8--12
+
+Stabilizator v7
+Numer seryjny: K0-911[5Ą65GM 566LG5I-PŁR-M 6Ł-0-FŁ07
+
+Stabilizator v11
+Numer seryjny: 7Ó509Ń81UŹL204 71T09ŚKWZ13-3ÓWJ-SP8PL
+
+Stabilizator v13
+Numer seryjny: ZUŹ-ŚT Ć410HA5ĄT-68ZŃ57-NJ7-B902A6-RR
+
+
+
+
+
+
+
+
+Rozwiązanie:
+ K U - W - - - N - - - - - - - A E - 
+  L  Z  I  K  -  I  -  A  A  -  -  ] 
+    C    E    U    F    C    H    -  
+      [             I             Ł  
+          L          K          S    
+            A            J           
+

@@ -24,7 +24,7 @@ try {
     throw "The JavaScript version is too old.";
 }
 
-const MAC_DEBUG = false;
+const MAC_DEBUG = true;
 const DEBUG_STAGE = 10;
 window.g = window.g || {}
 g.gameInitialised = false;
@@ -251,7 +251,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
 
     this.showImage = function (size = 100) {
         $gameScreen.erasePicture(1);
-        $gameScreen.showPicture(1, filename + '-' + x + '-' + y, 1, 960, 375, size, size, 255, 0);
+        $gameScreen.showPicture(1, `${filename}/${filename}-${x}-${y}`, 1, 960, 375, size, size, 255, 0);
     }
 
     this.getCoords = () => console.log(x, y);
@@ -278,6 +278,10 @@ g.screenWidth = function () {
 
 g.screenHeight = function () {
     return Number(document.querySelector("#GameCanvas").style.height.slice(0, -2));
+}
+
+g.showPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
+    $gameScreen.showPicture(id, name, 1, x, y, scale, scale, 255, 0);
 }
 
 g.padToLength = function (string, targetLength, side = 'both') {

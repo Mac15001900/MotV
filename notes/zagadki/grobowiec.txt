@@ -11,16 +11,16 @@ Pomysły:
 !i - illuminati
 !j - jaśniej (Jantaj jest miastem, ale raczej nazywa się je "Yantai"), Jastrzębie-Zdrój
 !k - kajak, kciuk
-!l - latorośl, Liverpool, lokal
+!l - latorośl, Liverpool, lokal, Lidl, leptocefal
 !m - metrokilogram (1m * 1kg), modem, muzeum, magnetyzm
 !n - neutron, neuron
 !o - obozowisko, okienko, oregano
-!p - peryskop, pseudostop
+!p - peryskop, pseudostop, prototyp, petaflop
 !r - radar, rower
 !s - Sagittarius, spirytus, sofokles
 !t - tybet, TNT (przepis w minecraftcie), trakt, transplant
 !u - Uluru, Ubuntu
-!w - wpływ, wrocław
+!w - wpływ, wrocław, Wrocław, wężogłów: (podpowiedź: Channa?)
 y - yyyyyyy, yoldiowy (????)
 !z - zakaz, zielarz
 [ - 
@@ -110,3 +110,54 @@ C|u|i p|l|b o|w|n
 
 Light: 03D0D9
 Dark: 034761
+
+Wersja 2.0:
+
+Wybrane:
+!a - andromeda (M31)
+!b - bób (\,)
+!c - czterozgłoskowiec (wiersz!)
+!d - deltoid (\,)
+!e - elbląskie (\,)
+!f - fonograf (\,)
+!g - gazociąg (\,)
+!h - Hannah (48°58′23″N 98°41′26″W)
+!i - illuminati (\,)
+!j - Jastrzębie-Zdrój (\,)
+!k - kciuk (\,)
+!l - Leptocefal (Stadium larwalne ryb zaliczanych do nadrzędu Elopomorpha)
+!m - muzeum (\,)
+!n - neutron (\,)
+!o - okno (\,)
+!p - petaflop (1x FLOPS ⋅ 10¹⁵)
+!r - radar (\,)
+!s - Sagittarius (\,)
+!t - tybet (བོད་)
+!u - Uluru (\,)
+!w - Wisław (imieniny obchodzi 7 czerwca i 15 czerwca.) - [Imię\n07.06\n15.06]
+!z - zakaz (\,)
+[ - 
+] - 
+
+e|A|m H|d|r z|f|g
+-+-+- -+-+- -+-+-
+k| |j  | |  T| |s
+-+-+- -+-+- -+-+-
+C|u|i P|L|b o|W|n
+
+Adv:
+e - c>
+a - g<
+d - a>
+r - u>
+z - c<
+k - o<
+t - i>
+c - k<
+u - s>
+i - e>
+l - u<
+o - f<
+n - <a
+[ - [
+] - ]

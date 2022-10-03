@@ -869,7 +869,7 @@ function Window_ChoiceMessage() {
 		const varId = parseInt(args[0]);
 		let message = '';
 		for (let i = 1; i < args.length; i++) {
-			message += args[i] + ' ';
+			message += args[i] + ' '; //TODO: This creates an extra spacebar at the end. Why not join?
 		}
 		//message = JSON.parse("\"" + message + "\"");
 		let callbacks = [];
@@ -1354,7 +1354,8 @@ function Window_ChoiceMessage() {
 		if (!width) {
 			this._width = 0;
 			for (let i = 0; i < this._choices.length; i++) {
-				const textWidth = this.textWidth(this._choices[i]);
+				//const textWidth = this.textWidth(this._choices[i]); //Change: fixing text width computation
+				const textWidth = this.textWidth(g.simpleUnescape(this._choices[i]));
 				if (this._width < textWidth) {
 					this._width = textWidth * this._columns;
 				}
@@ -1433,7 +1434,8 @@ function Window_ChoiceMessage() {
 		if (!width) {
 			this._width = 0;
 			for (let i = 0; i < this._lines.length; i++) {
-				const textWidth = this.textWidth(this._lines[i]);
+				//const textWidth = this.textWidth(this._lines[i]); //Change: Fixed getting width
+				const textWidth = this.textWidth(g.simpleUnescape(this._lines[i]));
 				if (this._width < textWidth) {
 					this._width = textWidth;
 				}

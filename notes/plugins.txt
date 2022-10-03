@@ -59,3 +59,6 @@ When using PIXI textures, always call .destroy() on them when no longer needed. 
 Proper scripting tutorials: https://www.youtube.com/watch?v=2DnYEfScybo&list=PL3Fv4Z54bWaGjcORlYg6TKsnoQDf2no3d&index=3
 Potential alternative to ocRam's layers: https://forums.rpgmakerweb.com/index.php?threads/galvs-layer-graphics-fogs-parallaxes-mapping.48483/
 
+Cool steampunk tiles (non-commercial only): https://forums.rpgmakerweb.com/index.php?threads/steampunk-tiles.65/
+Tons of tiles, permission for commercial (and MV?) needed: https://forums.rpgmakerweb.com/index.php?threads/lunas-tiles.84/
+

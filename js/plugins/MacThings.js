@@ -24,7 +24,7 @@ try {
     throw "The JavaScript version is too old.";
 }
 
-const MAC_DEBUG = true;
+const MAC_DEBUG = false;
 const DEBUG_STAGE = 10;
 window.g = window.g || {}
 g.gameInitialised = false;
@@ -384,6 +384,9 @@ Scene_Title.prototype.commandExit = function () {
 
 //From https://forums.rpgmakerweb.com/index.php?threads/how-to-remove-blur.47504/
 ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
+    //let doSmoothing = false;
+    //if (["img/faces/", "img/pictures/"].indexOf(folder) >= 0) doSmoothing = true;
+
     if (filename) {
         var path = folder + encodeURIComponent(filename) + '.png';
         var bitmap = this.loadNormalBitmap(path, hue || 0);

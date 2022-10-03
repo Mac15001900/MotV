@@ -1,6 +1,6 @@
 klucz[pierwiastek co tam]
-K  Lu C Zn  P  I  Er W  I  As Te K  Co Ta Md
-19 71 6 30  15 53 68 74 53 33 52 19 27 73 101                                 
+K  Lu C Zn P  I  Er W  I  As Te K  Co Ta Md
+19 71 6 30 15 53 68 74 53 33 52 19 27 73 101
 (n -> [) (d -> ])
 
 

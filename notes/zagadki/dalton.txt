@@ -69,10 +69,32 @@ K:
 
 
 
-
-Jakaś ciekawsza podpowiedź na Manchester Central Library? (Druga największa biblioteka w UK?) 
-Odnajdź oryginalny manuskrypt "How the fourth floor came to Crowley Castle". Następnie wyjdź z biblioteki. Przejdź przez tory trawmajowe i idź cały czas prosto. Po przejściu pod mostem kolejowym skręć w prawo w trzecią ulicę. Potem skręć w lewo, w ścieżkę przecinającą trawnik. 
+Podpowiedź do Daltona:
+Odnajdź oryginalny manuskrypt "How the fourth floor came to Crowley Castle". Następnie wyjdź z biblioteki. Przejdź przez tory trawmajowe i idź cały czas prosto ulicą, której nazwa zaczyna się na "o". Po przejściu pod mostem kolejowym skręć w prawo w trzecią ulicę. Potem skręć w lewo, w ścieżkę przecinającą trawnik. 
 Na jej końcu, na kamiennym krześle, spotkasz kogoś, kto zna te symbole.
+
+Podpowiedź do zapisu Hilla:
+
+\c[5]Zapis Hilla\c[0] - jednoznaczny sposób zapisu sumarycznych wzorów \c[3]związków chemicznych\c[0], w którym ustalona jest kolejność podawania symboli \c[3]pierwiastków chemicznych\c[0].
+
+- dla \c[5] związków organicznych \c[0](zawierających \c[3]wodór \c[0]i \c[3]węgiel\c[0]): na początku wzoru podawana jest liczba atomów \c[3]węgla\c[0], następnie \c[3]wodoru\c[0], a następnie w kolejności \c[3]alfabetycznej\c[0] pozostałych pierwiastków.
+- dla \c[5]związków nieorganicznych\c[0]: we wzorze \c[3]pierwiastki\c[0] występują w ściśle \c[3]alfabetycznym\c[0] porządku
+- oznaczenia \c[5]izotopów\c[0], np. \c[3]D\c[0] i \c[3]T\c[0] są traktowane na równi z symbolami \c[3]pierwiastków\c[0], tj. wchodzą do ogólnego porządku \c[3]alfabetycznego\c[0] kolejności zapisu.
+
+With extra line breaks:
+
+\fb\c[3]Zapis Hilla\c[0]\fb - jednoznaczny sposób zapisu sumarycznych wzorów \c[6]związków chemicznych\c[0], 
+w którym ustalona jest kolejność podawania symboli \c[6]pierwiastków chemicznych\c[0].
+
+- dla \c[3]związków nieorganicznych\c[0]: 
+we wzorze \c[6]pierwiastki\c[0] występują w ściśle \c[6]alfabetycznym\c[0] porządku.
+
+- dla \c[3]związków organicznych \c[0](to znaczy zawierających \c[6]wodór \c[0]i \c[6]węgiel\c[0]):
+na początku wzoru podawana jest liczba atomów \c[6]węgla\c[0], następnie \c[6]wodoru\c[0], a następnie w kolejności \c[6]alfabetycznej\c[0] pozostałych pierwiastków.
+
+- oznaczenia \c[3]izotopów\c[0], np. \c[6]D\c[0] i \c[6]T\c[0] są traktowane na równi z symbolami \c[6]pierwiastków\c[0], 
+to znaczy wchodzą do ogólnego porządku \c[6]alfabetycznego\c[0] kolejności zapisu.
+
 
 
 

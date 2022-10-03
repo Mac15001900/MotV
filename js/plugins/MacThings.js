@@ -382,6 +382,14 @@ Scene_Title.prototype.commandExit = function () {
     SceneManager.exit();
 };
 
+var _Window_Message_processEscapeCharacter = Window_Message.prototype.processEscapeCharacter;
+Window_Message.prototype.processEscapeCharacter = function (code, textState) {
+    switch (code) {
+        case ',': this.startWait(7); break;
+        default: _Window_Message_processEscapeCharacter.call(this, code, textState);
+    }
+}
+
 //From https://forums.rpgmakerweb.com/index.php?threads/how-to-remove-blur.47504/
 ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
     //let doSmoothing = false;

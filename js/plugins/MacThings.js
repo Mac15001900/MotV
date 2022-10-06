@@ -24,7 +24,7 @@ try {
     throw "The JavaScript version is too old.";
 }
 
-const MAC_DEBUG = false;
+const MAC_DEBUG = true;
 const DEBUG_STAGE = 10;
 window.g = window.g || {}
 g.gameInitialised = false;
@@ -32,12 +32,12 @@ g.gameInitialised = false;
 let $gv;
 let $gs;
 
-const SECRET_KEYS = ["otoczenie", "nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietapizzatęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "ognisko", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
+const GAME_VERSION = "Alpha 1.0.0";
+const SECRET_KEYS = ["otoczenie", "nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietakiwitęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "ognisko", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
 const VOLUME_INCREMENT = 5;
 const ENCRYPT_LIST = "aąbcćdeęfghijklłmnńoóprsśtuwyzźż[]"
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
-
-
+const ROOM_UNCLOKS = [1, 2, 3, 4, 6, 9, 12, 15, 19];
 var _Scene_Map_loaded = Scene_Map.prototype.onMapLoaded;
 Scene_Map.prototype.onMapLoaded = function () {
     _Scene_Map_loaded.call(this);
@@ -86,6 +86,7 @@ macThingsInit = function () {
     if (MAC_DEBUG) {
         $gs[2] = true; //Set the debug switch
         $gv[41] = DEBUG_STAGE;
+        $gamePlayer.setMoveSpeed(5);
     }
     g.interpteter = new Game_Interpreter();
     g.gameInitialised = true;
@@ -93,11 +94,12 @@ macThingsInit = function () {
 }
 
 initialiseGData = function () {
-    let res = { keysCurrent: 0, keysTotal: 0, test: "TOAST!" };
+    let res = { keysCurrent: 0, keysTotal: 0, test: "TOAST!", gameVersion: GAME_VERSION };
     res.keysCollected = {};
     for (let i = 0; i < SECRET_KEYS.length; i++) {
         res.keysCollected[SECRET_KEYS[i]] = false;
     }
+    res.lastCollected = null;
     return res;
 }
 
@@ -105,21 +107,65 @@ initialiseGData = function () {
 //=====================================Puzzle logic=====================================
 
 checkKey = function (input) {
-    if (input.substr(0, 6) !== "klucz[" || input[input.length - 1] !== ']') return 0; //Invalid format
-    let key = input.substr(6, input.length - 7);
+    let lowered = input.toLowerCase().replaceAll(' ', '');
+
+    if (lowered.substr(0, 6) !== "klucz[" || lowered[lowered.length - 1] !== ']') return 0; //Invalid format
+    let key = lowered.substr(6, lowered.length - 7);
+    $gv[11] = key;
     if (!(key in g.data.keysCollected)) return 1; //There is no such key
     if (g.data.keysCollected[key]) return 2; //Correct, but already collected
     if (!g.data.keysCollected[key]) {
         g.data.keysCollected[key] = true;
         g.data.keysCurrent += 1;
         g.data.keysTotal += 1;
-        switch (g.data.keysTotal) {
-            case 1: $gv[41] = 1; break;
-            case 2: $gv[41] = 2; break;
-            case 3: $gv[41] = 3; break;
-        }
+        g.data.lastCollected = key;
         return 3; //Correct, and not collected yet!
     }
+}
+
+processNewKey = function (inp) {
+    let currentKeys = g.data.keysTotal;
+    let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
+    if (newStage > 0) {
+        $gv[41] = newStage;
+        let message = "Nowy obszar odbklowowany."
+        g.showMessage(inp, message);
+    }
+    if ($gv[41] < ROOM_UNCLOKS.length) {
+        g.showMessage(inp, "Do odblokowania kolejnego obszaru zdobyć trzeba jeszcze " + displayKeys(ROOM_UNCLOKS[$gv[41]] - currentKeys));
+    } else if (currentKeys === SECRET_KEYS.length) {
+        AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
+        g.showMessage(inp, "Udało Ci się zdobyć wszystkie klucze dostępne w tej wersji gry.\n\\c[4]Gratulacje!");
+        //TODO: rolls credits?
+    } else {
+        g.showMessage(inp, "Do zdobycia jeszcze " + displayKeys(SECRET_KEYS.length - currentKeys));
+    }
+}
+
+keyReactions = function (inp) {
+    let currentKeys = g.data.keysTotal;
+    let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
+    let keyName = g.data.lastCollected;
+    switch (newStage) {
+        case 1: g.showMessage(inp, "O, to brzmi przydatnie. Zobaczymy, co tu teraz mamy.", 0); break;
+    }
+}
+
+wrongKeyReactions = function (inp, key) {
+    //Decrypto partial hints
+    let keyWords = ["czekolada", "pizza", "wiewiórka", "sparta"];
+    let correct = 0;
+    for (let i = 0; i < keyWords.length; i++) {
+        if (key.contains(keyWords[i])) correct++;
+    }
+    if (correct === 2) g.showMessage(inp, "Niektóre z tych słów zdecydowanie mają sens,\nno ale chyba jeszcze nie wszystkie.", 0);
+    else if (correct === 3) {
+        let wrongPart = key;
+        for (let i = 0; i < keyWords.length; i++) wrongPart = wrongPart.replace(keyWords[i], '');
+        wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
+        g.showMessage(inp, "To musi być już blisko! " + wrongPart + " tu chyba najmniej pasuje.", 0);
+    }
+
 }
 
 function displayKeys(amount) {
@@ -166,17 +212,17 @@ g.calculatorPuzzle = function (text) { //For testing: https://www.alpertron.com.
 
 //===================================== Event functions =====================================
 
-runNearbyEvent = function (interpreter, dx, dy) {
+runNearbyEvent = function (inp, dx, dy) {
     let events = $gameMap._events;
-    let { x, y } = events[interpreter.eventId()];
+    let { x, y } = events[inp.eventId()];
     let res = events.filter(e => e.x === x + dx && e.y === y + dy);
-    if (res.length > 0) interpreter.setupChild(res[0].list(), res[0].eventId());
+    if (res.length > 0) inp.setupChild(res[0].list(), res[0].eventId());
     else console.warn(`No event found at x:${x + dx}, y:${y + dy}`);
 }
 
-runEvent = function (interpreter, eventId) {
+runEvent = function (inp, eventId) {
     let event = $gameMap._events[eventId];
-    if (event) interpreter.setupChild(event.list(), eventId);
+    if (event) inp.setupChild(event.list(), eventId);
     else console.warn(`No event with id ${eventId} found.`);
 }
 
@@ -203,7 +249,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
     };
     this.moveLeft = (amount = 1) => self.moveRight(-amount);
 
-    this.showChoices = function (interpreter) {
+    this.showChoices = function (inp) {
         let choices = [];
 
         if (wrap || y < columns - 1) choices.push(2); //Up
@@ -229,17 +275,16 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
         $gameMessage.setChoicePositionType(2);
         $gameMessage.setChoiceCallback(n => $gv[3] = choices[n]);
         if (description) $gameMessage.add(description);
-        interpreter.setWaitMode('message');
+        inp.setWaitMode('message');
     };
 
-    this.processResponse = function (interpreter) {
+    this.processResponse = function (inp) {
         let choice = $gv[3];
         switch (choice) {
             case -2: break;
             case -1:
                 copyTextToClipboard(imageTexts[x + "-" + y]);
-                $gameMessage.add("Skopiowano do schowka.");
-                interpreter.setWaitMode('message');
+                g.showMessage("Skopiowano do schowka.");
                 break;
             case 0: self.moveLeft(); break;
             case 1: self.moveRight(); break;
@@ -284,6 +329,14 @@ g.showPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
     $gameScreen.showPicture(id, name, 1, x, y, scale, scale, 255, 0);
 }
 
+g.showMessage = function (inp, message, face, faceFile = 'mc') {
+    if (face !== undefined) $gameMessage.setFaceImage(faceFile, face);
+    $gameMessage.setBackground(0);
+    $gameMessage.setPositionType(2);
+    $gameMessage.add(message);
+    inp.setWaitMode('message');
+}
+
 g.padToLength = function (string, targetLength, side = 'both') {
     let lines = string.split('\n');
     let maxLength = lines.map(g.simpleUnescape).map(l => l.length).reduce((a, b) => a > b ? a : b);
@@ -323,7 +376,7 @@ g.simpleUnescape = function (string) {
 }
 
 //Text to clipboard, function by Dean Taylor taken from https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-function copyTextToClipboard(text) {
+function copyTextToClipboard(text, escapeSpecial = true) {
     var textArea = document.createElement("textarea");
     //Some styling shenanigans in case the element renders for some reason
     textArea.style.position = 'fixed';
@@ -337,7 +390,7 @@ function copyTextToClipboard(text) {
     textArea.style.boxShadow = 'none';
     textArea.style.background = 'transparent';
 
-    textArea.value = g.simpleUnescape(text);
+    textArea.value = escapeSpecial ? g.simpleUnescape(text) : text;
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();

@@ -62,3 +62,6 @@ Potential alternative to ocRam's layers: https://forums.rpgmakerweb.com/index.ph
 Cool steampunk tiles (non-commercial only): https://forums.rpgmakerweb.com/index.php?threads/steampunk-tiles.65/
 Tons of tiles, permission for commercial (and MV?) needed: https://forums.rpgmakerweb.com/index.php?threads/lunas-tiles.84/
 
+Gamefocus.js - in unused for now, can be used to pause sound/graphics when out of focus
+
+Steam integration plugin: https://forums.rpgmakerweb.com/index.php?threads/orangegreenworks-steam-integration-with-achievements-and-time-log.59469/

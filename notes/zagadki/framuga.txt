@@ -1,0 +1,14 @@
+klucz[odcyrklowywanie]
+
+Przesuwając litery o 3,1,4,1,5 itd:
+
+młźćb[pifżwpsućżzctłj]
+
+[ też niestety bierze w tym udział, bo inaczej nijak nie da się zrobić słowa zaczynającego się na pi->jg
+
+Możliwe błędy:
+Pominięcie [ : jgbuśmłnzruąręf
+Wzór n, 1, n+1, 1, n+2, 1, n+3 ... : łhąźoóltuźńbklż
+Wzór + pominięcie [ : ódęśukrncpyśści
+Łysy : ódęśukrncpyśśch (różni się końcem, zrobił j->h zamiast j->i)
+

@@ -985,7 +985,7 @@ function Scene_InputDialog() {
   Scene_InputDialog.prototype.okResult = function () {
     var text = this._textBox.getText() || '';
     if (text.match(/^([\d]+)$/g)) text = Number(RegExp.$1);
-    $gameVariables.setValue(RS.InputDialog.Params.variableID, text);
+    $gameVariables.setValue(RS.InputDialog.Params.variableID, String(text)); //Change: coerced output to string
     if (SceneManager._stack.length > 0) {
       TouchInput.clear();
       Input.clear();
@@ -1086,7 +1086,7 @@ function Scene_InputDialog() {
     if (this.textBoxIsBusy()) {
       var text = this._textBox.getText() || '';
       if (text.match(/^([\d]+)$/g)) text = Number(RegExp.$1);
-      $gameVariables.setValue(RS.InputDialog.Params.variableID, text);
+      $gameVariables.setValue(RS.InputDialog.Params.variableID,  String(text)); //Change: coerced output to string
       this._textBox.setText('');
       if (RS.InputDialog.Params.debug) {
         var dmsg = 'You typed the text is same as '.concat($gameVariables.value(RS.InputDialog.Params.variableID) + '' || 'NONE');

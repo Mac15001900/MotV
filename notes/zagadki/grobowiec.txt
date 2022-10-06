@@ -149,7 +149,7 @@ Adv:
 e - c>
 a - g<
 d - a>
-r - u>
+r - u>  <-  w<
 z - c<
 k - o<
 t - i>
@@ -157,7 +157,12 @@ c - k<
 u - s>
 i - e>
 l - u<
-o - f<
+o - f<  <-  p>
 n - <a
 [ - [
 ] - ]
+
+k  l  u  c  z  [ d  e  l  a  t  !o!  !r!  | c  u  k  !r!  z  e  n  i  a ]
+o< u< s> k< c< [ a> c> u< g< i> !f<! !u>! | k< s> o< !u>! c< c> <a e> g<
+
+klucz[delator cukrzenia] \,

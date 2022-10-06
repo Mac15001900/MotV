@@ -38,13 +38,15 @@ chi_____ JKLMNO
 Flavour:
 Znajdujesz jedną wydrukowaną kartkę:
 
+ورشو
+
 ABCDE[FGHI JKLMNO]
 
 alp_A_
 arf___B
 neC______
 me_D____
-war_E_H_ (ورشو)
+war_E_H_
 alf_F__
 pak_G__
 argI____

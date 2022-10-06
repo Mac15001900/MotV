@@ -1,0 +1,15 @@
+https://github.com/rpgtkoolmv/corescript - nicely organised corescript
+SceneManager - is important
+
+SceneManager._scene - access current scene
+
+SceneManager.push(Scene_Name) - adds a new scene to the stack,
+
+Basic windows (that most others extend):
+Window_Base, Window_Selectable, Window_Command, Window_HorzCommand
+
+
+
+Input.keyMapper["keycode"] = "label";
+Then, inside an update function:
+if(Input.isTriggered("label")) ...

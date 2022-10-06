@@ -1590,7 +1590,7 @@ Window_MenuCommand.prototype.numVisibleRows = function () {
 };
 
 Window_MenuCommand.prototype.makeCommandList = function () {
-    //this.addMainCommands();
+    //this.addMainCommands(); //Change: remove unsused, combar-related menus
     //this.addFormationCommand();
     this.addOriginalCommands();
     this.addOptionsCommand();

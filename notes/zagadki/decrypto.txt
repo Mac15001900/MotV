@@ -14,10 +14,19 @@ klucz [ czekolada pizza wiewiórka Sparta ]
 Flavour: 
 Pod jedną z filiżanek znajdujesz chusteczkę z zapisem:
 
-Zamek, muzyka, szyfr, odpowiedzi
-Kwadrat, przypis, otwarcie, matematyka
-Orzech, pies pogrzebany, fabryka, krowa
-Domino, pomidor, 1/8, Włochy
+Zamek, muzyka, szyfr, odpowiedzi | obracać
+Kwadrat, przypis, otwarcie, matematyka | szósty
+Orzech, pies pogrzebany, fabryka, krowa | gorycz
+Domino, pomidor, 1/8, Włochy | średnica, π
 Orzech, futro, lodowiec, zakopany skarb | gałąź, Rodentia, oko, życie, parkour (?), skok (?)
-Miasto, studnia, kilka setek, Grecja
-Dwa kąty proste, zamknięcie, źródło, sic
+Miasto, studnia, kilka setek, Grecja | wojownik, warunki
+Dwa kąty proste, zamknięcie, źródło, sic | koniec
+
+
+Zamek, muzyka, szyfr, odpowiedzi, obracać
+Kwadrat, przypis, otwarcie, matematyka, szósty
+Orzech, pies pogrzebany, fabryka, krowa, gorycz
+Domino, pomidor, średnica, 1/8, Włochy
+Orzech, futro, lodowiec, zakopany skarb, gałąź
+Miasto, studnia, warunki, kilka setek, Grecja
+Dwa kąty proste, zamknięcie, źródło, sic, koniec

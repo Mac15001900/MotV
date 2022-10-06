@@ -31,3 +31,5 @@ Jedna z puszek zamiast składu ma napisane:
 -----------------------
 
 ✖: Spójrz na dziwną etykietę
+
+Jeśli zignorujemy spację: klucz[miżd malina]

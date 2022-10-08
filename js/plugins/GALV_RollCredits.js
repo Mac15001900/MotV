@@ -99,66 +99,66 @@ Galv.CRED = Galv.CRED || {};        // Galv's stuff
 //  CODE STUFFS
 //-----------------------------------------------------------------------------
 
-(function() {
+(function () {
 
 
-Galv.CRED.skippable = PluginManager.parameters('Galv_RollCredits')["Skippable"].toLowerCase() == 'true' ? true : false;
-Galv.CRED.bSkip = PluginManager.parameters('Galv_RollCredits')["Block Skipping"].toLowerCase() == 'true' ? true : false;
-Galv.CRED.titleText = PluginManager.parameters('Galv_RollCredits')["Title Menu"];
-Galv.CRED.bgm = {name:PluginManager.parameters('Galv_RollCredits')["Title Credits Music"],pan:0,pitch:100,volume:90};
+	Galv.CRED.skippable = PluginManager.parameters('Galv_RollCredits')["Skippable"].toLowerCase() == 'true' ? true : false;
+	Galv.CRED.bSkip = PluginManager.parameters('Galv_RollCredits')["Block Skipping"].toLowerCase() == 'true' ? true : false;
+	Galv.CRED.titleText = PluginManager.parameters('Galv_RollCredits')["Title Menu"];
+	Galv.CRED.bgm = { name: PluginManager.parameters('Galv_RollCredits')["Title Credits Music"], pan: 0, pitch: 100, volume: 90 };
 
 
-// GET TXT FILE
-//-----------------------------------------------------------------------------
+	// GET TXT FILE
+	//-----------------------------------------------------------------------------
 
-Galv.CRED.file = {};
-Galv.CRED.file.getString = function(filePath) {
-	var request = new XMLHttpRequest();
-	request.open("GET", filePath);
-	request.overrideMimeType('application/json');
-	request.onload = function() {
-		if (request.status < 400) {
-			Galv.CRED.createCreds(request.responseText);
-		}
-	};
-	request.send();
-};
-
-Galv.CRED.createCreds = function(string) {
-	var lines = string.split("\n");
-	var bIndex = 0;
-	var record = false;
-	Galv.CRED.txtArray = [];
-
-	for (var i = 0; i < lines.length; i++) {
-		if (lines[i].contains('</block>')) {
-			record = false;
-			bIndex += 1;
-		} else if (lines[i].contains('<block:')) {
-			Galv.CRED.txtArray[bIndex] = [];
-			record = true;
+	Galv.CRED.file = {};
+	Galv.CRED.file.getString = function (filePath) {
+		var request = new XMLHttpRequest();
+		request.open("GET", filePath);
+		request.overrideMimeType('application/json');
+		request.onload = function () {
+			if (request.status < 400) {
+				Galv.CRED.createCreds(request.responseText);
+			}
 		};
-
-		if (record) Galv.CRED.txtArray[bIndex].push(lines[i]);
+		request.send();
 	};
-};
+
+	Galv.CRED.createCreds = function (string) {
+		var lines = string.split("\n");
+		var bIndex = 0;
+		var record = false;
+		Galv.CRED.txtArray = [];
+
+		for (var i = 0; i < lines.length; i++) {
+			if (lines[i].contains('</block>')) {
+				record = false;
+				bIndex += 1;
+			} else if (lines[i].contains('<block:')) {
+				Galv.CRED.txtArray[bIndex] = [];
+				record = true;
+			};
+
+			if (record) Galv.CRED.txtArray[bIndex].push(lines[i]);
+		};
+	};
 
 
-Galv.CRED.start = function(filename) {
-	Galv.CRED.tempFilename = filename;
-	Galv.CRED.fileName();
-	SceneManager.push(Scene_Credits);
-};
+	Galv.CRED.start = function (filename) {
+		Galv.CRED.tempFilename = filename;
+		Galv.CRED.fileName();
+		SceneManager.push(Scene_Credits);
+	};
 
-Galv.CRED.fileName = function() {
-	//if (!Galv.CRED.txtArray) {
+	Galv.CRED.fileName = function () {
+		//if (!Galv.CRED.txtArray) {
 		var filename = Galv.CRED.tempFilename || "Credits";
 		var folder = PluginManager.parameters('Galv_RollCredits')["Folder"];
 		if (folder !== "") folder = folder + "/";
 		Galv.CRED.file.getString(folder + filename + ".txt");
-	//};
+		//};
 
-};
+	};
 
 })();
 
@@ -168,26 +168,26 @@ Galv.CRED.fileName = function() {
 //-----------------------------------------------------------------------------
 
 function Window_Credits() {
-    this.initialize.apply(this, arguments);
+	this.initialize.apply(this, arguments);
 }
 
 Window_Credits.prototype = Object.create(Window_Base.prototype);
 Window_Credits.prototype.constructor = Window_Credits;
 
-Window_Credits.prototype.initialize = function(blockId) {
-    var width = Graphics.boxWidth;
-    var height = Graphics.boxHeight;
-    Window_Base.prototype.initialize.call(this, 0, 0, width, height);
-    this._id = blockId;
+Window_Credits.prototype.initialize = function (blockId) {
+	var width = Graphics.boxWidth;
+	var height = Graphics.boxHeight;
+	Window_Base.prototype.initialize.call(this, 0, 0, width, height);
+	this._id = blockId;
 	this.createVars();
 	this.refresh();
 };
 
-Window_Credits.prototype.txt = function() {
+Window_Credits.prototype.txt = function () {
 	return Galv.CRED.txtArray[this._id];
 };
 
-Window_Credits.prototype.createVars = function() {
+Window_Credits.prototype.createVars = function () {
 	this._textArray = this.txt();
 	this._complete = false;
 	this.opacity = 0;
@@ -213,7 +213,7 @@ Window_Credits.prototype.createVars = function() {
 	// 6 is image
 };
 
-Window_Credits.prototype.update = function() {
+Window_Credits.prototype.update = function () {
 	Window_Base.prototype.update.call(this);
 	this.opacity = 0;
 	if (this._timer > 0) { // timer active
@@ -226,26 +226,26 @@ Window_Credits.prototype.update = function() {
 	this.y += this._scroll;
 };
 
-Window_Credits.prototype.refresh = function() {
+Window_Credits.prototype.refresh = function () {
 	this._allTextHeight = 1;
 	// Draw all lines
-	for (var i = 1; i < this._textArray.length;i++) {
+	for (var i = 1; i < this._textArray.length; i++) {
 		var textState = { index: 0 };
 		textState.text = this.convertEscapeCharacters(this._textArray[i]);
 		//this.resetFontSettings();
 		this._allTextHeight += this.calcTextHeight(textState, false);
 	};
-	
+
 	// window height
 	this.height = this.contentsHeight() + this.standardPadding() * 2;
 	this.createContents();
-	
+
 	if (this._ypos.contains('offbot')) {
 		this.y = Graphics.height;
 	} else if (this._ypos.contains('offtop')) {
 		this.y = -height;
 	};
-	
+
 	// Set auto timer if -1 (auto)
 	if (this._timer < 0) {
 		if (this._scroll == 0) {
@@ -260,11 +260,11 @@ Window_Credits.prototype.refresh = function() {
 			//this._timer = distance / this._scroll;
 		};
 	};
-	
+
 	// Draw lines
 	var cy = 0;
-	for (var i = 1; i < this._textArray.length;i++) {
-	    var textState = {index:0,text:this._textArray[i]};
+	for (var i = 1; i < this._textArray.length; i++) {
+		var textState = { index: 0, text: this._textArray[i] };
 		var x = this.textPadding();
 		var w = this.testWidthEx(textState.text);
 		var h = this.cTextHeight;
@@ -277,79 +277,81 @@ Window_Credits.prototype.refresh = function() {
 		this.drawTextEx(textState.text, x, cy);
 		cy += h;
 	};
-	
+
 	this._allTextHeight = cy;
 	this.height = cy + this.standardPadding() * 2;
 };
 
-Window_Credits.prototype.testWidthEx = function(text) {
-    return this.drawTextExTest(text, 0, this.contents.height);
+Window_Credits.prototype.testWidthEx = function (text) {
+	return this.drawTextExTest(text, 0, this.contents.height);
 };
 
-Window_Credits.prototype.drawTextExTest = function(text, x, y) {
+Window_Credits.prototype.drawTextExTest = function (text, x, y) {
 	this.testActive = false;
-    if (text) {
+	if (text) {
 		this.resetFontSettings();
 		this.testActive = true;
-        var textState = { index: 0, x: x, y: y, left: x };
-        textState.text = this.convertEscapeCharacters(text);
-        textState.height = this.calcTextHeight(textState, false);
+		var textState = { index: 0, x: x, y: y, left: x };
+		textState.text = this.convertEscapeCharacters(text);
+		textState.height = this.calcTextHeight(textState, false);
 		this.cTextHeight = textState.height;
-        while (textState.index < textState.text.length) {
-            this.processCharacter(textState);
-        }
+		while (textState.index < textState.text.length) {
+			this.processCharacter(textState);
+		}
 		this.testActive = false;
-        return textState.x - x;
-    } else {
-        return 0;
-    }
+		return textState.x - x;
+	} else {
+		return 0;
+	}
 };
 
 
-Window_Credits.prototype.contentsHeight = function() {
-    return Math.max(this._allTextHeight, 1);
+Window_Credits.prototype.contentsHeight = function () {
+	return Math.max(this._allTextHeight, 1);
 };
+
+Window_Credits.prototype.standardFontSize = () => 48; //Trying to change font size
 
 
 // SCENE CREDITS
 //-----------------------------------------------------------------------------
 
 function Scene_Credits() {
-    this.initialize.apply(this, arguments);
+	this.initialize.apply(this, arguments);
 }
 
 Scene_Credits.prototype = Object.create(Scene_MenuBase.prototype);
 Scene_Credits.prototype.constructor = Scene_Credits;
 
-Scene_Credits.prototype.initialize = function() {
+Scene_Credits.prototype.initialize = function () {
 	this._blockId = 0;
 	//this._blocks = [];
 	this._txtLoaded = false;
 	this._bgs = [];
-    Scene_MenuBase.prototype.initialize.call(this);
+	Scene_MenuBase.prototype.initialize.call(this);
 };
 
-Scene_Credits.prototype.create = function() {
-    Scene_Base.prototype.create.call(this);
-    this.createBackground();
+Scene_Credits.prototype.create = function () {
+	Scene_Base.prototype.create.call(this);
+	this.createBackground();
 	//this.createBlock();
 };
 
-Scene_Credits.prototype.isReady = function() {
-    if (Scene_Base.prototype.isReady.call(this)) {
-        return Galv.CRED.txtArray;// && this._blocks[0];
-    } else {
-        return false;
-    }
+Scene_Credits.prototype.isReady = function () {
+	if (Scene_Base.prototype.isReady.call(this)) {
+		return Galv.CRED.txtArray;// && this._blocks[0];
+	} else {
+		return false;
+	}
 };
 
-Scene_Credits.prototype.update = function() {
-    Scene_Base.prototype.update.call(this);
+Scene_Credits.prototype.update = function () {
+	Scene_Base.prototype.update.call(this);
 	this.updateInput();
 	this.updateBlocks();
 };
 
-Scene_Credits.prototype.updateInput = function() {
+Scene_Credits.prototype.updateInput = function () {
 	if (Input.isTriggered('cancel') && Galv.CRED.skippable) {
 		this.endScene();
 	} else if ((TouchInput.isPressed() || Input.isTriggered('ok')) && Galv.CRED.bSkip) {
@@ -357,7 +359,7 @@ Scene_Credits.prototype.updateInput = function() {
 	};
 };
 
-Scene_Credits.prototype.updateBlocks = function() {
+Scene_Credits.prototype.updateBlocks = function () {
 
 	if (!this._txtLoaded) {
 		// wait for load
@@ -373,7 +375,7 @@ Scene_Credits.prototype.updateBlocks = function() {
 			this.endScene();
 			return;
 		}
-	
+
 		if (this._blocks[this._blockId]._complete) {
 			// If block is finished, remove window and continue to next
 			this.removeChild(this._blocks[this._blockId]);
@@ -385,23 +387,23 @@ Scene_Credits.prototype.updateBlocks = function() {
 	}
 };
 
-Scene_Credits.prototype.createBlock = function() {	
+Scene_Credits.prototype.createBlock = function () {
 	if (Galv.CRED.txtArray[this._blockId]) {
 		var arr = Galv.CRED.txtArray[this._blockId][0].match(/<block:(.*)>/i);
 		arr = arr[1].split(",");
 		if (arr[6]) {
 			var id = this._bgs.length;
-			this._bgs[id] = new Sprite_CredBg(arr[6],this._blockId);
+			this._bgs[id] = new Sprite_CredBg(arr[6], this._blockId);
 			this.addChild(this._bgs[id]);
 		};
 	};
-	
+
 	this._blocks[this._blockId] = new Window_Credits(this._blockId);
 	this.addChild(this._blocks[this._blockId]);
 };
 
 
-Scene_Credits.prototype.endScene = function() {
+Scene_Credits.prototype.endScene = function () {
 	Galv.CRED.tempFilename = null;
 	SceneManager.pop();
 };
@@ -412,25 +414,25 @@ Scene_Credits.prototype.endScene = function() {
 //-----------------------------------------------------------------------------
 
 function Sprite_CredBg() {
-    this.initialize.apply(this, arguments);
+	this.initialize.apply(this, arguments);
 }
 
 Sprite_CredBg.prototype = Object.create(Sprite.prototype);
 Sprite_CredBg.prototype.constructor = Sprite_CredBg;
 
-Sprite_CredBg.prototype.initialize = function(image,id) {
-    Sprite.prototype.initialize.call(this);
+Sprite_CredBg.prototype.initialize = function (image, id) {
+	Sprite.prototype.initialize.call(this);
 	this._id = id;
 	this.createBitmap(image);
-    this.update();
+	this.update();
 };
 
-Sprite_CredBg.prototype.createBitmap = function(image) {
+Sprite_CredBg.prototype.createBitmap = function (image) {
 	this.bitmap = ImageManager.loadTitle1(image);
 	this.opacity = 0;
 };
 
-Sprite_CredBg.prototype.update = function() {
+Sprite_CredBg.prototype.update = function () {
 	Sprite.prototype.update.call(this);
 	this.opacity += 5;
 };
@@ -438,7 +440,7 @@ Sprite_CredBg.prototype.update = function() {
 
 // ADD TO TITLE
 
-Scene_Title.prototype.commandCredits = function() {
+Scene_Title.prototype.commandCredits = function () {
 	this._commandWindow.close();
 	Galv.CRED.start('Credits');
 	AudioManager.playBgm(Galv.CRED.bgm);
@@ -446,14 +448,14 @@ Scene_Title.prototype.commandCredits = function() {
 
 if (Galv.CRED.titleText != "") {
 	Galv.CRED.Scene_Title_createCommandWindow = Scene_Title.prototype.createCommandWindow;
-	Scene_Title.prototype.createCommandWindow = function() {
+	Scene_Title.prototype.createCommandWindow = function () {
 		Galv.CRED.Scene_Title_createCommandWindow.call(this);
-		this._commandWindow.setHandler('credits',  this.commandCredits.bind(this));
+		this._commandWindow.setHandler('credits', this.commandCredits.bind(this));
 	};
-	
-	Galv.CRED.Window_TitleCommand_makeCommandList = Window_TitleCommand.prototype.makeCommandList;
+
+	/*Galv.CRED.Window_TitleCommand_makeCommandList = Window_TitleCommand.prototype.makeCommandList;
 	Window_TitleCommand.prototype.makeCommandList = function() {
 		Galv.CRED.Window_TitleCommand_makeCommandList.call(this);
-		this.addCommand(Galv.CRED.titleText,   'credits');
-	};
+		this.addCommand(Galv.CRED.titleText,   'credits'); //Change: Added this manually in the window
+	};*/
 }

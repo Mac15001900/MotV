@@ -346,7 +346,8 @@ Window_Base.prototype.processNewPage = function (textState) {
 
 Window_Base.prototype.obtainEscapeCode = function (textState) {
     textState.index++;
-    var regExp = /^[\$\.\|\^!><\{\}\\]|^[A-Z]+/i;
+    //var regExp = /^[\$\.\|\^!><\{\}\\]|^[A-Z]+/i;
+    var regExp = /^[\$\.,\|\^!><\{\}\\]|^[A-Z]+/i; //Change: allow for ',' to be matched as well
     var arr = regExp.exec(textState.text.slice(textState.index));
     if (arr) {
         textState.index += arr[0].length;
@@ -1743,6 +1744,7 @@ Window_MenuStatus.prototype.loadImages = function () {
 };
 
 Window_MenuStatus.prototype.drawItem = function (index) {
+    return; //TODO: Temporarily disabling rendering, replace the logic
     this.drawItemBackground(index);
     this.drawItemImage(index);
     this.drawItemStatus(index);
@@ -2673,6 +2675,7 @@ Window_Options.prototype.updatePlacement = function () {
 };
 
 Window_Options.prototype.makeCommandList = function () {
+    this.addCommand("Wróć", 'cancel'); //Change: added an option to go back
     this.addGeneralOptions();
     this.addVolumeOptions();
 };
@@ -2708,6 +2711,8 @@ Window_Options.prototype.statusText = function (index) {
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         return this.volumeStatusText(value);
+    } else if (symbol === "cancel") {
+        return "";  //Change: not doing anything for ON/OFF
     } else {
         return this.booleanStatusText(value);
     }
@@ -2728,6 +2733,7 @@ Window_Options.prototype.volumeStatusText = function (value) {
 Window_Options.prototype.processOk = function () {
     var index = this.index();
     var symbol = this.commandSymbol(index);
+    if (symbol === "cancel") SceneManager.pop(); //Change: special case for going back
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         value += this.volumeOffset();
@@ -2744,6 +2750,7 @@ Window_Options.prototype.processOk = function () {
 Window_Options.prototype.cursorRight = function (wrap) {
     var index = this.index();
     var symbol = this.commandSymbol(index);
+    if (symbol === "cancel") return; //Change: special case for going back
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         value += this.volumeOffset();
@@ -2757,6 +2764,7 @@ Window_Options.prototype.cursorRight = function (wrap) {
 Window_Options.prototype.cursorLeft = function (wrap) {
     var index = this.index();
     var symbol = this.commandSymbol(index);
+    if (symbol === "cancel") return; //Change: special case for going back
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         value -= this.volumeOffset();
@@ -5760,7 +5768,8 @@ Window_TitleCommand.prototype.makeCommandList = function () {
     this.addCommand(TextManager.newGame, 'newGame');
     this.addCommand(TextManager.continue_, 'continue', this.isContinueEnabled());
     this.addCommand(TextManager.options, 'options');
-    this.addCommand("Quit", 'exit');
+    this.addCommand(Galv.CRED.titleText, 'credits');  //Change: Added a credits and an exit option
+    this.addCommand("Wyjdź", 'exit');
 };
 
 Window_TitleCommand.prototype.isContinueEnabled = function () {

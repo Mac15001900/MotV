@@ -412,6 +412,14 @@ Scene_Title.prototype.start = function () {
     if (g) g.gameInitialised = false;
 };
 
+Input.keyMapper["81"] = "quit"; //Setting for the 'q' key
+var _Scene_Base_update = Scene_Base.prototype.update;
+Scene_Base.prototype.update = function () {
+    _Scene_Base_update.apply(this);
+    if (MAC_DEBUG && Input.isTriggered("quit")) SceneManager.exit(); //TODO QInpit prevents this, find out why
+}
+
+
 Window_Options.prototype.volumeOffset = () => VOLUME_INCREMENT;
 
 var _DataManager_makeSavefileInfo = DataManager.makeSavefileInfo;

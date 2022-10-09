@@ -1543,7 +1543,8 @@ Window_Gold.prototype.refresh = function () {
     var x = this.textPadding();
     var width = this.contents.width - this.textPadding() * 2;
     this.contents.clear();
-    this.drawCurrencyValue(this.value(), this.currencyUnit(), x, 0, width);
+    //this.drawCurrencyValue(this.value(), this.currencyUnit(), x, 0, width);
+    if (g.data) this.drawTextEx(displayKeys(g.data.keysTotal, true), x, 0);
 };
 
 Window_Gold.prototype.value = function () {

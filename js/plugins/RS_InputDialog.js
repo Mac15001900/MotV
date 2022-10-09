@@ -858,7 +858,8 @@ function Scene_InputDialog() {
         this.setPosition(RS.InputDialog.Params.pos.x, RS.InputDialog.Params.pos.y);
       }
     }
-    document.getElementsByClassName("inputDialogContainer")[0].style.display = 'block'; //Change: after repositioning, make it appear again
+    let element = document.getElementsByClassName("inputDialogContainer")[0];
+    if(element) element.style.display = 'block'; //Change: after repositioning, make it appear again
   };
 
   TextBox.prototype.isScreenLock = function () {

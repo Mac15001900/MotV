@@ -2850,7 +2850,12 @@ Window_SavefileList.prototype.drawItem = function (index) {
 };
 
 Window_SavefileList.prototype.drawFileId = function (id, x, y) {
-    this.drawText(TextManager.file + ' ' + id, x, y, 180);
+    if(id === 1){
+        if(this._mode === 'save') this.changePaintOpacity(false);
+        this.drawText('Autozapis', x, y, 180);
+    } else {
+        this.drawText(TextManager.file + ' ' + (id-1), x, y, 180);
+    }
 };
 
 Window_SavefileList.prototype.drawContents = function (info, rect, valid) {

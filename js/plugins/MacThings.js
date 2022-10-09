@@ -24,7 +24,7 @@ try {
     throw "The JavaScript version is too old.";
 }
 
-const MAC_DEBUG = true;
+const MAC_DEBUG = false;
 const DEBUG_STAGE = 10;
 window.g = window.g || {}
 g.gameInitialised = false;
@@ -77,10 +77,11 @@ macThingsInit = function () {
         }
     });
 
+    //debugger;
     $gs[1] = true; //Set the 'True' switch to always be true
 
     if ($gv[1] === 0) {
-        g.data = g.data || initialiseGData();
+        g.data = initialiseGData();
         $gv[1] = g.data;
     } else {
         g.data = $gv[1];
@@ -92,7 +93,8 @@ macThingsInit = function () {
     }
     g.interpteter = new Game_Interpreter();
     g.gameInitialised = true;
-    setTimeout(autosaveAttempt, AUTOSAVE_DELAY);
+    g.saveWorker = new Worker("./js/plugins/compressor.js");
+    scheduleAutosave(true);
     console.log("MacThings init complete", $gv[1]);
 }
 
@@ -218,7 +220,7 @@ g.calculatorPuzzle = function (text) { //For testing: https://www.alpertron.com.
 runNearbyEvent = function (inp, dx, dy) {
     let events = $gameMap._events;
     let { x, y } = events[inp.eventId()];
-    let res = events.filter(e => e.x === x + dx && e.y === y + dy);
+    let res = events.filter(e => e && e.x === x + dx && e.y === y + dy);
     if (res.length > 0) inp.setupChild(res[0].list(), res[0].eventId());
     else console.warn(`No event found at x:${x + dx}, y:${y + dy}`);
 }
@@ -231,30 +233,30 @@ runEvent = function (inp, eventId) {
 
 //===================================== Autosave system =====================================
 
-autosave = function (index = 1, force = false) {
-    if (SceneManager.getSceneName() !== 'Scene_Map') return false;
-    if (g.getInterpreter().isRunning() && !force) return false;
-
-    $gameSystem.onBeforeSave();
-    if (DataManager.saveGame(index)) { //Returns true if save is successful (I guess)
-        StorageManager.cleanBackup(index);
-        console.log("Saved at " + new Date().getSeconds());
-        return true;
-    } else {
-        console.warn("Saving failed");
-        return false;
-    }
+scheduleAutosave = function (wasSuccess = true) {
+    if (wasSuccess) g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_DELAY);
+    else g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_RETRY);
 }
 
 autosaveAttempt = function () {
-    Promise.resolve().then(() => {
-        let success = autosave();
-        if (success) g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_DELAY);
-        else g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_RETRY);
-    });
+    if (SceneManager.getSceneName() !== 'Scene_Map' || g.getInterpreter().isRunning()) scheduleAutosave(false);
+    else {
+        g.saveWorker.addEventListener('message', autosave);
+        $gameSystem.onBeforeSave();
+        g.saveWorker.postMessage({ saveData: JsonEx.stringify(DataManager.makeSaveContents()) })
+    }
 }
 
-
+autosave = function (message, index = 1) {
+    if (DataManager.saveGame(index, message.data)) {
+        StorageManager.cleanBackup(index);
+        console.log("Saved at " + new Date().getSeconds());
+        scheduleAutosave(true);
+    } else {
+        console.warn("Saving failed");
+        scheduleAutosave(false);
+    }
+}
 
 
 //===================================== Multi image display =====================================
@@ -459,8 +461,12 @@ Window_Options.prototype.volumeOffset = () => VOLUME_INCREMENT;
 var _DataManager_makeSavefileInfo = DataManager.makeSavefileInfo;
 DataManager.makeSavefileInfo = function () {
     var res = _DataManager_makeSavefileInfo.call(this);
-    if (g.data.keysTotal === 0) res.title = "Początek";
-    else res.title = displayKeys(g.data.keysTotal);
+    ///res.title = SceneManager.getSceneName() === 'Scene_Map' ? "Zapis automatyczny: " : ""; //Autosave only happens on the map
+    res.title = "";
+    if (g.data.keysTotal === 0) res.title += "Początek";
+    else if (g.data.keysTotal === SECRET_KEYS.length) res.title += "Wszystkie klucze!";
+    else res.title += displayKeys(g.data.keysTotal);
+    res.title += " | " + (new Date()).toLocaleString();
     return res;
 };
 

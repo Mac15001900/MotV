@@ -334,10 +334,10 @@ DataManager.maxSavefiles = function() {
     return 20;
 };
 
-DataManager.saveGame = function(savefileId) {
+DataManager.saveGame = function(savefileId, data) {
     try {
         StorageManager.backup(savefileId);
-        return this.saveGameWithoutRescue(savefileId);
+        return this.saveGameWithoutRescue(savefileId, data);
     } catch (e) {
         console.error(e);
         try {
@@ -367,12 +367,15 @@ DataManager.lastAccessedSavefileId = function() {
     return this._lastAccessedId;
 };
 
-DataManager.saveGameWithoutRescue = function(savefileId) {
-    var json = JsonEx.stringify(this.makeSaveContents());
-    if (json.length >= 200000) {
-        console.warn('Save data too big! Size: '+json.length);
-    }
-    StorageManager.save(savefileId, json);
+DataManager.saveGameWithoutRescue = function(savefileId, data) {
+    if(data) StorageManager.save(savefileId, data, false);
+    else{
+        var json = JsonEx.stringify(this.makeSaveContents());
+        if (json.length >= 200000) {
+            console.warn('Save data too big! Size: '+ json.length);
+        }
+        StorageManager.save(savefileId, json);
+    }    
     this._lastAccessedId = savefileId;
     var globalInfo = this.loadGlobalInfo() || [];
     globalInfo[savefileId] = this.makeSavefileInfo();
@@ -440,6 +443,7 @@ DataManager.makeSaveContents = function() {
     contents.party        = $gameParty;
     contents.map          = $gameMap;
     contents.player       = $gamePlayer;
+    //debugger;
     return contents;
 };
 

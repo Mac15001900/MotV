@@ -6943,7 +6943,7 @@ Game_Character.prototype.updateRoutineMove = function() {
         this._waitCount--;
     } else {
         this.setMovementSuccess(true);
-        var command = this._moveRoute.list[this._moveRouteIndex];
+        var command = this._moveRoute.list[this._moveRouteIndex]; //!Seems like the only place _moveRoute is used
         if (command) {
             this.processMoveCommand(command);
             this.advanceMoveRouteIndex();

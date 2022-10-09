@@ -1704,6 +1704,10 @@ Scene_Save.prototype.firstSavefileIndex = function() {
 };
 
 Scene_Save.prototype.onSavefileOk = function() {
+    if(this.savefileId() === 1){ //Change: not allowing saves to the autosave slot
+        this.onSaveFailure();
+        return;
+    }
     Scene_File.prototype.onSavefileOk.call(this);
     $gameSystem.onBeforeSave();
     if (DataManager.saveGame(this.savefileId())) {

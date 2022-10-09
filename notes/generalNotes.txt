@@ -23,3 +23,8 @@ guide, index, nexus (❇)
 piece - each key is a piece of a big thing
 
 Line width (with a face): 64 characters(ish)
+
+Saving:
+$gameSystem.onBeforeSave();
+if (DataManager.saveGame(saveSlot)) { //Returns true if save is successful (I guess)
+    StorageManager.cleanBackup(saveSlot);

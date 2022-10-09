@@ -2,6 +2,6 @@
 null,
 {"id":1,"expanded":true,"name":"MAP001","order":1,"parentId":0,"scrollX":832,"scrollY":640},
 null,
-{"id":3,"expanded":true,"name":"Level1-2","order":2,"parentId":1,"scrollX":4698.545454545455,"scrollY":1726.909090909091},
+{"id":3,"expanded":true,"name":"Level1-2","order":2,"parentId":1,"scrollX":2400,"scrollY":2412},
 {"id":4,"expanded":false,"name":"Entry","order":3,"parentId":1,"scrollX":1081.3333333333333,"scrollY":614.6666666666666}
 ]

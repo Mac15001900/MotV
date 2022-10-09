@@ -370,7 +370,7 @@ DataManager.lastAccessedSavefileId = function() {
 DataManager.saveGameWithoutRescue = function(savefileId) {
     var json = JsonEx.stringify(this.makeSaveContents());
     if (json.length >= 200000) {
-        console.warn('Save data too big!');
+        console.warn('Save data too big! Size: '+json.length);
     }
     StorageManager.save(savefileId, json);
     this._lastAccessedId = savefileId;
@@ -568,11 +568,11 @@ function StorageManager() {
     throw new Error('This is a static class');
 }
 
-StorageManager.save = function(savefileId, json) {
+StorageManager.save = function(savefileId, json, compress) {
     if (this.isLocalMode()) {
-        this.saveToLocalFile(savefileId, json);
+        this.saveToLocalFile(savefileId, json, compress);
     } else {
-        this.saveToWebStorage(savefileId, json);
+        this.saveToWebStorage(savefileId, json, compress);
     }
 };
 
@@ -603,20 +603,20 @@ StorageManager.remove = function(savefileId) {
 StorageManager.backup = function(savefileId) {
     if (this.exists(savefileId)) {
         if (this.isLocalMode()) {
-            var data = this.loadFromLocalFile(savefileId);
-            var compressed = LZString.compressToBase64(data);
+            var data = this.loadFromLocalFile(savefileId, false);
+            //var compressed = LZString.compressToBase64(data);
             var fs = require('fs');
             var dirPath = this.localFileDirectoryPath();
             var filePath = this.localFilePath(savefileId) + ".bak";
             if (!fs.existsSync(dirPath)) {
                 fs.mkdirSync(dirPath);
             }
-            fs.writeFileSync(filePath, compressed);
+            fs.writeFileSync(filePath, data);
         } else {
-            var data = this.loadFromWebStorage(savefileId);
-            var compressed = LZString.compressToBase64(data);
+            var data = this.loadFromWebStorage(savefileId, false);
+            //var compressed = LZString.compressToBase64(data);
             var key = this.webStorageKey(savefileId) + "bak";
-            localStorage.setItem(key, compressed);
+            localStorage.setItem(key, data);
         }
     }
 };
@@ -670,8 +670,8 @@ StorageManager.isLocalMode = function() {
     return Utils.isNwjs();
 };
 
-StorageManager.saveToLocalFile = function(savefileId, json) {
-    var data = LZString.compressToBase64(json);
+StorageManager.saveToLocalFile = function(savefileId, json, compress=true) {
+    var data = compress ? LZString.compressToBase64(json) : json;
     var fs = require('fs');
     var dirPath = this.localFileDirectoryPath();
     var filePath = this.localFilePath(savefileId);
@@ -681,24 +681,27 @@ StorageManager.saveToLocalFile = function(savefileId, json) {
     fs.writeFileSync(filePath, data);
 };
 
-StorageManager.loadFromLocalFile = function(savefileId) {
+StorageManager.loadFromLocalFile = function(savefileId, decompress=true) {
     var data = null;
     var fs = require('fs');
     var filePath = this.localFilePath(savefileId);
     if (fs.existsSync(filePath)) {
         data = fs.readFileSync(filePath, { encoding: 'utf8' });
     }
-    return LZString.decompressFromBase64(data);
+    if(decompress) return LZString.decompressFromBase64(data);
+    else return data;
+
 };
 
-StorageManager.loadFromLocalBackupFile = function(savefileId) {
+StorageManager.loadFromLocalBackupFile = function(savefileId, decompress=true) {
     var data = null;
     var fs = require('fs');
     var filePath = this.localFilePath(savefileId) + ".bak";
     if (fs.existsSync(filePath)) {
         data = fs.readFileSync(filePath, { encoding: 'utf8' });
     }
-    return LZString.decompressFromBase64(data);
+    if(decompress) return LZString.decompressFromBase64(data);
+    else return data;
 };
 
 StorageManager.localFileBackupExists = function(savefileId) {
@@ -719,16 +722,17 @@ StorageManager.removeLocalFile = function(savefileId) {
     }
 };
 
-StorageManager.saveToWebStorage = function(savefileId, json) {
+StorageManager.saveToWebStorage = function(savefileId, json, compress=true) {
     var key = this.webStorageKey(savefileId);
-    var data = LZString.compressToBase64(json);
+    var data = compress ? LZString.compressToBase64(json) : json;
     localStorage.setItem(key, data);
 };
 
-StorageManager.loadFromWebStorage = function(savefileId) {
+StorageManager.loadFromWebStorage = function(savefileId, decompress=true) {
     var key = this.webStorageKey(savefileId);
     var data = localStorage.getItem(key);
-    return LZString.decompressFromBase64(data);
+    if(decompress) return LZString.decompressFromBase64(data);
+    else return data;
 };
 
 StorageManager.loadFromWebStorageBackup = function(savefileId) {

@@ -2850,11 +2850,11 @@ Window_SavefileList.prototype.drawItem = function (index) {
 };
 
 Window_SavefileList.prototype.drawFileId = function (id, x, y) {
-    if(id === 1){
-        if(this._mode === 'save') this.changePaintOpacity(false);
+    if (id === 1) {
+        if (this._mode === 'save') this.changePaintOpacity(false);
         this.drawText('Autozapis', x, y, 180);
     } else {
-        this.drawText(TextManager.file + ' ' + (id-1), x, y, 180);
+        this.drawText(TextManager.file + ' ' + (id - 1), x, y, 180);
     }
 };
 
@@ -5811,6 +5811,7 @@ Window_GameEnd.prototype.initialize = function () {
     Window_Command.prototype.initialize.call(this, 0, 0);
     this.updatePlacement();
     this.openness = 0;
+    autosaveAttempt(true); //Change: added autosave when quitting
     this.open();
 };
 

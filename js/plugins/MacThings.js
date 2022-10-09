@@ -24,7 +24,7 @@ try {
     throw "The JavaScript version is too old.";
 }
 
-const MAC_DEBUG = false;
+const MAC_DEBUG = true;
 const DEBUG_STAGE = 10;
 window.g = window.g || {}
 g.gameInitialised = false;
@@ -35,8 +35,8 @@ let $gs;
 const GAME_VERSION = "Alpha 1.0.0";
 const SECRET_KEYS = ["otoczenie", "nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietakiwitęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
 const VOLUME_INCREMENT = 5;
-const AUTOSAVE_DELAY = 5 * 1000;
-const AUTOSAVE_RETRY = 2 * 1000;
+const AUTOSAVE_DELAY = 300 * 1000;
+const AUTOSAVE_RETRY = 5 * 1000;
 const ENCRYPT_LIST = "aąbcćdeęfghijklłmnńoóprsśtuwyzźż[]"
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
 const ROOM_UNCLOKS = [1, 2, 3, 4, 6, 9, 12, 15, 19];
@@ -86,6 +86,7 @@ macThingsInit = function () {
     } else {
         g.data = $gv[1];
     }
+    $gamePlayer.setMoveSpeed(4.5);
     if (MAC_DEBUG) {
         $gs[2] = true; //Set the debug switch
         $gv[41] = DEBUG_STAGE;
@@ -143,7 +144,7 @@ processNewKey = function (inp) {
         g.showMessage(inp, "Udało Ci się zdobyć wszystkie klucze dostępne w tej wersji gry.\n\\c[4]Gratulacje!");
         //TODO: rolls credits?
     } else {
-        g.showMessage(inp, "Do zdobycia jeszcze " + displayKeys(SECRET_KEYS.length - currentKeys));
+        g.showMessage(inp, "Do zdobycia jeszcze " + displayKeys(SECRET_KEYS.length - currentKeys) + ".");
     }
 }
 
@@ -220,9 +221,13 @@ g.calculatorPuzzle = function (text) { //For testing: https://www.alpertron.com.
 runNearbyEvent = function (inp, dx, dy) {
     let events = $gameMap._events;
     let { x, y } = events[inp.eventId()];
-    let res = events.filter(e => e && e.x === x + dx && e.y === y + dy);
-    if (res.length > 0) inp.setupChild(res[0].list(), res[0].eventId());
-    else console.warn(`No event found at x:${x + dx}, y:${y + dy}`);
+    let targetId = $gameMap.eventIdXy(x + dx, y + dy);
+    if (targetId === 0) throw new Error(`No event found at x:${x + xd}, y:${y + dy}.`);
+    else {
+        let targetEvent = $gameMap._events[targetId];
+        //let targetEvent = events.filter(e => e && e.x === x + dx && e.y === y + dy);
+        inp.setupChild(targetEvent.list(), targetEvent.eventId());
+    }
 }
 
 runEvent = function (inp, eventId) {
@@ -233,21 +238,34 @@ runEvent = function (inp, eventId) {
 
 //===================================== Autosave system =====================================
 
+//Schedules and autosave to happen a configurable amount of time from now. Parameters indicate if previous attempt was successful.
 scheduleAutosave = function (wasSuccess = true) {
+    if (g.autosaveTimeout) clearTimeout(g.autosaveTimeout); //In case we end up with two of them
     if (wasSuccess) g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_DELAY);
     else g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_RETRY);
 }
 
-autosaveAttempt = function () {
-    if (SceneManager.getSceneName() !== 'Scene_Map' || g.getInterpreter().isRunning()) scheduleAutosave(false);
-    else {
-        g.saveWorker.addEventListener('message', autosave);
+/*
+Will attempt to autosave. Successful or not, it will then schedule the next autosave based on configured delay.
+The synchronouse parameter dictates whether to handle over the task of compressing data to a worker or do it synchronously
+If synchronous is false, it will only save if we're on the map and not in an event.
+If it is true, it will save immidiately (blocking the main thread). We assume the caller ensured this is a good moment to autosave
+*/
+autosaveAttempt = function (synchronous = false) {
+    if (SceneManager.getSceneName() === 'Scene_Map' && !g.getInterpreter().isRunning() || synchronous) {
         $gameSystem.onBeforeSave();
-        g.saveWorker.postMessage({ saveData: JsonEx.stringify(DataManager.makeSaveContents()) })
+        if (synchronous) autosave(LZString.compressToBase64(JsonEx.stringify(DataManager.makeSaveContents())), true);
+        else {
+            g.saveWorker.addEventListener('message', autosave);
+            g.saveWorker.postMessage({ saveData: JsonEx.stringify(DataManager.makeSaveContents()) })
+        }
+    } else {
+        scheduleAutosave(false);
     }
 }
 
-autosave = function (message, index = 1) {
+//Will autosave the game, and call scheduleAutosave afterwards to schedule the next one
+autosave = function (message, synchronous = false, index = 1) {
     if (DataManager.saveGame(index, message.data)) {
         StorageManager.cleanBackup(index);
         console.log("Saved at " + new Date().getSeconds());
@@ -257,6 +275,13 @@ autosave = function (message, index = 1) {
         scheduleAutosave(false);
     }
 }
+
+window.onunload = () => {
+    if (!g.getInterpreter().isRunning()) {
+        g.data.test = "On unload!";
+        autosaveAttempt(true);
+    }
+};
 
 
 //===================================== Multi image display =====================================
@@ -469,6 +494,8 @@ DataManager.makeSavefileInfo = function () {
     res.title += " | " + (new Date()).toLocaleString();
     return res;
 };
+
+DataManager.maxSavefiles = () => 11;
 
 var _Game_Interpreter_updateWaitMode = Game_Interpreter.prototype.updateWaitMode;
 Game_Interpreter.prototype.updateWaitMode = function () {

@@ -548,6 +548,7 @@ function Scene_InputDialog() {
       box-sizing : border-box;
       resize : both;
       font-size: 16px;
+      display: none; /* Change: stopped the dialog from displaying until the game loads */
   }
   
   .inputDialog {
@@ -857,6 +858,7 @@ function Scene_InputDialog() {
         this.setPosition(RS.InputDialog.Params.pos.x, RS.InputDialog.Params.pos.y);
       }
     }
+    document.getElementsByClassName("inputDialogContainer")[0].style.display = 'block'; //Change: after repositioning, make it appear again
   };
 
   TextBox.prototype.isScreenLock = function () {
@@ -1086,7 +1088,7 @@ function Scene_InputDialog() {
     if (this.textBoxIsBusy()) {
       var text = this._textBox.getText() || '';
       if (text.match(/^([\d]+)$/g)) text = Number(RegExp.$1);
-      $gameVariables.setValue(RS.InputDialog.Params.variableID,  String(text)); //Change: coerced output to string
+      $gameVariables.setValue(RS.InputDialog.Params.variableID, String(text)); //Change: coerced output to string
       this._textBox.setText('');
       if (RS.InputDialog.Params.debug) {
         var dmsg = 'You typed the text is same as '.concat($gameVariables.value(RS.InputDialog.Params.variableID) + '' || 'NONE');

@@ -24,8 +24,9 @@ try {
     throw "The JavaScript version is too old.";
 }
 
-const MAC_DEBUG = true;
-const DEBUG_STAGE = 10;
+const MAC_DEBUG = false;
+const VERBOSE_LOGS = false;
+const DEBUG_STAGE = 0;
 window.g = window.g || {}
 g.gameInitialised = false;
 //Shorhands for $gameVariables and $gameSwitches
@@ -43,7 +44,7 @@ const ROOM_UNCLOKS = [1, 2, 3, 4, 6, 9, 12, 15, 19];
 var _Scene_Map_loaded = Scene_Map.prototype.onMapLoaded;
 Scene_Map.prototype.onMapLoaded = function () {
     _Scene_Map_loaded.call(this);
-    console.log("Map loaded!");
+    if (VERBOSE_LOGS) console.log("Map loaded!");
     if (!g.gameInitialised) macThingsInit();
     macUpdateForeground();
 };
@@ -52,10 +53,10 @@ macUpdateForeground = function () {
     let foregroundName = $gameMap._parallaxName + '-F';
     if (foregroundName === "-F") return; //We're in testland
     if ($gameMap._parallaxName && g.ocramLayers[0]._imgName !== foregroundName || !g.gameInitialised) {
-        console.log("Loading new foreground: " + foregroundName);
+        if (VERBOSE_LOGS) console.log("Loading new foreground: " + foregroundName);
         g.interpteter.pluginCommand('oc_layer', ['0', foregroundName]);
     } else {
-        console.log(foregroundName + " already correct");
+        if (VERBOSE_LOGS) console.log(foregroundName + " already correct");
     }
 }
 
@@ -113,6 +114,11 @@ initialiseGData = function () {
 //=====================================Puzzle logic=====================================
 
 checkKey = function (input) {
+    if (MAC_DEBUG && input === 'k') {
+        g.data.keysTotal += 1;
+        return 3;
+    }
+
     let lowered = input.toLowerCase().replaceAll(' ', '');
 
     if (lowered.substr(0, 6) !== "klucz[" || lowered[lowered.length - 1] !== ']') return 0; //Invalid format
@@ -135,10 +141,12 @@ processNewKey = function (inp) {
     if (newStage > 0) {
         $gv[41] = newStage;
         let message = "Nowy obszar odbklowowany."
+        if (newStage > 2) AudioManager.playSe({ name: "Ice2", volume: 100, pitch: 90 });
+        else AudioManager.playSe({ name: "Darkness1", volume: 100, pitch: 100 });
         g.showMessage(inp, message);
     }
     if ($gv[41] < ROOM_UNCLOKS.length) {
-        g.showMessage(inp, "Do odblokowania kolejnego obszaru zdobyć trzeba jeszcze " + displayKeys(ROOM_UNCLOKS[$gv[41]] - currentKeys));
+        g.showMessage(inp, "Do odblokowania kolejnego obszaru zdobyć trzeba jeszcze " + displayKeys(ROOM_UNCLOKS[$gv[41]] - currentKeys) + ".");
     } else if (currentKeys === SECRET_KEYS.length) {
         AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
         g.showMessage(inp, "Udało Ci się zdobyć wszystkie klucze dostępne w tej wersji gry.\n\\c[4]Gratulacje!");
@@ -152,8 +160,44 @@ keyReactions = function (inp) {
     let currentKeys = g.data.keysTotal;
     let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
     let keyName = g.data.lastCollected;
+    let randomMessages = [
+        "Kolejny klucz do kolekcji.",
+        "I kolejny!",
+        "Ładna się robi ta moja mała kolekcja kluczy",
+        "Zostało o jeden mniej.",
+        `${currentKeys} to ładna liczba. Ale ${currentKeys + 1} będzie lepszą!`,
+        "Tak!",
+        "Ha, mam cię!",
+        "Ta zagadka nie była taka zła.",
+        "Zaczyna mi to iść coraz lepiej.",
+    ];
+
+    if ($gv[41] < ROOM_UNCLOKS.length) randomMessages.push("Ciekawe, ile ich tu jeszcze jest.\\.\nPrzynajmniej teraz na pewno o jeden mniej!");
+    else if (currentKeys < SECRET_KEYS.length) randomMessages.push(`Jakoś powinno mi się udać zdobyć te pozostałe ${SECRET_KEYS.length - currentKeys}.`);
+    else {
+        //Just one left
+        if (g.data.keysCollected["iksytonawiasy"]) g.showMessage(inp, "Jeszcze tylko ten ostatni. Idę po ciebie!.", 0);
+        else g.showMessage(inp, "No dobra, tylko gdzie jest ten jeden pozostały klucz?\nChyba musi być ukryty nieco inaczej niż pozostałe.", 0);
+        return;
+    }
+
     switch (newStage) {
         case 1: g.showMessage(inp, "O, to brzmi przydatnie. Zobaczymy, co tu teraz mamy.", 0); break;
+        case 2: g.showMessage(inp, "Ha, to chyba koniec potencjalnie zabójczych laserów!", 0); break;
+        case 3:
+            //TODO: Support for multiple messages from a script. Temporarily, this message is in the event
+            //g.showMessage(inp, "\\{AAA!\\.\\.\\.", 3);
+            //g.showMessage(inp, "Ok, w sumie to nie wiem, czego dokładnie się spodziewałam\\..\nAle raczej nie tego, że ściana obok mnie sobie nagle zniknie.", 0);
+            break;
+        case 4: g.showMessage(inp, "Tym razem pewną zagadką jest samo określenie, co właściwie się \nteraz otworzyło.", 0); break;
+        case 6: g.showMessage(inp, `W sumie to ciekawe, do czego te klucze właściwie służą.\nTych zagadek rozwiązałam już ${ROOM_UNCLOKS[5]}, ale dalej jak nie miałam, tak \nw dalszym ciągu nie mam zielonego pojęcia, czym jest to miejsce. \nMam nadzieję, że gdzieś dalej będzie jakaś odpowiedź.`, 0); break;
+        default: switch (keyName) {
+            case "czekoladapizzawiewiórkasparta": g.showMessage(inp, "No, w pewnym sensie udało mi się zagrać w Decrypto.", 1); break;
+            case "miódmalina": g.showMessage(inp, "Trochę robię się teraz głodna przez tę zagadkę.", 1); break;
+            case "nokianazawsze": g.showMessage(inp, "Zdecydowanie nie spodziewałam się, że ta umiejętność jeszcze\nkiedykolwiek mi się w życiu przyda.", 1); break;
+            case "rakietakiwitęcza": g.showMessage(inp, 'Z cyklu \\fi"Rzeczy, Których Zdecydowanie Się Nie Spodziewałam \nW Tym Miejscu"\\fi: emoji.', 1); break;
+            default: g.showMessage(inp, randomMessages[Math.floor(Math.random() * randomMessages.length)], Math.random() < 0.66 ? 0 : 1);
+        }
     }
 }
 
@@ -268,7 +312,7 @@ autosaveAttempt = function (synchronous = false) {
 autosave = function (message, synchronous = false, index = 1) {
     if (DataManager.saveGame(index, message.data)) {
         StorageManager.cleanBackup(index);
-        console.log("Saved at " + new Date().getSeconds());
+        if (VERBOSE_LOGS) console.log("Saved at " + new Date().getSeconds());
         scheduleAutosave(true);
     } else {
         console.warn("Saving failed");
@@ -466,7 +510,7 @@ function copyTextToClipboard(text, escapeSpecial = true) {
 var _Scene_Title_start = Scene_Title.prototype.start;
 Scene_Title.prototype.start = function () {
     _Scene_Title_start.call(this);
-    console.log("Scene title started");
+    if (VERBOSE_LOGS) console.log("Scene title started");
     if (g) {
         g.gameInitialised = false;
         if (g.autosaveTimeout) clearTimeout(g.autosaveTimeout);
@@ -526,7 +570,7 @@ ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
     if (filename) {
         var path = folder + encodeURIComponent(filename) + '.png';
         var bitmap = this.loadNormalBitmap(path, hue || 0);
-        //console.log("disabling smoothing for " + path);
+        //if(VERBOSE_LOGS) console.log("disabling smoothing for " + path);
         bitmap.smooth = false; //TODO: choose when to smooth
         return bitmap;
     } else {

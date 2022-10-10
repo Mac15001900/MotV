@@ -779,13 +779,13 @@ StorageManager.localFilePath = function(savefileId) {
     return this.localFileDirectoryPath() + name;
 };
 
-StorageManager.webStorageKey = function(savefileId) {
+StorageManager.webStorageKey = function(savefileId) { //Change: Added the title to web storage key to avoid conflicts with other games
     if (savefileId < 0) {
-        return 'RPG Config';
+        return $dataSystem.gameTitle+' Config';
     } else if (savefileId === 0) {
-        return 'RPG Global';
+        return $dataSystem.gameTitle+' Global';
     } else {
-        return 'RPG File%1'.format(savefileId);
+        return $dataSystem.gameTitle+' File%1'.format(savefileId);
     }
 };
 

@@ -65,3 +65,5 @@ Tons of tiles, permission for commercial (and MV?) needed: https://forums.rpgmak
 Gamefocus.js - in unused for now, can be used to pause sound/graphics when out of focus
 
 Steam integration plugin: https://forums.rpgmakerweb.com/index.php?threads/orangegreenworks-steam-integration-with-achievements-and-time-log.59469/
+
+Modify the save screen: https://forums.rpgmakerweb.com/index.php?threads/tsr_save-by-the-northern-frog-customize-the-save-and-load-screen.123611/

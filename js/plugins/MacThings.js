@@ -26,21 +26,21 @@ try {
 
 const MAC_DEBUG = false;
 const VERBOSE_LOGS = false;
-const DEBUG_STAGE = 0;
+const DEBUG_STAGE = 0; //If debug is on, game stage will be set to this
 window.g = window.g || {}
 g.gameInitialised = false;
-//Shorhands for $gameVariables and $gameSwitches
+//Shorhands for $gameVariables and $gameSwitches. Filled in by macThingsInit
 let $gv;
 let $gs;
 
 const GAME_VERSION = "Alpha 1.0.0";
 const SECRET_KEYS = ["otoczenie", "nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietakiwitęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
-const VOLUME_INCREMENT = 5;
-const AUTOSAVE_DELAY = 300 * 1000;
-const AUTOSAVE_RETRY = 5 * 1000;
-const ENCRYPT_LIST = "aąbcćdeęfghijklłmnńoóprsśtuwyzźż[]"
+const AUTOSAVE_DELAY = 300 * 1000; //How often to autosave (in miliseconds)
+const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try again
+const VOLUME_INCREMENT = 5; //How many % to change the volume by from one button-press
+const ROOM_UNCLOKS = [1, 2, 3, 4, 6, 9, 12, 15, 19]; //How many keys are needed for each unlock stage
+const ENCRYPT_LIST = "aąbcćdeęfghijklłmnńoóprsśtuwyzźż[]";
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
-const ROOM_UNCLOKS = [1, 2, 3, 4, 6, 9, 12, 15, 19];
 var _Scene_Map_loaded = Scene_Map.prototype.onMapLoaded;
 Scene_Map.prototype.onMapLoaded = function () {
     _Scene_Map_loaded.call(this);
@@ -78,7 +78,6 @@ macThingsInit = function () {
         }
     });
 
-    //debugger;
     $gs[1] = true; //Set the 'True' switch to always be true
 
     if ($gv[1] === 0) {
@@ -114,13 +113,14 @@ initialiseGData = function () {
 //=====================================Puzzle logic=====================================
 
 checkKey = function (input) {
+    if (input === 0) return 0;
+    console.assert(typeof input === 'string' || input instanceof String, input);
     if (MAC_DEBUG && input === 'k') {
         g.data.keysTotal += 1;
         return 3;
     }
 
     let lowered = input.toLowerCase().replaceAll(' ', '');
-
     if (lowered.substr(0, 6) !== "klucz[" || lowered[lowered.length - 1] !== ']') return 0; //Invalid format
     let key = lowered.substr(6, lowered.length - 7);
     $gv[11] = key;

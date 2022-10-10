@@ -859,7 +859,7 @@ function Scene_InputDialog() {
       }
     }
     let element = document.getElementsByClassName("inputDialogContainer")[0];
-    if(element) element.style.display = 'block'; //Change: after repositioning, make it appear again
+    if (element) element.style.display = 'block'; //Change: after repositioning, make it appear again
   };
 
   TextBox.prototype.isScreenLock = function () {
@@ -997,6 +997,8 @@ function Scene_InputDialog() {
   };
 
   Scene_InputDialog.prototype.cancelResult = function () {
+    $gameVariables.setValue(RS.InputDialog.Params.variableID, String("")); //Change: made sure to create some output
+    console.log("Cancelling...", $gv[3]);
     if (SceneManager._stack.length > 0) {
       TouchInput.clear();
       Input.clear();

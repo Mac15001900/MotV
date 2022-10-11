@@ -1,7 +1,7 @@
 [
 null,
-{"id":1,"expanded":true,"name":"MAP001","order":1,"parentId":0,"scrollX":832,"scrollY":640},
+{"id":1,"expanded":true,"name":"MAP001","order":1,"parentId":0,"scrollX":1092,"scrollY":614.6666666666666},
 null,
-{"id":3,"expanded":true,"name":"Level1-2","order":2,"parentId":1,"scrollX":1947,"scrollY":1469},
-{"id":4,"expanded":false,"name":"Entry","order":3,"parentId":1,"scrollX":869,"scrollY":771}
+{"id":3,"expanded":true,"name":"Level1-2","order":2,"parentId":1,"scrollX":4464,"scrollY":1753.3333333333333},
+{"id":4,"expanded":false,"name":"Entry","order":3,"parentId":1,"scrollX":1081.3333333333333,"scrollY":809.3333333333334}
 ]

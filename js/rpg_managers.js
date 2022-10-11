@@ -41,7 +41,7 @@ var $gameMap          = null;
 var $gamePlayer       = null;
 var $testEvent        = null;
 
-DataManager._globalId       = 'RPGMV';
+DataManager._globalId       = 'MysteriesOfTheVault'; //Change: from 'RPGMV'
 DataManager._lastAccessedId = 1;
 DataManager._errorUrl       = null;
 
@@ -270,8 +270,7 @@ DataManager.isThisGameFile = function(savefileId) {
             return true;
         } else {
             var savefile = globalInfo[savefileId];
-            return (savefile.globalId === this._globalId &&
-                    savefile.title === $dataSystem.gameTitle);
+            return (savefile.globalId === this._globalId); //Change: Removed checking the save title since it can be different
         }
     } else {
         return false;
@@ -572,6 +571,8 @@ function StorageManager() {
     throw new Error('This is a static class');
 }
 
+StorageManager.SAVE_TITLE = "Mysteries of the Vault"; //Title used as an identifier for web saves
+
 StorageManager.save = function(savefileId, json, compress) {
     if (this.isLocalMode()) {
         this.saveToLocalFile(savefileId, json, compress);
@@ -781,11 +782,11 @@ StorageManager.localFilePath = function(savefileId) {
 
 StorageManager.webStorageKey = function(savefileId) { //Change: Added the title to web storage key to avoid conflicts with other games
     if (savefileId < 0) {
-        return $dataSystem.gameTitle+' Config';
+        return this.SAVE_TITLE +' Config';
     } else if (savefileId === 0) {
-        return $dataSystem.gameTitle+' Global';
+        return this.SAVE_TITLE +' Global';
     } else {
-        return $dataSystem.gameTitle+' File%1'.format(savefileId);
+        return this.SAVE_TITLE +' File%1'.format(savefileId);
     }
 };
 

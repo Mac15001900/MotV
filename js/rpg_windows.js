@@ -2724,7 +2724,8 @@ Window_Options.prototype.isVolumeSymbol = function (symbol) {
 };
 
 Window_Options.prototype.booleanStatusText = function (value) {
-    return value ? 'ON' : 'OFF';
+    //return value ? 'ON' : 'OFF'; 
+    return value ? 'TAK' : 'NIE';  //Change: Polish translation
 };
 
 Window_Options.prototype.volumeStatusText = function (value) {

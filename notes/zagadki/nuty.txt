@@ -1,0 +1,34 @@
+Do re mi fa sol la si do - nuty jako źródło tych liter
+Dostepne litery: adefilmors
+
+Obrazkowe instrukcje, jak odkodować:
+Czerwone nuty to pierwsza litera, niebieskie to druga (zielone środkowa dla sol) - jako czerwono niebiski, i obok czerwono-zielono-niebieski prostokąt
+Różne nuty to różne przesunięcia cezarowe: zapisane jako ½ -> +2, ¼ -> +4, ⅛ -> +6 itp.
+Prosty przykład ze znanym rozwiązaniem (be cezarowania).
+
+Przesunięcia:
+
+0: adefilmors - l
+1: ąeęgjłnósś
+2: bęfhkmńpśt - k
+3: cfgilnortu - c, u
+4: ćghjłńósuw - u
+5: dhikmopśwy - k
+6: eijlnórtyz - z
+7: ęjkłńpsuzź - k, u, z
+8: fklmorśwźż - k
+9: glłnóstyża - 
+
+-1: żćdęhkłńpr - k
+-2: źcćegjlnóp - c
+-3: zbcdfikmoó - c, z
+-4: yąbćęhjłńo - 
+-5: waącegilnń - c
+-6: użabdfhkmn - u
+-7: tźżąćęgjłm - 
+-8: śzźacefilł - c, z
+-9: syzżbdęhkl - k, z
+
+0, +2, -2, +3, -3:
+abcdefghijklmnoprstuzóćęńśź
+abcdefghiklmnoprstuzóęńś - no -2

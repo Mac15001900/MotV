@@ -51,7 +51,7 @@
  *   ~ SumRndmDde
  */
 
-(function() {
+(function () {
 
 	var parameters = PluginManager.parameters('SRD_FullscreenToggleOption');
 
@@ -63,76 +63,81 @@
 	ConfigManager.fullscreen = defaultValue;
 
 	Object.defineProperty(ConfigManager, 'fullscreen', {
-	    get: function() {
-	        return !Graphics._isFullScreen();
-	    },
-	    set: function(value) {
-	        if (value) {
-		        Graphics._requestFullScreen();
-		    } else {
-		        Graphics._cancelFullScreen();
-		    }
-	    },
-	    configurable: true
+		get: function () {
+			return g.fullScreen;
+			//return !Graphics._isFullScreen(); //TODO This should have a smarter return
+		},
+		set: function (value) {
+			if (value) {
+				g.fullScreen = true;
+				Graphics._requestFullScreen();
+			} else {
+				g.fullScreen = false;
+				Graphics._cancelFullScreen();
+			}
+		},
+		configurable: true
 	});
 
 	var _ConfigManager_makeData = ConfigManager.makeData;
-	ConfigManager.makeData = function() {
-	    var config = _ConfigManager_makeData.call(this);
-	    config.fullscreen = this.fullscreen;
-	    return config;
+	ConfigManager.makeData = function () {
+		var config = _ConfigManager_makeData.call(this);
+		config.fullscreen = this.fullscreen;
+		return config;
 	};
 
 	var _ConfigManager_applyData = ConfigManager.applyData;
-	ConfigManager.applyData = function(config) {
-	    _ConfigManager_applyData.call(this, config);
-	    this.fullscreen = this.readFullscreen(config, 'fullscreen');
+	ConfigManager.applyData = function (config) {
+		_ConfigManager_applyData.call(this, config);
+		let value = this.readFullscreen(config, 'fullscreen');
+		this.fullscreen = value;
+		g.fullScreen = value;
 	};
 
-	ConfigManager.readFullscreen = function(config, name) {
-	    var value = config[name];
-	    if(!persist) {
-		    if (value !== undefined) {
-		        return value;
-		    } else {
-		        return defaultValue;
-		    }
+	ConfigManager.readFullscreen = function (config, name) {
+		var value = config[name];
+		if (!persist) {
+			if (value !== undefined) {
+				return value;
+			} else {
+				return defaultValue;
+			}
 		} else {
 			return defaultValue;
 		}
 	};
 
 	var _Window_Options_addGeneralOptions = Window_Options.prototype.addGeneralOptions;
-	Window_Options.prototype.addGeneralOptions = function() {
-	    _Window_Options_addGeneralOptions.call(this);
-	    if(position === 'middle') {
-	    	this.addCommand(optionName, 'fullscreen');
-	    }
+	Window_Options.prototype.addGeneralOptions = function () {
+		_Window_Options_addGeneralOptions.call(this);
+		if (position === 'middle') {
+			this.addCommand(optionName, 'fullscreen');
+		}
 	};
 
 	var _Window_Options_makeCommandList = Window_Options.prototype.makeCommandList;
-	Window_Options.prototype.makeCommandList = function() {
-		if(position === 'top') {
-	    	this.addCommand(optionName, 'fullscreen');
-	    }
-	    _Window_Options_makeCommandList.call(this);
+	Window_Options.prototype.makeCommandList = function () {
+		if (position === 'top') {
+			this.addCommand(optionName, 'fullscreen');
+		}
+		_Window_Options_makeCommandList.call(this);
 	};
 
 	var _Window_Options_addVolumeOptions = Window_Options.prototype.addVolumeOptions;
-	Window_Options.prototype.addVolumeOptions = function() {
-	    _Window_Options_addVolumeOptions.call(this);
-	    if(position === 'bottom') {
-	    	this.addCommand(optionName, 'fullscreen');
-	    }
+	Window_Options.prototype.addVolumeOptions = function () {
+		_Window_Options_addVolumeOptions.call(this);
+		if (position === 'bottom') {
+			this.addCommand(optionName, 'fullscreen');
+		}
 	};
 
 	var _Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
-	Game_Interpreter.prototype.pluginCommand = function(command, args) {
-	    _Game_Interpreter_pluginCommand.call(this, command, args);
+	Game_Interpreter.prototype.pluginCommand = function (command, args) {
+		_Game_Interpreter_pluginCommand.call(this, command, args);
 
-	    if(command.toLowerCase() === 'togglescreentype') {
-	    	Graphics._switchFullScreen();
-	    }
+		if (command.toLowerCase() === 'togglescreentype') {
+			Graphics._switchFullScreen();
+		}
 	};
 
 })();

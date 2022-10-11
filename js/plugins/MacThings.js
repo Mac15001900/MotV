@@ -163,7 +163,7 @@ keyReactions = function (inp) {
     let randomMessages = [
         "Kolejny klucz do kolekcji.",
         "I kolejny!",
-        "Ładna się robi ta moja mała kolekcja kluczy",
+        "Ładna się robi ta moja mała kolekcja kluczy.",
         "Zostało o jeden mniej.",
         `${currentKeys} to ładna liczba. Ale ${currentKeys + 1} będzie lepszą!`,
         "Tak!",
@@ -189,7 +189,7 @@ keyReactions = function (inp) {
             //g.showMessage(inp, "\\{AAA!\\.\\.\\.", 3);
             //g.showMessage(inp, "Ok, w sumie to nie wiem, czego dokładnie się spodziewałam\\..\nAle raczej nie tego, że ściana obok mnie sobie nagle zniknie.", 0);
             break;
-        case 4: g.showMessage(inp, "Tym razem pewną zagadką jest samo określenie, co właściwie się \nteraz otworzyło.", 0); break;
+        //case 4: g.showMessage(inp, "Tym razem pewną zagadką jest samo określenie, co właściwie się \nteraz otworzyło.", 0); break;
         case 6: g.showMessage(inp, `W sumie to ciekawe, do czego te klucze właściwie służą.\nTych zagadek rozwiązałam już ${ROOM_UNCLOKS[5]}, ale dalej jak nie miałam, tak \nw dalszym ciągu nie mam zielonego pojęcia, czym jest to miejsce. \nMam nadzieję, że gdzieś dalej będzie jakaś odpowiedź.`, 0); break;
         default: switch (keyName) {
             case "czekoladapizzawiewiórkasparta": g.showMessage(inp, "No, w pewnym sensie udało mi się zagrać w Decrypto.", 1); break;

@@ -108,28 +108,24 @@
     var KOTCDynamicMusicINIT = Game_System.prototype.initialize;
     Game_System.prototype.initialize = function () {
         KOTCDynamicMusicINIT.call(this); // Makes sure to do the stuff that was in the function before
-        $KoTCDynamicMusicSystem = {
+        $KDMS = {
             Parameters: PluginManager.parameters('KoTC Optimized Dynamic Music System'),
-            NextSongReadyToPlay: 0,
+            NextSongReadyToPlay: true,
             MusicPool: {},
-            RegExMusicCode: new RegExp(/<KoTC Music List: (\S+)>/i)
-
+            RegExMusicCode: new RegExp(/<KoTC Music List: (\S+)>/i),
+            LastSong: null,
         };
 
-        var mainparse = JSON.parse($KoTCDynamicMusicSystem.Parameters['Music List Config']);
-        var g = 0;
-        var length = mainparse.length;
-        for (; g < length; g++) {
-            var listparse = JSON.parse(mainparse);
+        var mainparse = JSON.parse($KDMS.Parameters['Music List Config']);
+        for (var g = 0; g < mainparse.length; g++) {
+            var listparse = JSON.parse(mainparse[g]);
             var listname = listparse["List Name"];
-            $KoTCDynamicMusicSystem.MusicPool[listname] = JSON.parse(listparse["Music Contained"]);
-            var length2 = $KoTCDynamicMusicSystem.MusicPool[listname].length;
-            var p = 0;
-            for (; p < length2; p++) {
-                $KoTCDynamicMusicSystem.MusicPool[listname][p] = JSON.parse($KoTCDynamicMusicSystem.MusicPool[listname][p]);
+            $KDMS.MusicPool[listname] = JSON.parse(listparse["Music Contained"]);
+            var length2 = $KDMS.MusicPool[listname].length;
+            for (var p = 0; p < length2; p++) {
+                $KDMS.MusicPool[listname][p] = JSON.parse($KDMS.MusicPool[listname][p]);
             }
         }
-
 
         if (Utils.RPGMAKER_NAME == "MZ") {
             PluginManager.registerCommand('KoTC Optimized Dynamic Music System', "EnableKoTCDynamicMusic", data => {
@@ -151,22 +147,17 @@
                         case 'DisableKoTCDynamicMusic':
                             DisableKoTCDynamicMusic();
                             break;
-
-                        default:
-
                     };
                 }
             };
-
         };
     }
-}
-    ())
+}());
 
 
 var KOTCDynamicMusicTransfer = Game_Player.prototype.performTransfer;
 Game_Player.prototype.performTransfer = function () {
-    $KoTCDynamicMusicSystem.NextSongReadyToPlay = 1;
+    //$KDMS.NextSongReadyToPlay = true;
     KOTCDynamicMusicTransfer.call(this);
 }
 
@@ -174,95 +165,99 @@ Game_Player.prototype.performTransfer = function () {
 var KOTCWayDynMusTransCompleted = Scene_Map.prototype.onMapLoaded;
 Scene_Map.prototype.onMapLoaded = function () {
     KOTCWayDynMusTransCompleted.call(this);
-    if ($KoTCDynamicMusicSystem.RegExMusicCode.exec($dataMap.note) !== null && typeof $KoTCDynamicMusicSystem.DynamicMusicDisabled == 'undefined') {
+    if ($KDMS.RegExMusicCode.exec($dataMap.note) !== null && !$KDMS.DynamicMusicDisabled) {
         setTimeout(() => {
             KoTCDynamicMusic()
         }, 100); //Sus
 
     } else {
-        AudioManager.stopBgm()
-        clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout);
-        clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout2);
-        clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout3);
+        KoTCDStopMusic();
     }
 
 };
 
 function DisableKoTCDynamicMusic() {
-    $KoTCDynamicMusicSystem.DynamicMusicDisabled = 1;
-    AudioManager.stopBgm()
-    clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout);
-    clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout2);
-    clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout3);
+    $KDMS.DynamicMusicDisabled = true; //Change: 1 -> true
+    KoTCDStopMusic();
 }
 
 function EnableKoTCDynamicMusic() {
-    $KoTCDynamicMusicSystem.DynamicMusicDisabled = undefined;
+    $KDMS.DynamicMusicDisabled = false; //Change: undefined -> false
     AudioManager.stopBgm();
-    KoTCDynamicMusic(1);
+    KoTCDynamicMusic(true); //Change: 1 -> true
 }
 
+function KoTCDStopMusic() {
+    AudioManager.stopBgm()
+    clearTimeout($KDMS.NextSongTimeout);
+    clearTimeout($KDMS.NextSongTimeout2);
+    clearTimeout($KDMS.NextSongTimeout3);
+}
+
+function KoTCDPickSong(list) {
+    console.assert(Array.isArray(list));
+    let res = null;
+    if (list.length === 1) res = list[0];
+    else {
+        let newList = list.filter(m => m['Music Name'] !== $KDMS.LastSong);
+        res = newList[Math.randomInt(newList.length)];
+    }
+    $KDMS.LastSong = res['Music Name'];
+    return res;
+}
 
 function KoTCDynamicMusic(forceplay, musiclistname) {
-    if (typeof $KoTCDynamicMusicSystem.DynamicMusicDisabled == 'undefined' && $KoTCDynamicMusicSystem.RegExMusicCode.exec($dataMap.note) !== null || typeof forceplay !== 'undefined' && typeof $KoTCDynamicMusicSystem.DynamicMusicDisabled == 'undefined' && $KoTCDynamicMusicSystem.RegExMusicCode.exec($dataMap.note) !== null || typeof $KoTCDynamicMusicSystem.DynamicMusicDisabled == 'undefined' && typeof musiclistname !== 'undefined') {
+    if ($KDMS.DynamicMusicDisabled || $dataMap === null) return;
 
-        if ($KoTCDynamicMusicSystem.PreviousMusicList !== $KoTCDynamicMusicSystem.CurrentMusicList || $KoTCDynamicMusicSystem.NextSongReadyToPlay !== undefined || typeof forceplay !== 'undefined') {
-            if ($KoTCDynamicMusicSystem.NextSongReadyToPlay !== undefined) {
-                $KoTCDynamicMusicSystem.NextSongReadyToPlay = undefined;
-            } else {
-                AudioManager.stopBgm()
-                clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout);
-                clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout2);
-                clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout3);
-            };
+    let note = $KDMS.RegExMusicCode.exec($dataMap.note);
+    if ((note !== null || musiclistname !== undefined) && ($KDMS.PreviousMusicList !== RegExp.$1 || $KDMS.NextSongReadyToPlay || forceplay)) {
+        if ($KDMS.NextSongReadyToPlay) $KDMS.NextSongReadyToPlay = false;
+        else KoTCDStopMusic();
 
-            if (typeof forceplay !== 'undefined') {
-                AudioManager.stopBgm()
-                clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout);
-                clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout2);
-                clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout3);
+        if (forceplay) KoTCDStopMusic();
+
+        if (musiclistname !== undefined) {
+            $KDMS.CurrentMusicList = musiclistname;
+            KoTCDStopMusic();
+            var musictarget = KoTCDPickSong($KDMS.MusicPool[musiclistname]);
+        } else {
+            AudioManager.stopBgm()
+            $KDMS.CurrentMusicList = RegExp.$1;
+            var musictarget = KoTCDPickSong($KDMS.MusicPool[RegExp.$1]);
+        }
+
+        if (musictarget["Music Pitch Variance"] > 0) {
+            var pitchvarianceaddition = (Math.random() * (Number(musictarget["Music Pitch Variance"]) * 2));
+        } else {
+            var pitchvarianceaddition = 0;
+        }
+
+        if (MUSIC_DEBUG) console.log("Now playing: " + musictarget["Music Name"]);
+        var timesToPlay = Number(musictarget["Music Loop Amount"]) + 1;
+        let pitch = Number(musictarget["Music Pitch"]) - Number(musictarget["Music Pitch Variance"]) + pitchvarianceaddition;
+        AudioManager.playBgm({
+            name: musictarget["Music Name"],
+            volume: musictarget["Music Volume"],
+            pitch: pitch,
+            pan: 0
+        });
+
+        $KDMS.PreviousMusicList = $KDMS.CurrentMusicList;
+        $KDMS.NextSongTimeout3 = setTimeout(function () {
+            var timetonextsong = Math.round(AudioManager._bgmBuffer._totalTime * (pitch / 100) * timesToPlay * 1000);
+            if (MUSIC_DEBUG) {
+                console.log(`${timetonextsong / 1000}s to next song. We will repeat this one ${timesToPlay - 1} times.`);
+                setTimeout(() => console.log("We should start a new song now"), timetonextsong);
             }
-
-            if (typeof musiclistname !== 'undefined') {
-                $KoTCDynamicMusicSystem.CurrentMusicList = musiclistname;
-                AudioManager.stopBgm()
-                clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout);
-                clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout2);
-                clearTimeout($KoTCDynamicMusicSystem.NextSongTimeout3);
-                var musictarget = $KoTCDynamicMusicSystem.MusicPool[musiclistname][Math.randomInt($KoTCDynamicMusicSystem.MusicPool[musiclistname].length)];
-            } else {
-                AudioManager.stopBgm()
-                $KoTCDynamicMusicSystem.CurrentMusicList = RegExp.$1;
-                var musictarget = $KoTCDynamicMusicSystem.MusicPool[RegExp.$1][Math.randomInt($KoTCDynamicMusicSystem.MusicPool[RegExp.$1].length)];
-            }
-
-            if (musictarget["Music Pitch Variance"] > 0) {
-                var pitchvarianceaddition = (Math.random() * (Number(musictarget["Music Pitch Variance"]) * 2));
-            } else {
-                var pitchvarianceaddition = 0;
-            }
-
-            console.log(musictarget["Music Name"]);
-            var timestoplay = musictarget["Music Loop Amount"] + 1;
-            AudioManager.playBgm({
-                name: musictarget["Music Name"],
-                volume: musictarget["Music Volume"],
-                pitch: Number(musictarget["Music Pitch"]) - Number(musictarget["Music Pitch Variance"]) + pitchvarianceaddition,
-                pan: 0
-            });
-
-            $KoTCDynamicMusicSystem.PreviousMusicList = $KoTCDynamicMusicSystem.CurrentMusicList;
-            $KoTCDynamicMusicSystem.NextSongTimeout3 = setTimeout(function () {
-                var timetonextsong = Math.round(AudioManager._bgmBuffer._totalTime * (Number(musictarget["Music Pitch"]) - Number(musictarget["Music Pitch Variance"]) + pitchvarianceaddition / 100) * timestoplay * 1000);
-                console.log(timetonextsong);
-                $KoTCDynamicMusicSystem.NextSongTimeout = setTimeout(function () {
-                    $KoTCDynamicMusicSystem.NextSongReadyToPlay = 1;
-                    KoTCDynamicMusic();
-                }, timetonextsong)
-                $KoTCDynamicMusicSystem.NextSongTimeout2 = setTimeout(function () {
-                    AudioManager.fadeOutBgm(Number(musictarget["Fadeout Time"]))
-                }, timetonextsong - (Number(musictarget["Fadeout Time"]) * 1000))
-            }, 1000);
-        };
+            $KDMS.NextSongTimeout = setTimeout(function () {
+                if (MUSIC_DEBUG) console.log("About to play the next song");
+                $KDMS.NextSongReadyToPlay = true;
+                KoTCDynamicMusic();
+            }, timetonextsong)
+            $KDMS.NextSongTimeout2 = setTimeout(function () {
+                if (MUSIC_DEBUG) console.log("Fading out...");
+                AudioManager.fadeOutBgm(Number(musictarget["Fadeout Time"]))
+            }, timetonextsong - (Number(musictarget["Fadeout Time"]) * 1000))
+        }, 1000); //Also sus
     };
 };

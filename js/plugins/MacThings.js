@@ -24,9 +24,10 @@ try {
     throw "The JavaScript version is too old.";
 }
 
-const MAC_DEBUG = false;
+const MAC_DEBUG = true;
 const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 0; //If debug is on, game stage will be set to this
+const MUSIC_DEBUG = true;
 window.g = window.g || {}
 g.gameInitialised = false;
 //Shorhands for $gameVariables and $gameSwitches. Filled in by macThingsInit

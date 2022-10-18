@@ -327,6 +327,28 @@ window.onunload = () => {
     }
 };
 
+//===================================== Space Panic minigame =====================================
+
+testPanic = function (inp) {
+    inp.setWaitMode('indefinite'); //this.setWaitMode(''); to end this
+    document.getElementById("GameCanvas").style.visibility = 'hidden';
+    //let frame = document.getElementById("frameTest")
+    let frame = document.createElement('iframe');
+    frame.id = 'testFrame';
+    frame.src = "powerPanic/index.html";
+    frame.style = "width: 100%; height: 100%";
+    //let canvas = frame.contentWindow.document.getElementById()
+    frame.style.visibility = 'visible';
+    document.body.appendChild(frame);
+
+    /*canvas.width = this._width;
+    canvas.height = this._height;
+    canvas.style.zIndex = 2;
+    //this._centerElement(this._video);*/
+}
+
+
+
 
 //===================================== Multi image display =====================================
 

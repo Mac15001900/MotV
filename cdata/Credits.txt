@@ -18,6 +18,7 @@ image   = image name in /img/titles1/ folder to use as background. Leave
 
 
 <block:100000,0,10,10,50,center,starfield>
+
 \c[4]Programowanie, zagadki, mapa, fabuła:
 Maciej Bogacki
 
@@ -29,10 +30,16 @@ Kokoro Reflactions, Screaming Brain Studios
 Akira, Niteshift, George Hodan, Myotus, Halfdan, Indolences, 
 Nieuw, Huntster, Christaras A, Eva Hejda, NASA
 
+</block>
+
+<block:100000,0,10,10,50,center,starfield>
+
 \c[4]RPGMaker'owe pluginy:
 Biud436, Darkkitten, Galv, Masked, OcRam, Quxios, Rhyme, Shaz, 
 SumRndmDde, Triacontane, Yanfly, Yoji Ojima
 
+\c[4]Muzyka
+Eric Matyas (www.soundimage.org)
 
 </block>
 

@@ -215,6 +215,7 @@ MBS.MapZoom = {};
       this.zoom.x += this._spdZoom.x;
       this.zoom.y += this._spdZoom.y;
       this._zoomTime++;
+      //debugger;
       this.onZoomChange();
     } else if (this._zoomTime > 0) {
       this._zoomTime = 0;
@@ -259,7 +260,9 @@ MBS.MapZoom = {};
    * Function called when the map zoom changes.
    */
   Game_Map.prototype.onZoomChange = function () {
-    $gamePlayer.center((this._zoomCenter || $gamePlayer)._realX, (this._zoomCenter || $gamePlayer)._realY);
+    if (this._zoomCenter) $gamePlayer.center(this._zoomCenter.x, this._zoomCenter.y);
+    else $gamePlayer.center($gamePlayer._realX, $gamePlayer._realY);
+    // $gamePlayer.center((this._zoomCenter || $gamePlayer)._realX, (this._zoomCenter || $gamePlayer)._realY); //Old version
   };
 
   /**
@@ -476,6 +479,7 @@ MBS.MapZoom = {};
   Game_Interpreter.prototype.pluginCommand = function (command, args) {
     _GameInterpreter_pluginCommand.call(this, command, args);
     if (command == "MapZoom") {
+      //debugger;
       if (args[0] == "set") {
         if (args[1]) {
           if (args[2]) {

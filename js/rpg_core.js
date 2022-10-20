@@ -3949,7 +3949,8 @@ function Sprite() {
 Sprite.prototype = Object.create(PIXI.Sprite.prototype);
 Sprite.prototype.constructor = Sprite;
 
-Sprite.voidFilter = new PIXI.filters.VoidFilter();
+// Sprite.voidFilter = new PIXI.filters.VoidFilter();
+Sprite.voidFilter = new PIXI.filters.AlphaFilter(); //Change: renamed a deprecated filter
 
 Sprite.prototype.initialize = function(bitmap) {
     var texture = new PIXI.Texture(new PIXI.BaseTexture());
@@ -4393,7 +4394,7 @@ Sprite.prototype._renderWebGL = function(renderer) {
         //copy of pixi-v4 internal code
         this.calculateVertices();
 
-        if (this.pluginName === 'sprite' && this._isPicture) {
+        if (this.pluginName === 'sprite' && this._isPicture) { //TODO: Potentially, looks like a way to increase quality at the cost of performnance
             // use heavy renderer, which reduces artifacts and applies corrent blendMode,
             // but does not use multitexture optimization
             this._speedUpCustomBlendModes(renderer);
@@ -6974,7 +6975,8 @@ WindowLayer.prototype.onRemoveAsAChild = function() {
     this.removeChildren();
 }
 
-WindowLayer.voidFilter = new PIXI.filters.VoidFilter();
+// WindowLayer.voidFilter = new PIXI.filters.VoidFilter();
+WindowLayer.voidFilter = new PIXI.filters.AlphaFilter(); //Change: renamed a deprecated filter
 
 /**
  * The width of the window layer in pixels.

@@ -26,8 +26,8 @@ try {
 
 const MAC_DEBUG = true;
 const VERBOSE_LOGS = false;
-const DEBUG_STAGE = 0; //If debug is on, game stage will be set to this
-const MUSIC_DEBUG = true;
+const DEBUG_STAGE = 9; //If debug is on, game stage will be set to this
+const MUSIC_DEBUG = false;
 window.g = window.g || {}
 g.gameInitialised = false;
 //Shorhands for $gameVariables and $gameSwitches. Filled in by macThingsInit
@@ -600,3 +600,71 @@ ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
         return this.loadEmptyBitmap();
     }
 }
+
+//Fix from https://forums.rpgmakerweb.com/index.php?threads/rpg-maker-games-graphics-will-freeze-but-sound-keeps-playing-the-problem-the-solution.151887/
+var _Graphics_render = Graphics.render;
+Graphics.render = function (stage) {
+    if (this._skipCount < 0) {
+        this._skipCount = 0;
+    }
+    _Graphics_render.call(this, stage);
+};
+
+//===================================== Temp experiments =====================================
+/*
+Direction = {
+    NONE: 0,
+    DOWN: 2,
+    LEFT: 4,
+    RIGHT: 6,
+    UP: 8,
+}
+
+var _Game_Player_update = Game_Player.prototype.update;
+Game_Player.prototype.update = function (sceneActive) {
+    _Game_Player_update.call(this, sceneActive);
+    if (this.cameraOffset === undefined) this.cameraOffset = Direction.NONE;
+
+    if (this.offsetNextFrame) {
+        if ($gameMap.isScrolling()) return; //We'll wait until this is done.
+        if (!this.isMoving() && $gameMap.canScroll(this.direction()) && $gameMap.canScroll(reverseDirection(this.direction()))) {
+            $gameMap.startScroll(this.direction(), 1, this.moveSpeed());
+            $gamePlayer.cameraOffset = this.direction();
+        }
+        this.offsetNextFrame = false;
+    }
+    if (!this.isMoving() && this.cameraOffset === Direction.NONE) {
+        this.offsetNextFrame = true; //Let's wait to see if we're still not moving on the next frame
+    } else if (this.isMoving() && this.cameraOffset !== Direction.NONE && !$gameMap.isScrolling()) {
+        if (this.cameraOffset !== this.direction()) $gameMap.startScroll(reverseDirection(this.cameraOffset), 1, this.moveSpeed());
+        this.cameraOffset = Direction.NONE;
+        this.needToReset = true;
+    }
+}
+
+Game_Map.prototype.canScroll = function (direction) {
+    switch (direction) {
+        case Direction.DOWN: return this.isLoopVertical() || this.height() >= this.screenTileY() && this.displayY() < this.height() - this.screenTileY();
+        case Direction.UP: return this.isLoopVertical() || this.height() >= this.screenTileY() && this.displayY() > 0;
+        case Direction.LEFT: return this.isLoopHorizontal() || this.width() >= this.screenTileX() && this.displayX() > 0;
+        case Direction.RIGHT: return this.isLoopHorizontal() || this.width() >= this.screenTileX() && this.displayX() < this.width() - this.screenTileX();
+        default: return Direction.NONE;
+    }
+}
+
+reverseDirection = function (direction) {
+    switch (direction) {
+        case Direction.DOWN: return Direction.UP;
+        case Direction.UP: return Direction.DOWN;
+        case Direction.LEFT: return Direction.RIGHT;
+        case Direction.RIGHT: return Direction.LEFT;
+        default: return Direction.NONE;
+    }
+}*/
+/*
+//Will stop scrolling, wherever it currently is
+Game_Map.prototype.stopScroll = function () {
+    this._scrollRest = 0;
+} 
+
+*/

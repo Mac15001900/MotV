@@ -852,10 +852,12 @@ function Window_ChoiceMessage() {
 	};
 
 	SRD.PluginCommands['setquestionwindowchoices'] = function (args) {
-		let argString = '';
+		/*let argString = '';
 		for (let i = 0; i < args.length; i++) {
 			argString += args[i] + ' ';
-		}
+		}*/
+		let argString = args.join(' ');
+
 		$gameSystem.wu_info.questionWindowChoices = argString.split(/\s*,\s*/);
 	};
 
@@ -867,10 +869,11 @@ function Window_ChoiceMessage() {
 			$gameSystem.wu_info.questionWindowData = {};
 		}
 		const varId = parseInt(args[0]);
-		let message = '';
+		let message = args.splice(1).join(' ');
+		/*let message = '';
 		for (let i = 1; i < args.length; i++) {
-			message += args[i] + ' '; //TODO: This creates an extra spacebar at the end. Why not join?
-		}
+			message += args[i] + ' '; 
+		}*/
 		//message = JSON.parse("\"" + message + "\"");
 		let callbacks = [];
 		for (let i = 0; i < $gameSystem.wu_info.questionWindowChoices.length; i++) {
@@ -887,7 +890,12 @@ function Window_ChoiceMessage() {
 			$gameSystem.wu_info.questionWindowData
 		);
 		scene.addWindow(win);
+		/*let timeout = setTimeout(function () {
+			win.close();
+			$gameSwitches.setValue(42, true);
+		}, 5000);*/
 		win.setCloseCallback(function () {
+			//clearTimeout(timeout);
 			scene.removeChild(win);
 			this.setWaitMode('');
 		}.bind(this));

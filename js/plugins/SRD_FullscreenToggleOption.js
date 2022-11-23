@@ -114,22 +114,22 @@
 			this.addCommand(optionName, 'fullscreen');
 		}
 	};
-
-	var _Window_Options_makeCommandList = Window_Options.prototype.makeCommandList;
-	Window_Options.prototype.makeCommandList = function () {
-		if (position === 'top') {
-			this.addCommand(optionName, 'fullscreen');
-		}
-		_Window_Options_makeCommandList.call(this);
-	};
-
-	var _Window_Options_addVolumeOptions = Window_Options.prototype.addVolumeOptions;
-	Window_Options.prototype.addVolumeOptions = function () {
-		_Window_Options_addVolumeOptions.call(this);
-		if (position === 'bottom') {
-			this.addCommand(optionName, 'fullscreen');
-		}
-	};
+	/*
+		var _Window_Options_makeCommandList = Window_Options.prototype.makeCommandList;
+		Window_Options.prototype.makeCommandList = function () {
+			if (position === 'top') {
+				this.addCommand(optionName, 'fullscreen');
+			}
+			_Window_Options_makeCommandList.call(this);
+		};
+	
+		var _Window_Options_addVolumeOptions = Window_Options.prototype.addVolumeOptions;
+		Window_Options.prototype.addVolumeOptions = function () {
+			_Window_Options_addVolumeOptions.call(this);
+			if (position === 'bottom') {
+				this.addCommand(optionName, 'fullscreen');
+			}
+		};*/
 
 	var _Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
 	Game_Interpreter.prototype.pluginCommand = function (command, args) {

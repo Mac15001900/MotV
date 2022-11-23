@@ -195,7 +195,7 @@ function KoTCDStopMusic() {
 }
 
 function KoTCDPickSong(list) {
-    console.assert(Array.isArray(list));
+    console.assert(Array.isArray(list) && list.length > 0);
     let res = null;
     if (list.length === 1) res = list[0];
     else {

@@ -216,7 +216,7 @@ MBS.MapZoom = {};
       this.zoom.y += this._spdZoom.y;
       this._zoomTime++;
       //debugger;
-      this.onZoomChange();
+      this.recenterCamera();
     } else if (this._zoomTime > 0) {
       this._zoomTime = 0;
       this._zoomDuration = 0;
@@ -246,20 +246,28 @@ MBS.MapZoom = {};
    * @param {mixed} a Either a X coordinate or a Game_Character to center the zoom.
    * @param {Number} (Optional) A Y coordinate to center the zoom.
    */
-  Game_Map.prototype.setZoomCenter = function (a, b) {
+  Game_Map.prototype.setZoomCenter = function (a, b, duration = 0) {
+    let target = b ? new PIXI.Point(a, b) : a || null;
+    if (duration > 0) {
+      this._slideTarget = target;
+      this._slideDuration = duration;
+    } else {
+      this._zoomCenter = target;
+    }
+    /*
     if (b) {
       this._zoomCenter = new PIXI.Point(a, b);
     } else if (a) {
       this._zoomCenter = a;
     } else {
       this._zoomCenter = null;
-    }
+    }*/
   };
 
   /**
    * Function called when the map zoom changes.
    */
-  Game_Map.prototype.onZoomChange = function () {
+  Game_Map.prototype.recenterCamera = function () {
     if (this._zoomCenter) $gamePlayer.center(this._zoomCenter.x, this._zoomCenter.y);
     else $gamePlayer.center($gamePlayer._realX, $gamePlayer._realY);
     // $gamePlayer.center((this._zoomCenter || $gamePlayer)._realX, (this._zoomCenter || $gamePlayer)._realY); //Old version
@@ -515,7 +523,7 @@ MBS.MapZoom = {};
         } else if (args[1] == "reset") {
           $gameMap.setZoomCenter();
         } else {
-          $gameMap.setZoomCenter(Number(args[1]), Number(args[2]));
+          $gameMap.setZoomCenter(Number(args[1]), Number(args[2]), Number(args[3]));
         }
         $gameMap.setZoom($gameMap._destZoom.x, $gameMap._destZoom.y, $gameMap._zoomDuration - $gameMap._spdZoom);
       }

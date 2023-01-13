@@ -214,7 +214,7 @@ wrongKeyReactions = function (inp, key) {
         let wrongPart = key;
         for (let i = 0; i < keyWords.length; i++) wrongPart = wrongPart.replace(keyWords[i], '');
         wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
-        g.showMessage(inp, "To musi być już blisko! " + wrongPart + " tu chyba najmniej pasuje.", 0);
+        g.showMessage(inp, "To musi być już blisko!\n" + wrongPart + " tu chyba najmniej pasuje.", 0);
     }
 
 }
@@ -497,7 +497,10 @@ g.breakString = function (string, length = 100) {
 //Removes or converts some special escape characters, for saving strings as plain text. Might not handle everything
 //TODO: remove text shaking stuff as well
 g.simpleUnescape = function (string) {
-    return Window_Base.prototype.convertEscapeCharacters(string).replace(/\x1b\w\[(\d+)\]/g, '').replace(/\x1b\w/g, '');
+    return Window_Base.prototype.convertEscapeCharacters(string)
+        .replace(/\x1bMSGCORE\[(\d+)\]/g, '') //replaces Yanfly MessageCore codes
+        .replace(/\x1b\w\[(\d+)\]/g, '') //Replaces single-letter \x[n] codes
+        .replace(/\x1b\w/g, ''); //Replaces single-letter \x codes
 }
 
 //Text to clipboard, function by Dean Taylor taken from https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
@@ -612,6 +615,20 @@ Graphics.render = function (stage) {
 
 //===================================== Temp experiments =====================================
 /*
+//Script for larger icons:
+var _ImageManager_reserveSystem = ImageManager.reserveSystem;
+ImageManager.reserveSystem = function(filename, hue, reservationId) {
+    if(filename === "IconSet") filename = "IconSet-big";
+    _ImageManager_reserveSystem.call(this, filename, hue, reservationId);
+};
+
+var _ImageManager_loadSystem = ImageManager.loadSystem;
+ImageManager.loadSystem = function(filename, hue) {
+    if(filename === "IconSet") filename = "IconSet-big";
+    _ImageManager_loadSystem(this, filename, hue);
+};
+
+
 Direction = {
     NONE: 0,
     DOWN: 2,

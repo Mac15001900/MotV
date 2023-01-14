@@ -65,5 +65,11 @@ Tons of tiles, permission for commercial (and MV?) needed: https://forums.rpgmak
 Gamefocus.js - in unused for now, can be used to pause sound/graphics when out of focus
 
 Steam integration plugin: https://forums.rpgmakerweb.com/index.php?threads/orangegreenworks-steam-integration-with-achievements-and-time-log.59469/
+Google Play achievements thingy: https://github.com/playcanvas/google-play-game-services 
 
 Modify the save screen: https://forums.rpgmakerweb.com/index.php?threads/tsr_save-by-the-northern-frog-customize-the-save-and-load-screen.123611/
+
+Translation:
+Translation++: https://forums.rpgmakerweb.com/index.php?threads/translator-game-translation-tool.102706/
+GD Localisation: https://forums.rpgmakerweb.com/index.php?threads/gd-localization-yet-another-l18n-plugin.145927/
+

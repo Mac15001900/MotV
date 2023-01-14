@@ -62,6 +62,7 @@ macUpdateForeground = function () {
 }
 
 macThingsInit = function () {
+    //Setting up variable and switch proxies
     $gv = new Proxy($gameVariables._data, {
         get: function (target, name) {
             return $gameVariables.value(name);
@@ -81,18 +82,35 @@ macThingsInit = function () {
 
     $gs[1] = true; //Set the 'True' switch to always be true
 
+    //Loading or initialising gData
     if ($gv[1] === 0) {
         g.data = initialiseGData();
         $gv[1] = g.data;
     } else {
         g.data = $gv[1];
     }
+
+    //Setting up the $es proxy
+    $es = new Proxy(g.data.seenEvents, {
+        get: function (target, name) {
+            return !!(g.data.seenEvents[$gameMap.mapId()] || {})[name];
+        },
+        set: function (obj, eventId, value) {
+            let mapId = $gameMap.mapId();
+            if (!g.data.seenEvents[mapId]) g.data.seenEvents[mapId] = {};
+            g.data.seenEvents[mapId][eventId] = value;
+        }
+    });
+
+    //Movespeed and debug stuff
     $gamePlayer.setMoveSpeed(4.5);
     if (MAC_DEBUG) {
         $gs[2] = true; //Set the debug switch
         $gv[41] = DEBUG_STAGE;
         $gamePlayer.setMoveSpeed(5);
     }
+
+    //Other init stuff
     g.interpteter = new Game_Interpreter();
     g.gameInitialised = true;
     g.saveWorker = new Worker("./js/plugins/compressor.js");
@@ -101,7 +119,7 @@ macThingsInit = function () {
 }
 
 initialiseGData = function () {
-    let res = { keysCurrent: 0, keysTotal: 0, test: "TOAST!", gameVersion: GAME_VERSION };
+    let res = { keysCurrent: 0, keysTotal: 0, test: "TOAST!", gameVersion: GAME_VERSION, seenEvents: [] };
     res.keysCollected = {};
     for (let i = 0; i < SECRET_KEYS.length; i++) {
         res.keysCollected[SECRET_KEYS[i]] = false;
@@ -178,7 +196,7 @@ keyReactions = function (inp) {
     else {
         //Just one left
         if (g.data.keysCollected["iksytonawiasy"]) g.showMessage(inp, "Jeszcze tylko ten ostatni. Idę po ciebie!.", 0);
-        else g.showMessage(inp, "No dobra, tylko gdzie jest ten jeden pozostały klucz?\nChyba musi być ukryty nieco inaczej niż pozostałe.", 0);
+        else g.showMessage(inp, "No dobra, tylko gdzie niby jest ten jeden pozostały klucz?\nChyba musi być ukryty inaczej niż pozostałe.", 0);
         return;
     }
 
@@ -190,7 +208,6 @@ keyReactions = function (inp) {
             //g.showMessage(inp, "\\{AAA!\\.\\.\\.", 3);
             //g.showMessage(inp, "Ok, w sumie to nie wiem, czego dokładnie się spodziewałam\\..\nAle raczej nie tego, że ściana obok mnie sobie nagle zniknie.", 0);
             break;
-        //case 4: g.showMessage(inp, "Tym razem pewną zagadką jest samo określenie, co właściwie się \nteraz otworzyło.", 0); break;
         case 6: g.showMessage(inp, `W sumie to ciekawe, do czego te klucze właściwie służą.\nTych zagadek rozwiązałam już ${ROOM_UNCLOKS[5]}, ale dalej jak nie miałam, tak \nw dalszym ciągu nie mam zielonego pojęcia, czym jest to miejsce. \nMam nadzieję, że gdzieś dalej będzie jakaś odpowiedź.`, 0); break;
         default: switch (keyName) {
             case "czekoladapizzawiewiórkasparta": g.showMessage(inp, "No, w pewnym sensie udało mi się zagrać w Decrypto.", 1); break;
@@ -533,6 +550,7 @@ function copyTextToClipboard(text, escapeSpecial = true) {
 
 //=====================================Various engine changes=====================================
 
+//Clears up things when going back to main menu
 var _Scene_Title_start = Scene_Title.prototype.start;
 Scene_Title.prototype.start = function () {
     _Scene_Title_start.call(this);
@@ -543,6 +561,14 @@ Scene_Title.prototype.start = function () {
     }
 };
 
+//Marks the event as seen whenever it's launched
+var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
+Game_Interpreter.prototype.setup = function (list, eventId) {
+    if (eventId) $es[eventId] = true;
+    _Game_Interpreter_setup.call(this, list, eventId);
+}
+
+//Debug thingy for quitting the game with Q
 Input.keyMapper["81"] = "quit"; //Setting for the 'q' key
 var _Scene_Base_update = Scene_Base.prototype.update;
 Scene_Base.prototype.update = function () {
@@ -550,13 +576,13 @@ Scene_Base.prototype.update = function () {
     if (MAC_DEBUG && Input.isTriggered("quit")) SceneManager.exit(); //TODO QInpit prevents this, find out why
 }
 
-
+//Volume settings increment change
 Window_Options.prototype.volumeOffset = () => VOLUME_INCREMENT;
 
+//Creates save titles when saving
 var _DataManager_makeSavefileInfo = DataManager.makeSavefileInfo;
 DataManager.makeSavefileInfo = function () {
     var res = _DataManager_makeSavefileInfo.call(this);
-    ///res.title = SceneManager.getSceneName() === 'Scene_Map' ? "Zapis automatyczny: " : ""; //Autosave only happens on the map
     res.title = "";
     if (g.data.keysTotal === 0) res.title += "Początek";
     else if (g.data.keysTotal === SECRET_KEYS.length) res.title += "Wszystkie klucze!";
@@ -565,8 +591,10 @@ DataManager.makeSavefileInfo = function () {
     return res;
 };
 
+//Sets the number of available saves to (effectively) 10
 DataManager.maxSavefiles = () => 11;
 
+//Hack for stopping the game interpreter from processing unless we tell it to. Required by SRD_WindowUpgrade
 var _Game_Interpreter_updateWaitMode = Game_Interpreter.prototype.updateWaitMode;
 Game_Interpreter.prototype.updateWaitMode = function () {
     if (this._waitMode === 'indefinite') {
@@ -575,11 +603,13 @@ Game_Interpreter.prototype.updateWaitMode = function () {
     return _Game_Interpreter_updateWaitMode.apply(this, arguments);
 };
 
+//Adds an exit command to the main menu
 Scene_Title.prototype.commandExit = function () {
     this._commandWindow.close();
     SceneManager.exit();
 };
 
+//New delay character: in messages \, works like \. but for half the time
 var _Window_Message_processEscapeCharacter = Window_Message.prototype.processEscapeCharacter;
 Window_Message.prototype.processEscapeCharacter = function (code, textState) {
     switch (code) {
@@ -588,7 +618,7 @@ Window_Message.prototype.processEscapeCharacter = function (code, textState) {
     }
 }
 
-//From https://forums.rpgmakerweb.com/index.php?threads/how-to-remove-blur.47504/
+//Fixes the blurring when going fullscreen, by KisaiTenshi. From https://forums.rpgmakerweb.com/index.php?threads/how-to-remove-blur.47504/
 ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
     //let doSmoothing = false;
     //if (["img/faces/", "img/pictures/"].indexOf(folder) >= 0) doSmoothing = true;
@@ -604,14 +634,12 @@ ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
     }
 }
 
-//Fix from https://forums.rpgmakerweb.com/index.php?threads/rpg-maker-games-graphics-will-freeze-but-sound-keeps-playing-the-problem-the-solution.151887/
-var _Graphics_render = Graphics.render;
-Graphics.render = function (stage) {
-    if (this._skipCount < 0) {
-        this._skipCount = 0;
-    }
-    _Graphics_render.call(this, stage);
-};
+//Fix for a rare freeze on high-refresh displays, by Kido. From https://forums.rpgmakerweb.com/index.php?threads/rpg-maker-games-graphics-will-freeze-but-sound-keeps-playing-the-problem-the-solution.151887/
+//Added directly to Graphics.render
+
+//Fix for inaccurate playtime on high-refresh displays, by Caethyril. From: https://forums.rpgmakerweb.com/index.php?threads/using-gamesystem-playtimetext-for-accurate-playtime.131810/
+//Added directly to Graphics.render and SceneManager.updateScene
+
 
 //===================================== Temp experiments =====================================
 /*
@@ -627,61 +655,4 @@ ImageManager.loadSystem = function(filename, hue) {
     if(filename === "IconSet") filename = "IconSet-big";
     _ImageManager_loadSystem(this, filename, hue);
 };
-
-
-Direction = {
-    NONE: 0,
-    DOWN: 2,
-    LEFT: 4,
-    RIGHT: 6,
-    UP: 8,
-}
-
-var _Game_Player_update = Game_Player.prototype.update;
-Game_Player.prototype.update = function (sceneActive) {
-    _Game_Player_update.call(this, sceneActive);
-    if (this.cameraOffset === undefined) this.cameraOffset = Direction.NONE;
-
-    if (this.offsetNextFrame) {
-        if ($gameMap.isScrolling()) return; //We'll wait until this is done.
-        if (!this.isMoving() && $gameMap.canScroll(this.direction()) && $gameMap.canScroll(reverseDirection(this.direction()))) {
-            $gameMap.startScroll(this.direction(), 1, this.moveSpeed());
-            $gamePlayer.cameraOffset = this.direction();
-        }
-        this.offsetNextFrame = false;
-    }
-    if (!this.isMoving() && this.cameraOffset === Direction.NONE) {
-        this.offsetNextFrame = true; //Let's wait to see if we're still not moving on the next frame
-    } else if (this.isMoving() && this.cameraOffset !== Direction.NONE && !$gameMap.isScrolling()) {
-        if (this.cameraOffset !== this.direction()) $gameMap.startScroll(reverseDirection(this.cameraOffset), 1, this.moveSpeed());
-        this.cameraOffset = Direction.NONE;
-        this.needToReset = true;
-    }
-}
-
-Game_Map.prototype.canScroll = function (direction) {
-    switch (direction) {
-        case Direction.DOWN: return this.isLoopVertical() || this.height() >= this.screenTileY() && this.displayY() < this.height() - this.screenTileY();
-        case Direction.UP: return this.isLoopVertical() || this.height() >= this.screenTileY() && this.displayY() > 0;
-        case Direction.LEFT: return this.isLoopHorizontal() || this.width() >= this.screenTileX() && this.displayX() > 0;
-        case Direction.RIGHT: return this.isLoopHorizontal() || this.width() >= this.screenTileX() && this.displayX() < this.width() - this.screenTileX();
-        default: return Direction.NONE;
-    }
-}
-
-reverseDirection = function (direction) {
-    switch (direction) {
-        case Direction.DOWN: return Direction.UP;
-        case Direction.UP: return Direction.DOWN;
-        case Direction.LEFT: return Direction.RIGHT;
-        case Direction.RIGHT: return Direction.LEFT;
-        default: return Direction.NONE;
-    }
-}*/
-/*
-//Will stop scrolling, wherever it currently is
-Game_Map.prototype.stopScroll = function () {
-    this._scrollRest = 0;
-} 
-
 */

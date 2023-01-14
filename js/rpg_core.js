@@ -1869,7 +1869,7 @@ Graphics.tickEnd = function() {
  * @param {Stage} stage The stage object to be rendered
  */
 Graphics.render = function(stage) {
-    if (this._skipCount === 0) {
+    if (this._skipCount <= 0) { //Change: fixed a rare freeze on high refresh rate displays
         var startTime = Date.now();
         if (stage) {
             this._renderer.render(stage);
@@ -1885,7 +1885,7 @@ Graphics.render = function(stage) {
         this._skipCount--;
         this._rendered = false;
     }
-    this.frameCount++;
+    //this.frameCount++; //Change: fixed inaccurate playtime on high refresh rate displays
 };
 
 /**

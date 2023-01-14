@@ -2033,6 +2033,7 @@ SceneManager.updateScene = function() {
             this._scene.update();
         }
     }
+    Graphics.frameCount++; //Change: moved framecounting here
 };
 
 SceneManager.renderScene = function() {

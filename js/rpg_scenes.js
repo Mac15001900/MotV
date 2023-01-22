@@ -504,7 +504,7 @@ Scene_Title.prototype.createCommandWindow = function () {
     this._commandWindow.setHandler('newGame', this.commandNewGame.bind(this));
     this._commandWindow.setHandler('continue', this.commandContinue.bind(this));
     this._commandWindow.setHandler('options', this.commandOptions.bind(this));
-    this._commandWindow.setHandler('exit', this.commandExit.bind(this)); //Change: added exit option
+    if (Utils.isNwjs()) this._commandWindow.setHandler('exit', this.commandExit.bind(this)); //Change: added exit option
     this.addWindow(this._commandWindow);
 };
 

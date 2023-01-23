@@ -34,6 +34,7 @@ g.gameInitialised = false;
 let $gv;
 let $gs;
 let $es;
+let $ss;
 
 const GAME_VERSION = "Alpha 1.0.0";
 const SECRET_KEYS = ["otoczenie", "nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietakiwitęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
@@ -80,6 +81,16 @@ macThingsInit = function () {
             $gameSwitches.setValue(prop, value);
         }
     });
+    $ss = new Proxy($gameSelfSwitches._data, {
+        get: function (target, name) {
+            let inp = g.getInterpreter();
+            return $gameSelfSwitches.value(inp._mapId + ',' + inp._eventId + ',' + name.toUpperCase());
+        },
+        set: function (obj, name, value) {
+            let inp = g.getInterpreter();
+            $gameSelfSwitches.setValue(inp._mapId + ',' + inp._eventId + ',' + name.toUpperCase(), value);
+        }
+    });
 
     $gs[1] = true; //Set the 'True' switch to always be true
 
@@ -92,6 +103,7 @@ macThingsInit = function () {
     }
 
     //Setting up the $es proxy
+    if (!g.data.seenEvents) g.data.seenEvents = [];
     $es = new Proxy(g.data.seenEvents, {
         get: function (target, name) {
             return !!(g.data.seenEvents[$gameMap.mapId()] || {})[name];
@@ -103,6 +115,7 @@ macThingsInit = function () {
         }
     });
 
+
     //Movespeed and debug stuff
     $gamePlayer.setMoveSpeed(4.5);
     if (MAC_DEBUG) {
@@ -112,6 +125,7 @@ macThingsInit = function () {
     }
 
     //Other init stuff
+    g.lang = "en"; //TODO: this is temporary
     g.interpteter = new Game_Interpreter();
     g.gameInitialised = true;
     g.saveWorker = new Worker("./js/plugins/compressor.js");
@@ -124,6 +138,8 @@ initialiseGData = function () {
     res.keysCollected = {};
     for (let i = 0; i < SECRET_KEYS.length; i++) {
         res.keysCollected[SECRET_KEYS[i]] = false;
+        //$gameVariables.setValue(11, $gameVariables.value(11) + 1);
+        $gv[11]++;
     }
     res.lastCollected = null;
     return res;
@@ -388,7 +404,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
     this.moveRight = function (amount = 1) {
         if (x + amount < rows && x + amount >= 0) x += amount;
         else if (wrap) x = (x + amount) % rows;
-        else debugger; // console.error("Invalid operation at MultiDisplay");
+        else console.error("Invalid operation at MultiDisplay");
     };
     this.moveLeft = (amount = 1) => self.moveRight(-amount);
 
@@ -454,24 +470,29 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
 
 //=====================================Misc utility functions=====================================
 
+//Gets the currently active interpreter (or the map's default if none are active)
 g.getInterpreter = function () {
     let res = $gameMap._interpreter;
     while (res._childInterpreter && res._childInterpreter.isRunning()) res = res._childInterpreter;
     return res;
 }
 
+//Finds the width of the canvas (in pixels)
 g.screenWidth = function () {
     return Number(document.querySelector("#GameCanvas").style.width.slice(0, -2));
 }
 
+//Finds the height of the canvas (in pixels)
 g.screenHeight = function () {
     return Number(document.querySelector("#GameCanvas").style.height.slice(0, -2));
 }
 
+//Calls showPicture with some parameters filled in with reasonable defaults
 g.showPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
     $gameScreen.showPicture(id, name, 1, x, y, scale, scale, 255, 0);
 }
 
+//Shows a single message, with a face if one is specified. Will not queue up multiple messages
 g.showMessage = function (inp, message, face, faceFile = 'mc') {
     if (face !== undefined) $gameMessage.setFaceImage(faceFile, face);
     $gameMessage.setBackground(0);
@@ -480,6 +501,7 @@ g.showMessage = function (inp, message, face, faceFile = 'mc') {
     inp.setWaitMode('message');
 }
 
+//Adds extra spaces to make sure the text is of certain width
 g.padToLength = function (string, targetLength, side = 'both') {
     let lines = string.split('\n');
     let maxLength = lines.map(g.simpleUnescape).map(l => l.length).reduce((a, b) => a > b ? a : b);
@@ -549,6 +571,56 @@ function copyTextToClipboard(text, escapeSpecial = true) {
     document.body.removeChild(textArea);
 }
 
+//=====================================  Translation system  =====================================
+
+/*SceneManager.push(Scene_MenuBase)
+undefined
+g.getInterpreter().pluginCommand('CreateQuestionWindow', ['3', '<WordWrap>'+g.padToLength("hello", 40, 'right')]);
+undefined
+SceneManager.pop()*/
+
+//Saving to global data: makeSavefileInfo, inside saveGameWithoutRescue
+
+//ConfigManager.makeData = function () { - returns config
+//ConfigManager.applyData = function (config) { - loads everything from that config
+
+
+//ConfigManager.lang = "en"; //TODO is this needed?
+
+Object.defineProperty(ConfigManager, 'lang', {
+    get: function () {
+        return g.lang;
+    },
+    set: function (value) {
+        g.lang = value;
+    },
+    configurable: true
+});
+
+var _ConfigManager_makeData = ConfigManager.makeData;
+ConfigManager.makeData = function () {
+    var config = _ConfigManager_makeData.call(this);
+    config.lang = g.lang;
+    return config;
+};
+
+var _ConfigManager_applyData = ConfigManager.applyData;
+ConfigManager.applyData = function (config) {
+    _ConfigManager_applyData.call(this, config);
+    g.lang = config.lang;
+};
+
+var _Window_Options_addVolumeOptions = Window_Options.prototype.addVolumeOptions;
+Window_Options.prototype.addVolumeOptions = function () {
+    _Window_Options_addVolumeOptions.call(this);
+    this.addCommand("Język", 'lang');
+};
+
+
+
+
+
+
 //=====================================Various engine changes=====================================
 
 //Clears up things when going back to main menu
@@ -604,11 +676,13 @@ Game_Interpreter.prototype.updateWaitMode = function () {
     return _Game_Interpreter_updateWaitMode.apply(this, arguments);
 };
 
-//Adds an exit command to the main menu
+//Adds an exit command to the main menu 
+
 Scene_Title.prototype.commandExit = function () {
     this._commandWindow.close();
     SceneManager.exit();
 };
+
 
 //New delay character: in messages \, works like \. but for half the time
 var _Window_Message_processEscapeCharacter = Window_Message.prototype.processEscapeCharacter;

@@ -155,7 +155,7 @@ Galv.CRED = Galv.CRED || {};        // Galv's stuff
 		var filename = Galv.CRED.tempFilename || "Credits";
 		var folder = PluginManager.parameters('Galv_RollCredits')["Folder"];
 		if (folder !== "") folder = folder + "/";
-		Galv.CRED.file.getString(folder + filename + ".txt");
+		Galv.CRED.file.getString(folder + filename + "-" + g.lang + ".txt"); //Change: made the file language-dependent
 		//};
 
 	};

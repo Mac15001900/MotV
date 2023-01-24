@@ -5789,8 +5789,8 @@ Window_TitleCommand.prototype.makeCommandList = function () {
     this.addCommand(TextManager.newGame, 'newGame');
     this.addCommand(TextManager.continue_, 'continue', this.isContinueEnabled());
     this.addCommand(TextManager.options, 'options');
-    this.addCommand(Galv.CRED.titleText, 'credits');  //Change: Added a credits and an exit option
-    this.addCommand("Wyjdź", 'exit');
+    this.addCommand(s.credits, 'credits');  //Change: Added a credits and an exit option
+    this.addCommand(s.exit, 'exit');
 };
 
 Window_TitleCommand.prototype.isContinueEnabled = function () {

@@ -15,6 +15,10 @@ String.prototype.replaceAll = function (pattern, value) {
     return this.split(pattern).join(value);
 }*/
 
+String.prototype.capitalise = function () {
+    return this[0].toUpperCase() + this.substring(1);
+}
+
 //===================================== Initialisation =====================================
 
 //Make sure we have a modern enough version of JavaScript
@@ -29,8 +33,9 @@ const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 9; //If debug is on, game stage will be set to this
 const MUSIC_DEBUG = false;
 window.g = window.g || {}
+window.s = wordBank.en; //This should change once the config gets loaded
 g.gameInitialised = false;
-//Shorhands for $gameVariables and $gameSwitches, as well as seen events. Filled in by macThingsInit
+//Shorhands for $gameVariables, $gameSwitches and $gameSelfSwitches, as well as seen events. Filled in by macThingsInit
 let $gv;
 let $gs;
 let $es;
@@ -44,6 +49,7 @@ const VOLUME_INCREMENT = 5; //How many % to change the volume by from one button
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 20]; //How many keys are needed for each unlock stage
 const ENCRYPT_LIST = "aąbcćdeęfghijklłmnńoóprsśtuwyzźż[]";
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
+
 var _Scene_Map_loaded = Scene_Map.prototype.onMapLoaded;
 Scene_Map.prototype.onMapLoaded = function () {
     _Scene_Map_loaded.call(this);
@@ -123,6 +129,15 @@ macThingsInit = function () {
         $gv[41] = DEBUG_STAGE;
         $gamePlayer.setMoveSpeed(5);
     }
+
+    //Setting language switches
+    console.assert(g.lang !== 'none');
+    for (const key in langData.switches) {
+        if (Object.hasOwnProperty.call(langData.switches, key)) {
+            $gs[langData.switches[key]] = false;
+        }
+    }
+    $gs[langData.switches[g.lang]] = true
 
     //Other init stuff
     g.lang = "en"; //TODO: this is temporary
@@ -571,12 +586,10 @@ function copyTextToClipboard(text, escapeSpecial = true) {
     document.body.removeChild(textArea);
 }
 
-//=====================================  Translation system  =====================================
+//=====================================  Translation system (and colorblindness) =====================================
 
 /*SceneManager.push(Scene_MenuBase)
-undefined
 g.getInterpreter().pluginCommand('CreateQuestionWindow', ['3', '<WordWrap>'+g.padToLength("hello", 40, 'right')]);
-undefined
 SceneManager.pop()*/
 
 //Saving to global data: makeSavefileInfo, inside saveGameWithoutRescue
@@ -587,12 +600,26 @@ SceneManager.pop()*/
 
 //ConfigManager.lang = "en"; //TODO is this needed?
 
+g.setLanguage = function (lang) {
+    g.lang = lang;
+    s = wordBank[lang];
+    if ($dataSystem) $dataSystem.terms = s.terms;
+    if ($gs) { //If switches exist, set the correct language one
+        for (const key in langData.switches) {
+            if (Object.hasOwnProperty.call(langData.switches, key)) {
+                $gs[langData.switches[key]] = false;
+            }
+        }
+        $gs[langData.switches[lang]] = true
+    }
+}
+
 Object.defineProperty(ConfigManager, 'lang', {
     get: function () {
         return g.lang;
     },
     set: function (value) {
-        g.lang = value;
+        g.setLanguage(value);
     },
     configurable: true
 });
@@ -601,24 +628,78 @@ var _ConfigManager_makeData = ConfigManager.makeData;
 ConfigManager.makeData = function () {
     var config = _ConfigManager_makeData.call(this);
     config.lang = g.lang;
+    config.isColorblind = g.isColorblind;
     return config;
 };
 
 var _ConfigManager_applyData = ConfigManager.applyData;
 ConfigManager.applyData = function (config) {
     _ConfigManager_applyData.call(this, config);
-    g.lang = config.lang;
+    if (config.lang && config.lang !== "none") g.setLanguage(config.lang);
+    else g.lang = "none";
+    if (config.isColorblind !== undefined) g.isColorblind = config.isColorblind;
 };
+
+var _DataManager_onLoad = DataManager.onLoad;
+DataManager.onLoad = function (object) {
+    if (object === $dataSystem) {
+        console.log("Loading dataSystem", $dataSystem);
+        if (g.lang !== "none") $dataSystem.terms = s.terms;
+    }
+    _DataManager_onLoad.call(this, object);
+}
 
 var _Window_Options_addVolumeOptions = Window_Options.prototype.addVolumeOptions;
 Window_Options.prototype.addVolumeOptions = function () {
     _Window_Options_addVolumeOptions.call(this);
     this.addCommand("Język", 'lang');
 };
+/*
+//Adding the first-time language choice (when none is saved)
+var _Scene_Title_create = Scene_Title.prototype.create;
+Scene_Title.prototype.create = function () {
+    _Scene_Title_create.call(this);
+    let inp = g.getInterpreter();
+    inp._params = [14];
+    inp.command117();
+}*/
 
+//First-launch scene
+function Scene_LangugeChoice() {
+    this.initialize.apply(this, arguments);
+}
 
+Scene_LangugeChoice.prototype = Object.create(Scene_MenuBase.prototype);
+Scene_LangugeChoice.prototype.constructor = Scene_LangugeChoice;
 
+Scene_LangugeChoice.prototype.initialize = function () {
+    Scene_MenuBase.prototype.initialize.call(this);
+};
 
+Scene_LangugeChoice.prototype.start = function () {
+    console.log("Starting lang scene");
+    Scene_MenuBase.prototype.start.call(this);
+    let inp = g.getInterpreter();
+    inp.pluginCommand('SetQuestionWindowData', ['2', '1', 'center']);
+    inp.pluginCommand('SetQuestionWindowChoices', ['English,', 'Polski']);
+    inp.pluginCommand('CreateQuestionWindow', ['3', g.padToLength("Choose your preferred language\n      Wybierz język gry\n", 50)]);
+    this.stage = 1;
+};
+
+Scene_LangugeChoice.prototype.update = function () {
+    Scene_MenuBase.prototype.update.call(this);
+    let inp = g.getInterpreter();
+    if (this.stage === 1 && !inp._waitMode) {
+        g.setLanguage(langData.list[$gameVariables.value(3)]);
+        inp.pluginCommand('SetQuestionWindowChoices', [s.yes.capitalise() + ',', s.no.capitalise()]);
+        inp.pluginCommand('CreateQuestionWindow', ['3', g.padToLength(s.colorblindPrompt + '\n', 50)]);
+        this.stage = 2;
+    } else if (this.stage === 2 && !inp._waitMode) {
+        g.isColorblind = $gameVariables.value(3) === 0;
+        ConfigManager.save();
+        this.popScene()
+    }
+}
 
 
 //=====================================Various engine changes=====================================
@@ -631,6 +712,11 @@ Scene_Title.prototype.start = function () {
     if (g) {
         g.gameInitialised = false;
         if (g.autosaveTimeout) clearTimeout(g.autosaveTimeout);
+    }
+    //Language stuff
+    if (g.lang === "none") {
+        console.log("Starting lang selection");
+        SceneManager.push(Scene_LangugeChoice);
     }
 };
 

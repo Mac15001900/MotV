@@ -2714,6 +2714,8 @@ Window_Options.prototype.statusText = function (index) {
         return this.volumeStatusText(value);
     } else if (symbol === "cancel") {
         return "";  //Change: not doing anything for ON/OFF
+    } else if (symbol === "lang") {
+        return langData.dict[value];
     } else {
         return this.booleanStatusText(value);
     }
@@ -2736,6 +2738,10 @@ Window_Options.prototype.processOk = function () {
     var index = this.index();
     var symbol = this.commandSymbol(index);
     if (symbol === "cancel") SceneManager.pop(); //Change: special case for going back
+    if (symbol === 'lang') {
+        this.changeValue(symbol, langData.next());
+        return;
+    }
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         value += this.volumeOffset();
@@ -2753,6 +2759,10 @@ Window_Options.prototype.cursorRight = function (wrap) {
     var index = this.index();
     var symbol = this.commandSymbol(index);
     if (symbol === "cancel") return; //Change: special case for going back
+    if (symbol === 'lang') {
+        this.changeValue(symbol, langData.next());
+        return;
+    }
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         value += this.volumeOffset();
@@ -2767,6 +2777,10 @@ Window_Options.prototype.cursorLeft = function (wrap) {
     var index = this.index();
     var symbol = this.commandSymbol(index);
     if (symbol === "cancel") return; //Change: special case for going back
+    if (symbol === 'lang') {
+        this.changeValue(symbol, langData.previous());
+        return;
+    }
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         value -= this.volumeOffset();

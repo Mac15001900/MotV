@@ -140,7 +140,6 @@ macThingsInit = function () {
     $gs[langData.switches[g.lang]] = true
 
     //Other init stuff
-    g.lang = "en"; //TODO: this is temporary
     g.interpteter = new Game_Interpreter();
     g.gameInitialised = true;
     g.saveWorker = new Worker("./js/plugins/compressor.js");
@@ -549,6 +548,12 @@ g.breakString = function (string, length = 100) {
     return res.join('\n');
 }
 
+
+/*var _Window_Base_convertEscapeCharacters = Window_Base.prototype.convertEscapeCharacters;
+Window_Base.prototype.convertEscapeCharacters = function (text) {
+    _Window_Base_convertEscapeCharacters.call(this, eval('`' + text + '`'));
+}*/
+
 //Removes or converts some special escape characters, for saving strings as plain text. Might not handle everything
 //TODO: remove text shaking stuff as well
 g.simpleUnescape = function (string) {
@@ -597,9 +602,6 @@ SceneManager.pop()*/
 //ConfigManager.makeData = function () { - returns config
 //ConfigManager.applyData = function (config) { - loads everything from that config
 
-
-//ConfigManager.lang = "en"; //TODO is this needed?
-
 g.setLanguage = function (lang) {
     g.lang = lang;
     s = wordBank[lang];
@@ -642,10 +644,7 @@ ConfigManager.applyData = function (config) {
 
 var _DataManager_onLoad = DataManager.onLoad;
 DataManager.onLoad = function (object) {
-    if (object === $dataSystem) {
-        console.log("Loading dataSystem", $dataSystem);
-        if (g.lang !== "none") $dataSystem.terms = s.terms;
-    }
+    if (object === $dataSystem) if (g.lang !== "none") $dataSystem.terms = s.terms;
     _DataManager_onLoad.call(this, object);
 }
 
@@ -654,15 +653,6 @@ Window_Options.prototype.addVolumeOptions = function () {
     _Window_Options_addVolumeOptions.call(this);
     this.addCommand("Język", 'lang');
 };
-/*
-//Adding the first-time language choice (when none is saved)
-var _Scene_Title_create = Scene_Title.prototype.create;
-Scene_Title.prototype.create = function () {
-    _Scene_Title_create.call(this);
-    let inp = g.getInterpreter();
-    inp._params = [14];
-    inp.command117();
-}*/
 
 //First-launch scene
 function Scene_LangugeChoice() {
@@ -763,12 +753,22 @@ Game_Interpreter.prototype.updateWaitMode = function () {
 };
 
 //Adds an exit command to the main menu 
-
 Scene_Title.prototype.commandExit = function () {
     this._commandWindow.close();
     SceneManager.exit();
 };
 
+//Eval expressions inside ${}
+_Window_Base_convertEscapeCharacters = Window_Base.prototype.convertEscapeCharacters;
+Window_Base.prototype.convertEscapeCharacters = function (text, x, y) {
+    let res = text;
+    let match = res.match(/\${([^}]*)}/); //This will match template-like strings, i.e. ${expression}
+    while (match) {
+        res = res.replace(/\${([^}]*)}/, eval(match[1]));
+        match = res.match(/\${([^}]*)}/);
+    }
+    return _Window_Base_convertEscapeCharacters.call(this, res, x, y);
+}
 
 //New delay character: in messages \, works like \. but for half the time
 var _Window_Message_processEscapeCharacter = Window_Message.prototype.processEscapeCharacter;
@@ -778,6 +778,12 @@ Window_Message.prototype.processEscapeCharacter = function (code, textState) {
         default: _Window_Message_processEscapeCharacter.call(this, code, textState);
     }
 }
+//Allows game variables to return "" or false
+Game_Variables.prototype.value = function (variableId) {
+    let res = this._data[variableId];
+    if (res == null) return 0;
+    else return res;
+};
 
 //Fixes the blurring when going fullscreen, by KisaiTenshi. From https://forums.rpgmakerweb.com/index.php?threads/how-to-remove-blur.47504/
 ImageManager.loadBitmap = function (folder, filename, hue, smooth) {

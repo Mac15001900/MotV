@@ -25,3 +25,4 @@ Shiro
 Kaduki
 
 Aqua's tiles require a link
+SRD's also require a link: http://sumrndm.site/

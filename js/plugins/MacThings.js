@@ -761,11 +761,12 @@ Scene_Title.prototype.commandExit = function () {
 //Eval expressions inside ${}
 _Window_Base_convertEscapeCharacters = Window_Base.prototype.convertEscapeCharacters;
 Window_Base.prototype.convertEscapeCharacters = function (text, x, y) {
+    const pattern = /\${([^}]*)}/; //This will match template-like strings, i.e. ${expression}
     let res = text;
-    let match = res.match(/\${([^}]*)}/); //This will match template-like strings, i.e. ${expression}
+    let match = res.match(pattern);
     while (match) {
-        res = res.replace(/\${([^}]*)}/, eval(match[1]));
-        match = res.match(/\${([^}]*)}/);
+        res = res.replace(pattern, match[1]);
+        match = res.match(pattern);
     }
     return _Window_Base_convertEscapeCharacters.call(this, res, x, y);
 }

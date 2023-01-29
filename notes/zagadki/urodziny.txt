@@ -40,3 +40,53 @@ Sorted:
 
 F -> [
 A -> ]
+
+----------------- English -----------------
+
+nexus[goodluck]
+
+
+
+
+Nelson Eddy
+Ethelda Bleibtrey
+Xu Jianguo
+Umberto II
+Sergey Nikolsky
+[ Virginia Hall
+Günter Eich
+Olivier Messiaen
+Osamu Dazai
+Douglas Bader
+Lê Đức Thọ / Lee J. Cobb
+Ursula Torday
+Cynthia Chalk
+Kevin McCarthy
+] Axel Axgil
+
+
+Sorted:
+
+Axel Axgil
+Cynthia Chalk
+Douglas Bader
+Ethelda Bleibtrey
+
+Günter Eich
+Kevin McCarthy
+Lê Đức Thọ
+Nelson Eddy
+
+Olivier Messiaen
+Osamu Dazai
+Sergey Nikolsky
+Umberto II
+
+Ursula Torday
+Virginia Hall
+Xu Jianguo
+
+
+
+
+

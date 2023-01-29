@@ -1624,7 +1624,7 @@ Window_MenuCommand.prototype.addFormationCommand = function () {
 };
 
 Window_MenuCommand.prototype.addOriginalCommands = function () {
-    this.addCommand("Wznów", 'cancel', true);
+    this.addCommand(s.resume, 'cancel', true);
 };
 
 Window_MenuCommand.prototype.addOptionsCommand = function () {
@@ -2676,7 +2676,7 @@ Window_Options.prototype.updatePlacement = function () {
 };
 
 Window_Options.prototype.makeCommandList = function () {
-    this.addCommand("Wróć", 'cancel'); //Change: added an option to go back
+    this.addCommand(s.back, 'cancel'); //Change: added an option to go back
     this.addGeneralOptions();
     this.addVolumeOptions();
 };
@@ -2867,7 +2867,7 @@ Window_SavefileList.prototype.drawItem = function (index) {
 Window_SavefileList.prototype.drawFileId = function (id, x, y) {
     if (id === 1) {
         if (this._mode === 'save') this.changePaintOpacity(false);
-        this.drawText('Autozapis', x, y, 180);
+        this.drawText(s.autosave, x, y, 180);
     } else {
         this.drawText(TextManager.file + ' ' + (id - 1), x, y, 180);
     }

@@ -403,7 +403,7 @@ testPanic = function (inp) {
 
 g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
     let self = this;
-    text = text || ["Strzałka w lewo", "Strzałka w prawo", "Strzałka w górę", "Strzałka w dół", "Odejdź"];
+    text = text || s.displayNavigation;
     let x = 0;
     let y = 0;
     let imageTexts = {};
@@ -765,7 +765,7 @@ Window_Base.prototype.convertEscapeCharacters = function (text, x, y) {
     let res = text;
     let match = res.match(pattern);
     while (match) {
-        res = res.replace(pattern, match[1]);
+        res = res.replace(pattern, eval(match[1]));
         match = res.match(pattern);
     }
     return _Window_Base_convertEscapeCharacters.call(this, res, x, y);

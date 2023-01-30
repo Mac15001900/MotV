@@ -37,3 +37,48 @@ hodni, hwyt, ier, hmurzenie
 błoń, śnieć, godowy, ja
 ]
 
+
+----------------- English -----------------
+
+nexus[codeclination]
+nexus[lingonberry] ?
+
+(ne)ck, (ne)anderthal, (ne)ar, (ne)uron
+(x)enobiology, (x)erox, (x)ylophone, (x)ylocarp
+
+nomad, news, note, number, nebula, neutrino, nitrogen
+(ex)terminate, (ex)amination, (ex)act, (ex)cavation, (ex)cellent, (ex)ception, (ex)traction
+useful, user, userper, usual, USA, USSR, usher
+[
+CO: collaboration, coach, coat, coal, cosmic / cosmos, correlation, coarse, cobalt, cobblestone, coast, cocktail, codex, cod, code, coefficient, coffee, conicidence, cold, colour
+DEC: decade, december, decadent, decoration, decapitation, decentralisation, deception, decline, deck, decision, decipher / decrypt,      decarbonate
+LIN: line, link, linear, linen, linguist, lineage, lineup
+AT: attack, athlete, atlas, atom, atmosphere, attraction, attract, attribute, 
+I: instrument, internet, information, intellect, inquisition, igloo, image, invention, iron, iris
+ON: onlooker, onyx, onion, onwards, onto, oneself, one
+G: germs, globe, great, goat, gas, gold
+IO: ion, ionisation, iodic, IOU, IOS, ioniser, ionising
+
+N: neutrino, nebula, number, nitrogen
+EX: exception, exact, exterminate, exam
+US: user, usual, useful, userper
+[
+CO: cosmos, codex, cold, correlation
+DEC: decision, decryption, december, decade
+LIN: link, linguist, linear, lineage
+AT: atom, attraction, atmosphere, atlas
+I: igloo, image, iron, iris
+ON: onyx, onion, onlooker, one
+]
+
+eutrino, ebula, umber, itrogen
+ception, act, terminate, am
+er, ual, eful, erper
+[
+smos, dex, ld, rrelation
+ision, ryption, ember, ade
+k, guist, ear, eage
+om, traction, mosphere, las
+gloo, mage, ron, ris
+yx, ion, looker, e
+]

@@ -111,7 +111,7 @@
 	Window_Options.prototype.addGeneralOptions = function () {
 		_Window_Options_addGeneralOptions.call(this);
 		if (position === 'middle') {
-			this.addCommand(optionName, 'fullscreen');
+			this.addCommand(s.fullScreen, 'fullscreen');
 		}
 	};
 	/*

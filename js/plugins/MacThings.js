@@ -47,7 +47,6 @@ const AUTOSAVE_DELAY = 300 * 1000; //How often to autosave (in miliseconds)
 const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try again
 const VOLUME_INCREMENT = 5; //How many % to change the volume by from one button-press
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 20]; //How many keys are needed for each unlock stage
-const ENCRYPT_LIST = "aąbcćdeęfghijklłmnńoóprsśtuwyzźż[]";
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
 
 var _Scene_Map_loaded = Scene_Map.prototype.onMapLoaded;
@@ -282,25 +281,24 @@ function useDopełniacz(amount) {
 
 g.encrypterPuzzle = function (text) {
     text = text + "";
-    if (text.length > 100) return "Maksymalna długość to 100 znaków";
-    if (Array.from(text).find(c => !ENCRYPT_LIST.includes(c))) return "Dozwolone znaki to: " + ENCRYPT_LIST;
+    if (text.length > 100) return s.maximumLengthIs + ' 100 ' + s.characters;
+    if (Array.from(text).find(c => !s.encryptList.includes(c))) return s.allowedCharactersAre + ": " + s.encryptList;
 
-
-    let values = text.split("").map(c => ENCRYPT_LIST.indexOf(c) + 1);
+    let values = text.split("").map(c => s.encryptList.indexOf(c) + 1);
     let sum = values.reduce((a, b) => a + b, 0);
     let encrypted = [];
     for (let i = 0; i < values.length; i++) {
-        encrypted[i] = ENCRYPT_LIST[(values[i] - 1 + sum * (i + 1)) % (ENCRYPT_LIST.length)];
+        encrypted[i] = s.encryptList[(values[i] - 1 + sum * (i + 1)) % (s.encryptList.length)];
     }
     return encrypted.join("") + "-" + sum;
 }
 
-g.calculatorPuzzle = function (text) { //For testing: https://www.alpertron.com.ar/ECM.HTM
+g.calculatorPuzzle = function (text) { //Factorisation for testing: https://www.alpertron.com.ar/ECM.HTM
     text = text + "";
-    if (text.length > 50) return "Maksymalna długość to 50 znaków";
-    if (Array.from(text).find(c => !ENCRYPT_LIST.includes(c))) return "Dozwolone znaki to: " + ENCRYPT_LIST;
+    if (text.length > 50) return s.maximumLengthIs + ' 50 ' + s.characters;
+    if (Array.from(text).find(c => !s.encryptList.includes(c))) return s.allowedCharactersAre + ": " + s.encryptList;
 
-    let values = text.split("").map(c => ENCRYPT_LIST.indexOf(c) + 1);
+    let values = text.split("").map(c => s.encryptList.indexOf(c) + 1);
     let sum = 1n;
     for (let i = 0; i < values.length; i++) {
         sum = sum * PRIMES[i] ** BigInt(values[i]);
@@ -315,10 +313,9 @@ runNearbyEvent = function (inp, dx, dy) {
     let events = $gameMap._events;
     let { x, y } = events[inp.eventId()];
     let targetId = $gameMap.eventIdXy(x + dx, y + dy);
-    if (targetId === 0) throw new Error(`No event found at x:${x + xd}, y:${y + dy}.`);
+    if (targetId === 0) throw new Error(`No event found at x:${x + dx}, y:${y + dy}.`);
     else {
         let targetEvent = $gameMap._events[targetId];
-        //let targetEvent = events.filter(e => e && e.x === x + dx && e.y === y + dy);
         inp.setupChild(targetEvent.list(), targetEvent.eventId());
     }
 }
@@ -786,6 +783,9 @@ Game_Variables.prototype.value = function (variableId) {
     else return res;
 };
 
+
+//===================================== Engine fixes =====================================
+
 //Fixes the blurring when going fullscreen, by KisaiTenshi. From https://forums.rpgmakerweb.com/index.php?threads/how-to-remove-blur.47504/
 ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
     //let doSmoothing = false;
@@ -807,6 +807,26 @@ ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
 
 //Fix for inaccurate playtime on high-refresh displays, by Caethyril. From: https://forums.rpgmakerweb.com/index.php?threads/using-gamesystem-playtimetext-for-accurate-playtime.131810/
 //Added directly to Graphics.render and SceneManager.updateScene
+
+
+//===================================== Optimisations =====================================
+
+//Always return GameFont (instead of checking for other locales we don't use)
+Window_Base.prototype.standardFontFace = function () {
+    return 'GameFont';
+}
+
+//Cache the mobile safari querry
+Utils._mobileSafari = Utils.isMobileSafari();
+Utils.isMobileSafari = function () {
+    return Utils._mobileSafari;
+}
+
+//Cache the mobile device querry
+Utils._mobileDevice = Utils.isMobileDevice();
+Utils.isMobileDevice = function () {
+    return Utils._mobileDevice;
+}
 
 
 //===================================== Temp experiments =====================================

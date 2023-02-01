@@ -77,39 +77,30 @@ klucz[Wielka Unifikacja Haseł]
 nexus[First Great Unification]
 _klucz[Wielka Un_i_fik_acja _H_aseł]
 _nexus[First Gre_a_t U_nific_a_tion]
-_N_X___F_______E_______________T_O__
-__E__S__I__T_____A_____N__I________]
-____U____R____R____T____I____A______
-______[______G______ ______C______N_
-__________S__________U__________I___
-____________ ____________F__________
+_N_X_-_F_-_-_-_E_-_-_-_-_-_-_-_T_O_-_
+__E__S__I__T__-__A__-__N__I__-__-__]_
+____U____R____R____T____I____A____-__
+______[______G______ ______C______N__
+__________S__________U__________I____
+____________ ____________F___________
 
-With uppercased correct ones:
-rN_X"uyF;:,+s}qE`ka)lwd<<s`.tg|T[Ow;
-=!E+nSc<I'jT#r.<hAuw}=*N=gIp<] g{h]]
-o^*,Ukz>zR+}<"Rdg-jTk+[|I&(<^Ab$vdl&
-xv p\:["/c'hlGbut<,p d)u@meC>)[vfqN.
-bqa/$?>z@pS<>.r{v+"q-U[_"!$}s.b)I=ml
--#m..!",}/=r d,d#% <a&*hkFdw@i@=n.$u
+input = ["_N_X_-_F_-_-_-_E_-_-_-_-_-_-_-_T_O_-_", "__E__S__I__T__-__A__-__N__I__-__-__]_", "____U____R____R____T____I____A____-__", "______[______G______ ______C______N__", "__________S__________U__________I____", "____________ ____________F___________"]
 
-list = ["_N_X___F_______E_______________T_O__", "__E__S__I__T_____A_____N__I________]", "____U____R____R____T____I____A______", "______[______G______ ______C______N_", "__________S__________U__________I___", "____________ ____________F__________"]
-
-Puzzle:
 
 Stabiliser v2
-Serial number: rn_x"uyf;:,+s}qe`ka)lwd<<s`.tg|t[ow;
+Serial number: 7N4X0-1F3-8-8-GEM-M-U-7-J-S-K-6T6O6-J
 
 Stabiliser v3
-Serial number: =!e+nsc<i'jt#r.<hauw}=*n=gip<] g{h]]
+Serial number: IGER0S0YIL3TXA-G AV2-KEN 3I S-2T-YY]Q
 
 Stabiliser v5
-Serial number: o^*,ukz>zr+}<"rdg-jtk+[|i&(<^ab$vdl&
+Serial number: HY8EUWXKORZRCZR7YDCTVJZII2P4BAPT2M-K2
 
 Stabiliser v7
-Serial number: xv p\:["/c'hlgbut<,p d)u@mec>)[vfqn.
+Serial number: KAH125[Y1Y 6QGYUJ553 1RZRLDC0P91UXNQ6
 
 Stabiliser v11
-Serial number: bqa/$?>z@ps<>.r{v+"q-u[_"!$}s.b)i=ml
+Serial number: TTCKJXMV1 SXGXXNZWHLBUGM20 VOXD9IMDON
 
 Stabiliser v13
-Serial number: -#m..!",}/=r d,d#% <a&*hkfdw@i@=n.$u
+Serial number: I697P20DC5PU 7J62947ZH3TEFM78IEQHZ3SQ

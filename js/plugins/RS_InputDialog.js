@@ -580,7 +580,7 @@ function Scene_InputDialog() {
       border-radius : 0.5em;
       box-sizing : border-box;
       box-shadow : 0 1px 4px rgba(78, 78, 78, 0.6);
-      font-size : 1rem;
+      font-size : 1.5rem!important; /* Changed from 1rem */
   }
   
   .row {
@@ -595,7 +595,7 @@ function Scene_InputDialog() {
   
   @media screen and (min-width : 192px) and (max-width : 768px) {
       .defaultButton {
-          font-size : 1rem!important;
+          font-size : 1.5rem!important;
       }
       .row {
           width : 100%;
@@ -612,7 +612,7 @@ function Scene_InputDialog() {
   
   @media screen and (min-width : 768px) and (max-width : 1000px) {
       .defaultButton {
-          font-size : 1rem!important;
+          font-size : 1.5rem!important;
       }
       .row {
           width : 100%;
@@ -645,7 +645,7 @@ function Scene_InputDialog() {
   			</td>
   		</tr>
   		<tr class="row" valign="bottom">
-  			<td class="col" align="right">
+  			<td class="col" align="center">
   				<input class="defaultButton" id="inputDialog-OkBtn" type="button" value="${RS.InputDialog.Params.okButtonName}" name="">
           <input class="defaultButton" id="inputDialog-CancelBtn" type="button" value="${RS.InputDialog.Params.cancelButtonName}" name="">
   			</td>

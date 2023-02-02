@@ -48,7 +48,7 @@ nexus[lingonberry] ?
 
 nomad, news, note, number, nebula, neutrino, nitrogen
 (ex)terminate, (ex)amination, (ex)act, (ex)cavation, (ex)cellent, (ex)ception, (ex)traction
-useful, user, userper, usual, USA, USSR, usher
+useful, user, usurper, usual, USA, USSR, usher
 [
 CO: collaboration, coach, coat, coal, cosmic / cosmos, correlation, coarse, cobalt, cobblestone, coast, cocktail, codex, cod, code, coefficient, coffee, conicidence, cold, colour
 DEC: decade, december, decadent, decoration, decapitation, decentralisation, deception, decline, deck, decision, decipher / decrypt,      decarbonate
@@ -61,19 +61,19 @@ IO: ion, ionisation, iodic, IOU, IOS, ioniser, ionising
 
 N: neutrino, nebula, number, nitrogen
 EX: exception, exact, exterminate, exam
-US: user, usual, useful, userper
+US: user, usual, useful, usurper
 [
-CO: cosmos, codex, cold, correlation
-DEC: decision, decryption, december, decade
-LIN: link, linguist, linear, lineage
+CO: cosmos, codex, cold, correlation -- Make sure to close the doors to keep the inside cold enough
+DEC: decision, decryption, december, decade -- Decrypto
+LIN: link, linguist, linear, lineage -- linear support vector machine
 AT: atom, attraction, atmosphere, atlas
 I: igloo, image, iron, iris
-ON: onyx, onion, onlooker, one
+ON: onyx, onion, onlooker, one -- Toaster "ON"
 ]
 
 eutrino, ebula, umber, itrogen
 ception, act, terminate, am
-er, ual, eful, erper
+er, ual, eful, urper
 [
 smos, dex, ld, rrelation
 ision, ryption, ember, ade

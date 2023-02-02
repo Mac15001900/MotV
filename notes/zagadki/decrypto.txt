@@ -30,3 +30,13 @@ Domino, pomidor, średnica, 1/8, Włochy
 Orzech, futro, lodowiec, zakopany skarb, gałąź
 Miasto, studnia, warunki, kilka setek, Grecja
 Dwa kąty proste, zamknięcie, źródło, sic, koniec
+
+----------------- English -----------------
+
+Centre, puzzle, connection, focus, legends
+Square, annotation, opening, maths, sixth
+Nut, piece, factory, cow, darkness
+Domino, tomato, diameter, 1/8, Italy
+Nut, glacier, fur, buried treasure, branch
+City, well, spear, a few hundred, Greece
+Two right angles, closing, source, sic, end

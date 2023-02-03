@@ -2568,6 +2568,9 @@ Graphics._paintUpperCanvas = function () {
         context.globalAlpha = alpha;
         context.drawImage(this._loadingImage, dx, dy);
         context.restore();
+        if (!document.getElementById("loadingSpinner")) { //Change: added a spinner
+            document.body.appendChild(this._loadingSpinner);
+        }
     }
 };
 

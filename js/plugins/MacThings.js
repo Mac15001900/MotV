@@ -279,6 +279,23 @@ function useDopełniacz(amount) {
     return true;
 }
 
+function displayKeysEN(amount) {
+    return amount + " key" + (amount === 1 ? "" : "s");
+}
+
+function displayKeysPL(amount) {
+    let name = "klucze";
+    if (amount === 1) name = "klucz";
+    else if (useDopełniacz(amount)) name = "kluczy";
+    return amount + " " + name;
+}
+
+function useDopełniacz(amount) {
+    if (amount % 100 - amount % 10 === 10) return true;
+    if ([2, 3, 4].includes(amount % 10)) return false;
+    return true;
+}
+
 g.encrypterPuzzle = function (text) {
     text = text + "";
     if (text.length > 100) return s.maximumLengthIs + ' 100 ' + s.characters;
@@ -688,6 +705,45 @@ Scene_LangugeChoice.prototype.update = function () {
     }
 }
 
+//===================================== Loading spinnder =====================================
+
+//Creating the spinnder
+Graphics._createLoadingSpinner = function () {
+    const loadingSpinner = document.createElement("div");
+    const loadingSpinnerImage = document.createElement("div");
+    loadingSpinner.id = "loadingSpinner";
+    // loadingSpinnerImage.id = "loadingSpinnerImage";
+    // loadingSpinner.appendChild(loadingSpinnerImage);
+    this._loadingSpinner = loadingSpinner;
+};
+
+let _Graphics_createAllElements = Graphics._createAllElements;
+Graphics._createAllElements = function () {
+    _Graphics_createAllElements.call(this);
+    this._createLoadingSpinner();
+}
+/*
+//Show it when loading starts
+Graphics.startLoading = function () {
+    this._loadingCount = 0;
+        if (!document.getElementById("loadingSpinner")) {
+            document.body.appendChild(this._loadingSpinner);
+        }
+};*/
+
+//Hide it when it ends
+Graphics.endLoading = function () {
+    this._clearUpperCanvas();
+    this._upperCanvas.style.opacity = 0;
+    if (document.getElementById("loadingSpinner")) {
+        document.body.removeChild(this._loadingSpinner);
+    }
+};
+/*
+//TODO: very temp, disables loading probably
+SceneManager.onSceneStart = function () {
+    //Graphics.endLoading();
+};*/
 
 //=====================================Various engine changes=====================================
 

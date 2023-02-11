@@ -58,6 +58,7 @@ Scene_Map.prototype.onMapLoaded = function () {
 };
 
 macUpdateForeground = function () {
+    if (!g.ocramLayers) return;
     let foregroundName = $gameMap._parallaxName + '-F';
     if (foregroundName === "-F") return; //We're in testland
     if ($gameMap._parallaxName && g.ocramLayers[0]._imgName !== foregroundName || !g.gameInitialised) {

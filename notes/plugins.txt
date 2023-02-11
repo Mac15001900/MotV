@@ -73,3 +73,4 @@ Translation:
 Translation++: https://forums.rpgmakerweb.com/index.php?threads/translator-game-translation-tool.102706/
 GD Localisation: https://forums.rpgmakerweb.com/index.php?threads/gd-localization-yet-another-l18n-plugin.145927/
 
+Toasts: https://forums.rpgmakerweb.com/index.php?threads/kitemalert-mv.154667/

@@ -15,18 +15,37 @@ Od ósmej zacznij wkreślać tłuściej wzór [ ewolucja albedometrów czołgowi
 Od siódmej początek  
 
 Od ósmej zacznij wkreślać tłuściej wzór [wehikułów albedometrów czołgowisk błękitnookich]
+Matematycy na próżno starali się odkryć jakiś porządek występowania liczb pierwszych i mamy powody by przypuszczać, że jest to tajemnica, którą ludzki umysł nigdy nie zgłębi.
 Matematycy na próżno starali się odkryć jakiś porządek ████████████ █████ ██████████ i mamy powody by przypuszczać, że jest to tajemnica, którą ludzki umysł nigdy nie zgłębi
 
-Matematycy na próżno starali się odkryć jakiś porządek występowania liczb pierwszych i mamy powody by przypuszczać, że jest to tajemnica, którą ludzki umysł nigdy nie zgłębi.
+Z odstępami:
+Od ósmej zacznij wkreślać tłuściej wzór 
+[wehikułów albedometrów czołgowisk błękitnookich]
+
+Matematycy na próżno starali się odkryć jakiś porządek 
+████████████ █████ ██████████ i mamy powody by przypuszczać, 
+że jest to tajemnica, którą ludzki umysł nigdy nie zgłębi.
+
+Extra hint: 7919, 17389 (?)
+Równanie z samych liczb pierwszych:
+5 + 13 + 17299 = 17317
+73 + 97 + 15767 = 15937
+17 + 19 + 23 = 59
+
+Haskell na znajdowanie powyższych:
+isPrime x = [2..(fromIntegral x |> sqrt |> floor)] |> any (\d-> x `mod` d == 0) |> not
+findPairFrom x n = if ((isPrime x) && (isPrime (x+n))) then x else findPairFrom (x+1) n
+
+Środowiskowe:
+2 niebieskie butelki
+3 pomarańczowe
+5 płytki Petriego
+7 pustych butelek (lewy górny róg)
+11 zmiętych kartek papieru w koszu
+13 pustych butelek (duży stół)
+
+
 
 Bonus: polskie znaki o pierwszych pozycjach w alfabecie: ąbćehjmńryź
 
-Extra hint: 7919, 17389 (?)
 
-
-
-Tekst:
-Znajdujesz tu kartkę z napisem:
-
-Od ósmej zacznij wkreślać tłuściej wzór [wehikułów albedometrów czołgowisk błękitnookich]
-Matematycy na próżno starali się odkryć jakiś porządek ████████████ █████ ██████████ i mamy powody by przypuszczać, że jest to tajemnica, którą ludzki umysł nigdy nie zgłębi.

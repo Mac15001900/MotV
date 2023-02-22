@@ -36477,7 +36477,7 @@ var InteractionManager = function (_EventEmitter) {
         // Guaranteed that there will be at least one event in events, and all events must have the same pointer type
 
         if (this.autoPreventDefault && events[0].isNormalized) {
-            originalEvent.preventDefault();
+            //originalEvent.preventDefault();  //Change: TODO: trying out disabling default prevention
         }
 
         var eventLen = events.length;

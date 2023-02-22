@@ -360,7 +360,7 @@ If synchronous is false, it will only save if we're on the map and not in an eve
 If it is true, it will save immidiately (blocking the main thread). We assume the caller ensured this is a good moment to autosave
 */
 autosaveAttempt = function (synchronous = false) {
-    if (SceneManager.getSceneName() === 'Scene_Map' && !g.getInterpreter().isRunning() || synchronous) {
+    if (SceneManager.getSceneName && SceneManager.getSceneName() === 'Scene_Map' && !g.getInterpreter().isRunning() || synchronous) {
         $gameSystem.onBeforeSave();
         if (synchronous) autosave(LZString.compressToBase64(JsonEx.stringify(DataManager.makeSaveContents())), true);
         else {
@@ -396,19 +396,33 @@ window.onunload = () => {
 testPanic = function (inp) {
     inp.setWaitMode('indefinite'); //this.setWaitMode(''); to end this
     document.getElementById("GameCanvas").style.visibility = 'hidden';
-    //let frame = document.getElementById("frameTest")
+    document.getElementById("GameCanvas").style.display = 'none';
     let frame = document.createElement('iframe');
     frame.id = 'testFrame';
-    frame.src = "powerPanic/index.html";
-    frame.style = "width: 100%; height: 100%";
-    //let canvas = frame.contentWindow.document.getElementById()
-    frame.style.visibility = 'visible';
+    frame.src = "spacePanic/index.html";
+    frame.style = "width: 1920px; height: 1080px; border: none; z-index: 9005, ";
+    //let canvas = frame.contentWindow.document.getElementById();
+    frame.style.visibility = 'visible'; //TODO toggle 'display' instead?
+    frame.onload = "this.focus()";
     document.body.appendChild(frame);
 
-    /*canvas.width = this._width;
+    let gameElements = ["GameCanvas", "GameVideo", "UpperCanvas", "modeTextBack", "ErrorPrinter"]
+    for (let i = 0; i < gameElements.length; i++) {
+        const element = document.getElementById(gameElements[i]);
+        element.style.pointerEvents = "none";
+    }
+    document.body.style.margin = "-8px"; //It's 8px by default
+
+    //this._centerElement(this._video);
+}
+
+testPanic2 = function () {
+    let frame = document.getElementById("testFrame");
+    let nodes = frame.contentDocument.body.childNodes; //TODO this is a bit janky
+    let canvas = nodes[nodes.length - 1];
+    canvas.width = this._width;
     canvas.height = this._height;
     canvas.style.zIndex = 2;
-    //this._centerElement(this._video);*/
 }
 
 

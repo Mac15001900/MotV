@@ -613,7 +613,7 @@ function QInput() {
   Input._onKeyDown = function(event) {
     this._lastUsed = 'keyboard';
     if (this._shouldPreventDefault(event.keyCode)) {
-      event.preventDefault();
+      //event.preventDefault(); //Change: TODO: trying out disabling default prevention
     }
     if (event.keyCode === 144) {    // Numlock
       this.clear();

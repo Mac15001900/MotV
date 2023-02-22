@@ -37,7 +37,7 @@ var SceneStart = new Phaser.Class({
         this.background = this.add.image(-10, -10, 'stars-background').setOrigin(0).setScale(1.6);
         this.background.depth = -10;
 
-        this.textLogo = this.add.image(CANVAS_WIDTH / 2, 100, 'logo');
+        //this.textLogo = this.add.image(CANVAS_WIDTH / 2, 100, 'logo');
 
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N);
@@ -65,7 +65,6 @@ var SceneStart = new Phaser.Class({
         this.buttons['SceneWeapons'] = new StationButton(this, 'icon-weapons', 'Weapons', 'SceneWeapons', { x: buttonX + buttonDx, y: buttonY });
         this.buttons['SceneNavigation'] = new StationButton(this, 'icon-navigation', 'Navigation', 'SceneNavigation', { x: buttonX + buttonDx * 2, y: buttonY });
         this.buttons['SceneComms'] = new StationButton(this, 'icon-comms', 'Comms', 'SceneComms', { x: buttonX + buttonDx * 3, y: buttonY });
-
     },
 
     update: function (timestep, dt) {

@@ -12,6 +12,7 @@ var StationButton = new Phaser.Class({
 
         this.sprite.setInteractive().on('pointerup', function(event){
             switchToScene(scene, sceneName);
+            console.log(name+" clicked!");
         });
 
         this.sprite.on('pointerover',()=>{

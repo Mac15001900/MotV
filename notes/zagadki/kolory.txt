@@ -33,3 +33,29 @@ Jedna z puszek zamiast składu ma napisane:
 ✖: Spójrz na dziwną etykietę
 
 Jeśli zignorujemy spację: klucz[miżd malina]
+
+
+
+----------------- English -----------------
+
+Corn
+candy pink
+apricot
+almond
+bluetiful
+brown sugar
+
+
+nexus[deliciousness]
+N - Nickel #727472	
+EX - Mexican pink	#E4007C
+US - Mauvelous #EF98AA
+[
+DELIC - Psychedelic purple	#DF00FF   [note: conflict, but the other one is Phlox - short enough]
+IO - Heliotrope 	#DF73FF
+US - Purpureus 	#9A4EAE
+NE - Aquamarine 	#7FFFD4
+SS - Glossy grape	#AB92B3	
+
+1#727472 2-3#E4007C 8-9#EF98AA [ 7-11#DF00FF 
+4-5#DF73FF 8-9#9A4EAE 9-10#7FFFD4 4-5#AB92B3 ]

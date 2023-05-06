@@ -166,3 +166,106 @@ k  l  u  c  z  [ d  e  l  a  t  !o!  !r!  | c  u  k  !r!  z  e  n  i  a ]
 o< u< s> k< c< [ a> c> u< g< i> !f<! !u>! | k< s> o< !u>! c< c> <a e> g<
 
 klucz[delator cukrzenia] \,
+
+
+
+
+A - anaesthesia / Alula
+B - Bomb / Bib / bob (the builder?) / beelzebub
+C - Clinic / Critic  / croc
+D - Dad / Dud
+E - Enzyme   / Epee / electrode (pokemon #101) / electroluminescence
+F - Fief / Falloff / Fluff
+G - Gong / Gig
+H - Holograph / Huh / hatch / hog
+I - Illuminati
+J - jujij (insect, bug in Mi'kmaq)
+K - Kayak / Kook
+L - Level
+M - Mum
+N - Noon / Neon
+O - Oslo / oreo / orlando (city in Florida)
+P - Parsnip / Pop / pup / pawnshop / 
+Q - Qulliq (https://en.wikipedia.org/wiki/Inuit_culture) - use the photo, with clue "Nanavut"
+R - Rover / Rotator 
+S - Scissors / Solos
+T - Teapot / Turret / Tut
+U - Urdu (language of Pakistan) /  urutu (snake, Bothrops alternatus)
+V - Viv (minor planet # 2558)
+W - Willow, Window / Willet / Warsaw
+X - Xerox (printer photo, or headquarters image with coords https://www.google.com/maps/@41.1498087,-73.4262726,3a,75y,2.72h,103.2t/data=!3m6!1e1!3m4!1sV-L1u7ayaAG26FMmo2DA6Q!2e0!7i13312!8i6656?hl=en) / (xylanthrax - archaic for coal)
+Z - Zgierz / Ziz 
+
+ABCDEFGHIJKLMNOPQRSTUVWXZ
+abcdefghijklmnopqrstuvwxz
+
+Nice words:
+work
+town
+wasp
+band
+cork
+dawn
+cult
+dorm
+farm
+ship
+skip
+cent
+kilt
+turf
+lamb
+drug
+golf
+
+Code for this table (set 'a' to list of words): map (\word-> word ++"  "++(map (\x-> if elem x word then x else '-') alpha)) a |> map (++"\n") |> concat |> putStrLn
+
+      abcdefghijklmnopqrstuvwxz
+work  ----------k---o--r----w--
+town  -------------no----t--w--
+wasp  a--------------p--s---w--
+band  ab-d---------n-----------
+cork  --c-------k---o--r-------
+dawn  a--d---------n--------w--
+cult  --c--------l-------tu----
+dorm  ---d--------m-o--r-------
+farm  a----f------m----r-------
+ship  -------hi------p--s------
+skip  --------i-k----p--s------
+cent  --c-e--------n-----t-----
+kilt  --------i-kl-------t-----
+turf  -----f-----------r-tu----
+lamb  ab---------lm------------
+drug  ---d--g----------r--u----
+golf  -----fg----l--o----------
+zips  --------i------p--s-----z
+jinx  --------ij---n---------x-
+flux  -----f-----l--------u--x-
+volt  -----------l--o----t-v---
+vest  ----e-------------st-v---
+aqua  a---------------q---u----
+jump  ---------j--m--p----u----
+junk  ---------jk--n------u----
+jock  --c------jk---o----------
+djin  ---d----ij---n-----------
+jazz  a--------j--------------z
+herb  -b--e--h---------r-------
+helm  ----e--h---lm------------
+honk  -------h--k--no----------
+gosh  ------gh------o---s------
+chin  --c----hi----n-----------
+wish  -------hi---------s---w--
+shot  -------h------o---st-----
+show  -------h------o---s---w--
+      
+
+LIST OF DOOM
+nexus
+aqua
+jazz
+flux
+band
+cork
+vest
+whip
+game

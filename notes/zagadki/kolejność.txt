@@ -1,10 +1,11 @@
 3 prawa (np Newtona)
 3 części filmu (np Władca Pierścieni?)
 3 medale
+5 palce
 6 prezydenci
 7 dni tygodnia
-9 Kręgi piekła Dantego
 8 planety
+9 Kręgi piekła Dantego
 10 Przykazania
 10 Edycje Windowsa (xp? 10? xD)
 12 miesiące
@@ -18,6 +19,20 @@ DUŻO pierwiastki
 DUŻO litery a alfabecie
 DUŻO litery a greckim alfabecie
 DUŻO Messier
+
+Trudne (bardziej do gry)
+Dynastie Egipskie (czy tam inne)
+Dzielnice Paryża https://en.wikipedia.org/wiki/Quarters_of_Paris
+Stany USA
+12 żeber (mają nazwy)
+rozdziały Biblii
+Wiek, w którym coś się stało (albo rok?)
+tydzień w roku (dwie podane daty, poniedziałek i niedziela)
+Cuda Świata (chronologicznie?)
+Władcy innych krajów (dalajlama?)
+południe (12 godzina)?
+kierunek -> godzina?
+karty w talii
 
 4 pory roku
 (mało) gwiazdy według odległości od Ziemi?
@@ -38,16 +53,11 @@ królowie?
 11. Listopad
 12. Porwanie Cerbera
 13. Gromada Herkulesa
-14. μ
+14. ξ
 15. Fosfor
 16. 0x10
 
 Sync buzzer: https://play.google.com/store/apps/details?id=com.SAXapp.SAXBuzzer
 
 
-
-
-Λ λ	λάμβδα (wym. lambda), λάβδα (wym. labda)	lambda	lambda	[l]	[l]	Phoenician lamedh.png lamed	l
-Μ μ	μῦ (wym. my)	my (wym. mi)	my	[m]	[m]	Mem (litera) mem	m
-Ν ν	νῦ (wym. ny)	ny (wym. ni)	ny	[n]	[n]	Nun (litera) nun	n
-Ξ ξ	ξῦ (wym. ksy), ξῖ (wym. ksi), ξεῖ (wym. ksej)	xy (wym. ksi), xi	ksi	[ks]	[ks]	Phoenician samekh.svg samech	ks, x
+klucz[kolejnoskop]

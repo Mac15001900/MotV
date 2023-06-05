@@ -99,3 +99,32 @@ xj * ll = xuc[
 
 
 a * ] * c * (xoo + z] * xx - yz) * ([k * [k * a - yyx) * (yj * luj * luj * luj / [cl + x]zjzc)
+
+
+--------------------- English ---------------------
+
+nexus[sequenceness]
+As set: []cenqsux (+yab)
+
+Key:
+0 q
+1 y
+2 c
+3 [
+4 x
+5 n
+6 ]
+7 e
+8 s
+9 u
+10 a
+11 b
+qyc[xn]esuab
+
+Base10: 149535813288190295334
+2×3×173×311×463220183782163
+2 * 3 * ( 4 * 43 + 1 ) * ( 11 + 6 * 50 ) * ( 484 * 3517 * 3517 * 3517 * 286 / 13 + 4931 * 503369 )
+
+In base 12:
+c * [ * ( x * [e + y ) * ( b + ] * xc ) * ( [xx * cqny * cqny * cqny * yba / yy + cacb * cq[[en )
+Python to make it (set 'eq' to the equation): ' '.join(list(map(lambda w: convert_number(w,10,"qyc[xn]esuab") if w.isdigit() else w, eq.split())))

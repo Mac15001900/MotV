@@ -38,4 +38,10 @@ Liczby wskazujące na obiekty w katalogu Messiera
 zagadka eninsteina, pierwsze litery tworzą rozwiązanie - eksperymenty chemiczne
 Braille?
 Rzymskie cyfry ukryte w tekście
+Inspirowane "testem IQ" https://puzzling.stackexchange.com/questions/110408/iq-test-question-3x3-grids-with-some-shaded-cells - znajdź zasady przemieszczania się komórek, ostatnie stadium to odpowiedź. Trochę jak Conway
+Słowa, które trzeba napisać pierwiastkami
+FEN chess strings
+Punchcards (https://www.masswerk.at/keypunch/)
+
+
 

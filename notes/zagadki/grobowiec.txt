@@ -170,31 +170,33 @@ klucz[delator cukrzenia] \,
 
 
 
-A - anaesthesia / Alula
+A - Alula (part of a bird's wing) / Antarctica / anaesthesia
 B - Bomb / Bib / bob (the builder?) / beelzebub
 C - Clinic / Critic  / croc
-D - Dad / Dud
-E - Enzyme   / Epee / electrode (pokemon #101) / electroluminescence
-F - Fief / Falloff / Fluff
+D - Diamond / Deltoid / David / Dad (famility tree?) / Dud
+E - Electrode (pokemon #101) / Enzyme / Epee (type of fencing sword) / electroluminescence / Europe
+F - Falafel (Michel Kammoun, 2006) / Falloff (a decline especially in quantity or quality) / Fief / Fluff / Featherleaf (rare name for Rodgersia pinnata ) / Forehoof (front hoof) / 
 G - Gong / Gig
-H - Holograph / Huh / hatch / hog
-I - Illuminati
-J - jujij (insect, bug in Mi'kmaq)
+H - Hannah (hint: Charlotte Skeoch, Chamber of Secrets) / Holograph / Huh / hatch / hog
+I - Illuminati / Isiahi, Issi (names)
+J - Jujij (insect, Mi'kmaq)
 K - Kayak / Kook
 L - Level
-M - Mum
-N - Noon / Neon
-O - Oslo / oreo / orlando (city in Florida)
-P - Parsnip / Pop / pup / pawnshop / 
+M - Museum / Mum (famility tree?)
+N - Neon / Noon
+O - Oncativo (w3w ///specifying.positions.manufacturing, ///expel.dimension.scammed)  / Oslo / oreo / orlando (city in Florida)
+P - Parsnip (Pastinaca sativa)/ Pop / pup / pawnshop / 
 Q - Qulliq (https://en.wikipedia.org/wiki/Inuit_culture) - use the photo, with clue "Nanavut"
-R - Rover / Rotator 
+R - Radar / Rover / Rotator 
 S - Scissors / Solos
 T - Teapot / Turret / Tut
-U - Urdu (language of Pakistan) /  urutu (snake, Bothrops alternatus)
+U - Uozu (The city of ミラージュランド) / Urdu (language of Pakistan) /  urutu (snake, Bothrops alternatus)
 V - Viv (minor planet # 2558)
-W - Willow, Window / Willet / Warsaw
-X - Xerox (printer photo, or headquarters image with coords https://www.google.com/maps/@41.1498087,-73.4262726,3a,75y,2.72h,103.2t/data=!3m6!1e1!3m4!1sV-L1u7ayaAG26FMmo2DA6Q!2e0!7i13312!8i6656?hl=en) / (xylanthrax - archaic for coal)
-Z - Zgierz / Ziz 
+W - Window / Willet / Warsaw / Willow
+X - sequence puzzle (JL, FJLP, BFJLPT, XBFJLPTX)  / Xerox (printer photo, or headquarters image with coords https://www.google.com/maps/@41.1498087,-73.4262726,3a,75y,2.72h,103.2t/data=!3m6!1e1!3m4!1sV-L1u7ayaAG26FMmo2DA6Q!2e0!7i13312!8i6656?hl=en) / (xylanthrax - archaic for coal)
+Z - Zgierz (map + Polish flag)/ Ziz 
+
+Małżeństwo do Y i H: https://en.wikipedia.org/wiki/Yardley_Taylor
 
 ABCDEFGHIJKLMNOPQRSTUVWXZ
 abcdefghijklmnopqrstuvwxz
@@ -269,3 +271,8 @@ cork
 vest
 whip
 game
+
+
+Names: ['Aarika', 'Abba', 'Abra', 'Ada', 'Adara', 'Adda', 'Addia', 'Adela', 'Adelaida', 'Adelina', 'Adella', 'Adena', 'Adiana', 'Adina', 'Adora', 'Adrea', 'Adria', 'Adriana', 'Adrianna', 'Adriena', 'Aeriela', 'Agata', 'Agatha', 'Agna', 'Agnella', 'Agneta', 'Agnola', 'Agretha', 'Aida', 'Aila', 'Ailina', 'Aindrea', 'Alameda', 'Alana', 'Alanna', 'Alberta', 'Albertina', 'Albina', 'Alecia', 'Aleda', 'Alejandra', 'Alejandrina', 'Alejoa', 'Alena', 'Alessandra', 'Aleta', 'Alethea', 'Alexa', 'Alexandra', 'Alexandrina', 'Alexia', 'Alexina', 'Alfreda', 'Alia', 'Alica', 'Alicea', 'Alicia', 'Alida', 'Alidia', 'Alika', 'Alina', 'Alisa', 'Alisha', 'Alissa', 'Aliza', 'Alla', 'Allegra', 'Allianora', 'Allina', 'Allissa', 'Alma', 'Almeda', 'Almeria', 'Almeta', 'Almira', 'Aloisia', 'Aloysia', 'Alta', 'Althea', 'Alva', 'Alvera', 'Alverta', 'Alvina', 'Alvinia', 'Alvira', 'Alyda', 'Alyosha', 'Alysa', 'Alysia', 'Alyssa', 'Amalea', 'Amaleta', 'Amalia', 'Amalita', 'Amanda', 'Amara', 'Amata', 'Amelia', 'Amelina', 'Amelita', 'Ammamaria', 'Ana', 'Anabella', 'Anastasia', 'Anastassia', 'Anatola', 'Anderea', 'Andra', 'Andrea', 'Andrea', 'Andreana', 'Andria', 'Andriana', 'Anestassia', 'Anetta', 'Angela', 'Angelia', 'Angelica', 'Angelika', 'Angelina', 'Angelita', 'Ania', 'Anica', 'Anissa', 'Anita', 'Anitra', 'Anjela', 'Anna', 'Anna-Diana', 'Anna-Maria', 'Annabela', 'Annabella', 'Annadiana', 'Annamaria', 'Annetta', 'Annissa', 'Annmaria', 'Annnora', 'Annora', 'Anselma', 'Anthea', 'Anthia', 'Anthiathia', 'Antonella', 'Antonetta', 'Antonia', 'Antonietta', 'Antonina', 'Anya', 'Appolonia', 'Ara', 'Ara', 'Arabela', 'Arabella', 'Arda', 'Ardelia', 'Ardella', 'Ardenia', 'Ardra', 'Aretha', 'Ariana', 'Aridatha', 'Ariela', 'Ariella', 'Arlana', 'Arlena', 'Arleta', 'Arlina', 'Arlinda', 'Asa', 'Ashia', 'Ashla', 'Asia', 'Astra', 'Atalanta', 'Athena', 'Atlanta', 'Auberta', 'Audra', 'Augusta', 'Augustina', 'Aundrea', 'Aura', 'Aurea', 'Aurelea', 'Aurelia', 'Auria', 'Aurilia', 'Auroora', 'Aurora', 'Austina', 'Ava', 'Aviva', 'Bab', 'Babb', 'Barb', 'Bob', 'Caddric', 'Cedric', 'Chic', 'Clerc', 'David', 'Derward', 'Desmond', 'Desmund', 'Devland', 'Diarmid', 'Drud', 'Dud', 'Dugald', 'Durand', 'Durward', 'Eachelle', 'Eadie', 'Earle', 'Earlie', 'Ebonee', 'Eddie', 'Eddie', 'Ede', 'Edee', 'Edeline', 'Edie', 'Edithe', 'Edythe', 'Effie', 'Eimile', 'Elaine', 'Elane', 'Elayne', 'Elbertine', 'Eldredge', 'Eldridge', 'Eleanore', 'Elene', 'Elenore', 'Eleonore', 'Elfie', 'Elianore', 'Elie', 'Elinore', 'Elise', 'Elke', 'Elladine', 'Elle', 'Ellene', 'Ellette', 'Ellie', 'Elmore', 'Elnore', 'Eloise', 'Elonore', 'Else', 'Elsie', 'Elsinore', 'Elyse', 'Elysee', 'Emalee', 'Emanuele', 'Emeline', 'Emelyne', 'Emile', 'Emilee', 'Emilie', 'Emiline', 'Emlynne', 'Emmalee', 'Emmaline', 'Emmalynne', 'Emmeline', 'Emmie', 'Emmye', 'Emogene', 'Emyle', 'Emylee', 'Enrique', 'Eolande', 'Erie', 'Ermengarde', 'Ermentrude', 'Erminie', 'Ernaline', 'Ernestine', 'Ernie', 'Erskine', 'Esme', 'Esme', 'Essie', 'Estele', 'Estelle', 'Ethe', 'Etheline', 'Etienne', 'Ettie', 'Ettore', 'Eugene', 'Eugenie', 'Eugine', 'Eulalie', 'Eunice', 'Eustace', 'Evangeline', 'Evanne', 'Eve', 'Eveline', 'Evie', 'Evonne', 'Evvie', 'Eyde', 'Eydie', 'Eziechiele', 'Georg', 'Graig', 'Greg', 'Gregg', 'Hadleigh', 'Haleigh', 'Haleigh', 'Hamish', 'Hannah', 'Heath', 'Heath', 'Helen-Elizabeth', 'Hephzibah', 'Hersch', 'Hersh', 'Hirsch', 'Hugh', 'Hurleigh', 'Hyacinth', 'Isiahi', 'Issi', 'Karlik', 'Kendrick', 'Kerk', 'Kirk', 'Laural', 'Laurel', 'Lemuel', 'Lil', 'Linell', 'Linnell', 'Linoel', 'Lionel', 'Lovell', 'Lowell', 'Lyell', 'Lyndel', 'Lyndell', 'Lynnell', 'Magnum', 'Malcolm', 'Mariam', 'Maxim', 'Miriam', 'Myriam', 'Nadean', 'Nadeen', 'Nan', 'Nanon', 'Napoleon', 'Nathan', 'Nealon', 'Nealson', 'Nefen', 'Nelson', 'Neron', 'Nevin', 'Newton', 'Nilson', 'Ninon', 'Niven', 'Noellyn', 'Noelyn', 'Nolan', 'Norean', 'Noreen', 'Norman', 'Norton', 'Odo', 'Olivero', 'Oliviero', 'Omero', 'Onofredo', 'Orazio', 'Orlando', 'Othello', 'Otho', 'Otto', 'Philip', 'Phillip', 'Phillipp', 'Phip', 'Pip', 'Ragnar', 'Rainer', 'Rayner', 'Raynor', 'Reidar', 'Reider', 'Rochester', 'Rodger', 'Roger', 'Rudiger', 'Rutger', 'Rutter', 'Ruttger', 'Sanders', 'Saunders', 'Sayers', 'Sayres', 'Seamus', 'Seumas', 'Shamus', 'Silas', 'Sileas', 'Silvanus', 'Simmonds', 'Stanislas', 'Stanislaus', 'Stavros', 'Stephanus', 'Sylas', 'Tait', 'Talbert', 'Talbot', 'Thebault', 'Thibaut', 'Tiebout', 'Tobit', 'Trent', 'Tybalt', 'Vaclav', 'Viv', 'Walliw', 'Willow', 'Wilow', 'Winslow', 'Woodrow', 'Yancey', 'Yancy', 'Yardley', 'Yetty']
+
+Eduardo Castex

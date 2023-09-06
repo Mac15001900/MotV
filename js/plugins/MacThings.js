@@ -344,6 +344,11 @@ runEvent = function (inp, eventId) {
     else console.warn(`No event with id ${eventId} found.`);
 }
 
+rumble = function (duration, strength) {
+    let pad = navigator.getGamepads()[0];
+    if (pad && pad.vibrationActuator && pad.vibrationActuator.playEffect) pad.vibrationActuator.playEffect("dual-rumble", { duration: duration, strongMagnitude: strength, weakMagnitude: strength });
+}
+
 //===================================== Autosave system =====================================
 
 //Schedules and autosave to happen a configurable amount of time from now. Parameters indicate if previous attempt was successful.
@@ -462,7 +467,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
         textOptions = choices.map(n => text[n]);
 
         if (imageTexts[x + "-" + y]) {
-            textOptions.push("Kopiuj");
+            textOptions.push(s.copy);
             choices.push(-1);
         }
 
@@ -486,7 +491,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
             case -2: break;
             case -1:
                 copyTextToClipboard(imageTexts[x + "-" + y]);
-                g.showMessage(inp, "Skopiowano do schowka.");
+                g.showMessage(inp, s.clipboardMessage);
                 break;
             case 0: self.moveLeft(); break;
             case 1: self.moveRight(); break;
@@ -720,7 +725,7 @@ Scene_LangugeChoice.prototype.update = function () {
     }
 }
 
-//===================================== Loading spinnder =====================================
+//===================================== Loading spinner =====================================
 
 //Creating the spinnder
 Graphics._createLoadingSpinner = function () {
@@ -847,12 +852,26 @@ Window_Message.prototype.processEscapeCharacter = function (code, textState) {
         default: _Window_Message_processEscapeCharacter.call(this, code, textState);
     }
 }
+
 //Allows game variables to return "" or false
 Game_Variables.prototype.value = function (variableId) {
     let res = this._data[variableId];
     if (res == null) return 0;
     else return res;
 };
+
+//To be used in route commands, keeps repeating until character reaches x,y
+//Function and idea by orphalese, https://forums.rpgmakerweb.com/index.php?threads/js-snippets-thread.92501/page-2
+Game_Character.prototype.goto = function (x, y) {
+    if (!((this.x == x) && (this.y == y))) {
+        let direction = this.findDirectionTo(x, y);
+        this.setDirection(direction);
+        this.moveForward()
+        if (this.isMovementSucceeded()) {
+            this._moveRouteIndex = this._moveRouteIndex - 1;
+        }
+    }
+}
 
 
 //===================================== Engine fixes =====================================

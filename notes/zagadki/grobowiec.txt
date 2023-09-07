@@ -163,14 +163,15 @@ n - <a
 ] - ]
 
 k  l  u  c  z  [ d  e  l  a  t  !o!  !r!  | c  u  k  !r!  z  e  n  i  a ]
-o< u< s> k< c< [ a> c> u< g< i> !f<! !u>! | k< s> o< !u>! c< c> <a e> g<
+o< u< s> k< c< [ a> c> u< g< i> !f<! !u>! | k< s> o< !u>! c< c> <a e> g<]
 
 klucz[delator cukrzenia] \,
 
 
+----------------- English ----------------- 
 
 
-A - Alula (part of a bird's wing) / Antarctica / anaesthesia
+A - Andromeda / Antarctica / Alula (part of a bird's wing) / anaesthesia
 B - Bomb / Bib / bob (the builder?) / beelzebub
 C - Clinic / Critic  / croc
 D - Diamond / Deltoid / David / Dad (famility tree?) / Dud
@@ -183,7 +184,7 @@ J - Jujij (insect, Mi'kmaq)
 K - Kayak / Kook
 L - Level
 M - Museum / Mum (famility tree?)
-N - Neon / Noon
+N - Neutron / Neon / Noon
 O - Oncativo (w3w ///specifying.positions.manufacturing, ///expel.dimension.scammed)  / Oslo / oreo / orlando (city in Florida)
 P - Parsnip (Pastinaca sativa)/ Pop / pup / pawnshop / 
 Q - Qulliq (https://en.wikipedia.org/wiki/Inuit_culture) - use the photo, with clue "Nanavut"
@@ -197,6 +198,73 @@ X - sequence puzzle (JL, FJLP, BFJLPT, XBFJLPTX)  / Xerox (printer photo, or hea
 Z - Zgierz (map + Polish flag)/ Ziz 
 
 Małżeństwo do Y i H: https://en.wikipedia.org/wiki/Yardley_Taylor
+
+Candidates for second X: 
+text, experience, exile, exercise!, example
+
+#6bcedaff
+#034761ff
+
+Chosen: 
+
+A (nd) - andromeda - Messier 31
+B (om) - bomb 
+C (li) - clinic 
+D (in) - diamond 
+E (xs) - exercise
+F (ae) - falafel (Michel Kammoun, 2006)
+G (on) - gong 
+H (aa) - hannah (hint: Charlotte Skeoch, Chamber of Secrets) 
+I (lt) - illuminati 
+J (ui) - jujij (insect, Mi'kmaq)
+K (aa) - kayak 
+L (ee) - level
+M (uu) - museum 
+N (eo) - neutron 
+O (nv) - oncativo - 31° 54' 48" S 63° 40' 55" W (-31.913444452800753, -63.68208046344461 )
+P (ai) - parsnip (Pastinaca sativa)
+Q (ui) - qulliq (https://en.wikipedia.org/wiki/Inuit_culture) - use the photo, with clue "Nanavut"
+R (aa) - radar
+S (cr) - scissors 
+T (eo) - teapot 
+U (oz) - uozu (The city of ミラージュランド) 
+V (ii) - viv (minor planet # 2558)
+W (io) - window 
+X (bt) - xbfjlptx (sequence puzzle: JL, FJLP, BFJLPT, ???)  
+Z (gr) - zgierz (map + Polish flag)
+
+
+Level 2:
+Available: abcdegilmnorstuvxz
+Missing: fhjkpqwy
+
+!a - +r<, f<, h<, h>, k<, k>, p<, r>
+!b - x<
+!c - s<
+!d - a>
+!e - +l<, +n<, f>, l>, t<
+!g - z<
+!i - +v<, c>, d<, j>, p>, q>, v>, w<
+!l - +c<, i<
+!m - b>
+!n - +d>, a<, g>, o<
+!o - +g<, +t>, b<, n>, u<, w>
+!r - z>, s>
+!s - e>
+!t - +i>, x>
+!u - +m<, j<, m>, q<
+!v - o>
+!x - e<
+!z - u>
+
+Code for the above table:
+words = ["andromeda", "bomb", "clinic", "diamond", "exercise", "falafel", "gong", "hannah", "illuminati", "jujij", "kayak", "level", "museum", "neutron", "oncativo", "parsnip", "qulliq", "radar", "scissors", "teapot", "uozu", "viv", "window", "xbfjlptx", "zgierz"]
+"abcdegilmnorstuvxz" |> map (\l-> (l, filter ((==l) . fst) (words |> map (\w-> [(w!!1, (head w):"<"), (w|>init|>last, (head w):">")]) |> concat))) |> map (mapSnd (map snd)) |> map (\(l,o)-> l:" - "++(joinWith ", " o)) |> putList
+dict: {'a' : 'r<', 'b' : 'x<', 'c' : 's<', 'd' : 'a>', 'e' : 'l<', 'g' : 'z<', 'i' : 'v<', 'l' : 'c<', 'm' : 'b>', 'n' : 'd>', 'o' : 'g<', 'r' : 'z>', 's' : 'e>', 't' : 'i>', 'u' : 'm<', 'v' : 'o>', 'x' : 'e<', 'z' : 'u>'}
+
+nexus[activized ballistocardiogram]
+n  e  x  u  s  [ a  c  t  i  v  i  z  e  d      b  a  l  l  i  s  t  o  c  a  r  d  i  o  g  r  a  m  ]
+d> l< e< m< e> [ r< s< i> v< o> v< u> n< a>  |  x< r< c< c< v< e> i> g< s< r< z> a> v< t> z< z> r< b> ]
 
 ABCDEFGHIJKLMNOPQRSTUVWXZ
 abcdefghijklmnopqrstuvwxz

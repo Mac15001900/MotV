@@ -58,6 +58,27 @@
     this.windows = [];
   };
 
+  //Change: Custom function
+  WindowManager.showPictureWindow = function (name, n = 1) {
+    let bmp = ImageManager.loadPicture(name);
+    let self = this;
+    bmp.addLoadListener(function () {
+      let w = bmp.width + 36;
+      let h = bmp.height + 36;
+      let fullWidth = SceneManager._screenWidth;
+      let fullHeight = SceneManager._screenHeight;
+      var win = new Window_Base((fullWidth - w) / 2, (fullHeight - h) / 2, bmp.width + 36, bmp.height + 36);
+
+      win.openness = 0;
+      win.open();
+      if (self.windows[n]) self.hide(n);
+      self.windows[n] = win;
+      SceneManager._scene.addWindow(win);
+
+      self.windows[n].contents.blt(bmp, 0, 0, bmp.width, bmp.height, 0, 0);
+    }.bind(this));
+  }
+
   var _terminate = Scene_Base.prototype.terminate;
   Scene_Base.prototype.terminate = function () {
     _terminate.call(this);

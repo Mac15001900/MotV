@@ -689,7 +689,7 @@ DataManager.onLoad = function (object) {
 var _Window_Options_addVolumeOptions = Window_Options.prototype.addVolumeOptions;
 Window_Options.prototype.addVolumeOptions = function () {
     _Window_Options_addVolumeOptions.call(this);
-    this.addCommand("Język", 'lang');
+    this.addCommand(s.language, 'lang');
 };
 
 //First-launch scene
@@ -953,16 +953,15 @@ g.showPictureWindow = function (imageName) {
     g.getInterpreter().setWaitMode('indefinite');
     bmp.addLoadListener(function () {
         let w = bmp.width + 36;
-        let h = bmp.height + 36;
+        let h = bmp.height + 36 + 4;
         let fullWidth = SceneManager._screenWidth;
         let fullHeight = SceneManager._screenHeight;
-        var win = new Window_Base((fullWidth - w) / 2, (fullHeight - h) / 2, bmp.width + 36, bmp.height + 36);
+        var win = new Window_Base((fullWidth - w) / 2, (fullHeight - h) / 2, w, h);
         let onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
 
         win.update = function () {
             Window_Base.prototype.update.call(this);
             if (!this.isOpen()) return;
-            //if (Input.isRepeated('ok') || Input.isRepeated('cancel') || TouchInput.isRepeated()) {
             if (Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed()) {
                 if (onPreviousPress) return; //It's still on the keypress from last event
                 Input.update();
@@ -976,6 +975,7 @@ g.showPictureWindow = function (imageName) {
 
         win.openness = 0;
         win.open();
+        win.pause = true;
         SceneManager._scene.addWindow(win);
         g.pictureWindow = win;
 

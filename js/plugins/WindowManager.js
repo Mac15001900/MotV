@@ -58,16 +58,33 @@
         this.windows = [];
     };
 
+    /*
     //Change: Custom function
     WindowManager.showPictureWindow = function (name, n = 1) {
         let bmp = ImageManager.loadPicture(name);
         let self = this;
+        g.getInterpreter().setWaitMode('indefinite');
         bmp.addLoadListener(function () {
             let w = bmp.width + 36;
             let h = bmp.height + 36;
             let fullWidth = SceneManager._screenWidth;
             let fullHeight = SceneManager._screenHeight;
             var win = new Window_Base((fullWidth - w) / 2, (fullHeight - h) / 2, bmp.width + 36, bmp.height + 36);
+
+            win.isTriggered = function () {
+                return (Input.isRepeated('ok') || Input.isRepeated('cancel') || TouchInput.isRepeated());
+                //return false;
+            };
+
+            win.update = function () {
+                Window_Base.prototype.update.call(this);
+                if (this.isTriggered()) {
+                    Input.update();
+                    self.hide(n);
+                    SceneManager._scene.removeChild(win);
+                    g.getInterpreter().setWaitMode('');
+                }
+            }
 
             win.openness = 0;
             win.open();
@@ -78,16 +95,7 @@
             self.windows[n].contents.blt(bmp, 0, 0, bmp.width, bmp.height, 0, 0);
         }.bind(this));
     }
-
-
-
-
-
-
-
-
-
-
+*/
 
     var _terminate = Scene_Base.prototype.terminate;
     Scene_Base.prototype.terminate = function () {

@@ -540,6 +540,10 @@ g.showPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
     $gameScreen.showPicture(id, name, 1, x, y, scale, scale, 255, 0);
 }
 
+g.niceShowPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
+    WindowManager.show(1,)
+}
+
 //Shows a single message, with a face if one is specified. Will not queue up multiple messages
 g.showMessage = function (inp, message, face, faceFile = 'mc') {
     if (face !== undefined) $gameMessage.setFaceImage(faceFile, face);
@@ -918,8 +922,80 @@ Utils.isMobileDevice = function () {
     return Utils._mobileDevice;
 }
 
+//===================================== Dev tools =====================================
+
+//Finds the differences between two objects
+g.compareObjects = function (obj1, obj2) {
+    var res = {};
+    for (var key in obj1) {
+        if (obj1[key] !== obj2[key]) {
+            res[key] = [obj1[key], obj2[key]];
+        }
+    }
+    for (var key in obj2) {
+        if (obj1[key] === undefined) {
+            res[key] = [obj1[key], obj2[key]];
+        }
+    }
+    return res;
+
+}
+
+
+
 
 //===================================== Temp experiments =====================================
+
+//Picture window thingy
+
+g.showPictureWindow = function (imageName) {
+    let bmp = ImageManager.loadPicture(imageName);
+    g.getInterpreter().setWaitMode('indefinite');
+    bmp.addLoadListener(function () {
+        let w = bmp.width + 36;
+        let h = bmp.height + 36;
+        let fullWidth = SceneManager._screenWidth;
+        let fullHeight = SceneManager._screenHeight;
+        var win = new Window_Base((fullWidth - w) / 2, (fullHeight - h) / 2, bmp.width + 36, bmp.height + 36);
+        let onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
+
+        win.update = function () {
+            Window_Base.prototype.update.call(this);
+            if (!this.isOpen()) return;
+            //if (Input.isRepeated('ok') || Input.isRepeated('cancel') || TouchInput.isRepeated()) {
+            if (Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed()) {
+                if (onPreviousPress) return; //It's still on the keypress from last event
+                Input.update();
+                this.close();
+                SceneManager._scene.removeChild(win);
+                g.getInterpreter().setWaitMode('');
+            } else {
+                onPreviousPress = false;
+            }
+        }
+
+        win.openness = 0;
+        win.open();
+        SceneManager._scene.addWindow(win);
+        g.pictureWindow = win;
+
+        win.contents.blt(bmp, 0, 0, bmp.width, bmp.height, 0, 0);
+    }.bind(this));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 //Script for larger icons:
 var _ImageManager_reserveSystem = ImageManager.reserveSystem;

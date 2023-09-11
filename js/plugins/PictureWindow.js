@@ -1,3 +1,16 @@
+//=============================================================================
+// PictureWindow.js
+//=============================================================================
+
+/*:
+ * @plugindesc Adds a PictureWindow for displaying images nicely
+ * @author Mac15001900
+ *
+ * @help Use g.showPictureWindow(filename, independent, scale) to show the window.
+ * Independent decides whether it exists on its own (and blocks the interpreter)
+ * or as part of a message. If the latter, close it with g.hidePictureWindow().
+ */
+
 function PictureWindow() {
     this.initialize.apply(this, arguments);
 }
@@ -15,9 +28,6 @@ g.showPictureWindow = function (imageName, independent = true, scale = 1) {
 }
 
 g.hidePictureWindow = function () {
-    /*if (g.pictureWindow) {
-        g.pictureWindow.finish();
-    }*/
     g.pictureWindow.finish();
 }
 
@@ -71,13 +81,12 @@ PictureWindow.prototype.finish = function () {
 
 //Adjusts X position based on the choice window
 PictureWindow.prototype.adjustX = function () {
-    let cw = SceneManager._scene._windowLayer.children[2];
-    console.assert(cw instanceof Window_ChoiceList);
+    let choiceWindow = SceneManager._scene._windowLayer.children[2];
+    console.assert(choiceWindow instanceof Window_ChoiceList);
     this.recenter();
-    //debugger;
-    if (cw.ready && SceneManager._screenWidth - cw.width / 2 - 4) {
-        this.x -= cw.width / 2;
-        this.offsetX = -cw.width / 2;
+    if (choiceWindow.ready && this.x + this.width >= SceneManager._screenWidth - choiceWindow.width - 16) {
+        this.x -= choiceWindow.width / 2;
+        this.offsetX = -choiceWindow.width / 2;
     }
 }
 
@@ -86,21 +95,6 @@ PictureWindow.prototype.recenter = function () {
         this.x -= this.offsetX;
         this.offsetX = 0;
     }
-}
-
-g.nudgePictureWindow = function (dx) {
-    //Check if it overlaps the choice window
-    let win = g.pictureWindow;
-    if (!win) return;
-    if (win.x + win.width >= SceneManager._screenWidth - dx - 4) {
-        g.pictureWindow.nudge = dx / 2;
-        g.pictureWindow.x -= dx / 2;
-    }
-}
-
-g.unNudgePictureWindow = function () {
-    if (g.pictureWindow) g.pictureWindow.x += g.pictureWindow.nudge;
-    g.pictureWindow.nudge = 0;
 }
 
 Window_ChoiceList.prototype.close = function () {

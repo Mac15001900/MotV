@@ -48,6 +48,7 @@ const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try agai
 const VOLUME_INCREMENT = 5; //How many % to change the volume by from one button-press
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 20]; //How many keys are needed for each unlock stage
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
+const WINDOW_MESSAGE_HEIGHT = 336; //This is only descriptive, doesn't actually influence Window_Message
 
 var _Scene_Map_loaded = Scene_Map.prototype.onMapLoaded;
 Scene_Map.prototype.onMapLoaded = function () {
@@ -729,6 +730,57 @@ Scene_LangugeChoice.prototype.update = function () {
     }
 }
 
+//===================================== Custom windows =====================================
+
+//Creates a picture window, which works like the message window, only displaying an image. Can also exist alongside messages.
+g.showPictureWindow = function (imageName, independent = true) {
+    if (g.pictureWindow) g.pictureWindow.finish();
+    let bmp = ImageManager.loadPicture(imageName);
+    if (independent) g.getInterpreter().setWaitMode('indefinite');
+    bmp.addLoadListener(function () {
+        let w = bmp.width + 36;
+        let h = bmp.height + 36 + 4;
+        let fullWidth = SceneManager._screenWidth;
+        let fullHeight = independent ? SceneManager._screenHeight : SceneManager._screenHeight - WINDOW_MESSAGE_HEIGHT;
+        var win = new Window_Base((fullWidth - w) / 2, (fullHeight - h) / 2, w, h);
+        let onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
+
+        win.update = function () {
+            Window_Base.prototype.update.call(this);
+            if (!this.isOpen()) return;
+            if (independent) {
+                if (Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed()) {
+                    if (onPreviousPress) return; //We're still on the keypress from last event
+                    this.finish();
+                } else {
+                    onPreviousPress = false;
+                }
+            }
+        }
+        win.finish = function () {
+            Input.update();
+            this.close();
+            SceneManager._scene.removeChild(win);
+            if (independent) g.getInterpreter().setWaitMode('');
+            g.pictureWindow = null;
+        }
+
+        win.openness = 0;
+        win.open();
+        win.pause = independent; //This just displays the pause sign (small triangle at the bottom)
+        SceneManager._scene.addWindow(win);
+        g.pictureWindow = win;
+
+        win.contents.blt(bmp, 0, 0, bmp.width, bmp.height, 0, 0);
+    }.bind(this));
+}
+
+g.closePictureWindow = function () {
+    if (g.pictureWindow) {
+        g.pictureWindow.finish();
+    }
+}
+
 //===================================== Loading spinner =====================================
 
 //Creating the spinnder
@@ -750,10 +802,18 @@ Graphics._createAllElements = function () {
 //Show it when loading starts
 Graphics.startLoading = function () {
     this._loadingCount = 0;
+    
+};*/
+/*
+let _Graphics_updateLoading = Graphics.updateLoading;
+Graphics.updateLoading = function () {
+    _Graphics_updateLoading.call(this);
+    if (this._loadingCount >= 20) {
         if (!document.getElementById("loadingSpinner")) {
             document.body.appendChild(this._loadingSpinner);
         }
-};*/
+    }
+}*/
 
 //Hide it when it ends
 Graphics.endLoading = function () {
@@ -763,11 +823,6 @@ Graphics.endLoading = function () {
         document.body.removeChild(this._loadingSpinner);
     }
 };
-/*
-//TODO: very temp, disables loading probably
-SceneManager.onSceneStart = function () {
-    //Graphics.endLoading();
-};*/
 
 //=====================================Various engine changes=====================================
 
@@ -945,56 +1000,6 @@ g.compareObjects = function (obj1, obj2) {
 
 
 //===================================== Temp experiments =====================================
-
-//Picture window thingy
-
-g.showPictureWindow = function (imageName) {
-    let bmp = ImageManager.loadPicture(imageName);
-    g.getInterpreter().setWaitMode('indefinite');
-    bmp.addLoadListener(function () {
-        let w = bmp.width + 36;
-        let h = bmp.height + 36 + 4;
-        let fullWidth = SceneManager._screenWidth;
-        let fullHeight = SceneManager._screenHeight;
-        var win = new Window_Base((fullWidth - w) / 2, (fullHeight - h) / 2, w, h);
-        let onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
-
-        win.update = function () {
-            Window_Base.prototype.update.call(this);
-            if (!this.isOpen()) return;
-            if (Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed()) {
-                if (onPreviousPress) return; //It's still on the keypress from last event
-                Input.update();
-                this.close();
-                SceneManager._scene.removeChild(win);
-                g.getInterpreter().setWaitMode('');
-            } else {
-                onPreviousPress = false;
-            }
-        }
-
-        win.openness = 0;
-        win.open();
-        win.pause = true;
-        SceneManager._scene.addWindow(win);
-        g.pictureWindow = win;
-
-        win.contents.blt(bmp, 0, 0, bmp.width, bmp.height, 0, 0);
-    }.bind(this));
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 //Script for larger icons:

@@ -3869,6 +3869,8 @@ Window_ChoiceList.prototype.initialize = function (messageWindow) {
 
 Window_ChoiceList.prototype.start = function () {
     this.updatePlacement();
+    this.ready = true; //Change: added nudge and ready
+    g.pictureWindow.adjustX();
     this.updateBackground();
     this.refresh();
     this.selectDefault();

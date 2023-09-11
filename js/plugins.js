@@ -4,6 +4,7 @@ var $plugins =
 [
 {"name":"TranslationData","status":true,"description":"","parameters":{}},
 {"name":"MacThings","status":true,"description":"Various misc things","parameters":{}},
+{"name":"PictureWindow","status":true,"description":"","parameters":{}},
 {"name":"Community_Basic","status":true,"description":"Plugin used to set basic parameters.","parameters":{"cacheLimit":"20","screenWidth":"1920","screenHeight":"1080","changeWindowWidthTo":"1280","changeWindowHeightTo":"720","renderingMode":"auto","alwaysDash":"off"}},
 {"name":"ChangeTileSize","status":true,"description":"Allows maps based on a grid size other than 48x48\r\n<ChangeTileSize> v1.1","parameters":{"Tile Size":"32","Tileset Image Folder":"img/tilesets/","Parallax Image Folder":"img/parallaxes32/"}},
 {"name":"OcRam_Layers","status":true,"description":"v2.05 Display up to 3 layers which can be inherited to battle screen. You may also use sprites/pics bound to map. PLUGIN NAME MUST BE OcRam_Layers.js","parameters":{"Layer image directory":"img/parallaxes32/","Sprite image directory":"img/pictures/","Default values":"","Default sprite align":"5","Default scroll-x":"0.000","Default scroll-y":"0.000","Default opacity":"1.00","Default fixed to map":"true","Default loop-x":"0.000","Default loop-y":"0.000","Default fade time":"255.00","Layer zIndexes":"","Layer 0 zIndex":"3","Layer 1 zIndex":"3","Layer 2 zIndex":"3","Battle layers":"","Layer 0":"false","Layer 1":"false","Layer 2":"false","Template layers":"[]","Use only parallax mapping":"true","Debug mode":"false"}},

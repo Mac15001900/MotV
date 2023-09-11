@@ -146,6 +146,7 @@ macThingsInit = function () {
     g.saveWorker = new Worker("./js/plugins/compressor.js");
     scheduleAutosave(true);
     console.log("MacThings init complete", $gv[1]);
+    g.pictureWindow = new PictureWindow();
 }
 
 initialiseGData = function () {
@@ -502,9 +503,10 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
         }
     };
 
-    this.showImage = function (size = 100) {
-        $gameScreen.erasePicture(1);
-        $gameScreen.showPicture(1, `${filename}/${filename}-${x}-${y}`, 1, 960, 375, size, size, 255, 0);
+    this.showImage = function (scale = 1) {
+        /*$gameScreen.erasePicture(1);
+        $gameScreen.showPicture(1, `${filename}/${filename}-${x}-${y}`, 1, 960, 375, size, size, 255, 0);*/
+        g.showPictureWindow(`${filename}/${filename}-${x}-${y}`, false, scale);
     }
 
     this.getCoords = () => console.log(x, y);
@@ -732,54 +734,6 @@ Scene_LangugeChoice.prototype.update = function () {
 
 //===================================== Custom windows =====================================
 
-//Creates a picture window, which works like the message window, only displaying an image. Can also exist alongside messages.
-g.showPictureWindow = function (imageName, independent = true, scale = 1) {
-    if (g.pictureWindow) g.pictureWindow.finish();
-    let bmp = ImageManager.loadPicture(imageName);
-    if (independent) g.getInterpreter().setWaitMode('indefinite');
-    bmp.addLoadListener(function () {
-        let w = scale * bmp.width + 36;
-        let h = scale * bmp.height + 36 + (independent ? 4 : 0); //If independent, add 4 pixels for the pause sign
-        let fullWidth = SceneManager._screenWidth;
-        let fullHeight = independent ? SceneManager._screenHeight : SceneManager._screenHeight - WINDOW_MESSAGE_HEIGHT;
-        var win = new Window_Base((fullWidth - w) / 2, (fullHeight - h) / 2, w, h);
-        let onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
-
-        win.update = function () {
-            Window_Base.prototype.update.call(this);
-            if (!this.isOpen()) return;
-            if (independent) {
-                if (Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed()) {
-                    if (onPreviousPress) return; //We're still on the keypress from last event
-                    this.finish();
-                } else {
-                    onPreviousPress = false;
-                }
-            }
-        }
-        win.finish = function () {
-            Input.update();
-            this.close();
-            SceneManager._scene.removeChild(win);
-            if (independent) g.getInterpreter().setWaitMode('');
-            g.pictureWindow = null;
-        }
-
-        win.openness = 0;
-        win.open();
-        win.pause = independent; //This just displays the pause sign (small triangle at the bottom)
-        SceneManager._scene.addWindow(win);
-        g.pictureWindow = win;
-
-        win.contents.blt(bmp, 0, 0, bmp.width, bmp.height, 0, 0, scale * bmp.width, scale * bmp.height);
-    }.bind(this));
-}
-
-g.hidePictureWindow = function () {
-    if (g.pictureWindow) {
-        g.pictureWindow.finish();
-    }
-}
 
 //===================================== Loading spinner =====================================
 

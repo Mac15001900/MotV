@@ -733,13 +733,13 @@ Scene_LangugeChoice.prototype.update = function () {
 //===================================== Custom windows =====================================
 
 //Creates a picture window, which works like the message window, only displaying an image. Can also exist alongside messages.
-g.showPictureWindow = function (imageName, independent = true) {
+g.showPictureWindow = function (imageName, independent = true, scale = 1) {
     if (g.pictureWindow) g.pictureWindow.finish();
     let bmp = ImageManager.loadPicture(imageName);
     if (independent) g.getInterpreter().setWaitMode('indefinite');
     bmp.addLoadListener(function () {
-        let w = bmp.width + 36;
-        let h = bmp.height + 36 + 4;
+        let w = scale * bmp.width + 36;
+        let h = scale * bmp.height + 36 + (independent ? 4 : 0); //If independent, add 4 pixels for the pause sign
         let fullWidth = SceneManager._screenWidth;
         let fullHeight = independent ? SceneManager._screenHeight : SceneManager._screenHeight - WINDOW_MESSAGE_HEIGHT;
         var win = new Window_Base((fullWidth - w) / 2, (fullHeight - h) / 2, w, h);
@@ -771,11 +771,11 @@ g.showPictureWindow = function (imageName, independent = true) {
         SceneManager._scene.addWindow(win);
         g.pictureWindow = win;
 
-        win.contents.blt(bmp, 0, 0, bmp.width, bmp.height, 0, 0);
+        win.contents.blt(bmp, 0, 0, bmp.width, bmp.height, 0, 0, scale * bmp.width, scale * bmp.height);
     }.bind(this));
 }
 
-g.closePictureWindow = function () {
+g.hidePictureWindow = function () {
     if (g.pictureWindow) {
         g.pictureWindow.finish();
     }

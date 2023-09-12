@@ -13,6 +13,14 @@ radar - public domain, ?
 Sagittarius - public domain, NASA
 uluru - PD, Huntster
 zakaz - Christaras A
+Eng:
+clinic - ViršuLF (CC0)
+diamond - Cmglee
+kayak - Thruxton
+level - aTarom (PD)
+qulliq - CC Attribution-Share Alike 2.5 Generic, Ansgar Walk
+teapot - PD George Chernilevsky
+scissors - PD Evan-amos
 
 Library tiles (and more) - Indrah
 Books - Milu (more things here) https://forums.rpgmakerweb.com/index.php?threads/milus-tiles-characters-icons-autumn-updating.99358/

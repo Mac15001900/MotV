@@ -207,32 +207,39 @@ text, experience, exile, exercise!, example
 
 Chosen: 
 
-A (nd) - andromeda - Messier 31
-B (om) - bomb 
-C (li) - clinic 
-D (in) - diamond 
-E (xs) - exercise
-F (ae) - falafel (Michel Kammoun, 2006)
-G (on) - gong 
-H (aa) - hannah (hint: Charlotte Skeoch, Chamber of Secrets) 
-I (lt) - illuminati 
-J (ui) - jujij (insect, Mi'kmaq)
-K (aa) - kayak 
-L (ee) - level
-M (uu) - museum 
-N (eo) - neutron 
-O (nv) - oncativo - 31° 54' 48" S 63° 40' 55" W (-31.913444452800753, -63.68208046344461 )
-P (ai) - parsnip (Pastinaca sativa)
-Q (ui) - qulliq (https://en.wikipedia.org/wiki/Inuit_culture) - use the photo, with clue "Nanavut"
-R (aa) - radar
-S (cr) - scissors 
-T (eo) - teapot 
-U (oz) - uozu (The city of ミラージュランド) 
-V (ii) - viv (minor planet # 2558)
-W (io) - window 
-X (bt) - xbfjlptx (sequence puzzle: JL, FJLP, BFJLPT, ???)  
-Z (gr) - zgierz (map + Polish flag)
++A (nd) - andromeda - Messier 31
++B (om) - bomb - PD image found
++C (li) - clinic - Image found
++D (in) - diamond - Image made
++E (xs) - exercise
++F (ae) - falafel (Michel Kammoun, 2006)
++G (on) - gong 
++H (aa) - hannah (hint: Charlotte Skeoch\nChamber of Secrets) 
++I (lt) - illuminati 
++J (ui) - jujij (insect, Mi'kmaq)
++K (aa) - kayak 
++L (ee) - level
++M (uu) - museum 
+-N (eo) - neutron [UPDATE THE IMAGE]
++O (nv) - oncativo - 31° 54' 48" S 63° 40' 55" W (-31.913444452800753, -63.68208046344461 )
++P (ai) - parsnip (Pastinaca sativa)
+=Q (ui) - qulliq (https://en.wikipedia.org/wiki/Inuit_culture) - use the photo, with clue "Nanavut"
++R (aa) - radar
++S (cr) - scissors 
++T (eo) - teapot 
++U (oz) - uozu (The city of ミラージュランド) 
++V (ii) - viv (Minor planet # 2558)
++W (io) - window 
++X (bt) - xbfjlptx (sequence puzzle: JL, FJLP, BFJLPT, ???)  
++Z (gr) - zgierz (map + Polish flag)
 
+e|A|M H|D|R z|F|G
+-+-+- -+-+- -+-+-
+k| |j x| |v t| |s
+-+-+- -+-+- -+-+-
+C|u|I p|l|B o|w|N
+
+nexus[jazz flux band cork vest whip game]
 
 Level 2:
 Available: abcdegilmnorstuvxz
@@ -344,3 +351,15 @@ game
 Names: ['Aarika', 'Abba', 'Abra', 'Ada', 'Adara', 'Adda', 'Addia', 'Adela', 'Adelaida', 'Adelina', 'Adella', 'Adena', 'Adiana', 'Adina', 'Adora', 'Adrea', 'Adria', 'Adriana', 'Adrianna', 'Adriena', 'Aeriela', 'Agata', 'Agatha', 'Agna', 'Agnella', 'Agneta', 'Agnola', 'Agretha', 'Aida', 'Aila', 'Ailina', 'Aindrea', 'Alameda', 'Alana', 'Alanna', 'Alberta', 'Albertina', 'Albina', 'Alecia', 'Aleda', 'Alejandra', 'Alejandrina', 'Alejoa', 'Alena', 'Alessandra', 'Aleta', 'Alethea', 'Alexa', 'Alexandra', 'Alexandrina', 'Alexia', 'Alexina', 'Alfreda', 'Alia', 'Alica', 'Alicea', 'Alicia', 'Alida', 'Alidia', 'Alika', 'Alina', 'Alisa', 'Alisha', 'Alissa', 'Aliza', 'Alla', 'Allegra', 'Allianora', 'Allina', 'Allissa', 'Alma', 'Almeda', 'Almeria', 'Almeta', 'Almira', 'Aloisia', 'Aloysia', 'Alta', 'Althea', 'Alva', 'Alvera', 'Alverta', 'Alvina', 'Alvinia', 'Alvira', 'Alyda', 'Alyosha', 'Alysa', 'Alysia', 'Alyssa', 'Amalea', 'Amaleta', 'Amalia', 'Amalita', 'Amanda', 'Amara', 'Amata', 'Amelia', 'Amelina', 'Amelita', 'Ammamaria', 'Ana', 'Anabella', 'Anastasia', 'Anastassia', 'Anatola', 'Anderea', 'Andra', 'Andrea', 'Andrea', 'Andreana', 'Andria', 'Andriana', 'Anestassia', 'Anetta', 'Angela', 'Angelia', 'Angelica', 'Angelika', 'Angelina', 'Angelita', 'Ania', 'Anica', 'Anissa', 'Anita', 'Anitra', 'Anjela', 'Anna', 'Anna-Diana', 'Anna-Maria', 'Annabela', 'Annabella', 'Annadiana', 'Annamaria', 'Annetta', 'Annissa', 'Annmaria', 'Annnora', 'Annora', 'Anselma', 'Anthea', 'Anthia', 'Anthiathia', 'Antonella', 'Antonetta', 'Antonia', 'Antonietta', 'Antonina', 'Anya', 'Appolonia', 'Ara', 'Ara', 'Arabela', 'Arabella', 'Arda', 'Ardelia', 'Ardella', 'Ardenia', 'Ardra', 'Aretha', 'Ariana', 'Aridatha', 'Ariela', 'Ariella', 'Arlana', 'Arlena', 'Arleta', 'Arlina', 'Arlinda', 'Asa', 'Ashia', 'Ashla', 'Asia', 'Astra', 'Atalanta', 'Athena', 'Atlanta', 'Auberta', 'Audra', 'Augusta', 'Augustina', 'Aundrea', 'Aura', 'Aurea', 'Aurelea', 'Aurelia', 'Auria', 'Aurilia', 'Auroora', 'Aurora', 'Austina', 'Ava', 'Aviva', 'Bab', 'Babb', 'Barb', 'Bob', 'Caddric', 'Cedric', 'Chic', 'Clerc', 'David', 'Derward', 'Desmond', 'Desmund', 'Devland', 'Diarmid', 'Drud', 'Dud', 'Dugald', 'Durand', 'Durward', 'Eachelle', 'Eadie', 'Earle', 'Earlie', 'Ebonee', 'Eddie', 'Eddie', 'Ede', 'Edee', 'Edeline', 'Edie', 'Edithe', 'Edythe', 'Effie', 'Eimile', 'Elaine', 'Elane', 'Elayne', 'Elbertine', 'Eldredge', 'Eldridge', 'Eleanore', 'Elene', 'Elenore', 'Eleonore', 'Elfie', 'Elianore', 'Elie', 'Elinore', 'Elise', 'Elke', 'Elladine', 'Elle', 'Ellene', 'Ellette', 'Ellie', 'Elmore', 'Elnore', 'Eloise', 'Elonore', 'Else', 'Elsie', 'Elsinore', 'Elyse', 'Elysee', 'Emalee', 'Emanuele', 'Emeline', 'Emelyne', 'Emile', 'Emilee', 'Emilie', 'Emiline', 'Emlynne', 'Emmalee', 'Emmaline', 'Emmalynne', 'Emmeline', 'Emmie', 'Emmye', 'Emogene', 'Emyle', 'Emylee', 'Enrique', 'Eolande', 'Erie', 'Ermengarde', 'Ermentrude', 'Erminie', 'Ernaline', 'Ernestine', 'Ernie', 'Erskine', 'Esme', 'Esme', 'Essie', 'Estele', 'Estelle', 'Ethe', 'Etheline', 'Etienne', 'Ettie', 'Ettore', 'Eugene', 'Eugenie', 'Eugine', 'Eulalie', 'Eunice', 'Eustace', 'Evangeline', 'Evanne', 'Eve', 'Eveline', 'Evie', 'Evonne', 'Evvie', 'Eyde', 'Eydie', 'Eziechiele', 'Georg', 'Graig', 'Greg', 'Gregg', 'Hadleigh', 'Haleigh', 'Haleigh', 'Hamish', 'Hannah', 'Heath', 'Heath', 'Helen-Elizabeth', 'Hephzibah', 'Hersch', 'Hersh', 'Hirsch', 'Hugh', 'Hurleigh', 'Hyacinth', 'Isiahi', 'Issi', 'Karlik', 'Kendrick', 'Kerk', 'Kirk', 'Laural', 'Laurel', 'Lemuel', 'Lil', 'Linell', 'Linnell', 'Linoel', 'Lionel', 'Lovell', 'Lowell', 'Lyell', 'Lyndel', 'Lyndell', 'Lynnell', 'Magnum', 'Malcolm', 'Mariam', 'Maxim', 'Miriam', 'Myriam', 'Nadean', 'Nadeen', 'Nan', 'Nanon', 'Napoleon', 'Nathan', 'Nealon', 'Nealson', 'Nefen', 'Nelson', 'Neron', 'Nevin', 'Newton', 'Nilson', 'Ninon', 'Niven', 'Noellyn', 'Noelyn', 'Nolan', 'Norean', 'Noreen', 'Norman', 'Norton', 'Odo', 'Olivero', 'Oliviero', 'Omero', 'Onofredo', 'Orazio', 'Orlando', 'Othello', 'Otho', 'Otto', 'Philip', 'Phillip', 'Phillipp', 'Phip', 'Pip', 'Ragnar', 'Rainer', 'Rayner', 'Raynor', 'Reidar', 'Reider', 'Rochester', 'Rodger', 'Roger', 'Rudiger', 'Rutger', 'Rutter', 'Ruttger', 'Sanders', 'Saunders', 'Sayers', 'Sayres', 'Seamus', 'Seumas', 'Shamus', 'Silas', 'Sileas', 'Silvanus', 'Simmonds', 'Stanislas', 'Stanislaus', 'Stavros', 'Stephanus', 'Sylas', 'Tait', 'Talbert', 'Talbot', 'Thebault', 'Thibaut', 'Tiebout', 'Tobit', 'Trent', 'Tybalt', 'Vaclav', 'Viv', 'Walliw', 'Willow', 'Wilow', 'Winslow', 'Woodrow', 'Yancey', 'Yancy', 'Yardley', 'Yetty']
 
 Eduardo Castex
+
+Neutron:
+Your Majesty, Your Royal Highnesses, Ladies and Gentlemen.
+                                                                                                                        
+This year like two years ago the Academy of Sciences awards the Nobel Prize for Physics as a reward for discoveries in 
+the world of atoms and molecules. However, a fundamental difference is to be observed between the prizewinners of this 
+year and the prizes that were awarded last time. The latter formed the reward for investigations of more theoretical 
+nature, viz. the discovery of laws regulating the great many phenomena having been brought into light by experimental 
+research. This year the Nobel Prize for Physics is awarded as a reward for a discovery, confirmed in an experimental way, 
+of a new fundamental building-stone of atoms and molecules, viz. the discovery of the so-called ███████. By a combination 
+of intuition, logical thought, and experimental research Professor J. Chadwick, the laureate of this year, has succeeded 
+in proving the existence of the ███████ and establishing its properties.

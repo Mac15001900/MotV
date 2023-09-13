@@ -32,6 +32,8 @@ Enterbrain
 Shiro
 Kaduki
 
+comshou - a bunch of graphical assets
+
 Aqua's tiles require a link
 SRD's also require a link: http://sumrndm.site/
 

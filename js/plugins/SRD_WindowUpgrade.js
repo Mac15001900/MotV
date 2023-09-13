@@ -899,7 +899,7 @@ function Window_ChoiceMessage() {
 			scene.removeChild(win);
 			this.setWaitMode('');
 		}.bind(this));
-		g.test = this;
+		// g.test = this;
 		//console.log("Current interpreter:", this);
 		this.setWaitMode('indefinite');
 	};

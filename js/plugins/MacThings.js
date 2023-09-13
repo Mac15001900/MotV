@@ -558,6 +558,7 @@ g.showMessage = function (inp, message, face, faceFile = 'mc') {
 
 //Adds extra spaces to make sure the text is of certain width
 g.padToLength = function (string, targetLength, side = 'both') {
+    console.assert(typeof string === 'string', "padToLength: string must be a string");
     let lines = string.split('\n');
     let maxLength = lines.map(g.simpleUnescape).map(l => l.length).reduce((a, b) => a > b ? a : b);
     if (maxLength >= targetLength) return string;

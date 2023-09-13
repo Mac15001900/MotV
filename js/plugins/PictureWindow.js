@@ -74,7 +74,7 @@ PictureWindow.prototype.finish = function () {
     Input.update();
     this.contents.clear();
     this.close();
-    SceneManager._scene.removeChild(this);
+    // SceneManager._scene.removeChild(this);
     if (this.independent) g.getInterpreter().setWaitMode('');
 }
 

@@ -42,6 +42,7 @@ PictureWindow.prototype.show = function (imageName, independent = true, scale = 
         let h = scale * bmp.height + 36 + (independent ? 4 : 0); //If independent, add 4 pixels for the pause sign
         let fullWidth = SceneManager._screenWidth;
         let fullHeight = independent ? SceneManager._screenHeight : SceneManager._screenHeight - WINDOW_MESSAGE_HEIGHT;
+        if (w > fullWidth || h > fullHeight) console.warn("PictureWindow: Image is too large to fit on screen.");
         this.offsetX = 0;
         this.move((fullWidth - w) / 2, (fullHeight - h) / 2, w, h);
         this.adjustX();
@@ -53,7 +54,6 @@ PictureWindow.prototype.show = function (imageName, independent = true, scale = 
         SceneManager._scene.addWindow(this);
 
         this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, 0, 0, scale * bmp.width, scale * bmp.height);
-        console.log(this);
     }.bind(this));
 }
 
@@ -76,7 +76,6 @@ PictureWindow.prototype.finish = function () {
     this.close();
     SceneManager._scene.removeChild(this);
     if (this.independent) g.getInterpreter().setWaitMode('');
-    //g.pictureWindow = null;
 }
 
 //Adjusts X position based on the choice window

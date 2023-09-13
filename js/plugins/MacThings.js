@@ -78,6 +78,7 @@ macThingsInit = function () {
         },
         set: function (obj, prop, value) {
             $gameVariables.setValue(prop, value);
+            return true;
         }
     });
     $gs = new Proxy($gameSwitches._data, {
@@ -86,6 +87,7 @@ macThingsInit = function () {
         },
         set: function (obj, prop, value) {
             $gameSwitches.setValue(prop, value);
+            return true;
         }
     });
     $ss = new Proxy($gameSelfSwitches._data, {
@@ -96,6 +98,7 @@ macThingsInit = function () {
         set: function (obj, name, value) {
             let inp = g.getInterpreter();
             $gameSelfSwitches.setValue(inp._mapId + ',' + inp._eventId + ',' + name.toUpperCase(), value);
+            return true;
         }
     });
 
@@ -119,6 +122,7 @@ macThingsInit = function () {
             let mapId = $gameMap.mapId();
             if (!g.data.seenEvents[mapId]) g.data.seenEvents[mapId] = {};
             g.data.seenEvents[mapId][eventId] = value;
+            return true;
         }
     });
 
@@ -588,6 +592,18 @@ g.breakString = function (string, length = 100) {
     if (resLine.length > 0) res.push(resLine);
 
     return res.join('\n');
+}
+
+//Checks if two arrays are equal
+g.arraysEqual = function (a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
 }
 
 

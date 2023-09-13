@@ -1374,7 +1374,7 @@ function Window_ChoiceMessage() {
 		}
 		this.width = this.windowWidth();
 		this.refresh();
-		this.select(0);
+		this.select(0); //Change: using specific index if it exists
 	};
 
 	Window_ChoiceBase.prototype.parseData = function (data) {
@@ -1454,7 +1454,8 @@ function Window_ChoiceMessage() {
 		}
 		this.width = this.windowWidth();
 		this.refresh();
-		this.select(0);
+		this.select($gv[22]); //Change: using specific index if it exists
+		$gv[22] = 0;
 	};
 
 	Window_ChoiceMessage.prototype.parseData = function (data) {

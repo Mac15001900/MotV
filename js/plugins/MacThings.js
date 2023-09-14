@@ -948,6 +948,24 @@ Utils.isMobileDevice = function () {
     return Utils._mobileDevice;
 }
 
+
+/**
+ * Returns the width of the specified text.
+ *
+ * @method measureTextWidth
+ * @param {String} text The text to be measured
+ * @return {Number} The width of the text in pixels
+ */
+/*
+Bitmap.prototype.measureTextWidth = function (text) {
+    var context = this._context;
+    context.save();
+    context.font = this._makeFontNameText();
+    var width = context.measureText(text).width;
+    context.restore();
+    return width;
+};*/
+
 //===================================== Dev tools =====================================
 
 //Finds the differences between two objects
@@ -985,4 +1003,11 @@ ImageManager.loadSystem = function(filename, hue) {
     if(filename === "IconSet") filename = "IconSet-big";
     _ImageManager_loadSystem(this, filename, hue);
 };
-*/
+/*
+/*Game_CharacterBase.prototype.resetPattern = function () {
+    return;
+};
+
+Game_Event.prototype.resetPattern = function () {
+    return;
+};*/

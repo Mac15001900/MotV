@@ -249,7 +249,7 @@ Missing: fhjkpqwy
 !b - x<
 !c - s<
 !d - a>
-!e - +l<, +n<, f>, l>, t<
+!e - +l>, +n<, f>, l<, t<
 !g - z<
 !i - +v<, c>, d<, j>, p>, q>, v>, w<
 !l - +c<, i<

@@ -24,4 +24,15 @@
 
 klucz[Semakod]
 
+Ideas for a better version:
+A board you can walk on, turning cells on and off
+A list of numbers, one per row of the board
+A hint: blurry line of things, turning into a longer line. Matrix-style background with lots of binary.
+For each correct row something happens.
+Once a few correct rows are inputted, a cutscene plays solving 90% of the remainder
+
+Problem: even the smallest QR code won't fit on the screen this way. Zoom out? Or one specific place where you can zoom out.
+Toggling all the cells might be a bit tedious - 529 cells, above example has 238 cells to toggle off or 291 to toggle on
+
+Idea: universal numbers -> image converter. Used for multiple puzzles. Each digit corresponds to the color of a cell.
 

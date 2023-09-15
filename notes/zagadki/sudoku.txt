@@ -27,3 +27,26 @@ Znajdujesz magazyn z łamigłówkami sudoku. Jedna z nich różni się od pozost
 
 Docs:
 https://docs.google.com/document/d/1FuZPRwXfWzF48DcvxH5Q07eLy9mVZuBdNGViYT3DQQk/edit
+
+
+
+----------------- English ----------------- 
+
+nexus[reverseness]
+
+[ n r   ] v s   u e x
+] v e   x r u   n s [
+x u s   e [ n   v r ]
+ 
+e r [   s n ]   x v u
+u x n   v e r   ] [ s
+v s ]   u x [   e n r
+ 
+s e v   [ u x   r ] n
+r ] u   n s e   [ x v
+n [ x   r ] v   s u e
+
+n e x u s [ r e v e r s e n e s s ]
+1 2 3 4 5 6 7 8 9 1 1 1 1 1 1 1 1 1 
+                  0 1 2 3 4 5 6 7 8
+                  

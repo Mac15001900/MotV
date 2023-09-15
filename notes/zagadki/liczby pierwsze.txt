@@ -48,4 +48,24 @@ findPairFrom x n = if ((isPrime x) && (isPrime (x+n))) then x else findPairFrom 
 
 Bonus: polskie znaki o pierwszych pozycjach w alfabecie: ąbćehjmńryź
 
+nexus[eulerishness]
 
+----------------- English ----------------- 
+-XX-X-X---X-X---X-X---X-----X-X-----X---X-X---X-----X-----X-X-----X---X-X-----X---X-----X-------X
+.ne.x.u...s.[...e.u...l.....e.r.....i...s.h...n.....e.....s.s.....]...X.X.....X...X.....X.......X
+One x unmask[irrefutably algebraization schemingly develops sharks]
+-XX-X-X---X-X---X-n---e-----x-u-----s---[-X---X-----X-----X-X-----X---X-X-----X---X-----X-------X
+Begin at eigth hornlike affixture design[
+
+
+
+Determine
+Differentiate
+Definite
+Delegate
+Deplete
+Derive
+Develop
+Deduce
+Depict
+Descend

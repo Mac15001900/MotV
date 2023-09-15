@@ -97,4 +97,52 @@ to znaczy wchodzą do ogólnego porządku \c[6]alfabetycznego\c[0] kolejności z
 
 
 
+----------------- English ----------------- 
+
+nexus[deuteranopia]
+Needed: adeinoprstux
+
+Same as Polish, just add borax?
+
+Propofol -> Propofol \,
+Cetyryzyna -> Cetirizine (losing 'ay', gaining 'i')
+Kalamina -> Calamine (losing 'k', gaining 'ce')
+Sugammadeks -> Sugammadex (losing 'ks', gaining 'x')
+
+propofol | cetirizine | (K)calamine | sugammadex
+12345678   1234567890      12345678   1234567890
+
+n  e  x  u  s  [  d  e  u  t  e  r  a  n  o  p  i  a  ]
+K7 C2 S0 S2 S1 [1 S8 K8 S2 C3 S9 P2 K5 C9 P5 P1 C6 S4 [2
+1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19
+
+P:
+1 -> 16
+2 -> 12
+5 -> 15
+
+K:
+5 -> 13
+7 -> 1
+8 -> 8
+
+C:
+2 -> 2
+3 -> 10
+6 -> 17
+9 -> 14
+
+S:
+1 -> 5
+2 -> 4
+2 -> 9
+4 -> 18
+8 -> 7
+10 -> 3
+
+1 -> 5  |  2 -> 4  |  2 -> 9  |  4 -> 18  |  8 -> 7  |  10 -> 3
+
+Odnajdź oryginalny manuskrypt "How the fourth floor came to Crowley Castle". Następnie wyjdź z biblioteki. Przejdź przez tory trawmajowe i idź cały czas prosto ulicą, której nazwa zaczyna się na "o". Po przejściu pod mostem kolejowym skręć w prawo w trzecią ulicę. Potem skręć w lewo, w ścieżkę przecinającą trawnik.\nNa jej końcu, na kamiennym krześle, spotkasz kogoś, kto zna te symbole.
+
+Find the original manuscript of "How the fourth floor came to Crowley Castle". Then exit the library by the main entrance.\nCross over the tram tracks and continue onwards via a street whose name starts with an "o".\nAfter walking under a railroad bridge take the third turn right. Then turn left, into the path cutting across the grass.\nAt the end of the path, on a chair of stone, you shall find someone who knows these symbols.\n
 

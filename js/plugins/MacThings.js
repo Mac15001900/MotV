@@ -672,6 +672,8 @@ g.setLanguage = function (lang) {
         }
         $gs[langData.switches[lang]] = true
     }
+    console.log(s.loadingFile);
+    Graphics.setLoadingImage(`img/system/${s.loadingFile}.png`);
 }
 
 Object.defineProperty(ConfigManager, 'lang', {

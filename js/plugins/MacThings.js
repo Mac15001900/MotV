@@ -64,7 +64,7 @@ macUpdateForeground = function () {
     if (foregroundName === "-F") return; //We're in testland
     if ($gameMap._parallaxName && g.ocramLayers[0]._imgName !== foregroundName || !g.gameInitialised) {
         if (VERBOSE_LOGS) console.log("Loading new foreground: " + foregroundName);
-        g.interpteter.pluginCommand('oc_layer', ['0', foregroundName]);
+        g.getInterpreter().pluginCommand('oc_layer', ['0', foregroundName]);
     } else {
         if (VERBOSE_LOGS) console.log(foregroundName + " already correct");
     }
@@ -125,7 +125,6 @@ macThingsInit = function () {
             return true;
         }
     });
-
 
     //Movespeed and debug stuff
     $gamePlayer.setMoveSpeed(4.5);
@@ -357,16 +356,9 @@ rumble = function (duration, strength) {
 
 //===================================== Autosave system =====================================
 
-//Schedules and autosave to happen a configurable amount of time from now. Parameters indicate if previous attempt was successful.
-scheduleAutosave = function (wasSuccess = true) {
-    if (g.autosaveTimeout) clearTimeout(g.autosaveTimeout); //In case we end up with two of them
-    if (wasSuccess) g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_DELAY);
-    else g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_RETRY);
-}
-
 /*
 Will attempt to autosave. Successful or not, it will then schedule the next autosave based on configured delay.
-The synchronouse parameter dictates whether to handle over the task of compressing data to a worker or do it synchronously
+The synchronous parameter dictates whether to hand over the task of compressing data to a worker or do it synchronously
 If synchronous is false, it will only save if we're on the map and not in an event.
 If it is true, it will save immidiately (blocking the main thread). We assume the caller ensured this is a good moment to autosave
 */
@@ -383,6 +375,13 @@ autosaveAttempt = function (synchronous = false) {
     }
 }
 
+//Schedules an autosave to happen a configurable amount of time from now. Parameters indicate if previous attempt was successful.
+scheduleAutosave = function (wasSuccess = true) {
+    if (g.autosaveTimeout) clearTimeout(g.autosaveTimeout); //In case we end up with two of them
+    if (wasSuccess) g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_DELAY);
+    else g.autosaveTimeout = setTimeout(autosaveAttempt, AUTOSAVE_RETRY);
+}
+
 //Will autosave the game, and call scheduleAutosave afterwards to schedule the next one
 autosave = function (message, synchronous = false, index = 1) {
     if (DataManager.saveGame(index, message.data)) {
@@ -395,6 +394,7 @@ autosave = function (message, synchronous = false, index = 1) {
     }
 }
 
+//Will attempt to autosave on window close.
 window.onunload = () => {
     if (!g.getInterpreter().isRunning()) {
         g.data.test = "On unload!";
@@ -1012,4 +1012,24 @@ ImageManager.loadSystem = function(filename, hue) {
 
 Game_Event.prototype.resetPattern = function () {
     return;
+};*/
+/*
+var _Window_Base_drawText = Window_Base.prototype.drawTextEx;
+Window_Base.prototype.drawTextEx = function (text, x, y) {
+    let newText = text;
+    console.log("replacing 'word' with 'dorw'");
+    if ($gameSwitches.value(20)) {
+        console.log("replacing 'word' with 'dorw'");
+        newText = newText.replace(/(?<!\w)word(?!\w)/g, "dorw");
+    }
+    _Window_Base_drawTextEx.call(this, newText, x, y);
+}*/
+/*
+let _Game_Message_add = Game_Message.prototype.add;
+Game_Message.prototype.add = function (text) {
+    let newText = text;
+    if ($gameSwitches.value(20)) {
+        newText = newText.replace(/(?<!\w)word(?!\w)/g, "dorw");
+    }
+    _Game_Message_add.call(this, newText);
 };*/

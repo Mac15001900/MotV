@@ -1,0 +1,15 @@
+
+
+----------------- English ----------------- 
+
+Determine the right answer by:
+- constant (from the start, end, corner)
+- amount of words
+- amount of letters `mod` amount of answers
+- amount of a specific letter?
+- Numerical clue (some number)
+
+Questions: regular (text), or imcomprehensible (just numbers? jumbled text - might look like a decoding problem (is that bad?))
+
+nexus[]
+N EX US [ ]

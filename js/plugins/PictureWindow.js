@@ -38,8 +38,8 @@ PictureWindow.prototype.show = function (imageName, independent = true, scale = 
     let bmp = ImageManager.loadPicture(imageName);
     if (independent) g.getInterpreter().setWaitMode('indefinite');
     bmp.addLoadListener(function () {
-        let w = scale * bmp.width + 36;
-        let h = scale * bmp.height + 36 + (independent ? 4 : 0); //If independent, add 4 pixels for the pause sign
+        let w = scale * bmp.width + this.standardPadding() * 2;
+        let h = scale * bmp.height + this.standardPadding() * 2 + (independent ? 4 : 0); //If independent, add 4 pixels for the pause sign
         let fullWidth = SceneManager._screenWidth;
         let fullHeight = independent ? SceneManager._screenHeight : SceneManager._screenHeight - WINDOW_MESSAGE_HEIGHT;
         if (w > fullWidth || h > fullHeight) console.warn("PictureWindow: Image is too large to fit on screen.");

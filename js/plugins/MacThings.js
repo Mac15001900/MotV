@@ -157,8 +157,7 @@ initialiseGData = function () {
     res.keysCollected = {};
     for (let i = 0; i < SECRET_KEYS.length; i++) {
         res.keysCollected[SECRET_KEYS[i]] = false;
-        //$gameVariables.setValue(11, $gameVariables.value(11) + 1);
-        $gv[11]++;
+        //$gv[11]++; //TODO: I'm fairly sure this line isn't needed, but not 100% sure
     }
     res.lastCollected = null;
     return res;
@@ -237,7 +236,7 @@ keyReactions = function (inp) {
     }
 
     switch (newStage) {
-        case 1: g.showMessage(inp, "O, to brzmi przydatnie. Zobaczymy, co tu teraz mamy.", 0); break;
+        case 1: g.showMessage(inp, "O, to brzmi przydatnie. Zobaczmy, co tu teraz mamy.", 0); break;
         case 2: g.showMessage(inp, "Ha, to chyba koniec potencjalnie zabójczych laserów!", 0); break;
         case 3:
             //TODO: Support for multiple messages from a script. Temporarily, this message is in the event
@@ -1033,3 +1032,5 @@ Game_Message.prototype.add = function (text) {
     }
     _Game_Message_add.call(this, newText);
 };*/
+
+PluginManager.loadScript = () => false;

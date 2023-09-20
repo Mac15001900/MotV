@@ -131,7 +131,8 @@ Window_Options.prototype.makeCommandList = function() {
 }
 
 Window_Options.prototype.addMasterVolume = function() {
-    this.addCommand(_.optionName, 'masterVolume');
+    //this.addCommand(_.optionName, 'masterVolume');
+    this.addCommand(s.masterVolume, 'masterVolume'); //Change: made the option name dynamic
 };
 
 })(SRD.MasterVolume);

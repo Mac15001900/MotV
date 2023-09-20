@@ -858,7 +858,8 @@ function Window_ChoiceMessage() {
 		}*/
 		let argString = args.join(' ');
 
-		$gameSystem.wu_info.questionWindowChoices = argString.split(/\s*,\s*/);
+		$gameSystem.wu_info.questionWindowChoices = argString.split(/\s*(?<!\\),\s*/);
+		$gameSystem.wu_info.questionWindowChoices = $gameSystem.wu_info.questionWindowChoices.map(x => x.replace(/\\,/g, ','));
 	};
 
 	SRD.PluginCommands['createquestionwindow'] = function (args) {

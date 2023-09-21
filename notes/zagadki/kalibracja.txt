@@ -1,3 +1,19 @@
+klucz[międzyprzestrzeń]
+K LU CZ [ MI Ę DZ Y PR ZES T EZ E Ń]
+
+klucz[podprzestrzeń]
+K LU CZ [ PO D PR ESTR ZEŃ ]
+K   - TAK, K, NIE, X
+LU  - KLUB, LUB, LU, U, _
+CZ  - CZ, SZ, RZ, DZ, DŻ, DŹ
+[   - | ( [ {
+PO  - PO, PRZED, NAD, POD, PRZY
+D   - 
+PR  - 
+ES  - 
+TR  - 
+ZEŃ - 
+]   - 
 
 
 ----------------- English ----------------- 
@@ -13,6 +29,19 @@ Questions: regular (text), or imcomprehensible (just numbers? jumbled text - mig
 
 nexus[interspace]
 N EX US [ IN T E R SP ACE ]
+N   - Y N
+EX  - REG SP EX
+US  - US THEM
+[   - | ( [ {
+IN  - IN OUT ON OFF
+T   - S T A R
+E   - N S E W NE NW SE SW
+R   - X L R U D F B
+SP  - REG SP EX
+ACE - ACE SPD ACC NOP
+]   - keyboard thingy
+
+
 
 Last one:
 

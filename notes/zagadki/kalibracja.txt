@@ -8,11 +8,11 @@ LU  - KLUB, LUB, LU, U, _
 CZ  - CZ, SZ, RZ, DZ, DŻ, DŹ
 [   - | ( [ {
 PO  - PO, PRZED, NAD, POD, PRZY
-D   - 
-PR  - 
-ES  - 
-TR  - 
-ZEŃ - 
+D   - H, D, T, U, PU
+PR  - HR, GC, PR, QC, SMM
+ES  - PR, OC, ES, OR
+TR  - AS, TR, ON, OM
+ZEŃ - ZEŃ, ZĘN, ŻEN, ZEN
 ]   - 
 
 

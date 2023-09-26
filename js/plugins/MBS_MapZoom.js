@@ -158,6 +158,7 @@
  */
 
 var Imported = Imported || {};
+Imported.MBS_MapZoom = true; //Change: added this line (why wasn't it here already?)
 
 var MBS = MBS || {};
 MBS.MapZoom = {};
@@ -487,7 +488,6 @@ MBS.MapZoom = {};
   Game_Interpreter.prototype.pluginCommand = function (command, args) {
     _GameInterpreter_pluginCommand.call(this, command, args);
     if (command == "MapZoom") {
-      //debugger;
       if (args[0] == "set") {
         if (args[1]) {
           if (args[2]) {

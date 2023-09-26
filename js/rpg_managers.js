@@ -507,6 +507,7 @@ Object.defineProperty(ConfigManager, 'seVolume', {
     },
     set: function (value) {
         AudioManager.seVolume = value;
+        AudioManager.meVolume = value; //Change: SE volume now also affects ME volume
     },
     configurable: true
 });

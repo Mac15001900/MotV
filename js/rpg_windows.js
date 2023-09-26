@@ -2688,8 +2688,8 @@ Window_Options.prototype.addGeneralOptions = function () {
 
 Window_Options.prototype.addVolumeOptions = function () {
     this.addCommand(TextManager.bgmVolume, 'bgmVolume');
-    this.addCommand(TextManager.bgsVolume, 'bgsVolume');
-    this.addCommand(TextManager.meVolume, 'meVolume');
+    //this.addCommand(TextManager.bgsVolume, 'bgsVolume'); //Change: We're not using background sounds (yet xD)
+    //this.addCommand(TextManager.meVolume, 'meVolume'); //Change: removed ME volume option (it will be set by SE volume)
     this.addCommand(TextManager.seVolume, 'seVolume');
 };
 

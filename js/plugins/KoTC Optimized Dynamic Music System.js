@@ -233,6 +233,7 @@ function KoTCDynamicMusic(forceplay, musiclistname) {
         }
 
         if (MUSIC_DEBUG) console.log("Now playing: " + musictarget["Music Name"]);
+        //g.topRightToast.enqueueToast("♫ " + musictarget["Music Name"] + " ♫", 250); //This does work, it's just that thematically it doesn't really fit (and all the music names are boring)
         var timesToPlay = Number(musictarget["Music Loop Amount"]) + 1;
         let pitch = Number(musictarget["Music Pitch"]) - Number(musictarget["Music Pitch Variance"]) + pitchvarianceaddition;
         AudioManager.playBgm({

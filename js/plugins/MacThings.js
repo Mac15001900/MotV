@@ -25,7 +25,7 @@ try {
 }
 
 const MAC_DEBUG = true;
-const VERBOSE_LOGS = false;
+const VERBOSE_LOGS = true;
 const DEBUG_STAGE = 9; //If debug is on, game stage will be set to this
 const MUSIC_DEBUG = false;
 window.g = window.g || {}
@@ -35,8 +35,8 @@ g.persistentWindows = [];
 //Shorhands for $gameVariables, $gameSwitches and $gameSelfSwitches, as well as seen events. Filled in by macThingsInit
 let $gv;
 let $gs;
-let $es;
 let $ss;
+let $es;
 
 const GAME_VERSION = "Alpha 1.0.0";
 const SECRET_KEYS = ["otoczenie", "nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietakiwitęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
@@ -135,7 +135,7 @@ macThingsInit = function () {
         $gamePlayer.setMoveSpeed(5);
     }
 
-    //Setting language switches
+    //Setting language and colourblind switches
     console.assert(g.lang !== 'none');
     for (const key in langData.switches) {
         if (Object.hasOwnProperty.call(langData.switches, key)) {
@@ -143,6 +143,7 @@ macThingsInit = function () {
         }
     }
     $gs[langData.switches[g.lang]] = true
+    $gs[10] = g.isColorblind;
 
     //Toast window (for music and autosave displays)
     g.topRightToast = new ToastWindow("top-right");
@@ -368,6 +369,9 @@ If it is true, it will save immidiately (blocking the main thread). We assume th
 */
 autosaveAttempt = function (synchronous = false) {
     if (SceneManager.getSceneName && SceneManager.getSceneName() === 'Scene_Map' && !g.getInterpreter().isRunning() || synchronous) {
+        if (VERBOSE_LOGS) console.log("Starting save at " + new Date().getSeconds());
+        /*g.topRightToast.enqueueToast(s.autosaving, Infinity);
+        g.topRightToast.fadeInLeft = 0;*/ //Removed the autosaving... toast, since it only appeared for a fraction of a second, and had weird behaviour if there was already another toast present
         $gameSystem.onBeforeSave();
         if (synchronous) autosave(LZString.compressToBase64(JsonEx.stringify(DataManager.makeSaveContents())), true);
         else {
@@ -392,10 +396,13 @@ autosave = function (message, synchronous = false, index = 1) {
         StorageManager.cleanBackup(index);
         if (VERBOSE_LOGS) console.log("Saved at " + new Date().getSeconds());
         scheduleAutosave(true);
+        g.topRightToast.enqueueToast(s.autosaved, 120);
     } else {
         console.warn("Saving failed");
         scheduleAutosave(false);
+        g.topRightToast.enqueueToast(s.autosavingFailed, 120);
     }
+    //g.topRightToast.skipToast(); //Re-enable this line if bringing back "Autosaving..." toast
 }
 
 //Will attempt to autosave on window close.
@@ -536,14 +543,18 @@ g.getInterpreter = function () {
     return res;
 }
 
+//Creates a single use toast window at target location
+
 //Finds the width of the canvas (in pixels)
 g.screenWidth = function () {
-    return Number(document.querySelector("#GameCanvas").style.width.slice(0, -2));
+    //return Number(document.querySelector("#GameCanvas").style.width.slice(0, -2));
+    return Graphics.width;
 }
 
 //Finds the height of the canvas (in pixels)
 g.screenHeight = function () {
-    return Number(document.querySelector("#GameCanvas").style.height.slice(0, -2));
+    //return Number(document.querySelector("#GameCanvas").style.height.slice(0, -2));
+    return Graphics.height;
 }
 
 //Calls showPicture with some parameters filled in with reasonable defaults
@@ -689,6 +700,17 @@ Object.defineProperty(ConfigManager, 'lang', {
     configurable: true
 });
 
+Object.defineProperty(ConfigManager, 'cBlind', {
+    get: function () {
+        return g.isColorblind;
+    },
+    set: function (value) {
+        g.isColorblind = value;
+        if ($gs) $gs[10] = value;
+    },
+    configurable: true
+});
+
 var _ConfigManager_makeData = ConfigManager.makeData;
 ConfigManager.makeData = function () {
     var config = _ConfigManager_makeData.call(this);
@@ -715,6 +737,7 @@ var _Window_Options_addVolumeOptions = Window_Options.prototype.addVolumeOptions
 Window_Options.prototype.addVolumeOptions = function () {
     _Window_Options_addVolumeOptions.call(this);
     this.addCommand(s.language, 'lang');
+    this.addCommand(s.colorblindMode, 'cBlind');
 };
 
 //First-launch scene

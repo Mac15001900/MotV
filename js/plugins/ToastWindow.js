@@ -7,7 +7,7 @@ ToastWindow.prototype.constructor = ToastWindow;
 
 /**
  * 
- * @param {String|Object|Array<Number>} position The position to display the window. Can be an object with x and y properties, an [x,y] array, or a string denoting a dynamic position, e.g. "top-right". 
+ * @param {String|Object|Array<Number>} position The position to display the window. Can be an object with x and y properties, an [x,y] array, an eventId, or a string denoting a dynamic position, e.g. "top-right". 
  * Vertical parameters available: "top, middle, bottom, message" (message displays the toast just above the message window)
  * Horizontal parameters available: "left, middle, right".
  * @param {Number} r Red value of the color. 0-255
@@ -18,11 +18,17 @@ ToastWindow.prototype.initialize = function (position, r = 0, g = 255, b = 255) 
     this.FADEOUT_START = 30; //How many frames will fading out last
     this.FADEIN_TIME = 15; //How many frames will fading in last
     this.BASIC_DURATION = 120; //How many frames will the toast last if not specified by the caller (excluding fade in and out)
+    this.SCALE = $gameMap.zoom.y; //How much zoom do we have
 
     let x = 0
     let y = 0;
     this.positionType = "static";
-    if (position.x !== undefined && position.y !== undefined) {
+    this.isDynamic = false; //Whether the position will change while displaying the toast
+    if (typeof (position) === "number") {
+        this.positionType = "event";
+        this.targetEvent = $gameMap.event(position);
+        this.isDynamic = true;
+    } else if (position.x !== undefined && position.y !== undefined) {
         x = position.x;
         y = position.y;
     } else if (position.length === 2) {
@@ -30,6 +36,7 @@ ToastWindow.prototype.initialize = function (position, r = 0, g = 255, b = 255) 
         y = position[1];
     } else {
         this.positionType = position;
+        if (this.positionType === "player") this.isDynamic = true;
     }
 
     Window_Base.prototype.initialize.call(this, x, y, 0, 0); //Width and height will be redone for each message
@@ -69,7 +76,10 @@ ToastWindow.prototype.update = function () {
     } else if (this.framesLeft < this.FADEOUT_START) {
         this.contentsOpacity = 255 * this.framesLeft / this.FADEOUT_START;
     }
+
+    if (this.isDynamic) this.updatePosition();
 }
+
 
 ToastWindow.prototype.drawBackground = function (x, y, width, height) {
     //Basic linear gradient. Increases more sharply near the edges
@@ -120,8 +130,8 @@ ToastWindow.prototype.startToast = function (toast, instant = false) {
     this._height = this.fittingHeight(rows) + this.textPadding() * rows + this.extraPadding;
 
     //Position calculations
+    let outsidePadding = this.extraPadding;
     if (this.positionType.contains('-')) {
-        let outsidePadding = this.extraPadding;
         let positionTypeX = this.positionType.split("-")[1];
         let positionTypeY = this.positionType.split("-")[0];
         switch (positionTypeX) {
@@ -147,6 +157,8 @@ ToastWindow.prototype.startToast = function (toast, instant = false) {
             case "message":
                 this.y = Graphics.height - SceneManager._scene._messageWindow.height - this._height - outsidePadding;
         }
+    } else {
+        this.updatePosition();
     }
 
     //Move the window, refresh the contents, create the new display
@@ -174,4 +186,10 @@ ToastWindow.prototype._makeColor = function (transparency) {
 
 ToastWindow.prototype._isInBounds = function (x, y) {
     return x >= 0 && x <= Graphics.width - this.width && y >= 0 && y < Graphics.height - this.height;
+}
+
+ToastWindow.prototype.updatePosition = function () {
+    let event = this.positionType === "player" ? $gamePlayer : this.targetEvent;
+    this.x = event.screenX() * this.SCALE - this.width / 2;
+    this.y = event.screenY() * this.SCALE - this.height - 32 * this.SCALE - this.extraPadding;
 }

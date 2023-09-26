@@ -10,10 +10,6 @@
  */
 
 //===================================== JavaScript upgrades =====================================
-/*
-String.prototype.replaceAll = function (pattern, value) {
-    return this.split(pattern).join(value);
-}*/
 
 String.prototype.capitalise = function () {
     return this[0].toUpperCase() + this.substring(1);
@@ -21,7 +17,7 @@ String.prototype.capitalise = function () {
 
 //===================================== Initialisation =====================================
 
-//Make sure we have a modern enough version of JavaScript
+//Make sure we have a modern enough version of JavaScript (tbh I'm not sure if this test will even run on an older version, but it won't hurt)
 try {
     let test = BigInt(1);
 } catch (e) {
@@ -35,6 +31,7 @@ const MUSIC_DEBUG = false;
 window.g = window.g || {}
 window.s = wordBank.en; //This should change once the config gets loaded
 g.gameInitialised = false;
+g.persistentWindows = [];
 //Shorhands for $gameVariables, $gameSwitches and $gameSelfSwitches, as well as seen events. Filled in by macThingsInit
 let $gv;
 let $gs;
@@ -56,7 +53,11 @@ Scene_Map.prototype.onMapLoaded = function () {
     if (VERBOSE_LOGS) console.log("Map loaded!");
     if (!g.gameInitialised) macThingsInit();
     macUpdateForeground();
-};
+    //Re-add any windows we want to keep around pernamently
+    for (let i = 0; i < g.persistentWindows.length; i++) {
+        this.addWindow(g.persistentWindows[i]);
+    };
+}
 
 macUpdateForeground = function () {
     if (!g.ocramLayers) return;
@@ -143,8 +144,12 @@ macThingsInit = function () {
     }
     $gs[langData.switches[g.lang]] = true
 
+    //Toast window (for music and autosave displays)
+    g.topRightToast = new ToastWindow("top-right");
+    g.persistentWindows.push(g.topRightToast);
+    //It will be added to the scene later on in the onMapLoaded alias
+
     //Other init stuff
-    g.interpteter = new Game_Interpreter();
     g.gameInitialised = true;
     g.saveWorker = new Worker("./js/plugins/compressor.js");
     scheduleAutosave(true);
@@ -997,7 +1002,7 @@ ImageManager.reserveSystem = function(filename, hue, reservationId) {
     if(filename === "IconSet") filename = "IconSet-big";
     _ImageManager_reserveSystem.call(this, filename, hue, reservationId);
 };
-
+ 
 var _ImageManager_loadSystem = ImageManager.loadSystem;
 ImageManager.loadSystem = function(filename, hue) {
     if(filename === "IconSet") filename = "IconSet-big";
@@ -1007,7 +1012,7 @@ ImageManager.loadSystem = function(filename, hue) {
 /*Game_CharacterBase.prototype.resetPattern = function () {
     return;
 };
-
+ 
 Game_Event.prototype.resetPattern = function () {
     return;
 };*/

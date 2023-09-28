@@ -13,3 +13,15 @@ Tabelka na końcu:
 
 
 klucz[całkiemjakżycie]
+
+New version: dynamic, mod 2 thingy.
+Buttons:
+Advance one step
+Set to single pixel
+Set to another shape
+Set to target shape
+
+Clues:
+Calibration step (one with directions) / compass with N E S W NE NW SE SW
+a squate with a marked middle? (too much?)
+Two lists of numbers - one all even, the other all odd

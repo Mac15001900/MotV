@@ -1,0 +1,33 @@
+Parts:
+Nokia - digits
+Gra w życie - ?
+Kalkulacja - a simple calculation
+Klawiaturowa / Pierwiastki - overlap, since both include numbers
+Komunikacja - unicode for an emoji
+Światowy mors - morse code in there? bu tprobably won't work
+Alpaka - the capital letters might work
+Dalton - a simpler chemical
+Brakujące litery - a line or two with missing letters
+Decrypto - a line or two of Decrypto clues
+Kolory - just part of that puzzle
+Grobowiec - very simple to pick letters from that one
+Adv. grobowiec - and this one
+Rotowanie - an entire 4x4 block of text, that has to rotated a specific way?
+Blok liczb - a block of digits, with a single letter
+Sudoku - 6x6 sudoku? Or a big sudoku, with clues from other places, that you then have to arrange? (variant sudoku?)
+Gradient - a few colored letters, that need rearranging
+Zaszyfrowywacz - something encrypted with it
+Pierwszy szyfr - a large number, decrypt it
+Tutorial 3 - a few people, need to arrange them
+Calibration - some GUI and the start/end? or two of them, in different places?
+
+Actually use a simpler combined puzzle, that unlocks a bigger one?
+
+Nakładanie 2.0
+
+Positioning based:
+Sekwencja 
+Ilość tile'i
+Liczby pierwsze
+Parzystość
+Framuga

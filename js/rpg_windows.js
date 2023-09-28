@@ -4536,7 +4536,7 @@ Window_Message.prototype.newLineX = function () {
 };
 
 Window_Message.prototype.processNewLine = function (textState) {
-    //this._lineShowFast = false; //Change - not resetting instant input on newlines !
+    //this._lineShowFast = false; //Change: not resetting instant input on newlines !
     Window_Base.prototype.processNewLine.call(this, textState);
     if (this.needsNewPage(textState)) {
         this.startPause();
@@ -5791,7 +5791,8 @@ Window_TitleCommand.prototype.makeCommandList = function () {
     this.addCommand(TextManager.newGame, 'newGame');
     this.addCommand(TextManager.continue_, 'continue', this.isContinueEnabled());
     this.addCommand(TextManager.options, 'options');
-    this.addCommand(s.credits, 'credits');  //Change: Added a credits and an exit option
+    this.addCommand(s.credits, 'credits');  //Change: Added a credits, feedback and an exit options
+    this.addCommand(s.feedback, 'feedback');
     this.addCommand(s.exit, 'exit');
 };
 
@@ -5802,7 +5803,11 @@ Window_TitleCommand.prototype.isContinueEnabled = function () {
 Window_TitleCommand.prototype.processOk = function () {
     Window_TitleCommand._lastCommandSymbol = this.currentSymbol();
     Window_Command.prototype.processOk.call(this);
-};
+    if (this.currentSymbol() === 'feedback') { //Change: don't deactivate on feedback
+        console.log("Feedback time!");
+        this.active = true;
+    }
+}
 
 Window_TitleCommand.prototype.selectLast = function () {
     if (Window_TitleCommand._lastCommandSymbol) {

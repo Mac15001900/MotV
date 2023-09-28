@@ -25,7 +25,7 @@ try {
 }
 
 const MAC_DEBUG = true;
-const VERBOSE_LOGS = true;
+const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 9; //If debug is on, game stage will be set to this
 const MUSIC_DEBUG = false;
 window.g = window.g || {}
@@ -888,6 +888,20 @@ Scene_Title.prototype.commandExit = function () {
     this._commandWindow.close();
     SceneManager.exit();
 };
+
+Scene_Title.prototype.commandFeedback = function () {
+    switch (g.lang) {
+        case "en":
+            window.open("https://www.google.com"); //TODO eng feedback form
+            break;
+        case "pl":
+            window.open("https://forums.rpgmakerweb.com/");
+            break;
+        default: console.error("Language is not set, but the feedback form was requested.");
+    }
+
+}
+
 
 //Eval expressions inside ${}
 _Window_Base_convertEscapeCharacters = Window_Base.prototype.convertEscapeCharacters;

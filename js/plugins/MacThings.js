@@ -63,7 +63,7 @@ macUpdateForeground = function () {
     if (!g.ocramLayers) return;
     let foregroundName = $gameMap._parallaxName + '-F';
     if (foregroundName === "-F") return; //We're in testland
-    if ($gameMap._parallaxName && g.ocramLayers[0]._imgName !== foregroundName || !g.gameInitialised) {
+    if ($gameMap._parallaxName && g.ocramLayers[0]._imgName !== foregroundName) {
         if (VERBOSE_LOGS) console.log("Loading new foreground: " + foregroundName);
         g.getInterpreter().pluginCommand('oc_layer', ['0', foregroundName]);
     } else {

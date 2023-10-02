@@ -124,7 +124,7 @@ ToastWindow.prototype.startToast = function (toast, instant = false) {
     let lines = this.text.split("\n");
     this._width = 0;
     for (let i = 0; i < lines.length; i++) {
-        this._width = Math.max(this._width, this.textWidth(lines[i]) + 6 * this.extraPadding);
+        this._width = Math.max(this._width, this.textWidth(g.simpleUnescape(lines[i])) + 6 * this.extraPadding);
     }
     let rows = lines.length;
     this._height = this.fittingHeight(rows) + this.textPadding() * rows + this.extraPadding;

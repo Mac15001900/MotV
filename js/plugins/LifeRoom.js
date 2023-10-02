@@ -1,26 +1,5 @@
-/*Game_Player.prototype.moveByInput = function () {
-    if (!this.isMoving() && this.canMove()) {
-        if (this.actionQueued) {
-            // this.actionQueued = false;
-            if (this.triggerAction(true)) {
-                console.log("Action triggered");
-                return;
-            }
-        }
-        var direction = this.getInputDirection();
-        if (direction > 0) {
-            $gameTemp.clearDestination();
-        } else if ($gameTemp.isDestinationValid()) {
-            var x = $gameTemp.destinationX();
-            var y = $gameTemp.destinationY();
-            direction = this.findDirectionTo(x, y);
-        }
-        if (direction > 0) {
-            this.executeMove(direction);
-        }
-    }
-};*/
-
+//Modifying Game_Player to be a bit more responsive. This change allows for an action to get queued up while moving.
+//It's a marginal improvement overall, but a huge one for the life room
 Game_Player.prototype.triggerButtonAction = function () {
     if (Input.isTriggered('ok') || this.actionQueued) {
         this.actionQueued = false;
@@ -49,7 +28,7 @@ Game_Player.prototype.update = function (sceneActive) {
         this.moveByInput();
     }
     Game_Character.prototype.update.call(this);
-    this.updateScroll(lastScrolledX, lastScrolledY);
+    if ($gs[142] || true) this.updateScroll(lastScrolledX, lastScrolledY);
     this.updateVehicle();
     if (!this.isMoving()) {
         this.updateNonmoving(wasMoving);
@@ -57,21 +36,35 @@ Game_Player.prototype.update = function (sceneActive) {
     this._followers.update();
 };
 
+//Starting map events on the floor ignores 'through' events; 'below characters' and 'through' events are effectively not triggerable with the action button
+Game_Player.prototype.startMapEvent = function (x, y, triggers, normal) {
+    if (!$gameMap.isEventRunning()) {
+        $gameMap.eventsXy(x, y).forEach(function (event) {
+            if (event.isTriggerIn(triggers) && event.isNormalPriority() === normal && (normal || !event.isThrough())) {
+                event.start();
+            }
+        });
+    }
+};
 
+// Board manager, responsible for all the cellular automata logic
 function BoardManager() {
     this.initialize.apply(this, arguments);
 }
 
 BoardManager.prototype.constructor = BoardManager;
 
-BoardManager.prototype.initialize = function (x, y, width, height) {
+BoardManager.prototype.initialize = function (x, y, width, height, firstId) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
+    this.firstId = firstId;
     this.values = [];
+    this.newValues = [];
     for (let i = 0; i < this.height; i++) {
-        this.push(new Array(this.width).fill(false));
+        this.values.push(new Array(this.width).fill(false));
+        this.newValues.push(new Array(this.width).fill(false));
     }
 }
 
@@ -84,29 +77,48 @@ BoardManager.prototype.setCellFromEvent = function (event, value) {
 }
 
 BoardManager.prototype.updateObjects = function () {
+    if (!this.firstId) return; //In that case this is a virtual baord, not tied to events
     let mapId = $gameMap.mapId();
-    for (let i = 0; i < this.height; i++) {
-        for (let j = 0; j < this.width; j++) {
-            $gameSelfSwitches.setValue(mapId + "," + (i * this.width + j) + ",A", this.values[i][j]);
+    for (let y = 0; y < this.height; y++) {
+        for (let x = 0; x < this.width; x++) {
+            $gameSelfSwitches.setValue(mapId + "," + (y * this.width + x + this.firstId) + ",A", this.values[y][x]);
         }
     }
 }
 
 BoardManager.prototype.runStep = function () {
-    for (let i = 0; i < this.height; i++) {
-        for (let j = 0; j < this.width; j++) {
-            this.values[i][j] = this.getNeighbours(j, i) % 2 == 1;
+    for (let y = 0; y < this.height; y++) {
+        for (let x = 0; x < this.width; x++) {
+            this.newValues[y][x] = this.getNeighbours(x, y) % 2 === 1;
         }
     }
+    let changed = 0;
+    for (let y = 0; y < this.height; y++) {
+        for (let x = 0; x < this.width; x++) {
+            if (this.newValues[y][x] !== this.values[y][x]) changed++;
+            this.values[y][x] = this.newValues[y][x];
+        }
+    }
+    this.updateObjects();
+    return changed;
 }
 
 BoardManager.prototype.getNeighbours = function (x, y) {
     let neighbours = 0;
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
-            if (i == 0 && j == 0) continue;
-            if (this.values[y + j][x + i]) neighbours++;
+            if (i === 0 && j === 0) continue;
+            if (this.values[y + j] && this.values[y + j][x + i]) neighbours++;
         }
     }
     return neighbours;
+}
+
+BoardManager.prototype.resetValues = function () {
+    for (let y = 0; y < this.height; y++) {
+        for (let x = 0; x < this.width; x++) {
+            this.values[y][x] = false;
+        }
+    }
+    this.updateObjects();
 }

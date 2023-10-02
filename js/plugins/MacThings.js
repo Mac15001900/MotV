@@ -166,6 +166,7 @@ initialiseGData = function () {
         //$gv[11]++; //TODO: I'm fairly sure this line isn't needed, but not 100% sure
     }
     res.lastCollected = null;
+    res.lifeManager = new BoardManager(4, 9, 11, 9, 3); //Values depend on the layout of Map 6. Update them is resizeing that map.
     return res;
 }
 

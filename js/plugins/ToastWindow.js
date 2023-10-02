@@ -180,6 +180,10 @@ ToastWindow.prototype.addListener = function (listener) {
     this.closeListeners.push(listener);
 }
 
+ToastWindow.prototype.hasToastWithText = function (text) {
+    return this.text === text || this.queue.some(toast => toast.text === text);
+}
+
 ToastWindow.prototype._makeColor = function (transparency) {
     return this.toastColor + transparency + ")";
 }

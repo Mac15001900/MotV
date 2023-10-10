@@ -22,7 +22,7 @@ Game_Player.prototype.update = function (sceneActive) {
     var lastScrolledX = this.scrolledX();
     var lastScrolledY = this.scrolledY();
     var wasMoving = this.isMoving();
-    if (wasMoving && Input.isPressed('ok')) this.actionQueued = true;
+    if (wasMoving && Input.isPressed('ok')) this.actionQueued = true; //This is the only line changed here
     this.updateDashing();
     if (sceneActive) {
         this.moveByInput();
@@ -86,7 +86,14 @@ BoardManager.prototype.updateObjects = function () {
     }
 }
 
-BoardManager.prototype.runStep = function () {
+BoardManager.prototype.runStep = function (amount = 1) {
+    if (amount > 1) {
+        let changed = 0;
+        for (let i = 0; i < amount; i++) {
+            changed += this.runStep(1);
+        }
+        return changed;
+    }
     for (let y = 0; y < this.height; y++) {
         for (let x = 0; x < this.width; x++) {
             this.newValues[y][x] = this.getNeighbours(x, y) % 2 === 1;
@@ -121,4 +128,42 @@ BoardManager.prototype.resetValues = function () {
         }
     }
     this.updateObjects();
+}
+
+//Testing functions - not used in the game, but useful for setting puzzles
+
+BoardManager.prototype.print = function () {
+    res = "";
+    for (let y = 0; y < this.height; y++) {
+        for (let x = 0; x < this.width; x++) {
+            res += this.values[y][x] ? "X" : ".";
+        }
+        res += "\n";
+    }
+    console.log(res);
+}
+
+BoardManager.prototype.anyEdgesOn = function () {
+    for (let y = 0; y < this.height; y++) {
+        for (let x = 0; x < this.width; x++) {
+            if (this.values[y][x] && (x === 0 || x === this.width - 1 || y === 0 || y === this.height - 1)) return true;
+        }
+    }
+    return false;
+}
+
+BoardManager.prototype.setCells = function (list) {
+    for (let i = 0; i < list.length; i++) {
+        this.setCell(list[i][0], list[i][1], true);
+    }
+}
+
+BoardManager.prototype.countCells = function () {
+    let count = 0;
+    for (let y = 0; y < this.height; y++) {
+        for (let x = 0; x < this.width; x++) {
+            if (this.values[y][x]) count++;
+        }
+    }
+    return count;
 }

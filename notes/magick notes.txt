@@ -1,0 +1,2 @@
+Split a tileset into separate images: magick convert -crop 1x2@ -scene 1 wall-both-flush.png both_%02d.png
+Resize an image: magick input.png -resize 150% .output.png

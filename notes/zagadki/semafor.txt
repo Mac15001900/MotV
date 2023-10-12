@@ -1,0 +1,8 @@
+Zagadka w łazience
+
+Wskazówki, jakoś wizualnie połączone:
+Lista godzin --  zegar analogowy -- coś od alfabetu semaforowego
+
+Podpowiedzi do semaforu:
+Flagi wiszące na ścianie
+Mała łódka pływająca w wannie, z napisem RFC 4824 (https://datatracker.ietf.org/doc/html/rfc4824)

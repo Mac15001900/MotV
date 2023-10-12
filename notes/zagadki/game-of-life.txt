@@ -29,3 +29,9 @@ Calibration step (one with directions) / compass with N E S W NE NW SE SW
 Two lists of numbers - one all even, the other all odd
 
 An image with the target grid and letters.
+
+
+Setting the starting pattern:
+test.setCells([[6,5],[8,4],[4,5],[5,4],[7,6],[8,6]]); test.print(); - 12 characters left
+
+nexus[is this life]

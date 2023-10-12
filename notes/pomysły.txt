@@ -42,6 +42,7 @@ Inspirowane "testem IQ" https://puzzling.stackexchange.com/questions/110408/iq-t
 Słowa, które trzeba napisać pierwiastkami
 FEN chess strings
 Punchcards (https://www.masswerk.at/keypunch/)
+Flag signals
 
 
 

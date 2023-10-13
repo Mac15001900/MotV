@@ -61,10 +61,10 @@ Scene_Map.prototype.onMapLoaded = function () {
 }
 
 macUpdateForeground = function () {
-    if (!g.ocramLayers) return;
-    let foregroundName = $gameMap._parallaxName + '-F';
+    if (!g.ocramLayers || !$gameMap._parallaxName) return;
+    let foregroundName = g.translateMapName($gameMap._parallaxName) + '-F';
     if (foregroundName === "-F") return; //We're in testland
-    if ($gameMap._parallaxName && g.ocramLayers[0]._imgName !== foregroundName) {
+    if (g.ocramLayers[0]._imgName !== foregroundName) {
         if (VERBOSE_LOGS) console.log("Loading new foreground: " + foregroundName);
         g.getInterpreter().pluginCommand('oc_layer', ['0', foregroundName]);
     } else {
@@ -690,6 +690,11 @@ g.setLanguage = function (lang) {
         $gs[langData.switches[lang]] = true
     }
     Graphics.setLoadingImage(`img/system/${s.loadingFile}.png`);
+}
+
+g.translateMapName = function (filename) {
+    if (filename.indexOf('-lang') > -1) filename = filename.replace('-lang', '-' + g.lang);
+    return filename;
 }
 
 Object.defineProperty(ConfigManager, 'lang', {

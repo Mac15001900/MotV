@@ -59,7 +59,7 @@ RESOURCE LIST - DO NOT MODIFY ABOVE THIS LINE
     };
 
     ImageManager.loadParallax = function (filename, hue) { //Change: loading some maps dynamically depending on language
-        return this.loadBitmap(parallaxesFolder, filename, hue, true);
+        return this.loadBitmap(parallaxesFolder, g.translateMapName(filename), hue, true);
     };
 
     Game_Map.prototype.tileWidth = function () {

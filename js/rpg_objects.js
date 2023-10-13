@@ -558,7 +558,7 @@ Game_Variables.prototype.clear = function () {
 };
 
 Game_Variables.prototype.value = function (variableId) {
-    return this._data[variableId] || 0;
+    return this._data[variableId] ?? 0; //Change: changed || to ??, allowing falsey values
 };
 
 Game_Variables.prototype.setValue = function (variableId, value) {

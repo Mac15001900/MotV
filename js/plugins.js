@@ -3,6 +3,7 @@
 var $plugins =
 [
 {"name":"TranslationData","status":true,"description":"","parameters":{}},
+{"name":"CollisionData","status":true,"description":"","parameters":{}},
 {"name":"MacThings","status":true,"description":"Various misc things","parameters":{}},
 {"name":"PictureWindow","status":true,"description":"Adds a PictureWindow, for displaying images nicely","parameters":{}},
 {"name":"Community_Basic","status":true,"description":"Plugin used to set basic parameters.","parameters":{"cacheLimit":"20","screenWidth":"1920","screenHeight":"1080","changeWindowWidthTo":"1280","changeWindowHeightTo":"720","renderingMode":"auto","alwaysDash":"off"}},

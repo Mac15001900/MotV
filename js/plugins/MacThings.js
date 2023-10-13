@@ -26,7 +26,7 @@ try {
 
 const MAC_DEBUG = true;
 const VERBOSE_LOGS = false;
-const DEBUG_STAGE = 9; //If debug is on, game stage will be set to this
+const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this
 const DEBUG_SWITCHES = [141]; //Switches that will be turned on when debug mode is on 
 const MUSIC_DEBUG = false;
 window.g = window.g || {}
@@ -831,6 +831,16 @@ Graphics.endLoading = function () {
 };
 
 //=====================================Various engine changes=====================================
+
+//TODO overwrite Game_Map.prototype.setup = function (mapId) {, change $dataMap.data dynamically if $dataMap.meta.dynamicCollisions is true
+
+let _Game_Map_setup = Game_Map.prototype.setup;
+Game_Map.prototype.setup = function (mapId) {
+    _Game_Map_setup.call(this, mapId);
+    if ($dataMap.meta.dynamicCollisions) {
+        $dataMap.data = CollisionData[g.lang][$gameMap.mapId()];
+    }
+}
 
 //Clears up things when going back to main menu
 var _Scene_Title_start = Scene_Title.prototype.start;

@@ -1,0 +1,14 @@
+Skip title, to new game
+Quit after event test finishes
+Set starting variables and switches
+Change movement speed (regular and sprint)
+Phase through blocks on sprint
+Warp to selected map
+Show toasts for console errors, warnings and logs
+Show a persistent toast with a specific variable
+Play a sound when a variable changes
+Instant / very fast text
+Show collisions?
+Choose event page
+Show event pages
+Toggle music key / show currently playing music

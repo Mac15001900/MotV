@@ -22,3 +22,7 @@ Lengths:
 
 nexus[idaes to worlds]
 Use digits as brackets, with a hint somewhere?
+
+Brackets do have a morse code (https://k3wwp.com/cw_ss_list_punc.html)
+[   -.--.
+]	-.--.-

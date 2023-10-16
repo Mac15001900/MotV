@@ -7,17 +7,17 @@ ToastWindow.prototype.constructor = ToastWindow;
 
 /**
  * 
- * @param {String|Object|Array<Number>} position The position to display the window. Can be an object with x and y properties, an [x,y] array, an eventId, or a string denoting a dynamic position, e.g. "top-right". 
+ * @param {String|Object|Array<Number>|Number} position The position to display the window. Can be an object with x and y properties, an [x,y] array, an eventId, "player", or a string denoting a dynamic position, e.g. "top-right". 
  * Vertical parameters available: "top, middle, bottom, message" (message displays the toast just above the message window)
  * Horizontal parameters available: "left, middle, right".
- * @param {Number} r Red value of the color. 0-255
- * @param {Number} g Green value of the color. 0-255
- * @param {Number} b Blue value of the color. 0-255
+ * @param {Number} r Red value of the default color. 0-255
+ * @param {Number} g Green value of the default color. 0-255
+ * @param {Number} b Blue value of the default color. 0-255
  */
 ToastWindow.prototype.initialize = function (position, r = 0, g = 255, b = 255) {
     this.FADEOUT_START = 30; //How many frames will fading out last
     this.FADEIN_TIME = 15; //How many frames will fading in last
-    this.BASIC_DURATION = 120; //How many frames will the toast last if not specified by the caller (excluding fade in and out)
+    this.BASIC_DURATION = 120; //How many frames will the toast last if not specified by the caller (excluding fading in and out)
     this.SCALE = $gameMap.zoom.y; //How much zoom do we have
 
     let x = 0
@@ -36,7 +36,7 @@ ToastWindow.prototype.initialize = function (position, r = 0, g = 255, b = 255) 
         y = position[1];
     } else {
         this.positionType = position;
-        if (this.positionType === "player") this.isDynamic = true;
+        if (position === "player") this.isDynamic = true;
     }
 
     Window_Base.prototype.initialize.call(this, x, y, 0, 0); //Width and height will be redone for each message
@@ -65,7 +65,7 @@ ToastWindow.prototype.update = function () {
         this.fadeInLeft--;
     }
 
-    if (this.framesLeft == 0) {
+    if (this.framesLeft === 0) {
         this.contents.clear();
         this.contentsOpacity = 0;
         if (this.queue.length > 0) this.startToast(this.queue.shift());
@@ -98,7 +98,14 @@ ToastWindow.prototype.drawBackground = function (x, y, width, height) {
     grad2.addColorStop(1, this._makeColor(0));
     this.contents.fillRect(x, y, width, height, grad2);
 };
-
+/**
+ * Adds another toast to the queue to be displayed.
+ * @param {String} text Text to display
+ * @param {Number} [time] How many frames the toast should last, excluding fading in and out
+ * @param {Number} [r] Red value of the background color. 0-255
+ * @param {Number} [g] Green value of the background color. 0-255
+ * @param {Number} [b] Blue value of the background color. 0-255
+ */
 ToastWindow.prototype.enqueueToast = function (text, time = this.BASIC_DURATION, r, g, b) {
     this.queue.push({
         text: text,

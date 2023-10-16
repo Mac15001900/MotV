@@ -9218,10 +9218,17 @@ Game_Interpreter.prototype.command111 = function () {
             }
             break;
         case 2:  // Self Switch
-            if (this._eventId > 0) {
+            if (this.commonEventId) { //Change: Added a case for common events
+                var key = ['-', this.commonEventId, this._params[1]];
+                result = ($gameSelfSwitches.value(key) === (this._params[2] === 0));
+            } else if (this._eventId > 0) {
                 var key = [this._mapId, this._eventId, this._params[1]];
                 result = ($gameSelfSwitches.value(key) === (this._params[2] === 0));
             }
+            /*if (this._eventId > 0) {
+                var key = [this._mapId, this._eventId, this._params[1]];
+                result = ($gameSelfSwitches.value(key) === (this._params[2] === 0));
+            }*/
             break;
         case 3:  // Timer
             if ($gameTimer.isWorking()) {
@@ -9372,6 +9379,7 @@ Game_Interpreter.prototype.command117 = function () {
     if (commonEvent) {
         var eventId = this.isOnCurrentMap() ? this._eventId : 0;
         this.setupChild(commonEvent.list, eventId);
+        this._childInterpreter.commonEventId = commonEvent.id; //Change: added a new field to store the id of the current common event
     }
     return true;
 };
@@ -9572,7 +9580,10 @@ Game_Interpreter.prototype.operateVariable = function (variableId, operationType
 
 // Control Self Switch
 Game_Interpreter.prototype.command123 = function () {
-    if (this._eventId > 0) {
+    if (this.commonEventId) { //Change: Added a case for common events
+        var key = ['-', this.commonEventId, this._params[0]];
+        $gameSelfSwitches.setValue(key, this._params[1] === 0);
+    } else if (this._eventId > 0) {
         var key = [this._mapId, this._eventId, this._params[0]];
         $gameSelfSwitches.setValue(key, this._params[1] === 0);
     }

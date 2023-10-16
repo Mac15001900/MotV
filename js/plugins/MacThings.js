@@ -95,11 +95,13 @@ macThingsInit = function () {
     $ss = new Proxy($gameSelfSwitches._data, {
         get: function (target, name) {
             let inp = g.getInterpreter();
-            return $gameSelfSwitches.value(inp._mapId + ',' + inp._eventId + ',' + name.toUpperCase());
+            if (inp.commonEventId) return $gameSelfSwitches.value('-,' + inp.commonEventId + ',' + name.toUpperCase());
+            else return $gameSelfSwitches.value(inp._mapId + ',' + inp._eventId + ',' + name.toUpperCase());
         },
         set: function (obj, name, value) {
             let inp = g.getInterpreter();
-            $gameSelfSwitches.setValue(inp._mapId + ',' + inp._eventId + ',' + name.toUpperCase(), value);
+            if (inp.commonEventId) $gameSelfSwitches.setValue('-,' + inp.commonEventId + ',' + name.toUpperCase(), value);
+            else $gameSelfSwitches.setValue(inp._mapId + ',' + inp._eventId + ',' + name.toUpperCase(), value);
             return true;
         }
     });

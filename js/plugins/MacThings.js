@@ -860,6 +860,59 @@ Scene_Title.prototype.start = function () {
     }
 };
 
+//Adding unpressed key support
+/*void ((alias) => {
+    Input.update = function () {
+        this._justReleased = [];
+        for (var name in this._currentState) {
+            if (!this._currentState[name] && this._previousState[name]) {
+                this._justReleased.push(name);
+                this._justReleasedTime = this._pressedTime;
+            }
+        }
+        alias.call(this);
+    }
+})(Input.update);*/
+
+/**
+ * Checks whether a key was just released.
+ * @param {String} keyName The mapped name of the key
+ * @returns {Number} If the key was just released, the amount of frames it was held for. 0 otherwise.
+ */
+Input.isReleased = function (keyName) {
+    if (this._justReleased.includes(keyName)) return Graphics.frameCount - this._pressedStartTimes[keyName];
+    else return 0;
+}
+
+void ((alias) => {
+    Input.initialize = function () {
+        alias.call(this);
+        this._pressedStartTimes = {};
+    }
+})(Input.initialize);
+
+Input.update = function () {
+    this._pollGamepads();
+    this._justReleased = [];
+    if (this._currentState[this._latestButton]) {
+        this._pressedTime++;
+    } else {
+        this._latestButton = null;
+    }
+    for (var name in this._currentState) {
+        if (this._currentState[name] && !this._previousState[name]) {
+            this._latestButton = name;
+            this._pressedTime = 0;
+            this._date = Date.now();
+            this._pressedStartTimes[name] = Graphics.frameCount;
+        } else if (!this._currentState[name] && this._previousState[name]) {
+            this._justReleased.push(name);
+        }
+        this._previousState[name] = this._currentState[name];
+    }
+    this._updateDirection();
+};
+
 //Marks the event as seen whenever it's launched
 var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
 Game_Interpreter.prototype.setup = function (list, eventId) {
@@ -873,6 +926,8 @@ var _Scene_Base_update = Scene_Base.prototype.update;
 Scene_Base.prototype.update = function () {
     _Scene_Base_update.apply(this);
     if (MAC_DEBUG && Input.isTriggered("quit")) SceneManager.exit(); //TODO QInpit prevents this, find out why
+    if (Input.isReleased("ok")) console.log(Input.isReleased("ok"));
+    if (Input.isLongPressed('ok')) console.log("Test");
 }
 
 //Volume settings increment change

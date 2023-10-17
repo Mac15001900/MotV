@@ -127,7 +127,11 @@ Window_Options.prototype.processOk = function () {
         this.processDisabledOption(symbol);
         return;
     }
-    if (symbol === "cancel") SceneManager.pop(); //Change: special case for going back
+    if (symbol === "cancel") {
+        SceneManager.pop(); //Change: special case for going back
+        SoundManager.playOk();
+        return;
+    }
     if (symbol === "controls") this.showControlsScreen();
     if (symbol === 'lang') {
         this.changeValue(symbol, langData.next());

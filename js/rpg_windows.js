@@ -2712,7 +2712,7 @@ Window_Options.prototype.statusText = function (index) {
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         return this.volumeStatusText(value);
-    } else if (symbol === "cancel") {
+    } else if (symbol === "cancel" || symbol === "controls") {
         return "";  //Change: not doing anything for ON/OFF
     } else if (symbol === "lang") {
         return langData.dict[value];
@@ -2727,7 +2727,7 @@ Window_Options.prototype.isVolumeSymbol = function (symbol) {
 
 Window_Options.prototype.booleanStatusText = function (value) {
     //return value ? 'ON' : 'OFF'; 
-    return value ? s.on : s.off;  //Change: Polish translation
+    return value ? s.on : s.off;  //Change: Translation
 };
 
 Window_Options.prototype.volumeStatusText = function (value) {
@@ -2737,7 +2737,12 @@ Window_Options.prototype.volumeStatusText = function (value) {
 Window_Options.prototype.processOk = function () {
     var index = this.index();
     var symbol = this.commandSymbol(index);
+    if (!this.isCommandEnabled(index)) { //Change: Handle disabled fields
+        this.processDisabledOption(symbol);
+        return;
+    }
     if (symbol === "cancel") SceneManager.pop(); //Change: special case for going back
+    if (symbol === "controls") this.showControlsScreen();
     if (symbol === 'lang') {
         this.changeValue(symbol, langData.next());
         return;
@@ -2758,7 +2763,11 @@ Window_Options.prototype.processOk = function () {
 Window_Options.prototype.cursorRight = function (wrap) {
     var index = this.index();
     var symbol = this.commandSymbol(index);
-    if (symbol === "cancel") return; //Change: special case for going back
+    if (!this.isCommandEnabled(index)) { //Change: Handle disabled fields
+        this.processDisabledOption(symbol);
+        return;
+    }
+    if (symbol === "cancel" || symbol === "controls") return; //Change: special case for going back, controls and language
     if (symbol === 'lang') {
         this.changeValue(symbol, langData.next());
         return;
@@ -2776,7 +2785,11 @@ Window_Options.prototype.cursorRight = function (wrap) {
 Window_Options.prototype.cursorLeft = function (wrap) {
     var index = this.index();
     var symbol = this.commandSymbol(index);
-    if (symbol === "cancel") return; //Change: special case for going back
+    if (!this.isCommandEnabled(index)) { //Change: Handle disabled fields
+        this.processDisabledOption(symbol);
+        return;
+    }
+    if (symbol === "cancel" || symbol === "controls") return; //Change: special case for going back, controls and language
     if (symbol === 'lang') {
         this.changeValue(symbol, langData.previous());
         return;
@@ -2790,6 +2803,10 @@ Window_Options.prototype.cursorLeft = function (wrap) {
         this.changeValue(symbol, false);
     }
 };
+
+Window_Options.prototype.processDisabledOption = function (symbol) {
+    //TODO: make a sound?
+}
 
 Window_Options.prototype.volumeOffset = function () {
     return 20;

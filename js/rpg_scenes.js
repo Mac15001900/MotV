@@ -1603,6 +1603,9 @@ Scene_Options.prototype.createOptionsWindow = function () {
     this._optionsWindow = new Window_Options();
     this._optionsWindow.setHandler('cancel', this.popScene.bind(this));
     this.addWindow(this._optionsWindow);
+    //Change: adding the option description window
+    this._descriptionWindow = new OptionDescriptionWindow(this._optionsWindow);
+    this.addWindow(this._descriptionWindow);
 };
 
 //-----------------------------------------------------------------------------

@@ -547,7 +547,14 @@ g.getInterpreter = function () {
     return res;
 }
 
+//Gets the name of the current top-level scene in the stack
+g.topLevelScene = function () {
+    if (SceneManager._stack.length > 0) return SceneManager._stack[0].toString().split(' ')[1].split('(')[0]
+    else return SceneManager.getSceneName();
+}
+
 //Creates a single use toast window at target location
+//TODO
 
 //Finds the width of the canvas (in pixels)
 g.screenWidth = function () {
@@ -745,8 +752,9 @@ DataManager.onLoad = function (object) {
 var _Window_Options_addVolumeOptions = Window_Options.prototype.addVolumeOptions;
 Window_Options.prototype.addVolumeOptions = function () {
     _Window_Options_addVolumeOptions.call(this);
-    this.addCommand(s.language, 'lang');
+    this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title'); //We really don't want the language to change mid-game
     this.addCommand(s.colorblindMode, 'cBlind');
+    this.addCommand(s.controls, 'controls');
 };
 
 //First-launch scene
@@ -788,6 +796,37 @@ Scene_LangugeChoice.prototype.update = function () {
 
 //===================================== Custom windows =====================================
 
+//Option description
+function OptionDescriptionWindow() {
+    this.initialize.apply(this, arguments);
+};
+
+OptionDescriptionWindow.prototype = Object.create(Window_Base.prototype);
+OptionDescriptionWindow.prototype.constructor = OptionDescriptionWindow;
+
+OptionDescriptionWindow.prototype.initialize = function (optionsWindow) {
+    const ROW_AMOUNT = 2;
+    let height = this.fittingHeight(ROW_AMOUNT) + this.textPadding() * ROW_AMOUNT;// + this.standardPadding();
+    this.optionsWindow = optionsWindow;
+    Window_Base.prototype.initialize.call(this, 0, Graphics.height - height, Graphics.width, height);
+}
+
+OptionDescriptionWindow.prototype.update = function () {
+    Window_Base.prototype.update.call(this);
+    this.contents.clear();
+    this.drawTextEx(s.optionDescriptions[this.optionsWindow.commandSymbol(this.optionsWindow.index())], this.textPadding(), 0, Graphics.width, 'center');
+}
+
+Window_Options.prototype.showControlsScreen = function () {
+    let inp = g.getInterpreter();
+    this.active = false;
+    inp.pluginCommand('SetQuestionWindowData', ['1', '1', 'center']);
+    inp.pluginCommand('SetQuestionWindowChoices', ['OK']);
+    inp.pluginCommand('CreateQuestionWindow', ['3', "Hello there"]);
+    //TODO re-activate it when the question window is done
+}
+
+
 
 //===================================== Loading spinner =====================================
 
@@ -806,22 +845,6 @@ Graphics._createAllElements = function () {
     _Graphics_createAllElements.call(this);
     this._createLoadingSpinner();
 }
-/*
-//Show it when loading starts
-Graphics.startLoading = function () {
-    this._loadingCount = 0;
-    
-};*/
-/*
-let _Graphics_updateLoading = Graphics.updateLoading;
-Graphics.updateLoading = function () {
-    _Graphics_updateLoading.call(this);
-    if (this._loadingCount >= 20) {
-        if (!document.getElementById("loadingSpinner")) {
-            document.body.appendChild(this._loadingSpinner);
-        }
-    }
-}*/
 
 //Hide it when it ends
 Graphics.endLoading = function () {
@@ -861,18 +884,6 @@ Scene_Title.prototype.start = function () {
 };
 
 //Adding unpressed key support
-/*void ((alias) => {
-    Input.update = function () {
-        this._justReleased = [];
-        for (var name in this._currentState) {
-            if (!this._currentState[name] && this._previousState[name]) {
-                this._justReleased.push(name);
-                this._justReleasedTime = this._pressedTime;
-            }
-        }
-        alias.call(this);
-    }
-})(Input.update);*/
 
 /**
  * Checks whether a key was just released.
@@ -926,8 +937,6 @@ var _Scene_Base_update = Scene_Base.prototype.update;
 Scene_Base.prototype.update = function () {
     _Scene_Base_update.apply(this);
     if (MAC_DEBUG && Input.isTriggered("quit")) SceneManager.exit(); //TODO QInpit prevents this, find out why
-    if (Input.isReleased("ok")) console.log(Input.isReleased("ok"));
-    if (Input.isLongPressed('ok')) console.log("Test");
 }
 
 //Volume settings increment change

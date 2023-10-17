@@ -41,7 +41,7 @@ PictureWindow.prototype.show = function (imageName, independent = true, scale = 
         let w = scale * bmp.width + this.standardPadding() * 2;
         let h = scale * bmp.height + this.standardPadding() * 2 + (independent ? 4 : 0); //If independent, add 4 pixels for the pause sign
         let fullWidth = SceneManager._screenWidth;
-        let fullHeight = independent ? SceneManager._screenHeight : SceneManager._screenHeight - WINDOW_MESSAGE_HEIGHT;
+        let fullHeight = independent ? SceneManager._screenHeight : SceneManager._screenHeight - SceneManager._scene._messageWindow.height;
         if (w > fullWidth || h > fullHeight) console.warn("PictureWindow: Image is too large to fit on screen.");
         this.offsetX = 0;
         this.move((fullWidth - w) / 2, (fullHeight - h) / 2, w, h);

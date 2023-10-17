@@ -54,6 +54,14 @@ function BoardManager() {
 
 BoardManager.prototype.constructor = BoardManager;
 
+/**
+ * Creates a new board manager that handles the interactive puzzle in the Life Room, though it could be adapted for other puzzles by modifying runStep.
+ * @param {Number} x X position of the top-left event
+ * @param {Number} y Y  position of the top-left event
+ * @param {Number} width Width of the board
+ * @param {Number} height Height of the board
+ * @param {Number} firstId Id of the top-left event, or 0 to create a virtual board
+ */
 BoardManager.prototype.initialize = function (x, y, width, height, firstId) {
     this.x = x;
     this.y = y;
@@ -152,6 +160,7 @@ BoardManager.prototype.anyEdgesOn = function () {
     return false;
 }
 
+//Sets some cells on, specified by an array of [x,y] coordinates. To set the main puzzle in the game use [[6,5],[8,4],[4,5],[5,4],[7,6],[8,6]]
 BoardManager.prototype.setCells = function (list) {
     for (let i = 0; i < list.length; i++) {
         this.setCell(list[i][0], list[i][1], true);

@@ -43,7 +43,7 @@ Window_Options.prototype.initialize = function () {
 
 Window_Options.prototype.update = function () {
     Window_Command.prototype.update.call(this);
-    if (!g.getInterpreter()._waitMode) this.active = true;
+    if (!g.getInterpreter()._waitMode) this.active = true; //This ensures we re-activate this window when the controls window is closed
 }
 
 Window_Options.prototype.windowWidth = function () {
@@ -64,7 +64,7 @@ Window_Options.prototype.makeCommandList = function () {
     this.addCommand(TextManager.alwaysDash, 'alwaysDash');
     this.addCommand(s.fullScreen, 'fullscreen');
     this.addVolumeOptions();
-    this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title'); //We really don't want the language to change mid-game
+    this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title' || MAC_DEBUG); //We really don't want the language to change mid-game
     this.addCommand(s.colorblindMode, 'cBlind');
     this.addCommand(s.controls, 'controls');
 };

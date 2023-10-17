@@ -106,14 +106,14 @@
 			return defaultValue;
 		}
 	};
-
-	var _Window_Options_addGeneralOptions = Window_Options.prototype.addGeneralOptions;
-	Window_Options.prototype.addGeneralOptions = function () {
-		_Window_Options_addGeneralOptions.call(this);
-		if (position === 'middle') {
-			this.addCommand(s.fullScreen, 'fullscreen');
-		}
-	};
+	/*
+		var _Window_Options_addGeneralOptions = Window_Options.prototype.addGeneralOptions;
+		Window_Options.prototype.addGeneralOptions = function () {
+			_Window_Options_addGeneralOptions.call(this);
+			if (position === 'middle') {
+				this.addCommand(s.fullScreen, 'fullscreen');
+			}
+		};*/
 	/*
 		var _Window_Options_makeCommandList = Window_Options.prototype.makeCommandList;
 		Window_Options.prototype.makeCommandList = function () {

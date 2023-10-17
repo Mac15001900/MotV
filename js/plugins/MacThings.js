@@ -43,7 +43,6 @@ const GAME_VERSION = "Alpha 1.0.0";
 const SECRET_KEYS = ["otoczenie", "nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietakiwitęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
 const AUTOSAVE_DELAY = 300 * 1000; //How often to autosave (in miliseconds)
 const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try again
-const VOLUME_INCREMENT = 5; //How many % to change the volume by from one button-press
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 19, 22]; //How many keys are needed for each unlock stage
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
 const WINDOW_MESSAGE_HEIGHT = 336; //This is only descriptive, doesn't actually influence Window_Message
@@ -749,14 +748,6 @@ DataManager.onLoad = function (object) {
     _DataManager_onLoad.call(this, object);
 }
 
-var _Window_Options_addVolumeOptions = Window_Options.prototype.addVolumeOptions;
-Window_Options.prototype.addVolumeOptions = function () {
-    _Window_Options_addVolumeOptions.call(this);
-    this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title'); //We really don't want the language to change mid-game
-    this.addCommand(s.colorblindMode, 'cBlind');
-    this.addCommand(s.controls, 'controls');
-};
-
 //First-launch scene
 function Scene_LangugeChoice() {
     this.initialize.apply(this, arguments);
@@ -795,37 +786,6 @@ Scene_LangugeChoice.prototype.update = function () {
 }
 
 //===================================== Custom windows =====================================
-
-//Option description
-function OptionDescriptionWindow() {
-    this.initialize.apply(this, arguments);
-};
-
-OptionDescriptionWindow.prototype = Object.create(Window_Base.prototype);
-OptionDescriptionWindow.prototype.constructor = OptionDescriptionWindow;
-
-OptionDescriptionWindow.prototype.initialize = function (optionsWindow) {
-    const ROW_AMOUNT = 2;
-    let height = this.fittingHeight(ROW_AMOUNT) + this.textPadding() * ROW_AMOUNT;// + this.standardPadding();
-    this.optionsWindow = optionsWindow;
-    Window_Base.prototype.initialize.call(this, 0, Graphics.height - height, Graphics.width, height);
-}
-
-OptionDescriptionWindow.prototype.update = function () {
-    Window_Base.prototype.update.call(this);
-    this.contents.clear();
-    this.drawTextEx(s.optionDescriptions[this.optionsWindow.commandSymbol(this.optionsWindow.index())], this.textPadding(), 0, Graphics.width, 'center');
-}
-
-Window_Options.prototype.showControlsScreen = function () {
-    let inp = g.getInterpreter();
-    this.active = false;
-    inp.pluginCommand('SetQuestionWindowData', ['1', '1', 'center']);
-    inp.pluginCommand('SetQuestionWindowChoices', ['OK']);
-    inp.pluginCommand('CreateQuestionWindow', ['3', "Hello there"]);
-    //TODO re-activate it when the question window is done
-}
-
 
 
 //===================================== Loading spinner =====================================
@@ -938,9 +898,6 @@ Scene_Base.prototype.update = function () {
     _Scene_Base_update.apply(this);
     if (MAC_DEBUG && Input.isTriggered("quit")) SceneManager.exit(); //TODO QInpit prevents this, find out why
 }
-
-//Volume settings increment change
-Window_Options.prototype.volumeOffset = () => VOLUME_INCREMENT;
 
 //Creates save titles when saving
 var _DataManager_makeSavefileInfo = DataManager.makeSavefileInfo;

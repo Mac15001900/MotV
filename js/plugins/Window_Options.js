@@ -1,3 +1,32 @@
+//-----------------------------------------------------------------------------
+// OptionDescriptionWindow
+//
+// The window for displaying the description of an option.
+
+function OptionDescriptionWindow() {
+    this.initialize.apply(this, arguments);
+};
+
+OptionDescriptionWindow.prototype = Object.create(Window_Base.prototype);
+OptionDescriptionWindow.prototype.constructor = OptionDescriptionWindow;
+
+OptionDescriptionWindow.prototype.initialize = function (optionsWindow) {
+    const ROW_AMOUNT = 2;
+    let height = this.fittingHeight(ROW_AMOUNT) + this.textPadding() * ROW_AMOUNT;
+    this.optionsWindow = optionsWindow;
+    Window_Base.prototype.initialize.call(this, 0, Graphics.height - height, Graphics.width, height);
+}
+
+OptionDescriptionWindow.prototype.update = function () {
+    Window_Base.prototype.update.call(this);
+    this.contents.clear();
+    this.drawTextEx(s.optionDescriptions[this.optionsWindow.commandSymbol(this.optionsWindow.index())], this.textPadding(), 0, Graphics.width, 'center');
+}
+
+
+//-----------------------------------------------------------------------------
+// Window_Options
+//
 //The window for changing various settings on the options screen.
 
 function Window_Options() {
@@ -11,6 +40,11 @@ Window_Options.prototype.initialize = function () {
     Window_Command.prototype.initialize.call(this, 0, 0);
     this.updatePlacement();
 };
+
+Window_Options.prototype.update = function () {
+    Window_Command.prototype.update.call(this);
+    if (!g.getInterpreter()._waitMode) this.active = true;
+}
 
 Window_Options.prototype.windowWidth = function () {
     return 400;
@@ -26,20 +60,21 @@ Window_Options.prototype.updatePlacement = function () {
 };
 
 Window_Options.prototype.makeCommandList = function () {
-    this.addCommand(s.back, 'cancel'); //Change: added an option to go back
-    this.addGeneralOptions();
+    this.addCommand(s.back, 'cancel');
+    this.addCommand(TextManager.alwaysDash, 'alwaysDash');
+    this.addCommand(s.fullScreen, 'fullscreen');
     this.addVolumeOptions();
+    this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title'); //We really don't want the language to change mid-game
+    this.addCommand(s.colorblindMode, 'cBlind');
+    this.addCommand(s.controls, 'controls');
 };
 
-Window_Options.prototype.addGeneralOptions = function () {
-    this.addCommand(TextManager.alwaysDash, 'alwaysDash');
-    //this.addCommand(TextManager.commandRemember, 'commandRemember'); //Change: removed combat-related one
-};
+//Window_Options.prototype.addGeneralOptions = function () {};
 
 Window_Options.prototype.addVolumeOptions = function () {
     this.addCommand(TextManager.bgmVolume, 'bgmVolume');
-    //this.addCommand(TextManager.bgsVolume, 'bgsVolume'); //Change: We're not using background sounds (yet xD)
-    //this.addCommand(TextManager.meVolume, 'meVolume'); //Change: removed ME volume option (it will be set by SE volume)
+    //this.addCommand(TextManager.bgsVolume, 'bgsVolume'); // We're not using background sounds (yet xD)
+    //this.addCommand(TextManager.meVolume, 'meVolume'); //Removed ME volume option (it will be set by SE volume)
     this.addCommand(TextManager.seVolume, 'seVolume');
 };
 
@@ -159,8 +194,17 @@ Window_Options.prototype.processDisabledOption = function (symbol) {
     //TODO: make a sound?
 }
 
+Window_Options.prototype.showControlsScreen = function () {
+    let inp = g.getInterpreter();
+    this.active = false;
+    inp.pluginCommand('SetQuestionWindowData', ['1', '1', 'center']);
+    inp.pluginCommand('SetQuestionWindowChoices', ['OK']);
+    inp.pluginCommand('CreateQuestionWindow', ['3', s.controlsScreen]);
+    //TODO re-activate it when the question window is done
+}
+
 Window_Options.prototype.volumeOffset = function () {
-    return 20;
+    return 5;
 };
 
 Window_Options.prototype.changeValue = function (symbol, value) {

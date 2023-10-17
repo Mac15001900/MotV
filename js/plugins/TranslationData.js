@@ -38,6 +38,7 @@ wordBank = {
             seVolume: "Individual volume for sound effects.",
             controls: "Show the controls screen."
         },
+        controlsScreen: `Go up:    W or Up Arrow\nGo down:  S or Down Arrow\nGo left:  A or Left Arrow\nGo right: D or Right Arrow\nDash:     Shift\n\nInteract/confirm:  Space, Enter or Z\nCancel/open menu:  Escape or X\nToogle fullscreen: F4\n\nThere are no rebindable keys in this version, but they are coming at some point in the future.\nIf this feature is important to you do let me know, and it will be done faster ;)\n`,
         loadingFile: "Loading",
         yes: "yes",
         no: "no",
@@ -87,6 +88,7 @@ wordBank = {
             seVolume: "Poziom głośności efektów dźwiekowych.",
             controls: "Otwórz listę wszystkich klawiszy używanych w grze."
         },
+        controlsScreen: `Idź w górę:  W lub Strzałka w górę\nIdź w dół:   S lub Strzałka w dół\nIdź w lewo:  A lub Strzałka w lewo\nIdź w prawo: D lub Strzałka w prawo\nBiegnij:     Shift\n\nInterakcja/potwierdzenie: Spacja, Enter lub Z\nAnulowanie/menu:          Escape lub X\nWł./wył. pełny ekran:     F4\n\nW tej wersji niestety nie da się jeszcze zmieniać ustawień klawiszy.\nJeśli ta funkcja jest dla Ciebie ważna to daj mi znać, a zostanie zrobiona szybciej ;)\n`,
         loadingFile: "LoadingPl",
         yes: "tak",
         no: "nie",

@@ -955,6 +955,7 @@ var _Window_Message_processEscapeCharacter = Window_Message.prototype.processEsc
 Window_Message.prototype.processEscapeCharacter = function (code, textState) {
     switch (code) {
         case ',': this.startWait(7); break;
+        //case 'TEST': console.log(this.obtainEscapeParam(textState)); break;
         default: _Window_Message_processEscapeCharacter.call(this, code, textState);
     }
 }

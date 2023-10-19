@@ -3,7 +3,9 @@ ABCDEFGHIJKLMNOPRSTUWYZ
 AąBCćDEęFGHIJKLłMNńOóPRSśTUWYZźż
 
 
-
+Gradient:
+klucz[banachowo]
+nexus[banachish]
 
 
 

@@ -67,7 +67,8 @@ Window_Options.prototype.makeCommandList = function () {
     this.addVolumeOptions();
     this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title' || MAC_DEBUG); //We really don't want the language to change mid-game
     this.addCommand(s.colorblindMode, 'cBlind');
-    this.addCommand(s.controls, 'controls');
+    if (!Utils.isMobileDevice()) this.addCommand(s.controls, 'keyConfig', true);
+    //this.addCommand(s.controls, 'controls');
 };
 
 //Window_Options.prototype.addGeneralOptions = function () {};

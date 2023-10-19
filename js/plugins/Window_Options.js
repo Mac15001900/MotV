@@ -43,7 +43,8 @@ Window_Options.prototype.initialize = function () {
 
 Window_Options.prototype.update = function () {
     Window_Command.prototype.update.call(this);
-    if (!g.getInterpreter()._waitMode) this.active = true; //This ensures we re-activate this window when the controls window is closed
+    const rebindWindow = SceneManager._scene._windowLayer.children[2];
+    if (!g.getInterpreter()._waitMode && !(rebindWindow && rebindWindow.active)) this.active = true; //This ensures we re-activate this window when the controls window is closed
 }
 
 Window_Options.prototype.windowWidth = function () {

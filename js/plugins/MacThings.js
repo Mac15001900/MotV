@@ -644,7 +644,7 @@ Window_Base.prototype.convertEscapeCharacters = function (text) {
 //TODO: remove text shaking stuff as well
 g.simpleUnescape = function (string) {
     return Window_Base.prototype.convertEscapeCharacters(string)
-        .replace(/\x1bMSGCORE\[(\d+)\]/g, '') //replaces Yanfly MessageCore codes
+        .replace(/\x1bMSGCORE\[(\d+)\]/g, '') //replaces Yanfly MessageCore codes //TODO Replace \fn<fontName>
         .replace(/\x1b\w\[(\d+)\]/g, '') //Replaces single-letter \x[n] codes
         .replace(/\x1b\w/g, ''); //Replaces single-letter \x codes
 }
@@ -1108,5 +1108,7 @@ Game_Message.prototype.add = function (text) {
     }
     _Game_Message_add.call(this, newText);
 };*/
-
-PluginManager.loadScript = () => false;
+/*Window_ChoiceList.prototype.setCursorRect = function (x, y, width, height) {
+    const STRETCH_RATIO = 0.5; //How much to stretch the cursor by, e.g. 0.5 will make it 50% longer
+    Window.prototype.setCursorRect.call(this, x, y - height * STRETCH_RATIO / 2, width, height * (1 + STRETCH_RATIO));
+}*/

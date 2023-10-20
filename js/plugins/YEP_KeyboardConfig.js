@@ -617,7 +617,7 @@ ConfigManager.readKeyConfig = function (config, name) {
 //=============================================================================
 // Window_Options
 //=============================================================================
-
+/*
 Yanfly.KeyConfig.Window_Options_addGeneralOptions =
 	Window_Options.prototype.addGeneralOptions;
 Window_Options.prototype.addGeneralOptions = function () {
@@ -629,7 +629,7 @@ Window_Options.prototype.addKeyConfigCommand = function () {
 	if (Utils.isMobileDevice()) return;
 	this.addCommand(Yanfly.Param.KeyConfigName, 'keyConfig', true);
 };
-
+*/
 if (!Imported.YEP_OptionsCore) {
 
 	Yanfly.KeyConfig.Window_Options_drawItem =
@@ -657,7 +657,6 @@ if (!Imported.YEP_OptionsCore) {
 	};
 
 }; // Imported.YEP_OptionsCore
-
 
 //=============================================================================
 // Window_KeyConfig
@@ -854,37 +853,37 @@ Window_KeyConfig.prototype.drawItemAction = function (index) {
 Window_KeyConfig.prototype.actionKey = function (action) {
 	switch (action) {
 		case 'ok':
-			return Yanfly.Param.KeyConfigOkKey;
+			return s.controls.okKey //Yanfly.Param.KeyConfigOkKey;
 			break;
 		case 'escape':
-			return Yanfly.Param.KeyConfigEscKey;
+			return s.controls.escKey //Yanfly.Param.KeyConfigEscKey;
 			break;
 		case 'cancel':
-			return Yanfly.Param.KeyConfigCancelKey;
+			return s.controls.cancelKey //Yanfly.Param.KeyConfigCancelKey;
 			break;
 		case 'menu':
-			return Yanfly.Param.KeyConfigMenuKey;
+			return s.controls.menuKey //Yanfly.Param.KeyConfigMenuKey;
 			break;
 		case 'shift':
-			return Yanfly.Param.KeyConfigShiftKey;
+			return s.controls.shiftKey //Yanfly.Param.KeyConfigShiftKey;
 			break;
 		case 'pageup':
-			return Yanfly.Param.KeyConfigPageUpKey;
+			return s.controls.pageUpKey //Yanfly.Param.KeyConfigPageUpKey;
 			break;
 		case 'pagedown':
-			return Yanfly.Param.KeyConfigPageDnKey;
+			return s.controls.pageDnKey //Yanfly.Param.KeyConfigPageDnKey;
 			break;
 		case 'left':
-			return Yanfly.Param.KeyConfigLeftKey;
+			return s.controls.leftKey //Yanfly.Param.KeyConfigLeftKey;
 			break;
 		case 'up':
-			return Yanfly.Param.KeyConfigUpKey;
+			return s.controls.upKey //Yanfly.Param.KeyConfigUpKey;
 			break;
 		case 'right':
-			return Yanfly.Param.KeyConfigRightKey;
+			return s.controls.rightKey //Yanfly.Param.KeyConfigRightKey;
 			break;
 		case 'down':
-			return Yanfly.Param.KeyConfigDownKey;
+			return s.controls.downKey //Yanfly.Param.KeyConfigDownKey;
 			break;
 		default:
 			if (Imported.YEP_ButtonCommonEvents) {
@@ -1024,19 +1023,19 @@ Window_KeyAction.prototype.windowHeight = function () {
 	return Math.min(value, Graphics.boxHeight);
 };
 
-Window_KeyAction.prototype.makeCommandList = function () {
-	this.addCommand(Yanfly.Param.KeyConfigClearTx, 'ok', true, 'clear');
-	this.addCommand(Yanfly.Param.KeyConfigOkTx, 'ok', true, 'ok');
-	this.addCommand(Yanfly.Param.KeyConfigEscTx, 'ok', true, 'escape');
-	this.addCommand(Yanfly.Param.KeyConfigCancelTx, 'ok', true, 'cancel');
-	this.addCommand(Yanfly.Param.KeyConfigMenuTx, 'ok', true, 'menu');
-	this.addCommand(Yanfly.Param.KeyConfigShiftTx, 'ok', true, 'shift');
-	this.addCommand(Yanfly.Param.KeyConfigPageUpTx, 'ok', true, 'pageup');
-	this.addCommand(Yanfly.Param.KeyConfigPageDnTx, 'ok', true, 'pagedown');
-	this.addCommand(Yanfly.Param.KeyConfigLeftTx, 'ok', true, 'left');
-	this.addCommand(Yanfly.Param.KeyConfigUpTx, 'ok', true, 'up');
-	this.addCommand(Yanfly.Param.KeyConfigRightTx, 'ok', true, 'right');
-	this.addCommand(Yanfly.Param.KeyConfigDownTx, 'ok', true, 'down');
+Window_KeyAction.prototype.makeCommandList = function () { //TODO Add custom strings here
+	this.addCommand(s.controls.clearText, 'ok', true, 'clear'); //Yanfly.Param.KeyConfigClearTx
+	this.addCommand(s.controls.okText, 'ok', true, 'ok'); //Yanfly.Param.KeyConfigOkTx
+	this.addCommand(s.controls.escapeText, 'ok', true, 'escape'); //Yanfly.Param.KeyConfigEscTx
+	this.addCommand(s.controls.cancelText, 'ok', true, 'cancel'); //Yanfly.Param.KeyConfigCancelTx
+	this.addCommand(s.controls.menuText, 'ok', true, 'menu'); //Yanfly.Param.KeyConfigMenuTx
+	this.addCommand(s.controls.shiftText, 'ok', true, 'shift'); //Yanfly.Param.KeyConfigShiftTx
+	this.addCommand(s.controls.pageupText, 'ok', true, 'pageup'); //Yanfly.Param.KeyConfigPageUpTx
+	this.addCommand(s.controls.pagedownText, 'ok', true, 'pagedown'); //Yanfly.Param.KeyConfigPageDnTx
+	this.addCommand(s.controls.leftText, 'ok', true, 'left'); //Yanfly.Param.KeyConfigLeftTx
+	this.addCommand(s.controls.upText, 'ok', true, 'up'); //Yanfly.Param.KeyConfigUpTx
+	this.addCommand(s.controls.rightText, 'ok', true, 'right'); //Yanfly.Param.KeyConfigRightTx
+	this.addCommand(s.controls.downText, 'ok', true, 'down'); //Yanfly.Param.KeyConfigDownTx
 	if (Imported.YEP_ButtonCommonEvents) this.addButtonCommonEvents();
 };
 

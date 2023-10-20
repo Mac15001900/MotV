@@ -852,39 +852,17 @@ Window_KeyConfig.prototype.drawItemAction = function (index) {
 
 Window_KeyConfig.prototype.actionKey = function (action) {
 	switch (action) {
-		case 'ok':
-			return s.controls.okKey //Yanfly.Param.KeyConfigOkKey;
-			break;
-		case 'escape':
-			return s.controls.escKey //Yanfly.Param.KeyConfigEscKey;
-			break;
-		case 'cancel':
-			return s.controls.cancelKey //Yanfly.Param.KeyConfigCancelKey;
-			break;
-		case 'menu':
-			return s.controls.menuKey //Yanfly.Param.KeyConfigMenuKey;
-			break;
-		case 'shift':
-			return s.controls.shiftKey //Yanfly.Param.KeyConfigShiftKey;
-			break;
-		case 'pageup':
-			return s.controls.pageUpKey //Yanfly.Param.KeyConfigPageUpKey;
-			break;
-		case 'pagedown':
-			return s.controls.pageDnKey //Yanfly.Param.KeyConfigPageDnKey;
-			break;
-		case 'left':
-			return s.controls.leftKey //Yanfly.Param.KeyConfigLeftKey;
-			break;
-		case 'up':
-			return s.controls.upKey //Yanfly.Param.KeyConfigUpKey;
-			break;
-		case 'right':
-			return s.controls.rightKey //Yanfly.Param.KeyConfigRightKey;
-			break;
-		case 'down':
-			return s.controls.downKey //Yanfly.Param.KeyConfigDownKey;
-			break;
+		case 'ok': return s.controls.okKey //Yanfly.Param.KeyConfigOkKey;
+		case 'escape': return s.controls.escKey //Yanfly.Param.KeyConfigEscKey;
+		case 'cancel': return s.controls.cancelKey //Yanfly.Param.KeyConfigCancelKey;
+		case 'menu': return s.controls.menuKey //Yanfly.Param.KeyConfigMenuKey;
+		case 'shift': return s.controls.shiftKey //Yanfly.Param.KeyConfigShiftKey;
+		case 'pageup': return s.controls.pageUpKey //Yanfly.Param.KeyConfigPageUpKey;
+		case 'pagedown': return s.controls.pageDnKey //Yanfly.Param.KeyConfigPageDnKey;
+		case 'left': return s.controls.leftKey //Yanfly.Param.KeyConfigLeftKey;
+		case 'up': return s.controls.upKey //Yanfly.Param.KeyConfigUpKey;
+		case 'right': return s.controls.rightKey //Yanfly.Param.KeyConfigRightKey;
+		case 'down': return s.controls.downKey //Yanfly.Param.KeyConfigDownKey;
 		default:
 			if (Imported.YEP_ButtonCommonEvents) {
 				if (Yanfly.Param.BCEList[action]) {
@@ -894,36 +872,39 @@ Window_KeyConfig.prototype.actionKey = function (action) {
 				}
 			}
 			return '';
-			break;
 	}
 };
 
 Window_KeyConfig.prototype.cursorDown = function (wrap) {
 	var index = this.index();
 	if (index >= 105) {
-		this.select(index - 104);
+		this.select(index - 105);
 	} else if ([41, 62].contains(index)) {
 		this.select(83);
 	} else if ([83, 104].contains(index)) {
 		this.select(125);
 	} else {
-		Window_Command.prototype.cursorDown.call(this, wrap);
+		//Window_Command.prototype.cursorDown.call(this, wrap);
+		this.select(index + 21);
 	}
+
+	if (Window_KeyConfig._keyLayout[this.index()] === ' ') this.cursorDown(wrap);
 };
 
 Window_KeyConfig.prototype.cursorUp = function (wrap) {
 	var index = this.index();
-	if (index === 0) {
-		this.select(125);
-	} else if (index <= 20) {
-		this.select(index + 104);
+	if (index <= 20) {
+		this.select(index + 105);
 	} else if ([41, 62].contains(index)) {
 		this.select(20);
 	} else if ([83, 104].contains(index)) {
 		this.select(41);
 	} else {
-		Window_Command.prototype.cursorUp.call(this, wrap);
+		//Window_Command.prototype.cursorUp.call(this, wrap);
+		this.select(index - 21);
 	}
+
+	if (Window_KeyConfig._keyLayout[this.index()] === ' ') this.cursorUp(wrap);
 };
 
 Window_KeyConfig.prototype.cursorRight = function (wrap) {
@@ -945,8 +926,12 @@ Window_KeyConfig.prototype.cursorRight = function (wrap) {
 	} else if ([119, 120, 121, 122, 123, 124, 125].contains(index)) {
 		this.select(0);
 	} else {
-		Window_Command.prototype.cursorRight.call(this, wrap);
+		//Window_Command.prototype.cursorRight.call(this, wrap);
+		if (index % 21 === 20) this.select(index - 20);
+		else this.select(index + 1);
 	}
+
+	if (Window_KeyConfig._keyLayout[this.index()] === ' ') this.cursorRight(wrap);
 };
 
 Window_KeyConfig.prototype.cursorLeft = function (wrap) {
@@ -970,12 +955,18 @@ Window_KeyConfig.prototype.cursorLeft = function (wrap) {
 	} else if ([119, 120, 121, 122, 123, 124, 125].contains(index)) {
 		this.select(118);
 	} else {
-		Window_Command.prototype.cursorLeft.call(this, wrap);
+		//Window_Command.prototype.cursorLeft.call(this, wrap);
+		if (index % 21 === 0) this.select(index + 20);
+		else this.select(index - 1);
 	}
+
+	if (Window_KeyConfig._keyLayout[this.index()] === ' ') this.cursorLeft(wrap);
 };
 
-Window_KeyConfig.prototype.updateHelp = function () { //TODO detect if current key can be changed
+Window_KeyConfig.prototype.updateHelp = function () {
 	if (!this._helpWindow) return;
+	//this._helpWindow.setText(this.index() + ""); return;
+
 	let keyName = Window_KeyConfig._keyLayout[this.index()];
 	if (keyName === ' ') {
 		this._helpWindow.setText('');
@@ -1012,6 +1003,7 @@ Window_KeyConfig.prototype.printableName = function (keyName) {
 		case "PgDn": return "Page Down";
 		case "PgUp": return "Page Up";
 		case "\\": return "\\\\";
+		case "Space": return s.controls.space; //The only key that needs translation TODO it also need translation on the key itself xD
 		default: return keyName;
 	}
 }

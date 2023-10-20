@@ -832,7 +832,8 @@ Window_KeyConfig.prototype.drawItemKey = function (index) {
 Window_KeyConfig.prototype.visualName = function (index) {
 	var text = this._list[index].name;
 	text = text.replace(/#pD/gi, '');
-	return text;
+	if (text === "Space") return s.controls.space;
+	else return text;
 };
 
 Window_KeyConfig.prototype.drawItemAction = function (index) {
@@ -936,9 +937,7 @@ Window_KeyConfig.prototype.cursorRight = function (wrap) {
 
 Window_KeyConfig.prototype.cursorLeft = function (wrap) {
 	var index = this.index();
-	if (index === 0) {
-		this.select(125);
-	} else if ([54, 55].contains(index)) {
+	if ([54, 55].contains(index)) {
 		this.select(53);
 	} else if ([63, 64].contains(index)) {
 		this.select(62);
@@ -978,7 +977,7 @@ Window_KeyConfig.prototype.updateHelp = function () {
 
 	switch (this.currentSymbol()) {
 		case 'key':
-			this._helpWindow.setText(s.controls.keyHelp + "\\c[4]" + this.printableName(keyName)); //Yanfly.Param.KeyConfigKeyHelp
+			this._helpWindow.setText(s.controls.keyHelp + `\\c[${Yanfly.Param.KeyConfigActionColor}]` + this.printableName(keyName)); //Yanfly.Param.KeyConfigKeyHelp
 			break;
 		case 'default':
 			this._helpWindow.setText(s.controls.defaultHelp); //Yanfly.Param.KeyConfigDefaultHelp
@@ -1020,6 +1019,7 @@ Window_KeyAction.prototype = Object.create(Window_Command.prototype);
 Window_KeyAction.prototype.constructor = Window_KeyAction;
 
 Window_KeyAction.prototype.initialize = function () {
+	this.unbindable = false;
 	Window_Command.prototype.initialize.call(this, 0, 0);
 	this.x = (Graphics.boxWidth - this.width) / 2;
 	this.y = (Graphics.boxHeight - this.height) / 2;
@@ -1036,19 +1036,17 @@ Window_KeyAction.prototype.windowHeight = function () {
 	return Math.min(value, Graphics.boxHeight);
 };
 
-Window_KeyAction.prototype.makeCommandList = function () { //TODO Add custom strings here
-	this.addCommand(s.controls.clearText, 'ok', true, 'clear'); //Yanfly.Param.KeyConfigClearTx
-	this.addCommand(s.controls.okText, 'ok', true, 'ok'); //Yanfly.Param.KeyConfigOkTx
-	this.addCommand(s.controls.escapeText, 'ok', true, 'escape'); //Yanfly.Param.KeyConfigEscTx
-	this.addCommand(s.controls.cancelText, 'ok', true, 'cancel'); //Yanfly.Param.KeyConfigCancelTx
-	this.addCommand(s.controls.menuText, 'ok', true, 'menu'); //Yanfly.Param.KeyConfigMenuTx
-	this.addCommand(s.controls.shiftText, 'ok', true, 'shift'); //Yanfly.Param.KeyConfigShiftTx
-	this.addCommand(s.controls.pageupText, 'ok', true, 'pageup'); //Yanfly.Param.KeyConfigPageUpTx
-	this.addCommand(s.controls.pagedownText, 'ok', true, 'pagedown'); //Yanfly.Param.KeyConfigPageDnTx
-	this.addCommand(s.controls.leftText, 'ok', true, 'left'); //Yanfly.Param.KeyConfigLeftTx
-	this.addCommand(s.controls.upText, 'ok', true, 'up'); //Yanfly.Param.KeyConfigUpTx
-	this.addCommand(s.controls.rightText, 'ok', true, 'right'); //Yanfly.Param.KeyConfigRightTx
-	this.addCommand(s.controls.downText, 'ok', true, 'down'); //Yanfly.Param.KeyConfigDownTx
+Window_KeyAction.prototype.makeCommandList = function () {
+	this.addCommand(s.back, 'ok', true, 'cancel');
+	if (this.unbindable) this.addCommand(s.controls.clearText, 'ok', true, 'clear');
+	this.addCommand('', 'ok', true, 'nope');
+	this.addCommand(s.controls.okText, 'ok', true, 'ok');
+	this.addCommand(s.controls.escapeText, 'ok', true, 'escape');
+	this.addCommand(s.controls.upText, 'ok', true, 'up');
+	this.addCommand(s.controls.leftText, 'ok', true, 'left');
+	this.addCommand(s.controls.rightText, 'ok', true, 'right');
+	this.addCommand(s.controls.downText, 'ok', true, 'down');
+	this.addCommand(s.controls.shiftText, 'ok', true, 'shift');
 	if (Imported.YEP_ButtonCommonEvents) this.addButtonCommonEvents();
 };
 
@@ -1064,6 +1062,17 @@ Window_KeyAction.prototype.addButtonCommonEvents = function () {
 		}
 	}
 };
+
+//Functions to skip over the empty row
+Window_KeyAction.prototype.cursorUp = function (wrap) {
+	if (this.index() === 3 && this.unbindable || this.index() === 2 && !this.unbindable) this.select(this.index() - 2);
+	else Window_Command.prototype.cursorUp.call(this, wrap);
+}
+Window_KeyAction.prototype.cursorDown = function (wrap) {
+	if (this.index() === 0 && !this.unbindable) this.select(this.index() + 2);
+	else if (this.index() === 1) this.select(this.index() + 2);
+	else Window_Command.prototype.cursorDown.call(this, wrap);
+}
 
 //=============================================================================
 // Scene_Options
@@ -1144,6 +1153,8 @@ Scene_KeyConfig.prototype.commandWasd = function () {
 
 Scene_KeyConfig.prototype.commandKey = function () {
 	this._actionWindow.select(0);
+	this._actionWindow.unbindable = undefined !== Input.keyMapper[Window_KeyConfig._refId[this._configWindow.commandName(this._configWindow.index())]]; //Allow clearing only if a binding already exists for this key
+	this._actionWindow.refresh();
 	this._actionWindow.open();
 	this._actionWindow.activate();
 };
@@ -1160,10 +1171,11 @@ Scene_KeyConfig.prototype.onActionOk = function () {
 	var key = Window_KeyConfig._refId[name];
 	if (action === 'clear') {
 		ConfigManager.keyMapper[key] = undefined;
-	} else {
+		SoundManager.playEquip();
+	} else if (action !== "cancel") {
 		ConfigManager.keyMapper[key] = action;
+		SoundManager.playEquip();
 	}
-	SoundManager.playEquip();
 	ConfigManager.applyKeyConfig();
 	this.onActionCancel();
 	this.refreshWindows();

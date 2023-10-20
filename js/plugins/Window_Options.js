@@ -170,7 +170,7 @@ Window_Options.prototype.cursorRight = function (wrap) {
         this.processDisabledOption(symbol);
         return;
     }
-    if (symbol === "cancel" || symbol === "controls") return; //Change: special case for going back, controls and language
+    if (symbol === "cancel" || symbol === "controls" || symbol === "keyConfig") return; //Change: special case for going back, controls and language
     if (symbol === 'lang') {
         this.changeValue(symbol, langData.next());
         return;
@@ -192,7 +192,7 @@ Window_Options.prototype.cursorLeft = function (wrap) {
         this.processDisabledOption(symbol);
         return;
     }
-    if (symbol === "cancel" || symbol === "controls") return; //Change: special case for going back, controls and language
+    if (symbol === "cancel" || symbol === "controls" || symbol === "keyConfig") return; //Change: special case for going back, controls and language
     if (symbol === 'lang') {
         this.changeValue(symbol, langData.previous());
         return;

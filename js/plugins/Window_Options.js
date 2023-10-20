@@ -141,10 +141,10 @@ Window_Options.prototype.processOk = function () {
         SoundManager.playOk();
         return;
     }
-    /*if (symbol === "keyConfig") {
+    if (symbol === "keyConfig") {
         Window_Command.prototype.processOk.call(this);
         return;
-    }*/
+    }
     if (symbol === "controls") this.showControlsScreen();
     if (symbol === 'lang') {
         this.changeValue(symbol, langData.next());
@@ -163,7 +163,7 @@ Window_Options.prototype.processOk = function () {
     }
 };
 
-Window_Options.prototype.cursorRight = function (wrap) {
+Window_Options.prototype.cursorRight = function (wrap, reverse = false) {
     var index = this.index();
     var symbol = this.commandSymbol(index);
     if (!this.isCommandEnabled(index)) { //Change: Handle disabled fields
@@ -172,20 +172,24 @@ Window_Options.prototype.cursorRight = function (wrap) {
     }
     if (symbol === "cancel" || symbol === "controls" || symbol === "keyConfig") return; //Change: special case for going back, controls and language
     if (symbol === 'lang') {
-        this.changeValue(symbol, langData.next());
+        this.changeValue(symbol, reverse ? langData.previous() : langData.next());
         return;
     }
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
-        value += this.volumeOffset();
+        value += this.volumeOffset() * (reverse ? -1 : 1);
         value = value.clamp(0, 100);
         this.changeValue(symbol, value);
     } else {
-        this.changeValue(symbol, true);
+        this.changeValue(symbol, !reverse);
     }
 };
 
 Window_Options.prototype.cursorLeft = function (wrap) {
+    this.cursorRight(wrap, true);
+}
+
+/*Window_Options.prototype.cursorLeft = function (wrap) {
     var index = this.index();
     var symbol = this.commandSymbol(index);
     if (!this.isCommandEnabled(index)) { //Change: Handle disabled fields
@@ -205,7 +209,7 @@ Window_Options.prototype.cursorLeft = function (wrap) {
     } else {
         this.changeValue(symbol, false);
     }
-};
+};*/
 
 Window_Options.prototype.processDisabledOption = function (symbol) {
     //TODO: make a sound?

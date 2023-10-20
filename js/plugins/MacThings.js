@@ -57,8 +57,14 @@ Scene_Map.prototype.onMapLoaded = function () {
     for (let i = 0; i < g.persistentWindows.length; i++) {
         this.addWindow(g.persistentWindows[i]);
     };
+    //Handle dynamic collisions 
     if ($dataMap.meta.dynamicCollisions) {
         $dataMap.data = CollisionData[g.lang][$gameMap.mapId()];
+        if ($gamePlayer.isStuck()) { //This can potentially happen is the game was saved in one language and loaded in another
+            console.log("Player is stuck, moving down")
+            $gamePlayer.setPosition($gamePlayer.x, $gamePlayer.y + 1);
+            if ($gamePlayer.isStuck()) console.error("The player is still stuck, something went very wrong");
+        }
     }
 }
 
@@ -980,6 +986,11 @@ Game_Character.prototype.goto = function (x, y) {
     }
 }
 
+//Checks if the player is stuck, i.e. cannot move in any direction
+Game_Character.prototype.isStuck = function () {
+    return [2, 4, 6, 8].every(dir => !this.isMapPassable(this.x, this.y, dir));
+}
+
 
 //===================================== Engine fixes =====================================
 
@@ -1111,4 +1122,14 @@ Game_Message.prototype.add = function (text) {
 /*Window_ChoiceList.prototype.setCursorRect = function (x, y, width, height) {
     const STRETCH_RATIO = 0.5; //How much to stretch the cursor by, e.g. 0.5 will make it 50% longer
     Window.prototype.setCursorRect.call(this, x, y - height * STRETCH_RATIO / 2, width, height * (1 + STRETCH_RATIO));
-}*/
+}
+void ((alias) => {
+    Window_ChoiceList.prototype.itemHeight = function () {
+        return 2 * alias.call(this);
+    }
+})(Window_ChoiceList.prototype.itemHeight);*/
+
+/*Window_ChoiceList.prototype.createContents = function () {
+    this.contents = new Bitmap(this.contentsWidth(), this.contentsHeight() * 2);
+    this.resetFontSettings();
+};*/

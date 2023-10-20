@@ -90,6 +90,13 @@ Window_Options.prototype.drawItem = function (index) {
     this.drawText(this.commandName(index), rect.x, rect.y, titleWidth, 'left');
     this.drawText(this.statusText(index), titleWidth, rect.y, statusWidth, 'right');
 };
+/*if (this.commandSymbol(index) === 'keyConfig') {
+            var rect = this.itemRectForText(index);
+            var text = this.commandName(index);
+            this.resetTextColor();
+            this.changePaintOpacity(this.isCommandEnabled(index));
+            this.drawText(text, rect.x, rect.y, rect.width, 'left');
+        }*/
 
 Window_Options.prototype.statusWidth = function () {
     return 120;
@@ -100,8 +107,8 @@ Window_Options.prototype.statusText = function (index) {
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         return this.volumeStatusText(value);
-    } else if (symbol === "cancel" || symbol === "controls") {
-        return "";  //Change: not doing anything for ON/OFF
+    } else if (symbol === "cancel" || symbol === "keyConfig") {
+        return "";  //Change: not doing anything for ON/OFF when it's not needed
     } else if (symbol === "lang") {
         return langData.dict[value];
     } else {
@@ -134,6 +141,10 @@ Window_Options.prototype.processOk = function () {
         SoundManager.playOk();
         return;
     }
+    /*if (symbol === "keyConfig") {
+        Window_Command.prototype.processOk.call(this);
+        return;
+    }*/
     if (symbol === "controls") this.showControlsScreen();
     if (symbol === 'lang') {
         this.changeValue(symbol, langData.next());

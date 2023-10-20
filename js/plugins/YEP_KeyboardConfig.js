@@ -630,7 +630,7 @@ Window_Options.prototype.addKeyConfigCommand = function () {
 	this.addCommand(Yanfly.Param.KeyConfigName, 'keyConfig', true);
 };
 */
-if (!Imported.YEP_OptionsCore) {
+/*if (!Imported.YEP_OptionsCore) {
 
 	Yanfly.KeyConfig.Window_Options_drawItem =
 		Window_Options.prototype.drawItem;
@@ -656,7 +656,7 @@ if (!Imported.YEP_OptionsCore) {
 		}
 	};
 
-}; // Imported.YEP_OptionsCore
+};*/ // Imported.YEP_OptionsCore
 
 //=============================================================================
 // Window_KeyConfig

@@ -733,11 +733,11 @@ Window_KeyConfig.prototype.makeCommandList = function (index) {
 		var enabled = this.isKeyEnabled(keyName);
 		this.addCommand(keyName, 'key', enabled);
 	}
-	this.addCommand(Yanfly.Param.KeyConfigDefaultTx, 'default', true);
+	this.addCommand(s.controls.defaultText, 'default', true); //Yanfly.Param.KeyConfigDefaultTx
 	for (var i = 0; i < 6; ++i) this.addCommand(' ', 'default', true);
-	this.addCommand(Yanfly.Param.KeyConfigWasdTx, 'wasd', true);
+	this.addCommand(s.controls.wasdText, 'wasd', true); //Yanfly.Param.KeyConfigWasdTx
 	for (var i = 0; i < 6; ++i) this.addCommand(' ', 'wasd', true);
-	this.addCommand(Yanfly.Param.KeyConfigFinishTx, 'cancel', true);
+	this.addCommand(s.controls.finishText, 'cancel', true); //Yanfly.Param.KeyConfigFinishTx
 	for (var i = 0; i < 6; ++i) this.addCommand(' ', 'cancel', true);
 };
 
@@ -974,26 +974,47 @@ Window_KeyConfig.prototype.cursorLeft = function (wrap) {
 	}
 };
 
-Window_KeyConfig.prototype.updateHelp = function () {
+Window_KeyConfig.prototype.updateHelp = function () { //TODO detect if current key can be changed
 	if (!this._helpWindow) return;
+	let keyName = Window_KeyConfig._keyLayout[this.index()];
+	if (keyName === ' ') {
+		this._helpWindow.setText('');
+		return;
+	} else if (!this.isKeyEnabled(keyName)) {
+		this._helpWindow.setText(s.controls.notRebindable);
+		return;
+	}
+
 	switch (this.currentSymbol()) {
 		case 'key':
-			this._helpWindow.setText(Yanfly.Param.KeyConfigKeyHelp);
+			this._helpWindow.setText(s.controls.keyHelp + "\\c[4]" + this.printableName(keyName)); //Yanfly.Param.KeyConfigKeyHelp
 			break;
 		case 'default':
-			this._helpWindow.setText(Yanfly.Param.KeyConfigDefaultHelp);
+			this._helpWindow.setText(s.controls.defaultHelp); //Yanfly.Param.KeyConfigDefaultHelp
 			break;
 		case 'wasd':
-			this._helpWindow.setText(Yanfly.Param.KeyConfigWasdHelp);
+			this._helpWindow.setText(s.controls.wasdHelp); //Yanfly.Param.KeyConfigWasdHelp
 			break;
 		case 'cancel':
-			this._helpWindow.setText(Yanfly.Param.KeyConfigFinishHelp);
+			this._helpWindow.setText(s.controls.finishHelp); //Yanfly.Param.KeyConfigFinishHelp
 			break;
 		default:
 			this._helpWindow.clear();
 			break;
 	}
 };
+
+Window_KeyConfig.prototype.printableName = function (keyName) {
+	if (keyName.includes("#pD")) return keyName.substring(3);
+	switch (keyName) {
+		case "Ins": return "Insert";
+		case "Del": return "Delete";
+		case "PgDn": return "Page Down";
+		case "PgUp": return "Page Up";
+		case "\\": return "\\\\";
+		default: return keyName;
+	}
+}
 
 //=============================================================================
 // Window_KeyAction

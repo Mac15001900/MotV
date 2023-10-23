@@ -1007,6 +1007,21 @@ Window_KeyConfig.prototype.printableName = function (keyName) {
 	}
 }
 
+//Change cursor's opacity to be a bit more visible (change *8 to *4)
+Window_KeyConfig.prototype._updateCursor = function () {
+	var blinkCount = this._animationCount % 40;
+	var cursorOpacity = this.contentsOpacity;
+	if (this.active) {
+		if (blinkCount < 20) {
+			cursorOpacity -= blinkCount * 4;
+		} else {
+			cursorOpacity -= (40 - blinkCount) * 4;
+		}
+	}
+	this._windowCursorSprite.alpha = cursorOpacity / 255;
+	this._windowCursorSprite.visible = this.isOpen();
+};
+
 //=============================================================================
 // Window_KeyAction
 //=============================================================================

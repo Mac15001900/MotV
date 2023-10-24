@@ -2838,10 +2838,10 @@ Graphics._onKeyDown = function (event) {
                 event.preventDefault();
                 this._switchFPSMeter();
                 break;
-            case 114:   // F3
+            /*case 114:   // F3
                 event.preventDefault();
                 this._switchStretchMode();
-                break;
+                break;/*/ //Change: removed this feature
             case 115:   // F4
                 event.preventDefault();
                 this._switchFullScreen();
@@ -3073,7 +3073,7 @@ Input.clear = function () {
  * @static
  * @method update
  */
-Input.update = function () {
+Input.update = function () { //Change: this function if overwriten in MacThings.js
     this._pollGamepads();
     if (this._currentState[this._latestButton]) {
         this._pressedTime++;

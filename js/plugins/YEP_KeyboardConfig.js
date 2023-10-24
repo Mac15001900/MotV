@@ -859,11 +859,12 @@ Window_KeyConfig.prototype.actionKey = function (action) {
 		case 'menu': return s.controls.menuKey //Yanfly.Param.KeyConfigMenuKey;
 		case 'shift': return s.controls.shiftKey //Yanfly.Param.KeyConfigShiftKey;
 		case 'pageup': return s.controls.pageUpKey //Yanfly.Param.KeyConfigPageUpKey;
-		case 'pagedown': return s.controls.pageDnKey //Yanfly.Param.KeyConfigPageDnKey;
+		case 'pagedown': return s.controls.fastForwardKey //Yanfly.Param.KeyConfigPageDnKey;
 		case 'left': return s.controls.leftKey //Yanfly.Param.KeyConfigLeftKey;
 		case 'up': return s.controls.upKey //Yanfly.Param.KeyConfigUpKey;
 		case 'right': return s.controls.rightKey //Yanfly.Param.KeyConfigRightKey;
 		case 'down': return s.controls.downKey //Yanfly.Param.KeyConfigDownKey;
+		case 'f4': return s.controls.fullscreenKey;
 		default:
 			if (Imported.YEP_ButtonCommonEvents) {
 				if (Yanfly.Param.BCEList[action]) {
@@ -999,6 +1000,7 @@ Window_KeyConfig.prototype.printableName = function (keyName) {
 	switch (keyName) {
 		case "Ins": return "Insert";
 		case "Del": return "Delete";
+		case "En": return "Enter";
 		case "PgDn": return "Page Down";
 		case "PgUp": return "Page Up";
 		case "\\": return "\\\\";
@@ -1047,14 +1049,15 @@ Window_KeyAction.prototype.windowWidth = function () {
 };
 
 Window_KeyAction.prototype.windowHeight = function () {
-	var value = this.fittingHeight(this.numVisibleRows())
+	var value = this.fittingHeight(this.numVisibleRows() + 1); //+1 for the currently invisible row with the 'unbind' key
+	console.log(this.numVisibleRows(), this._list.length);
 	return Math.min(value, Graphics.boxHeight);
 };
 
 Window_KeyAction.prototype.makeCommandList = function () {
 	this.addCommand(s.back, 'ok', true, 'cancel');
 	if (this.unbindable) this.addCommand(s.controls.clearText, 'ok', true, 'clear');
-	this.addCommand('', 'ok', true, 'nope');
+	this.addCommand('', 'ok', true, 'skipThis');
 	this.addCommand(s.controls.okText, 'ok', true, 'ok');
 	this.addCommand(s.controls.escapeText, 'ok', true, 'escape');
 	this.addCommand(s.controls.upText, 'ok', true, 'up');
@@ -1062,7 +1065,10 @@ Window_KeyAction.prototype.makeCommandList = function () {
 	this.addCommand(s.controls.rightText, 'ok', true, 'right');
 	this.addCommand(s.controls.downText, 'ok', true, 'down');
 	this.addCommand(s.controls.shiftText, 'ok', true, 'shift');
+	this.addCommand(s.controls.fastForwardText, 'ok', true, 'pagedown');
+	this.addCommand(s.controls.fullscreenText, 'ok', true, 'f4');
 	if (Imported.YEP_ButtonCommonEvents) this.addButtonCommonEvents();
+	if (this.height) this.height = this.fittingHeight(this.numVisibleRows()); //Let's update the height, since the number of visible rows might have changed
 };
 
 Window_KeyAction.prototype.addButtonCommonEvents = function () {
@@ -1080,13 +1086,13 @@ Window_KeyAction.prototype.addButtonCommonEvents = function () {
 
 //Functions to skip over the empty row
 Window_KeyAction.prototype.cursorUp = function (wrap) {
-	if (this.index() === 3 && this.unbindable || this.index() === 2 && !this.unbindable) this.select(this.index() - 2);
-	else Window_Command.prototype.cursorUp.call(this, wrap);
+	Window_Command.prototype.cursorUp.call(this, wrap);
+	if (this.currentExt() === 'skipThis') this.cursorUp(wrap);
 }
+
 Window_KeyAction.prototype.cursorDown = function (wrap) {
-	if (this.index() === 0 && !this.unbindable) this.select(this.index() + 2);
-	else if (this.index() === 1) this.select(this.index() + 2);
-	else Window_Command.prototype.cursorDown.call(this, wrap);
+	Window_Command.prototype.cursorDown.call(this, wrap);
+	if (this.currentExt() === 'skipThis') this.cursorDown(wrap);
 }
 
 //=============================================================================

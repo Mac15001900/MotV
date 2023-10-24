@@ -876,6 +876,7 @@ Input.update = function () {
             this._pressedTime = 0;
             this._date = Date.now();
             this._pressedStartTimes[name] = Graphics.frameCount;
+            g.buttonPressed(name);
         } else if (!this._currentState[name] && this._previousState[name]) {
             this._justReleased.push(name);
         }
@@ -883,6 +884,13 @@ Input.update = function () {
     }
     this._updateDirection();
 };
+
+//Special things that happen on certain button presses
+g.buttonPressed = function (button) {
+    switch (button) {
+        case "f4": Graphics._switchFullScreen(); break;
+    }
+}
 
 //Marks the event as seen whenever it's launched
 var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
@@ -1070,13 +1078,46 @@ g.compareObjects = function (obj1, obj2) {
         }
     }
     return res;
+}
 
+g.scene = function () {
+    return SceneManager._scene;
+}
+
+g.getActiveWindows = function () {
+    return SceneManager._scene._windowLayer.children.filter(w => w.active);
 }
 
 
 
 
+
 //===================================== Temp experiments =====================================
+
+
+/** Provides an approximation of the user's physical screen size, in inches*/
+function computeDisplaySize() {
+    let testDiv = document.createElement('div');
+    testDiv.style = "height: 1in; left: -100%; position: absolute; top: -100%; width: 1in;";
+    window.document.body.appendChild(testDiv);
+    var devicePixelRatio = window.devicePixelRatio || 1;
+    var dpi_x = Math.round(testDiv.offsetWidth * devicePixelRatio);
+    var dpi_y = Math.round(testDiv.offsetHeight * devicePixelRatio);
+    testDiv.remove();
+    return { width: screen.width / dpi_x, height: screen.height / dpi_y };
+}
+
+//Function by Jonforum, https://forums.rpgmakerweb.com/index.php?threads/js-snippets-thread.92501/
+// Build Rectangles // x, y, w:width, h:height, c:color, a:alpha, r:radius, l_c_a:[lineWidth,colorLine,alphaLine]
+function drawRec(x, y, w, h, c, a, r, l_c_a) {
+    const rec = new PIXI.Graphics();
+    rec.beginFill(c || 0xffffff, a || 1);
+    l_c_a && rec.lineStyle((l_c_a[0] || 0), (l_c_a[1] || c || 0x000000), l_c_a[2] || 1);
+    r && rec.drawRoundedRect(x, y, w, h, r) || rec.drawRect(x, y, w, h);
+    return rec;
+}; //e.g. SceneManager._scene.addChild( drawRec(0, 0, 1310, 145) );
+
+
 
 /*
 //Script for larger icons:

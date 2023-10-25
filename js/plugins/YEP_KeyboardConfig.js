@@ -711,13 +711,14 @@ Window_KeyConfig.prototype = Object.create(Window_Command.prototype);
 Window_KeyConfig.prototype.constructor = Window_KeyConfig;
 
 Window_KeyConfig.prototype.initialize = function (helpWindow) {
+	this.configCopy = JSON.parse(JSON.stringify(ConfigManager.keyMapper));
 	var wy = helpWindow.height;
 	Window_Command.prototype.initialize.call(this, 0, wy);
 	this.setHelpWindow(helpWindow);
 	this.height = Graphics.boxHeight - wy;
 	this.refresh();
 	this.activate();
-	this.select(0);
+	this.select(42);
 };
 
 Window_KeyConfig.prototype.windowWidth = function () {
@@ -821,7 +822,8 @@ Window_KeyConfig.prototype.drawItemRect = function (index) {
 Window_KeyConfig.prototype.getRectColor = function (index) {
 	if (index > 167) return this.gaugeBackColor();
 	var key = Window_KeyConfig._refId[this.commandName(index)];
-	var action = Input.keyMapper[key];
+	var action = this.configCopy[key];
+	// var action = Input.keyMapper[key];
 	if (action !== undefined) {
 		return this.textColor(Yanfly.Param.KeyConfigAssignColor);
 	} else {
@@ -854,7 +856,8 @@ Window_KeyConfig.prototype.visualName = function (index) {
 
 Window_KeyConfig.prototype.drawItemAction = function (index) {
 	var key = Window_KeyConfig._refId[this.commandName(index)];
-	var action = Input.keyMapper[key];
+	var action = this.configCopy[key];
+	// var action = Input.keyMapper[key];
 	if (action === undefined) return;
 	this.resetFontSettings();
 	this.contents.fontSize -= 8;
@@ -1073,7 +1076,6 @@ Window_KeyAction.prototype.windowWidth = function () {
 
 Window_KeyAction.prototype.windowHeight = function () {
 	var value = this.fittingHeight(this.numVisibleRows() + 1); //+1 for the currently invisible row with the 'unbind' key
-	console.log(this.numVisibleRows(), this._list.length);
 	return Math.min(value, Graphics.boxHeight);
 };
 
@@ -1182,22 +1184,24 @@ Scene_KeyConfig.prototype.createKeyActionWindow = function () {
 	this.addWindow(this._actionWindow);
 };
 
-Scene_KeyConfig.prototype.commandDefault = function () {
-	ConfigManager.keyMapper =
-		JSON.parse(JSON.stringify(ConfigManager.defaultMap));
+Scene_KeyConfig.prototype.commandDefault = function () {//TODO
+	this._configWindow.configCopy = JSON.parse(JSON.stringify(ConfigManager.defaultMap));
+	ConfigManager.keyMapper = JSON.parse(JSON.stringify(ConfigManager.defaultMap));
 	ConfigManager.applyKeyConfig();
 	this.refreshWindows();
 };
 
-Scene_KeyConfig.prototype.commandWasd = function () {
-	ConfigManager.keyMapper = JSON.parse(JSON.stringify(ConfigManager.wasdMap));
-	ConfigManager.applyKeyConfig();
+Scene_KeyConfig.prototype.commandWasd = function () {//TODO
+	/*ConfigManager.keyMapper = JSON.parse(JSON.stringify(ConfigManager.wasdMap));
+	ConfigManager.applyKeyConfig();*/
+	this._configWindow.configCopy = JSON.parse(JSON.stringify(ConfigManager.keyMapper));
 	this.refreshWindows();
 };
 
 Scene_KeyConfig.prototype.commandKey = function () {
 	this._actionWindow.select(0);
-	this._actionWindow.unbindable = undefined !== Input.keyMapper[Window_KeyConfig._refId[this._configWindow.commandName(this._configWindow.index())]]; //Allow clearing only if a binding already exists for this key
+	// this._actionWindow.unbindable = undefined !== Input.keyMapper[Window_KeyConfig._refId[this._configWindow.commandName(this._configWindow.index())]]; //Allow clearing only if a binding already exists for this key
+	this._actionWindow.unbindable = undefined !== this._configWindow.configCopy[Window_KeyConfig._refId[this._configWindow.commandName(this._configWindow.index())]]; //Allow clearing only if a binding already exists for this key
 	this._actionWindow.refresh();
 	this._actionWindow.open();
 	this._actionWindow.activate();
@@ -1214,13 +1218,15 @@ Scene_KeyConfig.prototype.onActionOk = function () {
 	var name = this._configWindow.commandName(this._configWindow.index());
 	var key = Window_KeyConfig._refId[name];
 	if (action === 'clear') {
-		ConfigManager.keyMapper[key] = undefined;
+		this._configWindow.configCopy[key] = undefined;
+		// ConfigManager.keyMapper[key] = undefined;
 		SoundManager.playEquip();
 	} else if (action !== "cancel") {
-		ConfigManager.keyMapper[key] = action;
+		this._configWindow.configCopy[key] = action;
+		// ConfigManager.keyMapper[key] = action;
 		SoundManager.playEquip();
 	}
-	ConfigManager.applyKeyConfig();
+	//ConfigManager.applyKeyConfig();
 	this.onActionCancel();
 	this.refreshWindows();
 };
@@ -1231,6 +1237,8 @@ Scene_KeyConfig.prototype.commandExit = function () {
 		this._configWindow.activate();
 		return;
 	}
+	ConfigManager.keyMapper = JSON.parse(JSON.stringify(this._configWindow.configCopy));
+	ConfigManager.applyKeyConfig();
 	this.popScene();
 };
 

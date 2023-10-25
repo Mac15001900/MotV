@@ -678,7 +678,7 @@ function Window_KeyConfig() {
 	'→', '#pD0', '#pD0', '#pD.', 'En'
 ];*/
 Window_KeyConfig._keyLayout = [
-	'~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', ' ', 'Ins', 'Home', 'PgUp', ' ', '#pD/', '*', '#pD-',
+	'Esc', ' ', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
 	' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
 	'~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', ' ', 'Ins', 'Home', 'PgUp', ' ', '#pD/', '*', '#pD-',
 	' ', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\', 'Del', 'End', 'PgDn', '#pD7', '#pD8', '#pD9', '+',
@@ -701,7 +701,10 @@ Window_KeyConfig._refId = {
 	'Shift': 16, 'Z': 90, 'X': 88, 'C': 67, 'V': 86, 'B': 66,
 	'N': 78, 'M': 77, ',': 188, '.': 190, '/': 191, 'Shift': 16,
 	'↑': 38, '#pD1': 97, '#pD2': 98, '#pD3': 99, 'En': 13, 'Space': 32,
-	'←': 37, '↓': 40, '→': 39, '#pD0': 96, '#pD.': 110
+	'←': 37, '↓': 40, '→': 39, '#pD0': 96, '#pD.': 110,
+	'F1': 112, 'F2': 113, 'F3': 114, 'F4': 115, 'F5': 116, 'F6': 117,
+	'F7': 118, 'F8': 119, 'F9': 120, 'F10': 121, 'F11': 122, 'F12': 123,
+	'Esc': 27,
 };
 
 Window_KeyConfig.prototype = Object.create(Window_Command.prototype);
@@ -794,7 +797,8 @@ Window_KeyConfig.prototype.itemRect = function (index) {
 };
 
 Window_KeyConfig.prototype.leaveEmpty = function (index) {
-	return [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+	return [1, 17, 18, 19, 20,
+		21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
 		97, 98, 99, 100, 104, 106, 118, 119, 121, 126, 127, 128, 130, 131, 132, 133,
 		134, 135, 136, 137, 138, 139, 144, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156,
 		157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 169, 170, 171, 172, 173, 174, 176,
@@ -1015,6 +1019,7 @@ Window_KeyConfig.prototype.printableName = function (keyName) {
 		case "En": return "Enter";
 		case "PgDn": return "Page Down";
 		case "PgUp": return "Page Up";
+		case "Esc": return "Escape";
 		case "\\": return "\\\\";
 		case "Space": return s.controls.space; //The only key that needs translation TODO it also need translation on the key itself xD
 		default: return keyName;

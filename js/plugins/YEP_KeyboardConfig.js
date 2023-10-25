@@ -666,7 +666,7 @@ function Window_KeyConfig() {
 	this.initialize.apply(this, arguments);
 };
 
-Window_KeyConfig._keyLayout = [
+/*Window_KeyConfig._keyLayout = [
 	'~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', ' ', 'Ins',
 	'Home', 'PgUp', ' ', '#pD/', '*', '#pD-', ' ', 'Q', 'W', 'E', 'R', 'T', 'Y',
 	'U', 'I', 'O', 'P', '[', ']', '\\', 'Del', 'End', 'PgDn', '#pD7', '#pD8',
@@ -676,7 +676,17 @@ Window_KeyConfig._keyLayout = [
 	' ', '↑', ' ', '#pD1', '#pD2', '#pD3', 'En', ' ', ' ', ' ', 'Space', 'Space',
 	'Space', 'Space', 'Space', 'Space', 'Space', ' ', ' ', ' ', ' ', '←', '↓',
 	'→', '#pD0', '#pD0', '#pD.', 'En'
-];
+];*/
+Window_KeyConfig._keyLayout = [
+	'~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', ' ', 'Ins', 'Home', 'PgUp', ' ', '#pD/', '*', '#pD-',
+	' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+	'~', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', ' ', 'Ins', 'Home', 'PgUp', ' ', '#pD/', '*', '#pD-',
+	' ', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\', 'Del', 'End', 'PgDn', '#pD7', '#pD8', '#pD9', '+',
+	' ', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", 'Enter', 'Enter', ' ', ' ', ' ', '#pD4', '#pD5', '#pD6', '+',
+	'Shift', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'Shift', 'Shift', ' ', '↑', ' ', '#pD1', '#pD2', '#pD3', 'En',
+	' ', ' ', ' ', 'Space', 'Space', 'Space', 'Space', 'Space', 'Space', 'Space', ' ', ' ', ' ', ' ', '←', '↓', '→', '#pD0', '#pD0', '#pD.', 'En',
+	' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+]
 
 Window_KeyConfig._refId = {
 	'~': 192, '0': 48, '1': 49, '2': 50, '3': 51, '4': 52,
@@ -734,11 +744,11 @@ Window_KeyConfig.prototype.makeCommandList = function (index) {
 		this.addCommand(keyName, 'key', enabled);
 	}
 	this.addCommand(s.controls.defaultText, 'default', true); //Yanfly.Param.KeyConfigDefaultTx
-	for (var i = 0; i < 6; ++i) this.addCommand(' ', 'default', true);
+	for (var i = 0; i < 6; ++i) this.addCommand('X' + i, 'default', true);
 	this.addCommand(s.controls.wasdText, 'wasd', true); //Yanfly.Param.KeyConfigWasdTx
-	for (var i = 0; i < 6; ++i) this.addCommand(' ', 'wasd', true);
+	for (var i = 0; i < 6; ++i) this.addCommand('X' + i, 'wasd', true);
 	this.addCommand(s.controls.finishText, 'cancel', true); //Yanfly.Param.KeyConfigFinishTx
-	for (var i = 0; i < 6; ++i) this.addCommand(' ', 'cancel', true);
+	for (var i = 0; i < 6; ++i) this.addCommand('X' + i, 'cancel', true);
 };
 
 Window_KeyConfig.prototype.isKeyEnabled = function (keyName) {
@@ -748,35 +758,35 @@ Window_KeyConfig.prototype.isKeyEnabled = function (keyName) {
 Window_KeyConfig.prototype.itemRect = function (index) {
 	var rect = Window_Selectable.prototype.itemRect.call(this, index);
 	var maxCols = this.maxCols();
-	if ([41, 62].contains(index)) {
-		rect.y = Math.floor(41 / maxCols) * rect.height - this._scrollY;
-		rect.height = this.itemHeight() * 2;
-	} else if ([54, 55].contains(index)) {
-		rect.x = 54 % maxCols * (rect.width + this.spacing()) - this._scrollX;
-		rect.width = (this.itemWidth() + this.spacing()) * 2 - this.spacing();
-	} else if ([63, 64].contains(index)) {
-		rect.x = 63 % maxCols * (rect.width + this.spacing()) - this._scrollX;
-		rect.width = (this.itemWidth() + this.spacing()) * 2 - this.spacing();
-	} else if ([75, 76].contains(index)) {
-		rect.x = 75 % maxCols * (rect.width + this.spacing()) - this._scrollX;
-		rect.width = (this.itemWidth() + this.spacing()) * 2 - this.spacing();
-	} else if ([83, 104].contains(index)) {
+	if ([83, 104].contains(index)) {
 		rect.y = Math.floor(83 / maxCols) * rect.height - this._scrollY;
 		rect.height = this.itemHeight() * 2;
-	} else if ([87, 88, 89, 90, 91, 92, 93].contains(index)) {
-		rect.x = 87 % maxCols * (rect.width + this.spacing()) - this._scrollX;
-		rect.width = (this.itemWidth() + this.spacing()) * 7 - this.spacing();
-	} else if ([101, 102].contains(index)) {
-		rect.x = 101 % maxCols * (rect.width + this.spacing()) - this._scrollX;
+	} else if ([96, 97].contains(index)) {
+		rect.x = 96 % maxCols * (rect.width + this.spacing()) - this._scrollX;
 		rect.width = (this.itemWidth() + this.spacing()) * 2 - this.spacing();
-	} else if ([105, 106, 107, 108, 109, 110, 111].contains(index)) {
+	} else if ([105, 106].contains(index)) {
 		rect.x = 105 % maxCols * (rect.width + this.spacing()) - this._scrollX;
+		rect.width = (this.itemWidth() + this.spacing()) * 2 - this.spacing();
+	} else if ([117, 118].contains(index)) {
+		rect.x = 117 % maxCols * (rect.width + this.spacing()) - this._scrollX;
+		rect.width = (this.itemWidth() + this.spacing()) * 2 - this.spacing();
+	} else if ([125, 146].contains(index)) {
+		rect.y = Math.floor(125 / maxCols) * rect.height - this._scrollY;
+		rect.height = this.itemHeight() * 2;
+	} else if ([129, 130, 131, 132, 133, 134, 135].contains(index)) {
+		rect.x = 129 % maxCols * (rect.width + this.spacing()) - this._scrollX;
 		rect.width = (this.itemWidth() + this.spacing()) * 7 - this.spacing();
-	} else if ([112, 113, 114, 115, 116, 117, 118].contains(index)) {
-		rect.x = 112 % maxCols * (rect.width + this.spacing()) - this._scrollX;
+	} else if ([143, 144].contains(index)) {
+		rect.x = 143 % maxCols * (rect.width + this.spacing()) - this._scrollX;
+		rect.width = (this.itemWidth() + this.spacing()) * 2 - this.spacing();
+	} else if ([168, 169, 170, 171, 172, 173, 174].contains(index)) {
+		rect.x = 168 % maxCols * (rect.width + this.spacing()) - this._scrollX;
 		rect.width = (this.itemWidth() + this.spacing()) * 7 - this.spacing();
-	} else if ([119, 120, 121, 122, 123, 124, 125].contains(index)) {
-		rect.x = 119 % maxCols * (rect.width + this.spacing()) - this._scrollX;
+	} else if ([175, 176, 177, 178, 179, 180, 181].contains(index)) {
+		rect.x = 175 % maxCols * (rect.width + this.spacing()) - this._scrollX;
+		rect.width = (this.itemWidth() + this.spacing()) * 7 - this.spacing();
+	} else if ([182, 183, 184, 185, 186, 187, 188].contains(index)) {
+		rect.x = 182 % maxCols * (rect.width + this.spacing()) - this._scrollX;
 		rect.width = (this.itemWidth() + this.spacing()) * 7 - this.spacing();
 	}
 	rect.y += Math.max(0, (this.contents.height - this.lineHeight() * 12) / 2);
@@ -784,9 +794,11 @@ Window_KeyConfig.prototype.itemRect = function (index) {
 };
 
 Window_KeyConfig.prototype.leaveEmpty = function (index) {
-	return [55, 56, 57, 58, 62, 64, 76, 77, 79, 84, 85, 86, 88, 89, 90, 91,
-		92, 93, 94, 95, 96, 97, 102, 104, 106, 107, 108, 109, 110, 111, 113, 114,
-		115, 116, 117, 118, 120, 121, 122, 123, 124, 125].contains(index);
+	return [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+		97, 98, 99, 100, 104, 106, 118, 119, 121, 126, 127, 128, 130, 131, 132, 133,
+		134, 135, 136, 137, 138, 139, 144, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156,
+		157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 169, 170, 171, 172, 173, 174, 176,
+		177, 178, 179, 180, 181, 183, 184, 185, 186, 187, 188].contains(index);
 };
 
 Window_KeyConfig.prototype.drawItem = function (index) {
@@ -803,7 +815,7 @@ Window_KeyConfig.prototype.drawItemRect = function (index) {
 };
 
 Window_KeyConfig.prototype.getRectColor = function (index) {
-	if (index > 104) return this.gaugeBackColor();
+	if (index > 167) return this.gaugeBackColor();
 	var key = Window_KeyConfig._refId[this.commandName(index)];
 	var action = Input.keyMapper[key];
 	if (action !== undefined) {
@@ -879,12 +891,12 @@ Window_KeyConfig.prototype.actionKey = function (action) {
 
 Window_KeyConfig.prototype.cursorDown = function (wrap) {
 	var index = this.index();
-	if (index >= 105) {
-		this.select(index - 105);
-	} else if ([41, 62].contains(index)) {
-		this.select(83);
+	if (index >= 168) {
+		this.select(index - 168);
 	} else if ([83, 104].contains(index)) {
 		this.select(125);
+	} else if ([125, 146].contains(index)) {
+		this.select(167);
 	} else {
 		//Window_Command.prototype.cursorDown.call(this, wrap);
 		this.select(index + 21);
@@ -896,11 +908,11 @@ Window_KeyConfig.prototype.cursorDown = function (wrap) {
 Window_KeyConfig.prototype.cursorUp = function (wrap) {
 	var index = this.index();
 	if (index <= 20) {
-		this.select(index + 105);
-	} else if ([41, 62].contains(index)) {
-		this.select(20);
+		this.select(index + 168);
 	} else if ([83, 104].contains(index)) {
-		this.select(41);
+		this.select(20);
+	} else if ([125, 146].contains(index)) {
+		this.select(83);
 	} else {
 		//Window_Command.prototype.cursorUp.call(this, wrap);
 		this.select(index - 21);
@@ -911,22 +923,22 @@ Window_KeyConfig.prototype.cursorUp = function (wrap) {
 
 Window_KeyConfig.prototype.cursorRight = function (wrap) {
 	var index = this.index();
-	if ([54, 55].contains(index)) {
-		this.select(56);
-	} else if ([63, 64].contains(index)) {
-		this.select(65);
-	} else if ([75, 76].contains(index)) {
-		this.select(77);
-	} else if ([87, 88, 89, 90, 91, 92, 93].contains(index)) {
-		this.select(94);
-	} else if ([101, 102].contains(index)) {
-		this.select(103);
-	} else if ([105, 106, 107, 108, 109, 110, 111].contains(index)) {
-		this.select(112);
-	} else if ([112, 113, 114, 115, 116, 117, 118].contains(index)) {
+	if ([96, 97].contains(index)) {
+		this.select(98);
+	} else if ([105, 106].contains(index)) {
+		this.select(107);
+	} else if ([117, 118].contains(index)) {
 		this.select(119);
-	} else if ([119, 120, 121, 122, 123, 124, 125].contains(index)) {
-		this.select(0);
+	} else if ([129, 130, 131, 132, 133, 134, 135].contains(index)) {
+		this.select(136);
+	} else if ([143, 144].contains(index)) {
+		this.select(145);
+	} else if ([168, 169, 170, 171, 172, 173, 174].contains(index)) {
+		this.select(175);
+	} else if ([175, 176, 177, 178, 179, 180, 181].contains(index)) {
+		this.select(182);
+	} else if ([182, 183, 184, 185, 186, 187, 188].contains(index)) {
+		this.select(168);
 	} else {
 		//Window_Command.prototype.cursorRight.call(this, wrap);
 		if (index % 21 === 20) this.select(index - 20);
@@ -938,22 +950,22 @@ Window_KeyConfig.prototype.cursorRight = function (wrap) {
 
 Window_KeyConfig.prototype.cursorLeft = function (wrap) {
 	var index = this.index();
-	if ([54, 55].contains(index)) {
-		this.select(53);
-	} else if ([63, 64].contains(index)) {
-		this.select(62);
-	} else if ([75, 76].contains(index)) {
-		this.select(74);
-	} else if ([87, 88, 89, 90, 91, 92, 93].contains(index)) {
-		this.select(86);
-	} else if ([101, 102].contains(index)) {
-		this.select(100);
-	} else if ([105, 106, 107, 108, 109, 110, 111].contains(index)) {
+	if ([96, 97].contains(index)) {
+		this.select(95);
+	} else if ([105, 106].contains(index)) {
 		this.select(104);
-	} else if ([112, 113, 114, 115, 116, 117, 118].contains(index)) {
-		this.select(111);
-	} else if ([119, 120, 121, 122, 123, 124, 125].contains(index)) {
-		this.select(118);
+	} else if ([117, 118].contains(index)) {
+		this.select(116);
+	} else if ([129, 130, 131, 132, 133, 134, 135].contains(index)) {
+		this.select(128);
+	} else if ([143, 144].contains(index)) {
+		this.select(142);
+	} else if ([168, 169, 170, 171, 172, 173, 174].contains(index)) {
+		this.select(188);
+	} else if ([175, 176, 177, 178, 179, 180, 181].contains(index)) {
+		this.select(174);
+	} else if ([182, 183, 184, 185, 186, 187, 188].contains(index)) {
+		this.select(181);
 	} else {
 		//Window_Command.prototype.cursorLeft.call(this, wrap);
 		if (index % 21 === 0) this.select(index + 20);
@@ -965,7 +977,7 @@ Window_KeyConfig.prototype.cursorLeft = function (wrap) {
 
 Window_KeyConfig.prototype.updateHelp = function () {
 	if (!this._helpWindow) return;
-	//this._helpWindow.setText(this.index() + ""); return;
+	this._helpWindow.setText(this.index() + ""); return;
 
 	let keyName = Window_KeyConfig._keyLayout[this.index()];
 	if (keyName === ' ') {

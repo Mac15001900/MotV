@@ -1011,6 +1011,12 @@ Window_KeyConfig.prototype.updateHelp = function () {
 	}
 };
 
+Window_KeyConfig.prototype.hitTest = function (x, y) {
+	let res = Window_Selectable.prototype.hitTest.call(this, x, y);
+	if (Window_KeyConfig._keyLayout[res] === ' ') return -1
+	else return res;
+}
+
 Window_KeyConfig.prototype.printableName = function (keyName) {
 	if (keyName.includes("#pD")) return keyName.substring(3);
 	switch (keyName) {
@@ -1082,8 +1088,8 @@ Window_KeyAction.prototype.makeCommandList = function () {
 	this.addCommand(s.controls.rightText, 'ok', true, 'right');
 	this.addCommand(s.controls.downText, 'ok', true, 'down');
 	this.addCommand(s.controls.shiftText, 'ok', true, 'shift');
-	this.addCommand(s.controls.fastForwardText, 'ok', true, 'pagedown');
 	this.addCommand(s.controls.fullscreenText, 'ok', true, 'f4');
+	this.addCommand(s.controls.fastForwardText, 'ok', true, 'pagedown');
 	if (Imported.YEP_ButtonCommonEvents) this.addButtonCommonEvents();
 	if (this.height) this.height = this.fittingHeight(this.numVisibleRows()); //Let's update the height, since the number of visible rows might have changed
 };

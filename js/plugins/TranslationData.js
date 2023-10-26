@@ -39,6 +39,7 @@ wordBank = {
             seVolume: "Individual volume for sound effects.",
         },
         controls: {
+            //Actions in Window_KeyAction
             clearText: "Unbind key",
             okText: "Confirm / Interact",
             escapeText: "Cancel / Open Menu",
@@ -51,6 +52,11 @@ wordBank = {
             leftText: "Move Left ←",
             rightText: "Move Right →",
             downText: "Move Down ↓",
+            fullscreenText: "Toggle fulscreen mode on/off",
+            fastForwardText: "Skip through text",
+            fpsText: "Toggle WebGL FPS counter on/off",
+
+            //Actions as displayed on top of keys
             okKey: "OK",
             escKey: "Esc",
             cancelKey: "Cancel",
@@ -63,24 +69,32 @@ wordBank = {
             rightKey: "→",
             downKey: "↓",
             fastForwardKey: "Skip",
-            fastForwardText: "Skip through text",
             fullscreenKey: "FullScr",
-            fullscreenText: "Toggle fulscreen mode on/off",
             fpsKey: "FPS",
-            fpsText: "Toggle WebGL FPS counter on/off",
-            //fastForwardHelp: "Fast forwards through dialogue when held, making text appear extremely quickly and skipping to the next message when the current one is finished.",
+
+            //Text that appears in the help window
             keyNewHelp: "Bind an action to ",
             keyHelp: "Change the action bound to ",
             defaultHelp: "Revert your keyboard setting to the default configuration.",
-            wasdHelp: "Switch to the WASD Movement Layout",
             discardHelp: "Discard all changes you've made since opening this screen.",
             finishHelp: "Finish configuring the keyboard layout.",
+            notRebindable: "This key is not rebindable.",
+
+            //Names of keys, used in the help window (and displayed on space)
+            space: "Space",
+            upArrow: "Up arrow",
+            leftArrow: "Left arrow",
+            rightArrow: "Right arrow",
+            downArrow: "Down arrow",
+
+            //Text on the bottom 3 buttons
             defaultText: "Revert to default settings",
-            wasdText: "Discard changes",
             discardText: "Discard changes",
             finishText: "Apply changes",
-            notRebindable: "This key is not rebindable.",
-            space: "Space",
+
+            //Other
+            invalidConfigSingular: "This configuration cannot be saved, because the following \nrequired action does not have a keybinding: ",
+            invalidConfigPlural: "This configuration cannot be saved, because the following \nrequired actions do not have a keybinding:\n",
         },
         controlsScreen: `Go up:    W or Up Arrow\nGo down:  S or Down Arrow\nGo left:  A or Left Arrow\nGo right: D or Right Arrow\nDash:     Shift\n\nInteract/confirm:  Space, Enter or Z\nCancel/open menu:  Escape or X\nToogle fullscreen: F4\n\nThere are no rebindable keys in this version, but they are coming at some point in the future.\nIf this feature is important to you do let me know, and it will be done faster ;)\n`,
         loadingFile: "Loading",

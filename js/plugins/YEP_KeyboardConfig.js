@@ -756,7 +756,8 @@ Window_KeyConfig.prototype.makeCommandList = function (index) {
 };
 
 Window_KeyConfig.prototype.isKeyEnabled = function (keyName) {
-	return !([' ', 'Enter', 'En', '↑', '←', '↓', '→'].contains(keyName));
+	return !([' '].contains(keyName));
+	//return !([' ', 'Enter', 'En', '↑', '←', '↓', '→'].contains(keyName));
 };
 
 Window_KeyConfig.prototype.itemRect = function (index) {
@@ -872,17 +873,17 @@ Window_KeyConfig.prototype.drawItemAction = function (index) {
 
 Window_KeyConfig.prototype.actionKey = function (action) {
 	switch (action) {
-		case 'ok': return s.controls.okKey //Yanfly.Param.KeyConfigOkKey;
-		case 'escape': return s.controls.escKey //Yanfly.Param.KeyConfigEscKey;
-		case 'cancel': return s.controls.cancelKey //Yanfly.Param.KeyConfigCancelKey;
-		case 'menu': return s.controls.menuKey //Yanfly.Param.KeyConfigMenuKey;
-		case 'shift': return s.controls.shiftKey //Yanfly.Param.KeyConfigShiftKey;
-		case 'pageup': return s.controls.pageUpKey //Yanfly.Param.KeyConfigPageUpKey;
-		case 'pagedown': return s.controls.fastForwardKey //Yanfly.Param.KeyConfigPageDnKey;
-		case 'left': return s.controls.leftKey //Yanfly.Param.KeyConfigLeftKey;
-		case 'up': return s.controls.upKey //Yanfly.Param.KeyConfigUpKey;
-		case 'right': return s.controls.rightKey //Yanfly.Param.KeyConfigRightKey;
-		case 'down': return s.controls.downKey //Yanfly.Param.KeyConfigDownKey;
+		case 'ok': return s.controls.okKey;
+		case 'escape': return s.controls.escKey;
+		case 'cancel': return s.controls.cancelKey;
+		case 'menu': return s.controls.menuKey;
+		case 'shift': return s.controls.shiftKey;
+		case 'pageup': return s.controls.pageUpKey;
+		case 'pagedown': return s.controls.fastForwardKey;
+		case 'left': return s.controls.leftKey;
+		case 'up': return s.controls.upKey;
+		case 'right': return s.controls.rightKey;
+		case 'down': return s.controls.downKey;
 		case 'f4': return s.controls.fullscreenKey;
 		case 'fps': return s.controls.fpsKey;
 		case 'quit': return "Quit";
@@ -987,7 +988,7 @@ Window_KeyConfig.prototype.cursorLeft = function (wrap) {
 
 Window_KeyConfig.prototype.updateHelp = function () {
 	if (!this._helpWindow) return;
-	this._helpWindow.setText(this.index() + ""); return;
+	// this._helpWindow.setText(this.index() + ""); return;
 
 	let keyName = Window_KeyConfig._keyLayout[this.index()];
 	if (keyName === ' ') {
@@ -1000,16 +1001,19 @@ Window_KeyConfig.prototype.updateHelp = function () {
 
 	switch (this.currentSymbol()) {
 		case 'key':
-			this._helpWindow.setText(s.controls.keyHelp + `\\c[${Yanfly.Param.KeyConfigActionColor}]` + this.printableName(keyName)); //Yanfly.Param.KeyConfigKeyHelp
+			var key = Window_KeyConfig._refId[this.commandName(this.index())];
+			let text = s.controls.keyNewHelp;
+			if (this.configCopy[key]) text = s.controls.keyHelp; //Change the text if there's already an action bound to this key
+			this._helpWindow.setText(text + `\\c[${Yanfly.Param.KeyConfigActionColor}]` + this.printableName(keyName));
 			break;
 		case 'default':
-			this._helpWindow.setText(s.controls.defaultHelp); //Yanfly.Param.KeyConfigDefaultHelp
+			this._helpWindow.setText(s.controls.defaultHelp);
 			break;
 		case 'discard':
-			this._helpWindow.setText(s.controls.discardHelp); //Yanfly.Param.KeyConfigDiscardHelp
+			this._helpWindow.setText(s.controls.discardHelp);
 			break;
 		case 'cancel':
-			this._helpWindow.setText(s.controls.finishHelp); //Yanfly.Param.KeyConfigFinishHelp
+			this._helpWindow.setText(s.controls.finishHelp);
 			break;
 		default:
 			this._helpWindow.clear();
@@ -1033,6 +1037,10 @@ Window_KeyConfig.prototype.printableName = function (keyName) {
 		case "PgUp": return "Page Up";
 		case "Esc": return "Escape";
 		case "\\": return "\\\\";
+		case '↑': return s.controls.upArrow;
+		case '←': return s.controls.leftArrow;
+		case '→': return s.controls.rightArrow;
+		case '↓': return s.controls.downArrow;
 		case "Space": return s.controls.space; //The only key that needs translation TODO it also need translation on the key itself xD
 		default: return keyName;
 	}
@@ -1085,7 +1093,7 @@ Window_KeyAction.prototype.windowHeight = function () {
 Window_KeyAction.prototype.makeCommandList = function () {
 	this.addCommand(s.back, 'ok', true, 'cancel');
 	if (this.unbindable) this.addCommand(s.controls.clearText, 'ok', true, 'clear');
-	this.addCommand('', 'ok', true, 'skipThis');
+	this.addCommand('', 'ok', true, 'skipThis'); //This command will render as an empty line on won't be selectable
 	this.addCommand(s.controls.okText, 'ok', true, 'ok');
 	this.addCommand(s.controls.escapeText, 'ok', true, 'escape');
 	this.addCommand(s.controls.upText, 'ok', true, 'up');
@@ -1166,6 +1174,14 @@ Scene_KeyConfig.prototype.terminate = function () {
 	ConfigManager.save();
 };
 
+Scene_KeyConfig.prototype.update = function () {
+	Scene_MenuBase.prototype.update.call(this);
+	if (this.reanablePostError && !g.getInterpreter()._waitMode) {
+		this.reanablePostError = false;
+		this._configWindow.active = true;
+	}
+}
+
 Scene_KeyConfig.prototype.refreshWindows = function () {
 	this._configWindow.refresh();
 	this._configWindow.activate();
@@ -1240,7 +1256,7 @@ Scene_KeyConfig.prototype.commandExit = function () {
 	console.log(this._configWindow.currentExt());
 	if (!this.canExit()) {
 		SoundManager.playBuzzer();
-		this._configWindow.activate();
+		//this._configWindow.activate();
 		return;
 	}
 	ConfigManager.keyMapper = JSON.parse(JSON.stringify(this._configWindow.configCopy));
@@ -1250,6 +1266,16 @@ Scene_KeyConfig.prototype.commandExit = function () {
 };
 
 Scene_KeyConfig.prototype.canExit = function () {
+	let remainingCommands = ['ok', 'escape', 'up', 'down', 'left', 'right']; //Make sure each of these commands is bound to at least one key
+	const config = this._configWindow.configCopy;
+	for (const key in config) {
+		if (remainingCommands.includes(config[key])) remainingCommands.splice(remainingCommands.indexOf(config[key]), 1);
+	}
+	if (remainingCommands.length > 0) {
+		this.showError((remainingCommands.length === 1 ? s.controls.invalidConfigSingular : s.controls.invalidConfigPlural) + remainingCommands.join(', ').capitalise() + '\n');
+		return false;
+	}
+
 	if (!Imported.YEP_ButtonCommonEvents) return true;
 	for (var i = 0; i < Yanfly.KeyConfig.RequiredCommonEvents.length; ++i) {
 		var commonEventId = Yanfly.KeyConfig.RequiredCommonEvents[i];
@@ -1257,6 +1283,15 @@ Scene_KeyConfig.prototype.canExit = function () {
 	}
 	return true;
 };
+
+Scene_KeyConfig.prototype.showError = function (message) {
+	let inp = g.getInterpreter();
+	inp.pluginCommand('SetQuestionWindowData', ['1', '1', 'center']);
+	inp.pluginCommand('SetQuestionWindowChoices', ['OK']);
+	inp.pluginCommand('CreateQuestionWindow', ['3', g.padToLength(message, 40)]);
+	this._configWindow.active = false;
+	this.reanablePostError = true;
+}
 
 Scene_KeyConfig.prototype.isCommonEventBound = function (id) {
 	var length = Window_KeyConfig._keyLayout.length;

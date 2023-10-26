@@ -245,6 +245,7 @@ function KoTCDynamicMusic(forceplay, musiclistname) {
 
         $KDMS.PreviousMusicList = $KDMS.CurrentMusicList;
         $KDMS.NextSongTimeout3 = setTimeout(function () {
+            if (!AudioManager._bgmBuffer) return;//This shouldn't happen unless something goes very wrong, but if it does we'll break the music system rather than the whole game
             var timetonextsong = Math.round(AudioManager._bgmBuffer._totalTime * (pitch / 100) * timesToPlay * 1000);
             if (MUSIC_DEBUG) {
                 console.log(`${timetonextsong / 1000}s to next song. We will repeat this one ${timesToPlay - 1} times.`);

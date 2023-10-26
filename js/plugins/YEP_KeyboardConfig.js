@@ -477,8 +477,15 @@ if (Imported.YEP_ButtonCommonEvents) {
 //=============================================================================
 
 ConfigManager.keyMapper = JSON.parse(JSON.stringify(Input.keyMapper));
-ConfigManager.defaultMap = JSON.parse(JSON.stringify(Input.keyMapper));
-ConfigManager.discardMap = {
+ConfigManager.defaultMap = {
+	9: 'tab', 13: 'ok', 16: 'shift', 17: 'control', 18: 'control',
+	27: 'escape', 32: 'ok', 35: 'pagedown', 36: 'f4', 37: 'left', 38: 'up', 39: 'right',
+	40: 'down', 45: undefined, 46: 'escape', 65: 'left', 68: 'right', 74: 'ok', 75: 'escape',
+	77: 'escape', 83: 'down', 87: 'up', 88: 'escape', 90: 'ok', 96: 'escape', 98: 'down',
+	100: 'left', 102: 'right', 104: 'up', 110: 'escape', 113: 'fps', 115: 'f4',
+}
+
+ConfigManager.discardMap = { //Potentially still needed if we ever use YEP_ButtonCommonEvents
 	9: 'tab', 13: 'ok', 16: 'shift', 17: 'control', 18: 'control', 27: 'escape',
 	32: 'ok', 33: 'pageup', 34: 'pagedown', 37: 'left', 38: 'up', 39: 'right',
 	40: 'down', 87: 'up', 65: 'left', 83: 'down', 68: 'right', 74: 'ok',
@@ -1180,6 +1187,21 @@ Scene_KeyConfig.prototype.update = function () {
 		this.reanablePostError = false;
 		this._configWindow.active = true;
 	}
+	if (this.waitingForPromptResponse && !g.getInterpreter()._waitMode) {
+		this.waitingForPromptResponse = false;
+		this._configWindow.active = true;
+		switch ($gameVariables.value(3)) { //The response to the prompt. Can't use $gv[3] if we're still in the main menu
+			case 0: //Cancel
+				break;
+			case 1: //Discard changes
+				this.commandDiscard();
+				this.commandExit();
+				break;
+			case 2: //Apply changes
+				this.commandExit();
+				break;
+		}
+	}
 }
 
 Scene_KeyConfig.prototype.refreshWindows = function () {
@@ -1206,8 +1228,8 @@ Scene_KeyConfig.prototype.createKeyActionWindow = function () {
 
 Scene_KeyConfig.prototype.commandDefault = function () {
 	this._configWindow.configCopy = JSON.parse(JSON.stringify(ConfigManager.defaultMap));
-	ConfigManager.keyMapper = JSON.parse(JSON.stringify(ConfigManager.defaultMap));
-	ConfigManager.applyKeyConfig();
+	// ConfigManager.keyMapper = JSON.parse(JSON.stringify(ConfigManager.defaultMap));
+	// ConfigManager.applyKeyConfig();
 	this.refreshWindows();
 	SoundManager.playEquip();
 };
@@ -1253,10 +1275,17 @@ Scene_KeyConfig.prototype.onActionOk = function () {
 };
 
 Scene_KeyConfig.prototype.commandExit = function () {
-	console.log(this._configWindow.currentExt());
+	if (Input.isPressed('cancel') && !g.isObjectEmpty(g.compareObjects(Input.keyMapper, this._configWindow.configCopy))) { //If exiting via the cancel button and there are unsaved changes
+		let inp = g.getInterpreter();
+		inp.pluginCommand('SetQuestionWindowData', ['3', '1', 'center']);
+		inp.pluginCommand('SetQuestionWindowChoices', [[s.cancel, s.controls.discardChanges, s.controls.saveChanges].toString()]);
+		inp.pluginCommand('CreateQuestionWindow', ['3', g.padToLength(s.controls.cancelPrompt, 40)]);
+		this.waitingForPromptResponse = true;
+		this._configWindow.active = false;
+		return;
+	}
 	if (!this.canExit()) {
 		SoundManager.playBuzzer();
-		//this._configWindow.activate();
 		return;
 	}
 	ConfigManager.keyMapper = JSON.parse(JSON.stringify(this._configWindow.configCopy));

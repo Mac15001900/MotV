@@ -1090,11 +1090,21 @@ g.compareObjects = function (obj1, obj2) {
         }
     }
     for (var key in obj2) {
-        if (obj1[key] === undefined) {
+        if (obj1[key] === undefined && obj2[key] !== undefined) {
             res[key] = [obj1[key], obj2[key]];
         }
     }
     return res;
+}
+
+//Check if an object is empty - from Stackoverflow community wiki, https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
+g.isObjectEmpty = function (obj) {
+    for (var prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+            return false;
+        }
+    }
+    return true
 }
 
 g.scene = function () {

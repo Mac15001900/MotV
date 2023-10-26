@@ -69,7 +69,7 @@ wordBank = {
             rightKey: "→",
             downKey: "↓",
             fastForwardKey: "Skip",
-            fullscreenKey: "FullScr",
+            fullscreenKey: "⛶",
             fpsKey: "FPS",
 
             //Text that appears in the help window
@@ -94,7 +94,7 @@ wordBank = {
 
             //Other
             invalidConfigSingular: "This configuration cannot be saved, because the following \nrequired action does not have a keybinding: ",
-            invalidConfigPlural: "This configuration cannot be saved, because the following \nrequired actions do not have a keybinding:\n",
+            invalidConfigPlural: "This configuration cannot be saved, because the following \nrequired actions do not have a keybinding:\n\n",
             discardChanges: "Discard changes",
             saveChanges: "Save changes",
             cancelPrompt: "You have unsaved changes. \nWould you like to save them before quitting?\n",
@@ -149,6 +149,67 @@ wordBank = {
             meVolume: "Poziom głośności efektów muzycznych.",
             seVolume: "Poziom głośności efektów dźwiekowych.",
         },
+        controls: {
+            //Actions in Window_KeyAction
+            clearText: "Usuń akckję przypisaną do tego klawisza",  //"Unbind key",
+            okText: "Interakcja/potwierdzenie",  //"Confirm / Interact",
+            escapeText: "Anulowanie/menu",  //"Cancel / Open Menu",
+            cancelText: "Anulowanie",  //"Cancel",
+            menuText: "Otwieranie menu",  //"Menu",
+            shiftText: "Bieg",  //"Dash",
+            pageupText: "-",  //"-",
+            pagedownText: "-",  //"-",
+            upText: "Idź w górę ↑",  //"Move Up ↑",
+            leftText: "Idź w lewo ←",  //"Move Left ←",
+            rightText: "Idź w prawo →",  //"Move Right →",
+            downText: "Idź w dół ↓",  //"Move Down ↓",
+            fullscreenText: "Wł/wył. pełny ekran",  //"Toggle fulscreen mode on/off",
+            fastForwardText: "Przewijanie tekstu",  //"Skip through text",
+            fpsText: "Licznik FPS",  //"Toggle WebGL FPS counter on/off",
+
+            //Actions as displayed on top of keys
+            okKey: "OK",  //"OK",
+            escKey: "Esc",  //"Esc",
+            cancelKey: "Anuluj",  //"Cancel",
+            menuKey: "Menu",  //"Menu",
+            shiftKey: "Bieg",  //"Dash",
+            pageUpKey: "-",  //"-",
+            pageDnKey: "-",  //"-",
+            upKey: "↑",  //"↑",
+            leftKey: "←",  //"←",
+            rightKey: "→",  //"→",
+            downKey: "↓",  //"↓",
+            fastForwardKey: ">>",  //"Skip",
+            fullscreenKey: "⛶",  //"FullScr",
+            fpsKey: "FPS",  //"FPS",
+
+            //Text that appears in the help window
+            keyNewHelp: "Przypisz akcję do klawisza ",  //"Bind an action to ",
+            keyHelp: "Zmień akcję przypisaną do klawisza ",  //"Change the action bound to ",
+            defaultHelp: "Przywróć domyślne ustawienia klawiatury",  //"Revert your keyboard setting to the default configuration.",
+            discardHelp: "Cofnij wszystkie zmiany dokonane od otwarcia tego menu.",  //"Discard all changes you've made since opening this screen.",
+            finishHelp: "Zapisz wszystkie dokanane tu zmiany.",  //"Apply your changes to the keyboard configuration.",
+            notRebindable: "Nie możesz zmienić akcji przypisanej do tego klawisza.",  //"This key is not rebindable.",
+
+            //Names of keys, used in the help window (and displayed on space)
+            space: "Spacja",  //"Space",
+            upArrow: "Strzałka w górę",  //"Up arrow",
+            leftArrow: "Strzałka w lewo",  //"Left arrow",
+            rightArrow: "Strzałka w prawo",  //"Right arrow",
+            downArrow: "Strzałka w dół",  //"Down arrow",
+
+            //Text on the bottom 3 buttons
+            defaultText: "Przywróć domyślne",  //"Revert to default settings",
+            discardText: "Odrzuć zmiany",  //"Discard changes",
+            finishText: "Zapisz zmiany",  //"Apply changes",
+
+            //Other
+            invalidConfigSingular: "Nie można zapisać zmian, ponieważ następująca \nwymagana akcja nie ma przypisanego klawisza: ",  //"This configuration cannot be saved, because the following \nrequired action does not have a keybinding: ",
+            invalidConfigPlural: "Nie można zapisać zmian, ponieważ następujące \nwymagane akcje nie mają przypisanych klawiszy:\n\n",  //"This configuration cannot be saved, because the following \nrequired actions do not have a keybinding:\n",
+            discardChanges: "Odrzuć zmiany",  //"Discard changes",
+            saveChanges: "Zapisz zmiany",  //"Save changes",
+            cancelPrompt: "Masz niezapisane zmiany.\nCzy chcesz je zapisać przed wyjściem?\n",  //"You have unsaved changes. \nWould you like to save them before quitting?\n",
+        },
         controlsScreen: `Idź w górę:  W lub Strzałka w górę\nIdź w dół:   S lub Strzałka w dół\nIdź w lewo:  A lub Strzałka w lewo\nIdź w prawo: D lub Strzałka w prawo\nBiegnij:     Shift\n\nInterakcja/potwierdzenie: Spacja, Enter lub Z\nAnulowanie/menu:          Escape lub X\nWł./wył. pełny ekran:     F4\n\nW tej wersji niestety nie da się jeszcze zmieniać ustawień klawiszy.\nJeśli ta funkcja jest dla Ciebie ważna to daj mi znać, a zostanie zrobiona szybciej ;)\n`,
         loadingFile: "LoadingPl",
         yes: "tak",
@@ -162,7 +223,7 @@ wordBank = {
         back: "Wróć",
         language: "Język",
         colorblindMode: "Tryb dla daltonistów",
-        controls: "Sterowanie",
+        controlsOption: "Sterowanie",
         masterVolume: "Głośność",
         colorblindPrompt: "Czy chcesz włączyć tryb dla daltonistów?\n\nZmienia nieco niektóre zagadki, tak, aby ich rozwiązanie nie\nwymagało zdolności rozróżniania kolorów.",
         close: "Zamknij",

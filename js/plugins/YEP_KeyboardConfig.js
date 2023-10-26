@@ -1279,7 +1279,7 @@ Scene_KeyConfig.prototype.commandExit = function () {
 		let inp = g.getInterpreter();
 		inp.pluginCommand('SetQuestionWindowData', ['3', '1', 'center']);
 		inp.pluginCommand('SetQuestionWindowChoices', [[s.cancel, s.controls.discardChanges, s.controls.saveChanges].toString()]);
-		inp.pluginCommand('CreateQuestionWindow', ['3', g.padToLength(s.controls.cancelPrompt, 40)]);
+		inp.pluginCommand('CreateQuestionWindow', ['3', g.padToLength(s.controls.cancelPrompt, 50, "right")]);
 		this.waitingForPromptResponse = true;
 		this._configWindow.active = false;
 		return;
@@ -1301,7 +1301,17 @@ Scene_KeyConfig.prototype.canExit = function () {
 		if (remainingCommands.includes(config[key])) remainingCommands.splice(remainingCommands.indexOf(config[key]), 1);
 	}
 	if (remainingCommands.length > 0) {
-		this.showError((remainingCommands.length === 1 ? s.controls.invalidConfigSingular : s.controls.invalidConfigPlural) + remainingCommands.join(', ').capitalise() + '\n');
+		const strings = {
+			ok: s.controls.okText,
+			escape: s.controls.escapeText,
+			up: s.controls.upText,
+			left: s.controls.leftText,
+			right: s.controls.rightText,
+			down: s.controls.downText
+		}
+		const printableCommands = remainingCommands.map(c => strings[c]);
+		if (remainingCommands.length === 1) this.showError(s.controls.invalidConfigSingular + printableCommands.join(', ') + '\n');
+		else this.showError(s.controls.invalidConfigPlural + printableCommands.join('\n') + '\n');
 		return false;
 	}
 

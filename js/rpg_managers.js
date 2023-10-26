@@ -1940,7 +1940,7 @@ SceneManager.onKeyDown = function (event) {
     if (!event.ctrlKey && !event.altKey) {
         switch (event.keyCode) {
             case 116:   // F5
-                if (Utils.isNwjs()) {
+                if (Utils.isNwjs() && Utils.isOptionValid('test')) { //Change: only reload with F5 on playtest
                     location.reload();
                 }
                 break;

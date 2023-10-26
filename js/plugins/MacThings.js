@@ -889,8 +889,11 @@ Input.update = function () {
 g.buttonPressed = function (button) {
     switch (button) {
         case "f4": Graphics._switchFullScreen(); break;
+        case "fps": Graphics._switchFPSMeter(); break;
     }
 }
+
+Graphics._onKeyDown = () => { }; //Removed the default actions, since they're handled above
 
 //Marks the event as seen whenever it's launched
 var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
@@ -947,7 +950,21 @@ Scene_Title.prototype.commandFeedback = function () {
             break;
         default: console.error("Language is not set, but the feedback form was requested.");
     }
+}
 
+//Support for preventing next sound from SoundManager
+SoundManager.playSystemSound = function (n) {
+    if (this._preventNext) {
+        this._preventNext = false;
+        return;
+    }
+    if ($dataSystem) {
+        AudioManager.playStaticSe($dataSystem.sounds[n]);
+    }
+};
+
+SoundManager.preventNext = function () {
+    this._preventNext = true;
 }
 
 

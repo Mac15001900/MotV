@@ -1113,7 +1113,18 @@ Window_KeyAction.prototype.makeCommandList = function () {
 	this.addCommand(s.controls.fpsText, 'ok', true, 'fps');
 	if (Imported.YEP_ButtonCommonEvents) this.addButtonCommonEvents();
 	if (this.height) this.height = this.fittingHeight(this.numVisibleRows()); //Let's update the height, since the number of visible rows might have changed
+	console.log("Making a window for key " + this.keyActionName)
 };
+
+Window_KeyAction.prototype.drawItem = function (index) {
+	var rect = this.itemRectForText(index);
+	var align = this.itemTextAlign();
+	this.resetTextColor();
+	if (this._list[index].ext === this.keyActionName) this.changeTextColor(this.textColor(Yanfly.Param.KeyConfigAssignColor));
+	this.changePaintOpacity(this.isCommandEnabled(index));
+	this.drawText(this.commandName(index), rect.x, rect.y, rect.width, align);
+};
+
 
 Window_KeyAction.prototype.addButtonCommonEvents = function () {
 	var length = Yanfly.Param.KeyConfigEv.length;
@@ -1243,6 +1254,7 @@ Scene_KeyConfig.prototype.commandDiscard = function () {
 
 Scene_KeyConfig.prototype.commandKey = function () {
 	this._actionWindow.select(0);
+	this._actionWindow.keyActionName = this._configWindow.configCopy[Window_KeyConfig._refId[this._configWindow._list[this._configWindow.index()].name]];
 	// this._actionWindow.unbindable = undefined !== Input.keyMapper[Window_KeyConfig._refId[this._configWindow.commandName(this._configWindow.index())]]; //Allow clearing only if a binding already exists for this key
 	this._actionWindow.unbindable = undefined !== this._configWindow.configCopy[Window_KeyConfig._refId[this._configWindow.commandName(this._configWindow.index())]]; //Allow clearing only if a binding already exists for this key
 	this._actionWindow.refresh();

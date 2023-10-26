@@ -23,7 +23,7 @@
  * @value Notetag
  * @option When "Through" is on, trigger is "action button" and priority is above or below characters
  * @value Through
- * @default Disabled
+ * @default Notetag
  * 
  * @help
  * This plugin provides a command "RunEvent [id|offset]", which allows you
@@ -67,8 +67,9 @@
  * ------------------------------------------------------------------------------
  * Additionally, you can specify the page of the event you'd like to run, e.g.
  * "RunEvent left 3" will run the 3rd page of the event on the left, ignoring
- * any conditions that page has. If you don't specify a page the currently
- * active one will be used.
+ * any conditions that page has. This can also be specified with a variable, e.g.
+ * "RunEvent left v42".
+ * If you don't specify a page the currently active one will be used.
  * 
  * ------------------------------------------------------------------------------ 
  * The same functionality is also provided with a script call:
@@ -79,8 +80,9 @@
  * MAC_RunNearbyEvent.run("left-left-up", this, 3)
  * 
  * ------------------------------------------------------------------------------
- * This plugin is available under the MIT Licence. You're free to use it in any games,
- * or use the code in your own plugins. Credit is appreciated but not required.
+ * This plugin is available under the MIT Licence. You're free to use it in any 
+ * games, commercial or not, or use the code in your own plugins. Credit is 
+ * appreciated but not required.
  * 
 */
 
@@ -156,6 +158,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
         }
 
         if (pageId !== undefined && event) {
+            if (pageId[0] === 'v') pageId = $gameVariables.value(Number(pageId.substring(1)));
             page = event.event().pages[Number(pageId) - 1];
             if (!page) error = `MAC_RunNearbyEvent: tried to run page ${pageId} on event ${event.eventId()}. This page doesn't exist.`;
         }
@@ -194,7 +197,6 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
             };
             break;
         case "Notetag":
-            console.log("Using notetag method");
             Game_Player.prototype.startMapEvent = function (x, y, triggers, normal) {
                 if (!$gameMap.isEventRunning()) {
                     $gameMap.eventsXy(x, y).forEach(function (event) {

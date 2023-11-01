@@ -595,41 +595,25 @@ g.showMessage = function (inp, message, face, faceFile = 'mc') {
     inp.setWaitMode('message');
 }
 
-/*
-[{"code":101,"indent":0,"parameters":["",0,0,2]},
-{"code":401,"indent":0,"parameters":["Hello there"]},
-{"code":213,"indent":0,"parameters":[-1,3,false]},
-{"code":101,"indent":0,"parameters":["mc",0,0,2]},
-{"code":401,"indent":0,"parameters":["Hi!"]},
-{"code":101,"indent":0,"parameters":["mc",1,0,2]},
-{"code":401,"indent":0,"parameters":["I'm happier now!"]},
-{"code":401,"indent":0,"parameters":["This is the second line,"]},
-{"code":401,"indent":0,"parameters":["and this is the third."]},
-"code":0,"indent":0,"parameters":[]}]
-
-*/
-
-
-
-
-
 /**
- * Similar to g.showMessage, but shows multiple messages in sequence
+ * Shows a series of messages in sequence. Each message consists of a string, and optionally a face image or an attached balloon.
  * @param {Game_Interpreter} inp Interpreter to show the messages with
- * @param {Object[]} messages An array of messages to be displayed
+ * @param {Object[]|Object|String} messages An array of messages to be displayed. Alternatively a single message or just a string.
  * @param {string} messages[].string The text to display
  * @param {number} [messages[].id] The ID of face within the face file (0-7). Ommit in order to not use a face image.
  * @param {string} [messages[].face] The face file to use ("mc" when ommited)
- * @param {number} [messages[].baloon] The ballon id to display before the message, (shown above the player) (1-15)
+ * @param {number} [messages[].balloon] The balloon id to display before the message, (shown above the player) (1-15)
  */
 g.showMessages = function (inp, messages) {
+    if (typeof messages === "string") messages = { string: messages };
+    if (!Array.isArray(messages)) messages = [messages];
     console.assert(Array.isArray(messages), "showMessages: messages must be an array");
     console.assert(messages.every(m => typeof m === 'object'), "showMessages: messages must be an array of objects");
     console.assert(messages.every(m => m.hasOwnProperty('string')), "showMessages: message missing a string");
     let commandList = [];
     for (let message of messages) {
         let face = message.face ?? (message.id == null ? "" : "mc"); //"mc" is the default face, unless no id is present, which implies not using a face at all
-        if (message.baloon) commandList.push({ code: 213, indent: 0, parameters: [-1, message.baloon, false] });
+        if (message.balloon) commandList.push({ code: 213, indent: 0, parameters: [-1, message.balloon, false] });
         commandList.push({ code: 101, indent: 0, parameters: [face, message.id ?? 0, 0, 2] });
         for (let line of message.string.split('\n')) {
             commandList.push({ code: 401, indent: 0, parameters: [line] });

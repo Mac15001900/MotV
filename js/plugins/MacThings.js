@@ -248,7 +248,7 @@ keyReactions = function (inp) {
     else if (currentKeys < SECRET_KEYS.length) randomMessages.push(`Jakoś powinno mi się udać zdobyć te pozostałe ${SECRET_KEYS.length - currentKeys}.`);
     else {
         //Just one left
-        if (g.data.keysCollected["iksytonawiasy"]) g.showMessage(inp, "Jeszcze tylko ten ostatni. Idę po ciebie!.", 0);
+        if (g.data.keysCollected["iksytonawiasy"]) g.showMessage(inp, "Jeszcze tylko ten ostatni. Idę po ciebie!", 0);
         else g.showMessage(inp, "No dobra, tylko gdzie niby jest ten jeden pozostały klucz?\nChyba musi być ukryty inaczej niż pozostałe.", 0);
         return;
     }
@@ -587,11 +587,61 @@ g.niceShowPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
 
 //Shows a single message, with a face if one is specified. Will not queue up multiple messages
 g.showMessage = function (inp, message, face, faceFile = 'mc') {
+    console.assert(typeof message === 'string', "showMessage: message must be a string");
     if (face !== undefined) $gameMessage.setFaceImage(faceFile, face);
     $gameMessage.setBackground(0);
     $gameMessage.setPositionType(2);
     $gameMessage.add(message);
     inp.setWaitMode('message');
+}
+
+/*
+[{"code":101,"indent":0,"parameters":["",0,0,2]},
+{"code":401,"indent":0,"parameters":["Hello there"]},
+{"code":213,"indent":0,"parameters":[-1,3,false]},
+{"code":101,"indent":0,"parameters":["mc",0,0,2]},
+{"code":401,"indent":0,"parameters":["Hi!"]},
+{"code":101,"indent":0,"parameters":["mc",1,0,2]},
+{"code":401,"indent":0,"parameters":["I'm happier now!"]},
+{"code":401,"indent":0,"parameters":["This is the second line,"]},
+{"code":401,"indent":0,"parameters":["and this is the third."]},
+"code":0,"indent":0,"parameters":[]}]
+
+*/
+
+
+
+
+
+/**
+ * Similar to g.showMessage, but shows multiple messages in sequence
+ * @param {Game_Interpreter} inp Interpreter to show the messages with
+ * @param {Object[]} messages An array of messages to be displayed
+ * @param {string} messages[].string The text to display
+ * @param {number} [messages[].id] The ID of face within the face file (0-7). Ommit in order to not use a face image.
+ * @param {string} [messages[].face] The face file to use ("mc" when ommited)
+ * @param {number} [messages[].baloon] The ballon id to display before the message, (shown above the player) (1-15)
+ */
+g.showMessages = function (inp, messages) {
+    console.assert(Array.isArray(messages), "showMessages: messages must be an array");
+    console.assert(messages.every(m => typeof m === 'object'), "showMessages: messages must be an array of objects");
+    console.assert(messages.every(m => m.hasOwnProperty('string')), "showMessages: message missing a string");
+    let commandList = [];
+    for (let message of messages) {
+        let face = message.face ?? (message.id == null ? "" : "mc"); //"mc" is the default face, unless no id is present, which implies not using a face at all
+        if (message.baloon) commandList.push({ code: 213, indent: 0, parameters: [-1, message.baloon, false] });
+        commandList.push({ code: 101, indent: 0, parameters: [face, message.id ?? 0, 0, 2] });
+        for (let line of message.string.split('\n')) {
+            commandList.push({ code: 401, indent: 0, parameters: [line] });
+        }
+    }
+
+    inp ??= g.getInterpreter();
+    if (inp.isRunning()) {
+        inp.setupChild(commandList, 0);
+    } else {
+        inp.setup(commandList, 0);
+    }
 }
 
 //Adds extra spaces to make sure the text is of certain width
@@ -1153,7 +1203,7 @@ ImageManager.reserveSystem = function(filename, hue, reservationId) {
     if(filename === "IconSet") filename = "IconSet-big";
     _ImageManager_reserveSystem.call(this, filename, hue, reservationId);
 };
- 
+
 var _ImageManager_loadSystem = ImageManager.loadSystem;
 ImageManager.loadSystem = function(filename, hue) {
     if(filename === "IconSet") filename = "IconSet-big";
@@ -1163,7 +1213,7 @@ ImageManager.loadSystem = function(filename, hue) {
 /*Game_CharacterBase.prototype.resetPattern = function () {
     return;
 };
- 
+
 Game_Event.prototype.resetPattern = function () {
     return;
 };*/
@@ -1201,3 +1251,8 @@ void ((alias) => {
     this.contents = new Bitmap(this.contentsWidth(), this.contentsHeight() * 2);
     this.resetFontSettings();
 };*/
+
+//TODO custom cursor!
+/*  document.body.style.cursor = file == ""
+        ? "default"
+        : `url("${base_url}${file}.png") ${x_offset} ${y_offset}, ${fallbackStyle}`;*/

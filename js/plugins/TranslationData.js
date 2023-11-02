@@ -95,9 +95,9 @@ wordBank = {
             //Other
             invalidConfigSingular: "This configuration cannot be saved, because the following \nrequired action does not have a keybinding: ",
             invalidConfigPlural: "This configuration cannot be saved, because the following \nrequired actions do not have a keybinding:\n\n",
+            cancelPrompt: "You have unsaved changes. \nWould you like to save them before quitting?\n",
             discardChanges: "Discard changes",
             saveChanges: "Save changes",
-            cancelPrompt: "You have unsaved changes. \nWould you like to save them before quitting?\n",
         },
         controlsScreen: `Go up:    W or Up Arrow\nGo down:  S or Down Arrow\nGo left:  A or Left Arrow\nGo right: D or Right Arrow\nDash:     Shift\n\nInteract/confirm:  Space, Enter or Z\nCancel/open menu:  Escape or X\nToogle fullscreen: F4\n\nThere are no rebindable keys in this version, but they are coming at some point in the future.\nIf this feature is important to you do let me know, and it will be done faster ;)\n`,
         loadingFile: "Loading",

@@ -227,7 +227,12 @@ processNewKey = function (inp) {
         g.showMessage(inp, "Do zdobycia jeszcze " + displayKeys(SECRET_KEYS.length - currentKeys) + ".");
     }
 }
-
+/*Key reactions: 
+If failed: reaction to specific puzzle if present, otherwise random failure reaction
+If succeeded: 
+    If key amount reaction exists: reaction to specific puzzle if present, then key amount reaction.
+    Otheriwse: reaction to specific puzzle if present, otherwise random success reaction.
+*/
 keyReactions = function (inp) {
     let currentKeys = g.data.keysTotal;
     let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
@@ -288,12 +293,31 @@ wrongKeyReactions = function (inp, key) {
     }
 
 }
+//Checks if there exists a reaction specific to the current amount of keys, by looking at conditions
+//in stage reaction events. Can only be called on the main map.
+function stageReactionExists(keysAmount) {
+    let pages = [];
+    switch (g.lang) {
+        case "en": pages = $dataMap.events[216].pages; break;
+        case "pl": pages = $dataMap.events[215].pages; break;
+        default: throw new Error("Invalid language: " + g.lang);
+    }
+    for (let i = 0; i < pages.length; i++) {
+        if (pages[i].conditions.variableValue === keysAmount) return true;
+    }
+    return false;
+}
 
 function displayKeys(amount, color = false) {
-    let name = "klucze";
-    if (amount === 1) name = "klucz";
-    else if (useDopełniacz(amount)) name = "kluczy";
-    return (color ? "\\c[4]" : "") + amount + (color ? "\\c[0] " : " ") + name;
+    let res = color ? "\\c[4]" : "";
+    switch (g.lang) {
+        case "en": return res + displayKeysEN(amount);
+        case "pl": return res + displayKeysPL(amount);
+        case "none":
+            console.warn("Displaying keys without a languege being set");
+            return res + amount;
+        default: throw new Error("Invalid language: " + g.lang);
+    }
 }
 
 function useDopełniacz(amount) {

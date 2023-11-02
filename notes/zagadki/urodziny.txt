@@ -1,3 +1,5 @@
+klucz[powodzenia]
+
 Kiyoshi Oka
 Louis Beel
 Una Merkel
@@ -13,8 +15,11 @@ Zohra Sehgal
 Everett Parker
 Norman Borlaug
 Irving Gordon
-Arsène Tchakarian (->])
+Arsène Tchakarian 
+James Rainwater (->])
 
+Lettrs used:
+ACDEFIKLNOPUWZ
 
 Sorted:
     Arsène Tchakarian    
@@ -22,11 +27,11 @@ Sorted:
     Dudley Senanayake    
     Everett Parker    
     Fred Lawrence Whipple    
-        
-    Ilya Prigogine    
-    Irving Gordon    
-    Kiyoshi Oka    
-    Louis Beel    
+           
+    Irving Gordon
+    James Rainwater
+    Kiyoshi Oka
+    Louis Beel
         
     Norman Borlaug    
     Olivier Messiaen    
@@ -39,7 +44,7 @@ Sorted:
     Zohra Sehgal    
 
 F -> [
-A -> ]
+J -> ]
 
 ----------------- English -----------------
 

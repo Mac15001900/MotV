@@ -36,6 +36,6 @@ var $plugins =
 {"name":"MAC_Extended_Loading_Screens","status":false,"description":"This plugin will make loading screens last longer, so that you can take a good look at them.","parameters":{"Time":"5"}},
 {"name":"ToastWindow","status":true,"description":"","parameters":{}},
 {"name":"LifeRoom","status":true,"description":"","parameters":{}},
-{"name":"MAC_RunNearbyEvent","status":true,"description":"Allows events to run other events in various ways.","parameters":{"With an invalid target":"Show a warning in console","Max chain length":"500","Events with trigger \"none\"":"Disabled"}},
+{"name":"MAC_RunNearbyEvent","status":true,"description":"Allows events to run other events in various ways.","parameters":{"With an invalid target":"Show a warning in console","Max chain length":"500","Events with trigger \"none\"":"Disabled","Lock ran events":"true"}},
 {"name":"PuzzleManager","status":true,"description":"Manages puzzle-related data.","parameters":{}}
 ];

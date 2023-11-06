@@ -1,3 +1,9 @@
+Pierwsza:
+>>> cezar("klucz[zaczynamy]", -1)
+'jktby[yżbywmżłw]'
+
+cezar("nexus[aroundyou]", -1, alphabetEnglish)
+'mdwtr[zqntmcxnt]'
 
 Tutorialowa zagadka (stara):
 

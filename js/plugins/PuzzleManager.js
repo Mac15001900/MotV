@@ -51,7 +51,7 @@ const $dataPuzzles = {
 
     },
     pl: [{
-        name: "tutorial2",
+        name: "tutorial-2",
         solution: "otoczenie",
     }, {
         name: "nokia",
@@ -61,7 +61,7 @@ const $dataPuzzles = {
             id: 1,
         },
     }, {
-        name: "game-of-life",
+        name: "game of life",
         solution: "całkiemjakżycie",
     }, {
         name: "kalkulacja",
@@ -158,7 +158,7 @@ const $dataPuzzles = {
         name: "nakładanie",
         solution: "wielkaunifikacjahaseł",
     }, {
-        name: "",
+        name: "tutorial-1",
         solution: "zaczynamy",
     }, {
         name: "interaktywne-zaszyftowywacz",

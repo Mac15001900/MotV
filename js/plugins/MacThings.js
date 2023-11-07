@@ -58,7 +58,7 @@ Scene_Map.prototype.onMapLoaded = function () {
         this.addWindow(g.persistentWindows[i]);
     };
     //Handle dynamic collisions 
-    if ($dataMap.meta.dynamicCollisions) {
+    if ($dataMap.meta && $dataMap.meta.dynamicCollisions) {
         $dataMap.data = CollisionData[g.lang][$gameMap.mapId()];
         if ($gamePlayer.isStuck()) { //This can potentially happen is the game was saved in one language and loaded in another
             console.log("Player is stuck, moving down")
@@ -174,26 +174,36 @@ initialiseGData = function () {
     res.keysCollected = {};
     for (let i = 0; i < SECRET_KEYS.length; i++) {
         res.keysCollected[SECRET_KEYS[i]] = false;
-        //$gv[11]++; //TODO: I'm fairly sure this line isn't needed, but not 100% sure
     }
     res.lastCollected = null;
-    res.lifeManager = new BoardManager(4, 9, 11, 9, 3); //Values depend on the layout of Map 6. Update them is resizeing that map.
+    res.lifeManager = new BoardManager(4, 9, 11, 9, 3); //Values depend on the layout of Map 6. Update them if resizing  that map.
     return res;
 }
 
 
 //=====================================Puzzle logic=====================================
 
-checkKey = function (input) {
+/**
+ * Checks whether a key entered by the player is correct. If the format is corrects, stores the key in $gv[11] for accessibility by events and further processing.
+ * @param {String} input Player input
+ * @returns 0 if the format is invalid, 1 if the key is incorrect, 2 if the key is correct but was already found before, 3 if the key is correct and new
+ */
+g.checkKey = function (input) {
     if (input === 0) return 0;
     console.assert(typeof input === 'string' || input instanceof String, input);
     if (MAC_DEBUG && input === 'k') {
         g.data.keysTotal += 1;
         return 3;
     }
+    let startString = "";
+    switch (g.lang) {
+        case "pl": startString = "klucz["; break;
+        case "en": startString = "nexus["; break;
+        default: throw new Error("Undefined language in g.checkKey");
+    }
 
     let lowered = input.toLowerCase().replaceAll(' ', '');
-    if (lowered.substr(0, 6) !== "klucz[" || lowered[lowered.length - 1] !== ']') return 0; //Invalid format
+    if (lowered.substr(0, 6) !== startString || lowered[lowered.length - 1] !== ']') return 0; //Invalid format
     let key = lowered.substr(6, lowered.length - 7);
     $gv[11] = key;
     if (!(key in g.data.keysCollected)) return 1; //There is no such key
@@ -201,6 +211,7 @@ checkKey = function (input) {
     if (!g.data.keysCollected[key]) {
         g.data.keysCollected[key] = true;
         g.data.keysCurrent += 1;
+        $gv[42]++;
         g.data.keysTotal += 1;
         g.data.lastCollected = key;
         return 3; //Correct, and not collected yet!
@@ -212,27 +223,70 @@ processNewKey = function (inp) {
     let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
     if (newStage > 0) {
         $gv[41] = newStage;
-        let message = "Nowy obszar odbklowowany."
+        let message = s.newAreaUnlocked;
         if (newStage > 2) AudioManager.playSe({ name: "Ice2", volume: 100, pitch: 90 });
         else AudioManager.playSe({ name: "Darkness1", volume: 100, pitch: 100 });
         g.showMessage(inp, message);
     }
     if ($gv[41] < ROOM_UNCLOKS.length) {
-        g.showMessage(inp, "Do odblokowania kolejnego obszaru zdobyć trzeba jeszcze " + displayKeys(ROOM_UNCLOKS[$gv[41]] - currentKeys) + ".");
+        g.showMessage(inp, s.remainingToNextArea(displayKeys(ROOM_UNCLOKS[$gv[41]] - currentKeys)));
     } else if (currentKeys === SECRET_KEYS.length) {
         AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
-        g.showMessage(inp, "Udało Ci się zdobyć wszystkie klucze dostępne w tej wersji gry.\n\\c[4]Gratulacje!");
+        g.showMessage(inp, s.tempVictory);
         //TODO: rolls credits?
     } else {
-        g.showMessage(inp, "Do zdobycia jeszcze " + displayKeys(SECRET_KEYS.length - currentKeys) + ".");
+        g.showMessage(inp, s.keysRemaining(displayKeys(SECRET_KEYS.length - currentKeys)));
     }
 }
+
+
 /*Key reactions: 
 If failed: reaction to specific puzzle if present, otherwise random failure reaction
 If succeeded: 
     If key amount reaction exists: reaction to specific puzzle if present, then key amount reaction.
     Otheriwse: reaction to specific puzzle if present, otherwise random success reaction.
 */
+
+correctKeyReactions = function (inp) {
+    let currentKeys = g.data.keysTotal;
+    let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
+    let keyName = g.data.lastCollected;
+    let randomMessages = [
+        "Kolejny klucz do kolekcji.",
+        "I kolejny!",
+        "Ładna się robi ta moja mała kolekcja kluczy.",
+        "Zostało o jeden mniej.",
+        `${currentKeys} to ładna liczba. Ale ${currentKeys + 1} będzie lepszą!`,
+        "Tak!",
+        "Ha, mam cię!",
+        "Ta zagadka nie była taka zła.",
+        "Zaczyna mi to iść coraz lepiej.",
+    ];
+
+
+
+}
+/**
+ * Checks if there exists a reaction specific to the current amount of keys or game stage, by
+ * looking at conditions in stage reaction events. Can only be called while on the main map.
+ * @param {Number} keysAmount Current amount of keys
+ * @param {Number} [gameStage] The current game stage, if it has just changed.
+ */
+function stageReactionExists(keysAmount, gameStage) {
+    let pages = [];
+    switch (g.lang) {
+        case "en": pages = $dataMap.events[216].pages; break;
+        case "pl": pages = $dataMap.events[215].pages; break;
+        default: throw new Error("Invalid language: " + g.lang);
+    }
+    for (let i = 0; i < pages.length; i++) {
+        if (pages[i].conditions.variableValue === keysAmount && pages[i].conditions.variableId === 41) return true;
+        if (pages[i].conditions.variableValue === gameStage && pages[i].conditions.variableId === 42) return true;
+    }
+    return false;
+}
+
+/*
 keyReactions = function (inp) {
     let currentKeys = g.data.keysTotal;
     let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
@@ -291,28 +345,13 @@ wrongKeyReactions = function (inp, key) {
         wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
         g.showMessage(inp, "To musi być już blisko!\n" + wrongPart + " tu chyba najmniej pasuje.", 0);
     }
-
-}
-//Checks if there exists a reaction specific to the current amount of keys, by looking at conditions
-//in stage reaction events. Can only be called on the main map.
-function stageReactionExists(keysAmount) {
-    let pages = [];
-    switch (g.lang) {
-        case "en": pages = $dataMap.events[216].pages; break;
-        case "pl": pages = $dataMap.events[215].pages; break;
-        default: throw new Error("Invalid language: " + g.lang);
-    }
-    for (let i = 0; i < pages.length; i++) {
-        if (pages[i].conditions.variableValue === keysAmount) return true;
-    }
-    return false;
-}
+}*/
 
 function displayKeys(amount, color = false) {
-    let res = color ? "\\c[4]" : "";
+    let res = (color ? "\\c[4]" : "") + amount + " " + (color ? "\\c[0]" : "");
     switch (g.lang) {
-        case "en": return res + displayKeysEN(amount);
-        case "pl": return res + displayKeysPL(amount);
+        case "en": return res + keyWordEN(amount);
+        case "pl": return res + keyWordPL(amount);
         case "none":
             console.warn("Displaying keys without a languege being set");
             return res + amount;
@@ -320,21 +359,15 @@ function displayKeys(amount, color = false) {
     }
 }
 
-function useDopełniacz(amount) {
-    if (amount % 100 - amount % 10 === 10) return true;
-    if ([2, 3, 4].includes(amount % 10)) return false;
-    return true;
+function keyWordEN(amount) {
+    return "key" + (amount === 1 ? "" : "s");
 }
 
-function displayKeysEN(amount) {
-    return amount + " key" + (amount === 1 ? "" : "s");
-}
-
-function displayKeysPL(amount) {
+function keyWordPL(amount) {
     let name = "klucze";
     if (amount === 1) name = "klucz";
     else if (useDopełniacz(amount)) name = "kluczy";
-    return amount + " " + name;
+    return name;
 }
 
 function useDopełniacz(amount) {

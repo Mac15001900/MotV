@@ -183,5 +183,14 @@ const $dataPuzzles = {
                 default: return null;
             }
         }
-    }]
+    }],
+    get: function (puzzleName) {
+        switch (g.lang) {
+            case "pl":
+                return $dataPuzzles.pl.find(p => p.name === puzzleName);
+            case "en":
+                return $dataPuzzles.en.find(p => p.name === puzzleName);
+
+        }
+    }
 }

@@ -51,7 +51,7 @@ const $dataPuzzles = {
 
     },
     pl: [{
-        name: "tutorial-2",
+        name: "tutorial_2",
         solution: "otoczenie",
     }, {
         name: "nokia",
@@ -61,7 +61,7 @@ const $dataPuzzles = {
             id: 1,
         },
     }, {
-        name: "game of life",
+        name: "game_of_life",
         solution: "całkiemjakżycie",
     }, {
         name: "kalkulacja",
@@ -131,10 +131,10 @@ const $dataPuzzles = {
             if (guess === "miżdmalina") return "To musi być jakoś blisko. Może trzeba po prostu potraktować\ntamtą spację jak zwykły znak?"
         }
     }, {
-        name: "grobowiec-1",
+        name: "grobowiec_1",
         solution: "delatorcukrzenia",
     }, {
-        name: "grobowiec-2",
+        name: "grobowiec_2",
         solution: "bojadrukfigahartmenuopiswiza",
     }, {
         name: "rotowanie",
@@ -143,7 +143,7 @@ const $dataPuzzles = {
         name: "liczby pierwsze",
         solution: "eulerowsko",
     }, {
-        name: "blok liczb",
+        name: "blok_liczb",
         solution: "945",
     }, {
         name: "parzystość",
@@ -158,13 +158,13 @@ const $dataPuzzles = {
         name: "nakładanie",
         solution: "wielkaunifikacjahaseł",
     }, {
-        name: "tutorial-1",
+        name: "tutorial_1",
         solution: "zaczynamy",
     }, {
-        name: "interaktywne-zaszyftowywacz",
+        name: "interaktywne_zaszyftowywacz",
         solution: "zacezarowane",
     }, {
-        name: "interaktywne-obliczacz",
+        name: "interaktywne_obliczacz",
         solution: "wykładniczowością",
     }, {
         name: "podłoga",
@@ -192,5 +192,14 @@ const $dataPuzzles = {
                 return $dataPuzzles.en.find(p => p.name === puzzleName);
 
         }
-    }
+    },
+    getBySolution: function (solution) {
+        switch (g.lang) {
+            case "pl":
+                return $dataPuzzles.pl.find(p => p.solution === solution);
+            case "en":
+                return $dataPuzzles.en.find(p => p.solution === solution);
+
+        }
+    },
 }

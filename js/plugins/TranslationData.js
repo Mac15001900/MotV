@@ -139,6 +139,33 @@ wordBank = {
         tempVictory: "You've found every Nexus fragment in this version of the game.\n\\c[4]Congratulations!",
         remainingToNextArea: (keys) => `${keys.capitalise()} still required to unlock the next area.`,
         keysRemaining: (keys) => `${keys.capitalise()} ${keys === 1 ? "is" : "are"} still remaining.`,
+        randomSuccessMessages: (currentKeys) => [
+            "And another fragment done.",
+            "And another one!",
+            { string: "This will make a fine addition to my collection.", id: 1 },
+            "One less remanining.",
+            `${currentKeys} is a nice number. But ${currentKeys + 1} will be better!`,
+            "Yes!",
+            "Ha, I've got it!",
+            "That one wasn't so bad.",
+            "I'm getting better and better at this.",
+            $gv[41] < ROOM_UNCLOKS.length ? "I wonder how many of these are left.\\.\nAt least it's one less now!" : `Just ${$dataPuzzles.pl.length - currentKeys} remaining now, that shouldn't be too hard.`,
+        ],
+        randomFailureMessages: (currentKeys, lastGuess, guessAmount) => [
+            "I guess that wasn't it.",
+            { string: "Next time I'll make it!", id: 1 },
+            "Alright, I probably should have thought about that a bit more.",
+            "Well, back to the drawing board.",
+            [{ string: "Ah, and I thought I had it.", id: 0 }, { string: "I \\fiwill\\fi figure this out eventually, one way or another.", id: 4 }],
+            { string: "Let's think about this more carefully. There must be some\nlogical way to do it...", id: 4, balloon: BALLOON_ID.SILENCE },
+            lastGuess.length < 40 ? `So it isn't ${lastGuess}?\nThen what is it?` : null,
+            guessAmount >= 2 && g.data.wrongGuesses.at(-2).length < 55 ? { string: `Oh well, at least this one made more sense than\n ${g.data.wrongGuesses.at(-2)}.`, id: 1 } : null,
+            guessAmount > 5 ? { string: "Well, at lest it doesn't seem like the amount of guesses is\nin any way limited.", id: 1 } : null,
+            guessAmount > 15 ? { string: "I \\fireally\\fi hope all those wrong guesses won't have any\nconsequences later.", id: 5 } : null,
+
+        ],
+        secondWrong: [{ string: "I guess I should have expected that inputting the same thing\nagain isn't going to end up any different.", id: 0 }, { string: "But hey, it's always important to validate your assumuptions!", id: 1 }],
+        anotherWrong: (count) => { return { string: `Attempt number ${count}: it's still not correct.`, id: 1 } },
     },
     pl: {
         terms: { "basic": ["Level", "Lv", "HP", "HP", "MP", "MP", "TP", "TP", "EXP", "EXP"], "commands": ["Fight", "Escape", "Attack", "Guard", "Item", "Skill", "Equip", "Status", "Formation", "Zapisz", "Wyjdź", "Opcje", "Weapon", "Armor", "Key Item", "Equip", "Optimize", "Clear", "Nowa gra", "Kontynuacja", null, "Do menu głównego", "Anuluj", null, "Buy", "Sell"], "params": ["Max HP", "Max MP", "Attack", "Defense", "M.Attack", "M.Defense", "Agility", "Luck", "Hit", "Evasion"], "messages": { "actionFailure": "There was no effect on %1!", "actorDamage": "%1 took %2 damage!", "actorDrain": "%1 was drained of %2 %3!", "actorGain": "%1 gained %2 %3!", "actorLoss": "%1 lost %2 %3!", "actorNoDamage": "%1 took no damage!", "actorNoHit": "Miss! %1 took no damage!", "actorRecovery": "%1 recovered %2 %3!", "alwaysDash": "Biegnij domyślnie", "bgmVolume": "Głośność muzyki", "bgsVolume": "Głośność dźwięków tła", "buffAdd": "%1's %2 went up!", "buffRemove": "%1's %2 returned to normal!", "commandRemember": "Don't mind this", "counterAttack": "%1 counterattacked!", "criticalToActor": "A painful blow!!", "criticalToEnemy": "An excellent hit!!", "debuffAdd": "%1's %2 went down!", "defeat": "%1 was defeated.", "emerge": "%1 emerged!", "enemyDamage": "%1 took %2 damage!", "enemyDrain": "%1 was drained of %2 %3!", "enemyGain": "%1 gained %2 %3!", "enemyLoss": "%1 lost %2 %3!", "enemyNoDamage": "%1 took no damage!", "enemyNoHit": "Miss! %1 took no damage!", "enemyRecovery": "%1 recovered %2 %3!", "escapeFailure": "However, it was unable to escape!", "escapeStart": "%1 has started to escape!", "evasion": "%1 evaded the attack!", "expNext": "To Next %1", "expTotal": "Current %1", "file": "Plik", "levelUp": "%1 is now %2 %3!", "loadMessage": "Który plik wczytać?", "magicEvasion": "%1 nullified the magic!", "magicReflection": "%1 reflected the magic!", "meVolume": "Głośność efektów muzycznych", "obtainExp": "%1 %2 received!", "obtainGold": "znaleziono %1\\G!", "obtainItem": "znaleziono %1!", "obtainSkill": "%1 learned!", "partyName": "%1's Party", "possession": "Possession", "preemptive": "%1 got the upper hand!", "saveMessage": "Do którego pliku zapisać?", "seVolume": "Głośność efektów", "substitute": "%1 protected %2!", "surprise": "%1 was surprised!", "useItem": "%1 uses %2!", "victory": "%1 was victorious!" } },
@@ -147,7 +174,7 @@ wordBank = {
             alwaysDash: "Z tą opcją będziesz biec domyślnie, a iść normalnie tylko przy wciśniętym klawiszu biegu.",
             fullscreen: "Przełącza pomiędzy trybem pełnoekranowym a oknem.",
             keyConfig: "Pozawala na zmianę ustawień sterowania.",
-            lang: "Zmienia język gry.\nTą opcję można zmienić tylko w menu głównym.",
+            lang: "Zmienia język gry.\nTę opcję można zmienić tylko w menu głównym.",
             cBlind: "Zmienia nieco niektóre zagadki, tak, aby ich rozwiązanie nie wymagało zdolności rozróżniania kolorów.",
             masterVolume: "Ogólny poziom głośności dla całej gry.",
             bgmVolume: "Poziom głośności muzyki.",
@@ -268,6 +295,19 @@ wordBank = {
             "Ta zagadka nie była taka zła.",
             "Zaczyna mi to iść coraz lepiej.",
             $gv[41] < ROOM_UNCLOKS.length ? "Ciekawe, ile ich tu jeszcze jest.\\.\nPrzynajmniej teraz na pewno o jeden mniej!" : `Jakoś powinno mi się udać zdobyć te pozostałe ${$dataPuzzles.pl.length - currentKeys}.`,
-        ]
+        ],
+        randomFailureMessages: (currentKeys, lastGuess, guessAmount) => [
+            "Czyli raczej nie o to chodziło.",
+            { string: "Następny razem się uda!", id: 1 },
+            "No może powinnam była bardziej się nad tym zastanowić.",
+            { string: "Pomyślmy, to musi mieć jakieś logiczne rozwiązanie...", id: 4, balloon: BALLOON_ID.SILENCE },
+            lastGuess.length < 30 ? `Czyli to jednak nie ${lastGuess}.\nW takim razie co?` : null,
+            guessAmount >= 2 && g.data.wrongGuesses.at(-2).length < 55 ? { string: `Przynajmniej miało to trochę więcej sensu niż\n ${g.data.wrongGuesses.at(-2)}.`, id: 1 } : null,
+            guessAmount > 5 ? "No, cóż, przynajmniej nie wygląda na to, żeby ilość pojejść\nbyła jakkolwiek ogarniczona." : null,
+            guessAmount > 15 ? { string: "Naprawdę mam nadzieję, że te wszystkie błędne klucze nie\nbędą w przyszłości miały żadnych negatywnych konwekwecji...", id: 5 } : null,
+
+        ],
+        secondWrong: [{ string: "Mogłam się w sumie spodziewać, że wpisanie tego drugi raz\nnie przyniesie innego rezultatu.", id: 0 }, { string: "No ale zawsze warto testować takie założenia.", id: 1 }],
+        anotherWrong: (count) => { return { string: `Podejście ${count}: dalej nie działa.`, id: 0 } },
     }
 }

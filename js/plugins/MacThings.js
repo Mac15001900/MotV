@@ -15,6 +15,10 @@ String.prototype.capitalise = function () {
     return this[0].toUpperCase() + this.substring(1);
 }
 
+Array.prototype.pickRandom = function () {
+    return this[Math.floor(Math.random() * this.length)];
+}
+
 //===================================== Initialisation =====================================
 
 //Make sure we have a modern enough version of JavaScript (tbh I'm not sure if this test will even run on an older version, but it won't hurt)
@@ -170,13 +174,16 @@ macThingsInit = function () {
 }
 
 initialiseGData = function () {
-    let res = { keysCurrent: 0, keysTotal: 0, test: "TOAST!", gameVersion: GAME_VERSION, seenEvents: [] };
-    res.keysCollected = {};
-    for (let i = 0; i < SECRET_KEYS.length; i++) {
-        res.keysCollected[SECRET_KEYS[i]] = false;
-    }
-    res.lastCollected = null;
-    res.lifeManager = new BoardManager(4, 9, 11, 9, 3); //Values depend on the layout of Map 6. Update them if resizing  that map.
+    let res = {
+        keysCurrent: 0, //Currently owned keys
+        keysTotal: 0, //Total amount of collected keys
+        gameVersion: GAME_VERSION, //Version of the game the savefile was made in
+        seenEvents: [],
+        wrongGuesses: [], //List of wrong guesses for puzzle solutions
+        solved: {}, //Solved puzzles
+        lastSolved: null, //The name of the last solved puzzle
+        lifeManager: new BoardManager(4, 9, 11, 9, 3), //Values depend on the layout of Map 6. Update them if resizing  that map.
+    };
     return res;
 }
 
@@ -184,7 +191,7 @@ initialiseGData = function () {
 //=====================================Puzzle logic=====================================
 
 /**
- * Checks whether a key entered by the player is correct. If the format is corrects, stores the key in $gv[11] for accessibility by events and further processing.
+ * Checks whether a key entered by the player is correct, and stores the resulting guess in g.data.
  * @param {String} input Player input
  * @returns 0 if the format is invalid, 1 if the key is incorrect, 2 if the key is correct but was already found before, 3 if the key is correct and new
  */
@@ -205,85 +212,128 @@ g.checkKey = function (input) {
     let lowered = input.toLowerCase().replaceAll(' ', '');
     if (lowered.substr(0, 6) !== startString || lowered[lowered.length - 1] !== ']') return 0; //Invalid format
     let key = lowered.substr(6, lowered.length - 7);
+    g.data.lastGuess = key;
     $gv[11] = key;
-    if (!(key in g.data.keysCollected)) return 1; //There is no such key
-    if (g.data.keysCollected[key]) return 2; //Correct, but already collected
-    if (!g.data.keysCollected[key]) {
-        g.data.keysCollected[key] = true;
+    let puzzleName = $dataPuzzles.getBySolution(key)?.name;
+    if (!puzzleName) {
+        g.data.wrongGuesses.push(key);
+        return 1; //There is no such key
+    }
+    if (g.data.solved[puzzleName]) return 2; //Correct, but already collected
+    if (!g.data.solved[puzzleName]) {
+        g.data.solved[puzzleName] = true;
         g.data.keysCurrent += 1;
         $gv[42]++;
         g.data.keysTotal += 1;
-        g.data.lastCollected = key;
+        g.data.lastSolved = puzzleName;
         return 3; //Correct, and not collected yet!
     }
 }
 
-processNewKey = function (inp) {
+/**
+ * Handles progression logic after gaining a new key, mostly related to unlocking new areas and reactions by the Puzzle Nexus
+ * @param {Game_Interpreter} inp Current game interpreter
+ */
+g.processNewKey = function (inp) {
     let currentKeys = g.data.keysTotal;
     let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
+    let message = ""
     if (newStage > 0) {
         $gv[41] = newStage;
-        let message = s.newAreaUnlocked;
+        message += s.newAreaUnlocked + '\n';
         if (newStage > 2) AudioManager.playSe({ name: "Ice2", volume: 100, pitch: 90 });
         else AudioManager.playSe({ name: "Darkness1", volume: 100, pitch: 100 });
-        g.showMessage(inp, message);
     }
     if ($gv[41] < ROOM_UNCLOKS.length) {
-        g.showMessage(inp, s.remainingToNextArea(displayKeys(ROOM_UNCLOKS[$gv[41]] - currentKeys)));
+        message += s.remainingToNextArea(displayKeys(ROOM_UNCLOKS[$gv[41]] - currentKeys));
     } else if (currentKeys === SECRET_KEYS.length) {
         AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
-        g.showMessage(inp, s.tempVictory);
+        message += s.tempVictory;
         //TODO: rolls credits?
     } else {
-        g.showMessage(inp, s.keysRemaining(displayKeys(SECRET_KEYS.length - currentKeys)));
+        message += s.keysRemaining(displayKeys(SECRET_KEYS.length - currentKeys));
     }
+    g.showMessages(inp, message);
 }
 
 
 /*Key reactions: 
 If failed: reaction to specific puzzle if present, otherwise random failure reaction
 If succeeded: 
-    If key amount reaction exists: reaction to specific puzzle if present, then key amount reaction.
+    If progression reaction exists: reaction to specific puzzle if present, then progression reaction.
     Otheriwse: reaction to specific puzzle if present, otherwise random success reaction.
 */
 
-correctKeyReactions = function (inp) {
+/**
+ * Handles reactions by the protagonist to gaining a new key. This ranges from simple quips in some cases to triggerring 
+ * progression-related cutscenes in others. More specifically:
+ * If progress reaction exists: reaction to specific puzzle if present, then progress reaction.
+ * Otheriwse: reaction to specific puzzle if present, if not then random success reaction.
+ * @param {Game_Interpreter} inp Current game interpreter
+ */
+g.correctKeyReactions = function (inp) {
     let currentKeys = g.data.keysTotal;
     let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
-    let keyName = g.data.lastCollected;
-    let randomMessages = [
-        "Kolejny klucz do kolekcji.",
-        "I kolejny!",
-        "Ładna się robi ta moja mała kolekcja kluczy.",
-        "Zostało o jeden mniej.",
-        `${currentKeys} to ładna liczba. Ale ${currentKeys + 1} będzie lepszą!`,
-        "Tak!",
-        "Ha, mam cię!",
-        "Ta zagadka nie była taka zła.",
-        "Zaczyna mi to iść coraz lepiej.",
-    ];
+    let puzzle = $dataPuzzles.get(g.data.lastSolved);
+    $gv[21] = !!puzzle.success; //Set the switch that indicates whether there was a special reaction to this puzzle
 
-
-
+    if (g.progressReactionExists(currentKeys, newStage > 0 ? newStage : null)) {
+        //We need to both show a message, and after it's done run an event. So we'll make them event commands
+        let commandList = [];
+        if (puzzle.success) {
+            $gv[12] = puzzle.success;
+            commandList.push({ "code": 355, "indent": 0, "parameters": ["g.showMessages(this, $gv[12], 0);"] });
+        }
+        commandList.push({ "code": 355, "indent": 0, "parameters": ["MAC_RunNearbyEvent.run(g.events.PROGRESS_CUTSCENES(), this);"] });
+        inp.setupChild(commandList, 0);
+    } else {
+        if (puzzle.success) g.showMessages(inp, puzzle.success, 0);
+        else g.showMessages(inp, s.randomSuccessMessages(currentKeys).pickRandom(), Math.random() < 0.66 ? 0 : 1);
+    }
 }
+
 /**
  * Checks if there exists a reaction specific to the current amount of keys or game stage, by
  * looking at conditions in stage reaction events. Can only be called while on the main map.
  * @param {Number} keysAmount Current amount of keys
  * @param {Number} [gameStage] The current game stage, if it has just changed.
  */
-function stageReactionExists(keysAmount, gameStage) {
-    let pages = [];
-    switch (g.lang) {
-        case "en": pages = $dataMap.events[216].pages; break;
-        case "pl": pages = $dataMap.events[215].pages; break;
-        default: throw new Error("Invalid language: " + g.lang);
-    }
+g.progressReactionExists = function (keysAmount, gameStage) {
+    let pages = $dataMap.events[g.events.PROGRESS_CUTSCENES()].pages;
     for (let i = 0; i < pages.length; i++) {
         if (pages[i].conditions.variableValue === keysAmount && pages[i].conditions.variableId === 41) return true;
         if (pages[i].conditions.variableValue === gameStage && pages[i].conditions.variableId === 42) return true;
     }
     return false;
+}
+
+/**
+ * Handles reactions by the protagonist to entering an incorrect key (not an already existing key or incorrectly formatted one).
+ * If a failure reaction exists for the guess, it's shown. Otherwise, a random failure reaction is shown.
+ * @param {Game_Interpreter} inp Current game interpreter
+ * @returns 
+ */
+g.wrongKeyReactions = function (inp) {
+    let guess = g.data.lastGuess
+    for (puzzle of $dataPuzzles[g.lang]) {
+        let failureMessage = puzzle.failure?.(guess);
+        if (failureMessage) {
+            g.showMessages(inp, failureMessage, 0);
+            return;
+        }
+    }
+    let previousAttempts = g.data.wrongGuesses.filter(x => x === guess).length - 1;
+    if (previousAttempts === 0) g.showMessages(inp, s.randomFailureMessages($gv[42], guess, g.data.wrongGuesses.length).filter(m => m).pickRandom(), 0);
+    else if (previousAttempts === 1) g.showMessages(inp, s.secondWrong);
+    else g.showMessages(inp, s.anotherWrong(previousAttempts + 1));
+
+}
+
+/**
+ * Stores the ids of various special events, some of which can be language-dependent.
+ */
+g.events = {
+    PROGRESS_CUTSCENES: () => { return { pl: 215, en: 216 }[g.lang] },
 }
 
 /*
@@ -360,7 +410,7 @@ function displayKeys(amount, color = false) {
 }
 
 function keyWordEN(amount) {
-    return "key" + (amount === 1 ? "" : "s");
+    return "fragment" + (amount === 1 ? "" : "s");
 }
 
 function keyWordPL(amount) {
@@ -612,6 +662,26 @@ g.getInterpreter = function () {
     return res;
 }
 
+//Returns some useful information about the state of the interpreter
+g.interpreterInfo = function () {
+    let inp = g.getInterpreter();
+    return {
+        active: inp.isRunning(),
+        eventId: inp.eventId(),
+        index: inp.previousIndex,
+        ...inp.command,
+    }
+}
+
+
+void ((alias) => {
+    Game_Interpreter.prototype.executeCommand = function () {
+        this.command = this.currentCommand();
+        this.previousIndex = this._index;
+        return alias.call(this);
+    }
+})(Game_Interpreter.prototype.executeCommand);
+
 //Gets the name of the current top-level scene in the stack
 g.topLevelScene = function () {
     if (SceneManager._stack.length > 0) return SceneManager._stack[0].toString().split(' ')[1].split('(')[0]
@@ -642,7 +712,10 @@ g.niceShowPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
     WindowManager.show(1,)
 }
 
-//Shows a single message, with a face if one is specified. Will not queue up multiple messages
+/**
+ * Shows a single message, with a face if one is specified. Will not queue up multiple messages
+ * @deprecated Use g.showMessages instead
+ */
 g.showMessage = function (inp, message, face, faceFile = 'mc') {
     console.assert(typeof message === 'string', "showMessage: message must be a string");
     if (face !== undefined) $gameMessage.setFaceImage(faceFile, face);
@@ -655,13 +728,14 @@ g.showMessage = function (inp, message, face, faceFile = 'mc') {
 /**
  * Shows a series of messages in sequence. Each message consists of a string, and optionally a face image or an attached balloon.
  * @param {Game_Interpreter} inp Interpreter to show the messages with
- * @param {Object[]|Object|String} messages An array of messages to be displayed. Alternatively a single message or just a string.
+ * @param {Object[]|Object|String} messages An array of message objects to be displayed. Alternatively a single message object or just a string.
  * @param {string} messages[].string The text to display
  * @param {number} [messages[].id] The ID of face within the face file (0-7). Ommit in order to not use a face image.
  * @param {string} [messages[].face] The face file to use ("mc" when ommited)
  * @param {number} [messages[].balloon] The balloon id to display before the message, (shown above the player) (1-15)
+ * @param {number} [defaultId] The ID of the face within the face file (0-7), to be used for messages which do not specify a face id.
  */
-g.showMessages = function (inp, messages) {
+g.showMessages = function (inp, messages, defaultId) {
     if (typeof messages === "string") messages = { string: messages };
     if (!Array.isArray(messages)) messages = [messages];
     console.assert(Array.isArray(messages), "showMessages: messages must be an array");
@@ -669,9 +743,11 @@ g.showMessages = function (inp, messages) {
     console.assert(messages.every(m => m.hasOwnProperty('string')), "showMessages: message missing a string");
     let commandList = [];
     for (let message of messages) {
-        let face = message.face ?? (message.id == null ? "" : "mc"); //"mc" is the default face, unless no id is present, which implies not using a face at all
+        let faceId = message.id === undefined ? defaultId : message.id;
+        let face = message.face ?? (faceId == null ? "" : "mc"); //"mc" is the default face, unless no id is present, which implies not using a face at all
+
         if (message.balloon) commandList.push({ code: 213, indent: 0, parameters: [-1, message.balloon, false] });
-        commandList.push({ code: 101, indent: 0, parameters: [face, message.id ?? 0, 0, 2] });
+        commandList.push({ code: 101, indent: 0, parameters: [face, faceId ?? 0, 0, 2] });
         for (let line of message.string.split('\n')) {
             commandList.push({ code: 401, indent: 0, parameters: [line] });
         }
@@ -1106,6 +1182,7 @@ Game_Character.prototype.goto = function (x, y) {
 Game_Character.prototype.isStuck = function () {
     return [2, 4, 6, 8].every(dir => !this.isMapPassable(this.x, this.y, dir));
 }
+
 
 
 //===================================== Engine fixes =====================================

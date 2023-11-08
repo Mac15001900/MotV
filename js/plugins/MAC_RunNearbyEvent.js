@@ -1,6 +1,6 @@
 /*:
  * @author Mac15001900
- * @plugindesc Allows events to run other events in various ways.
+ * @plugindesc v1.1 Allows events to run other events in various ways.
  * 
  * @param With an invalid target
  * @desc What should the plugin do when trying to run a non-existent event or page?

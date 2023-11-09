@@ -50,140 +50,164 @@ const $dataPuzzles = {
     en: {
 
     },
-    pl: [{
-        name: "tutorial_2",
-        solution: "otoczenie",
-    }, {
-        name: "nokia",
-        solution: "nokianazawsze",
-        success: {
-            string: "Zdecydowanie nie spodziewałam się, że ta umiejętność jeszcze\nkiedykolwiek mi się w życiu przyda.",
-            id: 1,
+    pl: [
+        //Tutorial puzzles
+        {
+            name: "tutorial_1",
+            solution: "zaczynamy",
+        }, {
+            name: "tutorial_2",
+            solution: "otoczenie",
+        }, {
+            name: "urodziny",
+            solution: "powodzenia",
+
         },
-    }, {
-        name: "game_of_life",
-        solution: "całkiemjakżycie",
-    }, {
-        name: "kalkulacja",
-        solution: "kalkulacja",
-    }, {
-        name: "klawiaturowa",
-        solution: "charleskrum",
-    }, {
-        name: "komunikacja",
-        solution: "rakietakiwitęcza",
-        success: {
-            string: 'Z cyklu \\fi"Rzeczy, Których Zdecydowanie Się Nie Spodziewałam \nW Tym Miejscu"\\fi: emoji.',
-            id: 1,
-        },
-    }, {
-        name: "mors",
-        solution: "iksytonawiasy",
-        lastRemaining: {
-            string: "No dobra, tylko gdzie niby jest ten jeden pozostały klucz?\nChyba musi być ukryty inaczej niż pozostałe.",
-            id: 0,
-            balloon: BALLOON_ID.QUESTION,
-        }
-    }, {
-        name: "alpaka",
-        solution: "nowesrebro",
-    }, {
-        name: "dalton",
-        solution: "deuteranopia",
-    }, {
-        name: "sekwencja",
-        solution: "akumulatron",
-    }, {
-        name: "pierwiastki",
-        solution: "pierwiastekcotam",
-    }, {
-        name: "urodziny",
-        solution: "powodzenia",
-    }, {
-        name: "brakujące",
-        solution: "semikonteneryzacja",
-    }, {
-        name: "decrypto",
-        solution: "czekoladapizzawiewiórkasparta",
-        success: {
-            string: "Tak patrząc po tamtej instruckji, to chyba w pewnym sensie udało\nmi się jednak zagrać w Decrypto.",
-            id: 1,
-        },
-        failure: function (guess) {
-            let keyWords = ["czekolada", "pizza", "wiewiórka", "sparta"];
-            let correct = 0;
-            for (let i = 0; i < keyWords.length; i++) {
-                if (guess.contains(keyWords[i])) correct++;
+
+        //Living room
+        {
+            name: "brakujące",
+            solution: "semikonteneryzacja",
+        }, {
+            name: "decrypto",
+            solution: "czekoladapizzawiewiórkasparta",
+            success: {
+                string: "Tak patrząc po tamtej instruckji, to chyba w pewnym sensie udało\nmi się jednak zagrać w Decrypto.",
+                id: 1,
+            },
+            failure: function (guess) {
+                let keyWords = ["czekolada", "pizza", "wiewiórka", "sparta"];
+                let correct = 0;
+                for (let i = 0; i < keyWords.length; i++) {
+                    if (guess.contains(keyWords[i])) correct++;
+                }
+                if (correct === 2) return ({ string: "Niektóre z tych słów zdecydowanie mają sens,\nno ale chyba jeszcze nie wszystkie.", id: 0 });
+                else if (correct === 3) {
+                    let wrongPart = key;
+                    for (let i = 0; i < keyWords.length; i++) wrongPart = wrongPart.replace(keyWords[i], '');
+                    wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
+                    return ({ string: "To musi być już blisko!\n" + wrongPart + " tu chyba najmniej pasuje.", id: 0 })
+                } else return null;
             }
-            if (correct === 2) return ({ string: "Niektóre z tych słów zdecydowanie mają sens,\nno ale chyba jeszcze nie wszystkie.", id: 0 });
-            else if (correct === 3) {
-                let wrongPart = key;
-                for (let i = 0; i < keyWords.length; i++) wrongPart = wrongPart.replace(keyWords[i], '');
-                wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
-                return ({ string: "To musi być już blisko!\n" + wrongPart + " tu chyba najmniej pasuje.", id: 0 })
-            } else return null;
-        }
-    }, {
-        name: "kolory",
-        solution: "miódmalina",
-        success: { string: "Trochę robię się teraz głodna przez tę zagadkę.", id: 1 },
-        failure: function (guess) {
-            if (guess === "miżdmalina") return "To musi być jakoś blisko. Może trzeba po prostu potraktować\ntamtą spację jak zwykły znak?"
-        }
-    }, {
-        name: "grobowiec_1",
-        solution: "delatorcukrzenia",
-    }, {
-        name: "grobowiec_2",
-        solution: "bojadrukfigahartmenuopiswiza",
-    }, {
-        name: "rotowanie",
-        solution: "obracańko",
-    }, {
-        name: "liczby pierwsze",
-        solution: "eulerowsko",
-    }, {
-        name: "blok_liczb",
-        solution: "945",
-    }, {
-        name: "parzystość",
-        solution: "terazmyśliszparzystością",
-    }, {
-        name: "sudoku",
-        solution: "zaznaczacz",
-    }, {
-        name: "gradient",
-        solution: "banachowo",
-    }, {
-        name: "nakładanie",
-        solution: "wielkaunifikacjahaseł",
-    }, {
-        name: "tutorial_1",
-        solution: "zaczynamy",
-    }, {
-        name: "interaktywne_zaszyftowywacz",
-        solution: "zacezarowane",
-    }, {
-        name: "interaktywne_obliczacz",
-        solution: "wykładniczowością",
-    }, {
-        name: "podłoga",
-        solution: "krynszpany",
-    }, {
-        name: "framuga",
-        solution: "odcyrklowywanie",
-        failure: function (guess) {
-            switch (guess) {
-                case "jgbuśmłnzruąręf":
-                    return [{ string: "Nie!? Ale przecież tu wszystko tak idealnie wskazuje na pi.", id: 3, balloon: BALLOON_ID.COBWEB },
-                    { string: "Chociaż właściwie to póki co rozwiązania zawsze były raczej\njakimiś słowami. Może trzeba to zrobić jakoś odrobinę inczej?", id: 0 }];
-                case "łhąźoóltuźńbklż":
-                case "ódęśukrncpyśści":
-                    return "Szkoda, tak ładnie ta zasada działała dla pierwszych pięciu,\nno ale chyba nie działa dalej. Czyli chodzi pewnie a coś innego.\nMoże fakt, że ten tekst jest okrągły ma jakieś znaczenie?"
-                default: return null;
+        }, {
+            name: "kolory",
+            solution: "miódmalina",
+            success: { string: "Trochę robię się teraz głodna przez tę zagadkę.", id: 1 },
+            failure: function (guess) {
+                if (guess === "miżdmalina") return "To musi być jakoś blisko. Może trzeba po prostu potraktować\ntamtą spację jak zwykły znak?"
             }
-        }
-    }],
+        }, {
+            name: "rotowanie",
+            solution: "obracańko",
+        },
+
+        //Laboratory
+        {
+            name: "alpaka",
+            solution: "nowesrebro",
+        }, {
+            name: "dalton",
+            solution: "deuteranopia",
+        }, {
+            name: "sekwencja",
+            solution: "akumulatron",
+        }, {
+            name: "pierwiastki",
+            solution: "pierwiastekcotam",
+        },
+
+        //Bedroom
+        {
+            name: "liczby pierwsze",
+            solution: "eulerowsko",
+        }, {
+            name: "parzystość",
+            solution: "terazmyśliszparzystością",
+        }, {
+            name: "sudoku",
+            solution: "zaznaczacz",
+        }, {
+            name: "framuga",
+            solution: "odcyrklowywanie",
+            failure: function (guess) {
+                switch (guess) {
+                    case "jgbuśmłnzruąręf":
+                        return [{ string: "Nie!? Ale przecież tu wszystko tak idealnie wskazuje na pi.", id: 3, balloon: BALLOON_ID.COBWEB },
+                        { string: "Chociaż właściwie to póki co rozwiązania zawsze były raczej\njakimiś słowami. Może trzeba to zrobić jakoś odrobinę inczej?", id: 0 }];
+                    case "łhąźoóltuźńbklż":
+                    case "ódęśukrncpyśści":
+                        return "Szkoda, tak ładnie ta zasada działała dla pierwszych pięciu,\nno ale chyba nie działa dalej. Czyli chodzi pewnie a coś innego.\nMoże fakt, że ten tekst jest okrągły ma jakieś znaczenie?"
+                    default: return null;
+                }
+            }
+        },
+
+        //Computer room
+        {
+            name: "interaktywne_zaszyftowywacz",
+            solution: "zacezarowane",
+        }, {
+            name: "interaktywne_obliczacz",
+            solution: "wykładniczowością",
+        }, {
+            name: "kalkulacja",
+            solution: "kalkulacja",
+        }, {
+            name: "klawiaturowa",
+            solution: "charleskrum",
+        }, {
+            name: "kalibracja",
+            solution: "międzyprzestrzeń",
+        }, {
+            name: "komunikacja",
+            solution: "rakietakiwitęcza",
+            success: {
+                string: 'Z cyklu \\fi"Rzeczy, Których Zdecydowanie Się Nie Spodziewałam \nW Tym Miejscu"\\fi: emoji.',
+                id: 1,
+            },
+        },
+
+        //Landing pad
+        {
+            name: "blok_liczb",
+            solution: "945",
+        }, {
+            name: "gradient",
+            solution: "banachowo",
+        }, {
+            name: "nakładanie",
+            solution: "wielkaunifikacjahaseł",
+        }, {
+            name: "nokia",
+            solution: "nokianazawsze",
+            success: {
+                string: "Zdecydowanie nie spodziewałam się, że ta umiejętność jeszcze\nkiedykolwiek mi się w życiu przyda.",
+                id: 1,
+            },
+        },
+
+        //Other
+        {
+            name: "game_of_life",
+            solution: "całkiemjakżycie",
+        }, {
+            name: "podłoga",
+            solution: "krynszpany",
+        }, {
+            name: "grobowiec_1",
+            solution: "delatorcukrzenia",
+        }, {
+            name: "grobowiec_2",
+            solution: "bojadrukfigahartmenuopiswiza",
+        }, {
+            name: "mors",
+            solution: "iksytonawiasy",
+            lastRemaining: {
+                string: "No dobra, tylko gdzie niby jest ten jeden pozostały klucz?\nChyba musi być ukryty inaczej niż pozostałe.",
+                id: 0,
+                balloon: BALLOON_ID.QUESTION,
+            }
+        }],
     get: function (puzzleName) {
         switch (g.lang) {
             case "pl":

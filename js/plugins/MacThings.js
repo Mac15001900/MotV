@@ -515,7 +515,7 @@ autosave = function (message, synchronous = false, index = 1) {
         StorageManager.cleanBackup(index);
         if (VERBOSE_LOGS) console.log("Saved at " + new Date().getSeconds());
         scheduleAutosave(true);
-        if (!g.topRightToast.hasToastWithText(s.autosaved)) g.topRightToast.enqueueToast(s.autosaved, 120);
+        if (!g.topRightToast.hasToastWithText(s.autosaved) || !g.topRightToast.hasActiveToast()) g.topRightToast.enqueueToast(s.autosaved, 120);
     } else {
         console.warn("Saving failed");
         scheduleAutosave(false);

@@ -187,6 +187,10 @@ ToastWindow.prototype.addListener = function (listener) {
     this.closeListeners.push(listener);
 }
 
+ToastWindow.prototype.hasActiveToast = function () {
+    return this.framesLeft >= 0;
+}
+
 ToastWindow.prototype.hasToastWithText = function (text) {
     return this.text === text || this.queue.some(toast => toast.text === text);
 }

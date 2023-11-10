@@ -28,7 +28,7 @@ try {
     throw "The JavaScript version is too old.";
 }
 
-const MAC_DEBUG = true;
+let MAC_DEBUG = true;
 const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this
 const DEBUG_SWITCHES = [141]; //Switches that will be turned on when debug mode is on 
@@ -967,16 +967,18 @@ g.exportSave = function () {
     //Using a similar system to DataManager.makeSaveContents 
     let contents = {};
     contents.system = $gameSystem;
-    contents.screen = $gameScreen;
+    delete contents.system.wu_info; //Window_Upgrade info; we don't need to export it
     contents.timer = $gameTimer;
     contents.switches = $gameSwitches;
     contents.variables = $gameVariables;
     contents.selfSwitches = $gameSelfSwitches;
     // contents.actors = $gameActors; //Actors and party are not used in the game
     // contents.party = $gameParty;
-    // contents.map = $gameMap; //Excluded because it's huge and not really needed
+    //contents.screen = $gameScreen; //Information about the state of the screen, tint, screen shake etc.
+    // contents.map = $gameMap; //States of events, mostly movement-related. Not needed since we're resetting the map
     // contents.player = $gamePlayer; //Excluded to clear any effects, like transparency or move speed modifications
     contents.version = GAME_VERSION;
+    contents.language = g.lang;
     return LZString.compressToBase64(JsonEx.stringify(contents));
 }
 
@@ -993,12 +995,20 @@ g.importSave = function (compressedString) {
         console.warn("Looks like the imported save file was empty");
         return false;
     }
+    if (!contents.version) {
+        console.warn("Save file was valid JSON, but missing a version");
+        return false;
+    }
+    let wu_info = $gameSystem.wu_info;//Not included in exports, so we keep the existing one
     $gameSystem = contents.system;
-    $gameScreen = contents.screen;
+    $gameSystem.wu_info = wu_info;
+
     $gameTimer = contents.timer;
     $gameSwitches = contents.switches;
     $gameVariables = contents.variables;
     $gameSelfSwitches = contents.selfSwitches;
+    g.setLanguage(contents.language);
+
     switch (contents.version) {
         //Any version-specific logic will go here
     }
@@ -1008,6 +1018,7 @@ g.importSave = function (compressedString) {
     }
     $gamePlayer.reserveTransfer(3, 64, 47); //Starting position for imported files
     $gamePlayer.setDirection(8);
+    SoundManager.playLoad();
     g.scene().fadeOutAll();
     SceneManager.goto(Scene_Map);
     return true;

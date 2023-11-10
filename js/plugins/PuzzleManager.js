@@ -123,6 +123,10 @@ const $dataPuzzles = {
         }, {
             name: "parzystość",
             solution: "terazmyśliszparzystością",
+            failure: function (guess) {
+                if (guess === "terazmyśli" || guess === "terazmyśl") return "Wydaje się to działać, no ale nijak ten końcowy nawias tu nie\npasuje. Może jednak trzeba tu zrobić coś więcej?";
+                else if (guess === "terazścią") return [{ string: "Czyli nie o to chodziło." }, { string: "Chyba jendak powinnam potraktować tą drugą spację tak samo\njak pierwszą\\..\\..\\.. tylko co dalej?", id: 4, balloon: BALLOON_ID.SILENCE }];
+            }
         }, {
             name: "sudoku",
             solution: "zaznaczacz",
@@ -177,6 +181,10 @@ const $dataPuzzles = {
         }, {
             name: "nakładanie",
             solution: "wielkaunifikacjahaseł",
+            success: {
+                string: "Ta zdecydowanie wygrywywa jeśli chodzi o stosunek pomiędzy tym,\nna jak trudną ta zagadka wyglądała, a tym, jak trudna\nfaktycznie była.",
+                id: 1,
+            },
         }, {
             name: "nokia",
             solution: "nokianazawsze",

@@ -16,3 +16,5 @@ Instant text - Window_Message.prototype.updateShowFast = function() {this._showF
 Last changed variable/switch
 Warn about the lack of changes since last test
 Modify evalDamageFormula to print errors in the formulas instead of returning 0
+Allow selecting disabled options
+Info for the console (like g.getInterpreterInfo())

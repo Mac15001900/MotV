@@ -49,9 +49,9 @@
             },
             "0,Window_MenuCommand": {
                 "x": 0,
-                "y": 352,
+                "y": 305,
                 "width": 320,
-                "height": 188,
+                "height": 235,
                 "opacity": 255,
                 "hidden": false,
                 "_customFontSize": 32,

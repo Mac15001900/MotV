@@ -1592,11 +1592,12 @@ Window_MenuCommand.prototype.numVisibleRows = function () {
 };
 
 Window_MenuCommand.prototype.makeCommandList = function () {
-    //this.addMainCommands(); //Change: remove unsused, combar-related menus
+    //this.addMainCommands(); //Change: remove unsused, combat-related menus
     //this.addFormationCommand();
     this.addOriginalCommands();
     this.addOptionsCommand();
     this.addSaveCommand();
+    this.addCommand(s.exportGame, 'export', $gs[22] || MAC_DEBUG)
     this.addGameEndCommand();
 };
 

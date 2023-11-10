@@ -963,7 +963,7 @@ Scene_LangugeChoice.prototype.update = function () {
 }
 //===================================== Save exporting / importing =====================================
 
-g.exportsSave = function () {
+g.exportSave = function () {
     //Using a similar system to DataManager.makeSaveContents 
     let contents = {};
     contents.system = $gameSystem;
@@ -980,7 +980,7 @@ g.exportsSave = function () {
     return LZString.compressToBase64(JsonEx.stringify(contents));
 }
 
-g.importGame = function (compressedString) {
+g.importSave = function (compressedString) {
     DataManager.setupNewGame();
     let contents;
     try {
@@ -1014,15 +1014,9 @@ g.importGame = function (compressedString) {
 }
 
 Scene_Title.prototype.commandImport = function () {
-    console.log("Importing starting");
     let commandList = [];
-    /*commandList.push({ "code": 355, "indent": 0, "parameters": ["RS.InputDialog.Params.nMaxLength = 100000;"] });
-    commandList.push({ "code": 355, "indent": 0, "parameters": ["RS.InputDialog.createInstance();"] });
-    commandList.push({ "code": 355, "indent": 0, "parameters": ["RS.InputDialog.Params.nMaxLength = 100;"] });
-    commandList.push({ "code": 355, "indent": 0, "parameters": ["g.importGame($gameVariables.value(3));"] });*/
     commandList.push({ "code": 117, "indent": 0, "parameters": [2] });
-    // g.getInterpreter().setup($dataCommonEvents[2].list, 0);
-    g.getInterpreter().setup(commandList, 0);
+    g.getInterpreter().setup([{ "code": 117, "indent": 0, "parameters": [2] }], 0);
 }
 
 Scene_Title.prototype.importFailureNotification = function () {
@@ -1031,6 +1025,12 @@ Scene_Title.prototype.importFailureNotification = function () {
     inp.pluginCommand('SetQuestionWindowChoices', [s.ok]);
     inp.pluginCommand('CreateQuestionWindow', ['3', s.importFailure]);
     this._commandWindow.active = false;
+    g.failedToImport = false;
+}
+
+Scene_Menu.prototype.commandExport = function () {
+    $gameTemp.reserveCommonEvent(3);
+    SceneManager.pop();
 }
 
 

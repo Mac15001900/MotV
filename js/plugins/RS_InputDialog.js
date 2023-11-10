@@ -708,7 +708,7 @@ function Scene_InputDialog() {
     this.onResize();
 
     if (SceneManager._scene instanceof Scene_InputDialog) {
-      document.querySelector('.inputDialog').placeholder = $gv[21];
+      document.querySelector('.inputDialog').placeholder = g.topLevelScene() === 'Scene_Title' ? s.importPlaceholder : $gv[21];
       this.getFocus();
       this.show();
     }

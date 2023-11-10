@@ -667,9 +667,10 @@ g.interpreterInfo = function () {
     let inp = g.getInterpreter();
     return {
         active: inp.isRunning(),
+        waitMode: inp._waitMode,
         eventId: inp.eventId(),
         index: inp.previousIndex,
-        ...inp.command,
+        command: inp.command?.code,
     }
 }
 
@@ -960,7 +961,7 @@ Scene_LangugeChoice.prototype.update = function () {
         this.popScene()
     }
 }
-//===================================== Save exporting =====================================
+//===================================== Save exporting / importing =====================================
 
 g.exportsSave = function () {
     //Using a similar system to DataManager.makeSaveContents 
@@ -981,7 +982,17 @@ g.exportsSave = function () {
 
 g.importGame = function (compressedString) {
     DataManager.setupNewGame();
-    let contents = JsonEx.parse(LZString.decompressFromBase64(compressedString));
+    let contents;
+    try {
+        contents = JsonEx.parse(LZString.decompressFromBase64(compressedString.trim()));
+    } catch (e) {
+        console.warn("Failed to parse save file");
+        return false;
+    }
+    if (!contents) {
+        console.warn("Looks like the imported save file was empty");
+        return false;
+    }
     $gameSystem = contents.system;
     $gameScreen = contents.screen;
     $gameTimer = contents.timer;
@@ -999,45 +1010,30 @@ g.importGame = function (compressedString) {
     $gamePlayer.setDirection(8);
     g.scene().fadeOutAll();
     SceneManager.goto(Scene_Map);
+    return true;
+}
+
+Scene_Title.prototype.commandImport = function () {
+    console.log("Importing starting");
+    let commandList = [];
+    /*commandList.push({ "code": 355, "indent": 0, "parameters": ["RS.InputDialog.Params.nMaxLength = 100000;"] });
+    commandList.push({ "code": 355, "indent": 0, "parameters": ["RS.InputDialog.createInstance();"] });
+    commandList.push({ "code": 355, "indent": 0, "parameters": ["RS.InputDialog.Params.nMaxLength = 100;"] });
+    commandList.push({ "code": 355, "indent": 0, "parameters": ["g.importGame($gameVariables.value(3));"] });*/
+    commandList.push({ "code": 117, "indent": 0, "parameters": [2] });
+    // g.getInterpreter().setup($dataCommonEvents[2].list, 0);
+    g.getInterpreter().setup(commandList, 0);
+}
+
+Scene_Title.prototype.importFailureNotification = function () {
+    let inp = g.getInterpreter();
+    inp.pluginCommand('SetQuestionWindowData', ['1', '1', 'center']);
+    inp.pluginCommand('SetQuestionWindowChoices', [s.ok]);
+    inp.pluginCommand('CreateQuestionWindow', ['3', s.importFailure]);
+    this._commandWindow.active = false;
 }
 
 
-
-/*Scene_Load.prototype.onSavefileOk = function () {
-    Scene_File.prototype.onSavefileOk.call(this);
-    if (DataManager.loadGame(this.savefileId())) {
-        this.onLoadSuccess();
-    } else {
-        this.onLoadFailure();
-    }
-};
-
-Scene_Load.prototype.onLoadSuccess = function () {
-    SoundManager.playLoad();
-    this.fadeOutAll();
-    this.reloadMapIfUpdated();
-    SceneManager.goto(Scene_Map);
-    this._loadSuccess = true;
-};*/
-
-/*DataManager.loadGameWithoutRescue = function (savefileId) {
-    var globalInfo = this.loadGlobalInfo();
-    if (this.isThisGameFile(savefileId)) {
-        var json = StorageManager.load(savefileId);
-        this.createGameObjects();
-        this.extractSaveContents(JsonEx.parse(json));
-        this._lastAccessedId = savefileId;
-        return true;
-    } else {
-        return false;
-    }
-};*/
-
-/*DataManager.setupNewGame();
-    this._commandWindow.close();
-    this.fadeOutAll();
-    SceneManager.goto(Scene_Map);
-};*/
 
 //===================================== Custom windows =====================================
 

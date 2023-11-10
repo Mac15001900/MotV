@@ -5625,11 +5625,12 @@ Window_TitleCommand.prototype.updatePlacement = function () {
     this.y = Graphics.boxHeight - this.height - 96;
 };
 
-Window_TitleCommand.prototype.makeCommandList = function () {
+Window_TitleCommand.prototype.makeCommandList = function () { //Change: Added a bunch of options
     this.addCommand(TextManager.newGame, 'newGame');
     this.addCommand(TextManager.continue_, 'continue', this.isContinueEnabled());
+    this.addCommand(s.importGame, 'import');
     this.addCommand(TextManager.options, 'options');
-    this.addCommand(s.credits, 'credits');  //Change: Added a credits, feedback and an exit options
+    this.addCommand(s.credits, 'credits');
     this.addCommand(s.feedback, 'feedback');
     this.addCommand(s.exit, 'exit');
 };

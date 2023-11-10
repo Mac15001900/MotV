@@ -14,3 +14,5 @@ Show event pages
 Toggle music key / show currently playing music
 Instant text - Window_Message.prototype.updateShowFast = function() {this._showFast = true;}
 Last changed variable/switch
+Warn about the lack of changes since last test
+Modify evalDamageFormula to print errors in the formulas instead of returning 0

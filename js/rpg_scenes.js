@@ -453,6 +453,9 @@ Scene_Title.prototype.update = function () {
     if (!this.isBusy()) {
         this._commandWindow.open();
     }
+    g.getInterpreter().update(); //Change: updating the interpreter, notification on load failure, re-activating the window
+    if (g.failedToImport) this.importFailureNotification();
+    this._commandWindow.active = g.getInterpreter()._waitMode === '' && !(this._windowLayer.children[1]?.active);
     Scene_Base.prototype.update.call(this);
 };
 
@@ -504,8 +507,9 @@ Scene_Title.prototype.createCommandWindow = function () {
     this._commandWindow.setHandler('newGame', this.commandNewGame.bind(this));
     this._commandWindow.setHandler('continue', this.commandContinue.bind(this));
     this._commandWindow.setHandler('options', this.commandOptions.bind(this));
+    this._commandWindow.setHandler('import', this.commandImport.bind(this));
     //this._commandWindow.setHandler('feedback', () => console.log('test')); //() => window.open("https://www.google.com")); //Change: feedback option, temporarily links to google
-    this._commandWindow.setHandler('feedback', this.commandNewGame.bind(this)); //Change: feedback option, temporarily links to google
+    this._commandWindow.setHandler('feedback', this.commandFeedback.bind(this)); //Change: feedback option, temporarily links to google
     if (Utils.isNwjs()) this._commandWindow.setHandler('exit', this.commandExit.bind(this)); //Change: added exit option
     this.addWindow(this._commandWindow);
 };

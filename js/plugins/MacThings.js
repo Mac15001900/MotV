@@ -960,6 +960,84 @@ Scene_LangugeChoice.prototype.update = function () {
         this.popScene()
     }
 }
+//===================================== Save exporting =====================================
+
+g.exportsSave = function () {
+    //Using a similar system to DataManager.makeSaveContents 
+    let contents = {};
+    contents.system = $gameSystem;
+    contents.screen = $gameScreen;
+    contents.timer = $gameTimer;
+    contents.switches = $gameSwitches;
+    contents.variables = $gameVariables;
+    contents.selfSwitches = $gameSelfSwitches;
+    // contents.actors = $gameActors; //Actors and party are not used in the game
+    // contents.party = $gameParty;
+    // contents.map = $gameMap; //Excluded because it's huge and not really needed
+    // contents.player = $gamePlayer; //Excluded to clear any effects, like transparency or move speed modifications
+    contents.version = GAME_VERSION;
+    return LZString.compressToBase64(JsonEx.stringify(contents));
+}
+
+g.importGame = function (compressedString) {
+    DataManager.setupNewGame();
+    let contents = JsonEx.parse(LZString.decompressFromBase64(compressedString));
+    $gameSystem = contents.system;
+    $gameScreen = contents.screen;
+    $gameTimer = contents.timer;
+    $gameSwitches = contents.switches;
+    $gameVariables = contents.variables;
+    $gameSelfSwitches = contents.selfSwitches;
+    switch (contents.version) {
+        //Any version-specific logic will go here
+    }
+    const tempSwitches = [132]; //Switches that are meant to be temporary, and it makes more sense to turn them off when importing a game
+    for (let s of tempSwitches) {
+        $gameSwitches.setValue(s, false);
+    }
+    $gamePlayer.reserveTransfer(3, 64, 47); //Starting position for imported files
+    $gamePlayer.setDirection(8);
+    g.scene().fadeOutAll();
+    SceneManager.goto(Scene_Map);
+}
+
+
+
+/*Scene_Load.prototype.onSavefileOk = function () {
+    Scene_File.prototype.onSavefileOk.call(this);
+    if (DataManager.loadGame(this.savefileId())) {
+        this.onLoadSuccess();
+    } else {
+        this.onLoadFailure();
+    }
+};
+
+Scene_Load.prototype.onLoadSuccess = function () {
+    SoundManager.playLoad();
+    this.fadeOutAll();
+    this.reloadMapIfUpdated();
+    SceneManager.goto(Scene_Map);
+    this._loadSuccess = true;
+};*/
+
+/*DataManager.loadGameWithoutRescue = function (savefileId) {
+    var globalInfo = this.loadGlobalInfo();
+    if (this.isThisGameFile(savefileId)) {
+        var json = StorageManager.load(savefileId);
+        this.createGameObjects();
+        this.extractSaveContents(JsonEx.parse(json));
+        this._lastAccessedId = savefileId;
+        return true;
+    } else {
+        return false;
+    }
+};*/
+
+/*DataManager.setupNewGame();
+    this._commandWindow.close();
+    this.fadeOutAll();
+    SceneManager.goto(Scene_Map);
+};*/
 
 //===================================== Custom windows =====================================
 

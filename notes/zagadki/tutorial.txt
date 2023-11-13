@@ -2,8 +2,8 @@ Pierwsza:
 >>> cezar("klucz[zaczynamy]", -1)
 'jktby[yżbywmżłw]'
 
-cezar("nexus[aroundyou]", -1, alphabetEnglish)
-'mdwtr[zqntmcxnt]'
+cezar("nexus[beginning]", -1, alphabetEnglish)
+'mdwtr[adfhmmhmf]'
 
 Tutorialowa zagadka (stara):
 

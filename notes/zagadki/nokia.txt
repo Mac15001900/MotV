@@ -8,6 +8,7 @@ Na ekranie wyświetla się trochę cyfr:
 
 ----------------- English -----------------
 
+nexus[nokiaforever]
 n    e    x    u    s    [    n    o    k    i    a    f    o    r    e    v    e    r    ]
 66 33 99 88 7777 [ 66 666 55 444 2 333 666 777 33 888 33 777 ]
 663399887777[666665544423336667773388833777]

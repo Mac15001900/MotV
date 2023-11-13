@@ -44,9 +44,173 @@ const BALLOON_ID = {
  * lastRemaining: A message to be displayed when this puzzle is the last one remaining.
  */
 const $dataPuzzles = {
-    en: {
+    en: [
+        //Tutorial puzzles
+        {
+            name: "tutorial_1",
+            solution: "beginning",
+        }, {
+            name: "tutorial_2",
+            solution: "aroundyou",
+        }, {
+            name: "urodziny",
+            solution: "goodluck",
 
-    },
+        },
+
+        //Living room
+        {
+            name: "brakujące",
+            solution: "codeclination",
+        }, {
+            name: "decrypto",
+            solution: "chocolate pizza squirrel Sparta",
+            success: {
+                string: "Tak patrząc po tamtej instruckji, to chyba w pewnym sensie udało\nmi się jednak zagrać w Decrypto.",
+                id: 1,
+            },
+            failure: function (guess) {
+                let keyWords = ["czekolada", "pizza", "wiewiórka", "sparta"];
+                let correct = 0;
+                for (let i = 0; i < keyWords.length; i++) {
+                    if (guess.contains(keyWords[i])) correct++;
+                }
+                if (correct === 2) return ({ string: "Niektóre z tych słów zdecydowanie mają sens,\nno ale chyba jeszcze nie wszystkie.", id: 0 });
+                else if (correct === 3) {
+                    let wrongPart = key;
+                    for (let i = 0; i < keyWords.length; i++) wrongPart = wrongPart.replace(keyWords[i], '');
+                    wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
+                    return ({ string: "To musi być już blisko!\n" + wrongPart + " tu chyba najmniej pasuje.", id: 0 })
+                } else return null;
+            }
+        }, {
+            name: "kolory",
+            solution: "deliciousness",
+            success: { string: "Trochę robię się teraz głodna przez tę zagadkę.", id: 1 },
+            failure: function (guess) {
+                if (guess === "miżdmalina") return "To musi być jakoś blisko. Może trzeba po prostu potraktować\ntamtą spację jak zwykły znak?"
+            }
+        }, {
+            name: "rotowanie",
+            solution: "rotatious",
+        },
+
+        //Laboratory
+        {
+            name: "dalton",
+            solution: "deuteranopia",
+        }, {
+            name: "sekwencja",
+            solution: "accumulatron",
+        }, {
+            name: "pierwiastki",
+            solution: "periodycalness",
+        },
+
+        //Bedroom
+        {
+            name: "liczby pierwsze",
+            solution: "eulerishness",
+        }, {
+            name: "parzystość",
+            solution: "terazmyśliszparzystością",
+            failure: function (guess) {
+                if (guess === "terazmyśli" || guess === "terazmyśl") return "Wydaje się to działać, no ale nijak ten końcowy nawias tu nie\npasuje. Może jednak trzeba tu zrobić coś więcej?";
+                else if (guess === "terazścią") return [{ string: "Czyli nie o to chodziło." }, { string: "Chyba jendak powinnam potraktować tą drugą spację tak samo\njak pierwszą\\..\\..\\.. tylko co dalej?", id: 4, balloon: BALLOON_ID.SILENCE }];
+            }
+        }, {
+            name: "sudoku",
+            solution: "reverseness",
+        }, {
+            name: "framuga", //TODO !
+            solution: "odcyrklowywanie",
+            failure: function (guess) {
+                switch (guess) {
+                    case "jgbuśmłnzruąręf":
+                        return [{ string: "Nie!? Ale przecież tu wszystko tak idealnie wskazuje na pi.", id: 3, balloon: BALLOON_ID.COBWEB },
+                        { string: "Chociaż właściwie to póki co rozwiązania zawsze były raczej\njakimiś słowami. Może trzeba to zrobić jakoś odrobinę inczej?", id: 0 }];
+                    case "łhąźoóltuźńbklż":
+                    case "ódęśukrncpyśści":
+                        return "Szkoda, tak ładnie ta zasada działała dla pierwszych pięciu,\nno ale chyba nie działa dalej. Czyli chodzi pewnie a coś innego.\nMoże fakt, że ten tekst jest okrągły ma jakieś znaczenie?"
+                    default: return null;
+                }
+            }
+        },
+
+        //Computer room
+        {
+            name: "zaszyftowywacz", //File: interaktywne
+            solution: "overcezared",
+        }, {
+            name: "obliczacz", //File: interaktywne
+            solution: "exponenatialisness",
+        }, {
+            name: "kalkulacja",
+            solution: "sequenceness",
+        }, {
+            name: "klawiaturowa",
+            solution: "charles krum",
+        }, {
+            name: "kalibracja",
+            solution: "interspace",
+        }, {
+            name: "komunikacja",
+            solution: "rocket kiwi rainbow",
+            failure: function (guess) {
+                if (guess === "🚀🥝🌈") return "Well, I did have to convert that X emoji earlier\\..\\..\\..\nI guess I need to somehow do the same for the others?"
+            },
+            success: {
+                string: { string: 'Well, emojis are certainly a one of the things I really did\nnot expect to see here.', id: 1 },
+                id: 1,
+            },
+        },
+
+        //Landing pad
+        {
+            name: "blok_liczb",
+            solution: "945",
+            success: {
+                string: "This one really takes the crown in terms for the best ratio\nbetween how difficult it looks like versus how difficult the\nactual solution is.",
+                id: 1,
+            },
+        }, {
+            name: "gradient", //No notes file for this one. See the gimp and tiled image files
+            solution: "newtonish",
+        }, {
+            name: "nakładanie",
+            solution: "First Great Unification",
+        }, {
+            name: "nokia",
+            solution: "nokiaforever",
+            success: {
+                string: "I really didn't expect that particular ability to ever be\nuseful again.",
+                id: 1,
+            },
+        },
+
+        //Other
+        {
+            name: "game_of_life",
+            solution: "is this life",
+        }, {
+            name: "podłoga",
+            solution: "turquooise",
+        }, {
+            name: "grobowiec_1",
+            solution: "jazz flux band cork vest whip game",
+        }, {
+            name: "grobowiec_2",
+            solution: "activized ballistocardiogram",
+        }, {
+            name: "mors",
+            solution: "ideas to worlds",
+            success: "Well, that was fun to spot.\nAnd I really didn't expect to learn more about Morse code of\nall things, but now I know that '-.--.' can be stand for any\ntype of bracket. The more you know.",
+            lastRemaining: {
+                string: "Alright, but where is that one remaining fragment?\nEverything seem to be accounted for already\\..\\..\\..\nMaybe this one is hidden in a different way?",
+                id: 0,
+                balloon: BALLOON_ID.QUESTION,
+            }
+        }],
     pl: [
         //Tutorial puzzles
         {
@@ -145,10 +309,10 @@ const $dataPuzzles = {
 
         //Computer room
         {
-            name: "interaktywne_zaszyftowywacz",
+            name: "zaszyftowywacz", //File: interaktywne
             solution: "zacezarowane",
         }, {
-            name: "interaktywne_obliczacz",
+            name: "obliczacz", //File: interaktywne
             solution: "wykładniczowością",
         }, {
             name: "kalkulacja",
@@ -172,16 +336,16 @@ const $dataPuzzles = {
         {
             name: "blok_liczb",
             solution: "945",
+            success: {
+                string: "Ta zdecydowanie wygrywywa jeśli chodzi o stosunek pomiędzy tym,\nna jak trudną ta zagadka wyglądała, a tym, jak trudna\nfaktycznie była.",
+                id: 1,
+            },
         }, {
             name: "gradient",
             solution: "banachowo",
         }, {
             name: "nakładanie",
             solution: "wielkaunifikacjahaseł",
-            success: {
-                string: "Ta zdecydowanie wygrywywa jeśli chodzi o stosunek pomiędzy tym,\nna jak trudną ta zagadka wyglądała, a tym, jak trudna\nfaktycznie była.",
-                id: 1,
-            },
         }, {
             name: "nokia",
             solution: "nokianazawsze",
@@ -194,16 +358,16 @@ const $dataPuzzles = {
         //Other
         {
             name: "game_of_life",
-            solution: "całkiemjakżycie",
+            solution: "czy to życie",
         }, {
             name: "podłoga",
             solution: "krynszpany",
         }, {
             name: "grobowiec_1",
-            solution: "delatorcukrzenia",
+            solution: "boja druk figa hart menu opis wiza",
         }, {
             name: "grobowiec_2",
-            solution: "bojadrukfigahartmenuopiswiza",
+            solution: "delator cukrzenia",
         }, {
             name: "mors",
             solution: "iksytonawiasy",

@@ -11,10 +11,6 @@
  * - Puzzle-specific reactions
  * - Hints for close solutions and the functions for detecting those
  * 
- * Also handles reactions to puzzles in general
- * 
- * Yes, this file is a somewhat unholy combination of both code and data, but separating
- * them would have been much more annoying.
  */
 
 const BALLOON_ID = {
@@ -36,6 +32,7 @@ const BALLOON_ID = {
 }
 /**
  * Each puzzle object contains the following properties:
+ * name: The name of the puzzle, used to identify it. Same as the name of the corresponding notes file if possible.
  * solution: The solution to the puzzle, as a string without the required part (i.e. "945", not "nexus[945]")
  *
  * The remaining properties are optional, and include messages to be sent when various things happen.
@@ -217,21 +214,9 @@ const $dataPuzzles = {
             }
         }],
     get: function (puzzleName) {
-        switch (g.lang) {
-            case "pl":
-                return $dataPuzzles.pl.find(p => p.name === puzzleName);
-            case "en":
-                return $dataPuzzles.en.find(p => p.name === puzzleName);
-
-        }
+        return $dataPuzzles[g.lang].find(p => p.name === puzzleName);
     },
     getBySolution: function (solution) {
-        switch (g.lang) {
-            case "pl":
-                return $dataPuzzles.pl.find(p => p.solution === solution);
-            case "en":
-                return $dataPuzzles.en.find(p => p.solution === solution);
-
-        }
+        return $dataPuzzles[g.lang].find(p => p.solution.toLocaleLowerCase().replaceAll(' ', '') === solution);
     },
 }

@@ -18,3 +18,4 @@ Warn about the lack of changes since last test
 Modify evalDamageFormula to print errors in the formulas instead of returning 0
 Allow selecting disabled options
 Info for the console (like g.getInterpreterInfo())
+Pause the game, do one frame at a time

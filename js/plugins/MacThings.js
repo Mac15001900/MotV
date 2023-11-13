@@ -143,12 +143,12 @@ macThingsInit = function () {
     });
 
     //Movespeed and debug stuff
-    $gamePlayer.setMoveSpeed(4.5);
     if (MAC_DEBUG) {
         $gs[2] = true; //Set the debug switch
         $gv[41] = DEBUG_STAGE;
-        $gamePlayer.setMoveSpeed(5);
+        $gamePlayer.defaultSpeed = () => 5;
     }
+    $gamePlayer.resetSpeed();
 
     //Setting language and colourblind switches
     console.assert(g.lang !== 'none');
@@ -1142,6 +1142,7 @@ g.buttonPressed = function (button) {
     switch (button) {
         case "f4": Graphics._switchFullScreen(); break;
         case "fps": Graphics._switchFPSMeter(); break;
+        case "frame": g.scene().update(); break;
     }
 }
 
@@ -1202,6 +1203,15 @@ Scene_Title.prototype.commandFeedback = function () {
             break;
         default: console.error("Language is not set, but the feedback form was requested.");
     }
+}
+
+//Player default speed thingy
+Game_Player.prototype.defaultSpeed = function () {
+    return 4.5;
+}
+
+Game_Player.prototype.resetSpeed = function () {
+    this.setMoveSpeed(this.defaultSpeed());
 }
 
 //Support for preventing next sound from SoundManager
@@ -1266,6 +1276,60 @@ Game_Character.prototype.goto = function (x, y) {
 //Checks if the player is stuck, i.e. cannot move in any direction
 Game_Character.prototype.isStuck = function () {
     return [2, 4, 6, 8].every(dir => !this.isMapPassable(this.x, this.y, dir));
+}
+
+//===================================== Frame advance stuff =====================================
+
+if (MAC_DEBUG) {
+
+    SceneManager.update = function (force) {
+        if ($gs && $gs[4] && force !== true) return;
+        try {
+            this.tickStart();
+            if (Utils.isMobileSafari()) {
+                this.updateInputData();
+            }
+            this.updateManagers();
+            this.updateMain();
+            this.tickEnd();
+        } catch (e) {
+            this.catchException(e);
+        }
+    };
+
+    SceneManager.updateMain = function () {
+        if (Utils.isMobileSafari()) {
+            this.changeScene();
+            this.updateScene();
+        } else {
+            var newTime = this._getTimeInMsWithoutMobileSafari();
+            var fTime = (newTime - this._currentTime) / 1000;
+            if (fTime > 0.25) fTime = 0.25;
+            this._currentTime = newTime;
+            this._accumulator += fTime;
+            //while (this._accumulator >= this._deltaTime) {
+            this.updateInputData();
+            this.changeScene();
+            this.updateScene();
+            this._accumulator -= this._deltaTime;
+            //}
+        }
+        this.renderScene();
+        this.requestUpdate();
+    };
+
+    proccessKeyDown = function (event) {
+        switch (event.key) {
+            case 'f': SceneManager.update(true); break;
+            case 'g':
+                $gs[4] = !$gs[4];
+                if (!$gs[4]) SceneManager.requestUpdate();
+
+                break;
+        }
+    }
+
+    document.addEventListener('keydown', proccessKeyDown);
 }
 
 

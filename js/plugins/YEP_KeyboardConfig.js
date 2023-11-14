@@ -836,14 +836,14 @@ Window_KeyConfig.prototype.getRectColor = function (index) {
 	var action = this.configCopy[key];
 	// var action = Input.keyMapper[key];
 	if (action !== undefined) {
-		return this.textColor(Yanfly.Param.KeyConfigAssignColor);
+		return g.isColorblind ? "#cfa000" : this.textColor(Yanfly.Param.KeyConfigAssignColor); //Using a darker color in colorblind mode to make the cursor more visible
 	} else {
 		return this.gaugeBackColor();
 	}
 };
 
 Window_KeyConfig.prototype.drawRect = function (dx, dy, dw, dh, color) {
-	this.changePaintOpacity(false);
+	//this.changePaintOpacity(false);
 	this.contents.fillRect(dx, dy, dw, dh, color);
 	this.changePaintOpacity(true);
 };
@@ -1058,17 +1058,39 @@ Window_KeyConfig.prototype.printableName = function (keyName) {
 
 //Change cursor's opacity to be a bit more visible (change *8 to *4)
 Window_KeyConfig.prototype._updateCursor = function () {
-	var blinkCount = this._animationCount % 40;
+	var blinkCount = this._animationCount % 80;
 	var cursorOpacity = this.contentsOpacity;
 	if (this.active) {
-		if (blinkCount < 20) {
-			cursorOpacity -= blinkCount * 4;
+		if (blinkCount < 40) {
+			cursorOpacity -= blinkCount * 2;
 		} else {
-			cursorOpacity -= (40 - blinkCount) * 4;
+			cursorOpacity -= (80 - blinkCount) * 2;
 		}
 	}
 	this._windowCursorSprite.alpha = cursorOpacity / 255;
 	this._windowCursorSprite.visible = this.isOpen();
+};
+
+//Reordered the draw order to make the cursor appear on top
+Window.prototype._createAllParts = function () {
+	this._windowSpriteContainer = new PIXI.Container();
+	this._windowBackSprite = new Sprite();
+	this._windowCursorSprite = new Sprite();
+	this._windowFrameSprite = new Sprite();
+	this._windowContentsSprite = new Sprite();
+	this._downArrowSprite = new Sprite();
+	this._upArrowSprite = new Sprite();
+	this._windowPauseSignSprite = new Sprite();
+	this._windowBackSprite.bitmap = new Bitmap(1, 1);
+	this._windowBackSprite.alpha = 192 / 255;
+	this.addChild(this._windowSpriteContainer);
+	this._windowSpriteContainer.addChild(this._windowBackSprite);
+	this._windowSpriteContainer.addChild(this._windowFrameSprite);
+	this.addChild(this._windowContentsSprite);
+	this.addChild(this._downArrowSprite);
+	this.addChild(this._upArrowSprite);
+	this.addChild(this._windowPauseSignSprite);
+	this.addChild(this._windowCursorSprite);
 };
 
 //=============================================================================
@@ -1122,7 +1144,8 @@ Window_KeyAction.prototype.drawItem = function (index) {
 	var rect = this.itemRectForText(index);
 	var align = this.itemTextAlign();
 	this.resetTextColor();
-	if (this._list[index].ext === this.keyActionName) this.changeTextColor(this.textColor(g.isColorblind ? 1 : Yanfly.Param.KeyConfigAssignColor));
+	if (this._list[index].ext === this.keyActionName) this.changeTextColor(g.isColorblind ? "#cfa000" : this.textColor(Yanfly.Param.KeyConfigAssignColor));
+	// if (this._list[index].ext === this.keyActionName) this.changeTextColor(this.textColor(g.isColorblind ? 1 : Yanfly.Param.KeyConfigAssignColor));
 	this.changePaintOpacity(this.isCommandEnabled(index));
 	this.drawText(this.commandName(index), rect.x, rect.y, rect.width, align);
 };

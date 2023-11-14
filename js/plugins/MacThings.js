@@ -1307,12 +1307,13 @@ if (MAC_DEBUG) {
             if (fTime > 0.25) fTime = 0.25;
             this._currentTime = newTime;
             this._accumulator += fTime;
-            //while (this._accumulator >= this._deltaTime) {
-            this.updateInputData();
-            this.changeScene();
-            this.updateScene();
-            this._accumulator -= this._deltaTime;
-            //}
+            while (this._accumulator >= this._deltaTime) {
+                this.updateInputData();
+                this.changeScene();
+                this.updateScene();
+                this._accumulator -= this._deltaTime;
+                if ($gs && $gs[4]) break;
+            }
         }
         this.renderScene();
         this.requestUpdate();
@@ -1430,6 +1431,13 @@ g.scene = function () {
 
 g.getActiveWindows = function () {
     return SceneManager._scene._windowLayer.children.filter(w => w.active);
+}
+
+g.resizeTo = function (width = 1920, height = 1080) {
+    var dw = width - window.innerWidth;
+    var dh = height - window.innerHeight;
+    window.moveBy(-dw / 2, -dh / 2);
+    window.resizeBy(dw, dh);
 }
 
 

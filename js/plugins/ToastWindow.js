@@ -18,7 +18,7 @@ ToastWindow.prototype.initialize = function (position, r = 0, g = 255, b = 255) 
     this.FADEOUT_START = 30; //How many frames will fading out last
     this.FADEIN_TIME = 15; //How many frames will fading in last
     this.BASIC_DURATION = 120; //How many frames will the toast last if not specified by the caller (excluding fading in and out)
-    this.SCALE = $gameMap.zoom.y; //How much zoom do we have
+    this.SCALE = $gameMap.zoom?.y ?? 1; //How much zoom do we have
 
     let x = 0
     let y = 0;

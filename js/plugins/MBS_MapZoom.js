@@ -368,6 +368,12 @@ MBS.MapZoom = {};
     //this.x += Math.round(screen.shake());
     this.x = 0;
     this.y = 0;
+    if ($gameTemp.shake_dur > 0) {
+      $gameTemp.shake_dur -= 1;
+      let rate = $gameTemp.shake_dur / $gameTemp.shake_maxdur;
+      this.x += Math.random() * $gameTemp.shake_pow * rate * (Math.random() >= 0.5 ? 1 : -1);
+      this.y += Math.random() * $gameTemp.shake_pow * rate * (Math.random() >= 0.5 ? 1 : -1);
+    }
     if (this.scale.x !== scale.x || this.scale.y !== scale.y) {
       var destScale = $gameMap._destZoom;
       var sw = Graphics.width / destScale.x + this._tilemap._margin * 2;

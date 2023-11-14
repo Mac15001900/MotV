@@ -2,10 +2,10 @@
 null,
 {"id":1,"expanded":true,"name":"MAP001","order":1,"parentId":0,"scrollX":1139,"scrollY":641},
 {"id":2,"expanded":false,"name":"Underbedroom","order":3,"parentId":3,"scrollX":1139,"scrollY":641},
-{"id":3,"expanded":true,"name":"Level1-2","order":2,"parentId":1,"scrollX":3184,"scrollY":1904},
+{"id":3,"expanded":true,"name":"Level1-2","order":2,"parentId":1,"scrollX":4476,"scrollY":1316},
 {"id":4,"expanded":false,"name":"Entry","order":6,"parentId":1,"scrollX":1131,"scrollY":943},
-{"id":5,"expanded":true,"name":"Testmap","order":7,"parentId":0,"scrollX":1139,"scrollY":641},
-{"id":6,"expanded":false,"name":"Life room","order":4,"parentId":3,"scrollX":754,"scrollY":466},
+{"id":5,"expanded":true,"name":"Testmap","order":7,"parentId":0,"scrollX":1242.5454545454545,"scrollY":699.2727272727273},
+{"id":6,"expanded":true,"name":"Life room","order":4,"parentId":3,"scrollX":1139,"scrollY":641},
 {"id":7,"expanded":false,"name":"Tester map","order":8,"parentId":5,"scrollX":911.2,"scrollY":512.8},
 {"id":8,"expanded":false,"name":"Entry copy","order":9,"parentId":5,"scrollX":904.8,"scrollY":800.8},
 {"id":9,"expanded":false,"name":"Life room 2","order":5,"parentId":6,"scrollX":1139,"scrollY":641}

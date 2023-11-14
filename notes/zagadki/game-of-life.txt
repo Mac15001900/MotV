@@ -10,7 +10,9 @@ Clues:
 a squate with a marked middle? - on the walls \,
 
 Calibration step (one with directions) / compass with N E S W NE NW SE SW
-Two lists of numbers - one all even, the other all odd
+Two lists of numbers - one all even, the other all odd.
+
+3 25 171 1 ??? - no way to create something that won't look like it has a pattern to it
 
 An image with the target grid and letters.
 

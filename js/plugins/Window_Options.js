@@ -173,6 +173,7 @@ Window_Options.prototype.cursorRight = function (wrap, reverse = false) {
     if (symbol === "cancel" || symbol === "controls" || symbol === "keyConfig") return; //Change: special case for going back, controls and language
     if (symbol === 'lang') {
         this.changeValue(symbol, reverse ? langData.previous() : langData.next());
+        this.refresh();
         return;
     }
     var value = this.getConfigValue(symbol);
@@ -215,15 +216,6 @@ Window_Options.prototype.processDisabledOption = function (symbol) {
     //TODO: make a sound?
 }
 
-Window_Options.prototype.showControlsScreen = function () {
-    let inp = g.getInterpreter();
-    this.active = false;
-    inp.pluginCommand('SetQuestionWindowData', ['1', '1', 'center']);
-    inp.pluginCommand('SetQuestionWindowChoices', ['OK']);
-    inp.pluginCommand('CreateQuestionWindow', ['3', s.controlsScreen]);
-    //TODO re-activate it when the question window is done
-}
-
 Window_Options.prototype.volumeOffset = function () {
     return 5;
 };
@@ -244,3 +236,13 @@ Window_Options.prototype.getConfigValue = function (symbol) {
 Window_Options.prototype.setConfigValue = function (symbol, volume) {
     ConfigManager[symbol] = volume;
 };
+
+/*
+//Old controls panel
+Window_Options.prototype.showControlsScreen = function () {
+    let inp = g.getInterpreter();
+    this.active = false;
+    inp.pluginCommand('SetQuestionWindowData', ['1', '1', 'center']);
+    inp.pluginCommand('SetQuestionWindowChoices', ['OK']);
+    inp.pluginCommand('CreateQuestionWindow', ['3', s.controlsScreen]);
+}*/

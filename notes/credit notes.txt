@@ -62,3 +62,5 @@ Fonts:
 Logo font (andar) - Andrew Young, Disaster Fonts, Creative Commons Attribution-ShareAlike
 Old fonts: VileR, Creative Commons Attribution-ShareAlike 4.0, https://int10h.org/oldschool-pc-fonts/
 Chakra-Petch (computer-ish one): Open font licence https://github.com/m4rc1e/Chakra-Petch/blob/master/OFL.txt, multiple contributors: https://github.com/cadsondemak/Chakra-Petch
+Square sans: Sizenko Alexander (freeware)
+"Video SSD" font: GuyStruct

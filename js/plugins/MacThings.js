@@ -450,7 +450,7 @@ g.calculatorPuzzle = function (text) { //Factorisation for testing: https://www.
     for (let i = 0; i < values.length; i++) {
         sum = sum * PRIMES[i] ** BigInt(values[i]);
     }
-    return g.breakString(sum + "", 125);
+    return g.breakString("" + sum, 80).split('\n').map(line => "\\fn<Segment>" + line).join('\n');
 }
 
 
@@ -817,8 +817,10 @@ Window_Base.prototype.convertEscapeCharacters = function (text) {
 //Removes or converts some special escape characters, for saving strings as plain text. Might not handle everything
 //TODO: remove text shaking stuff as well
 g.simpleUnescape = function (string) {
+    console.log("Processing ", Window_Base.prototype.convertEscapeCharacters(string))
     return Window_Base.prototype.convertEscapeCharacters(string)
         .replace(/\x1bMSGCORE\[(\d+)\]/g, '') //replaces Yanfly MessageCore codes //TODO Replace \fn<fontName>
+        .replace(/\x1bfn<(\w+)>/g, '') //replaces Yanfly MessageCore codes //TODO Replace \fn<fontName>
         .replace(/\x1b\w\[(\d+)\]/g, '') //Replaces single-letter \x[n] codes
         .replace(/\x1b\w/g, ''); //Replaces single-letter \x codes
 }
@@ -1083,6 +1085,7 @@ Graphics._createGameFontLoader = function () {
     this._createFontLoader('GameFont');
     this._createFontLoader('Chakra');
     this._createFontLoader('Antar');
+    this._createFontLoader('Segment');
 };
 
 

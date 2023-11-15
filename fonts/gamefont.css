@@ -18,6 +18,16 @@
     src: url("ChakraPetch-Regular.ttf");
 }
 
+@font-face {
+    font-family: Square;
+    src: url("square_sans_serif_7.ttf");
+}
+
+@font-face {
+    font-family: Segment;
+    src: url("video-ssd.ttf");
+}
+
 .IIV::-webkit-media-controls-play-button,
 video::-webkit-media-controls-start-playback-button {
     opacity: 0;

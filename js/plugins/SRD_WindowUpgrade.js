@@ -1436,6 +1436,7 @@ function Window_ChoiceMessage() {
 	Window_ChoiceMessage.prototype.initialize = function (message, choices, callbacks, data) {
 		this._lines = message.split(/(?:\r\n|\r|\n)/);
 		this._borderPadding = 12;
+		if ($gv && $gv[23] && $gv[23] !== "GameFont") this.standardFontFace = () => $gv[23]; // this.contents.fontFace = $gv[23];
 		Window_ChoiceBase.prototype.initialize.call(this, choices, callbacks, data);
 	};
 
@@ -1455,7 +1456,7 @@ function Window_ChoiceMessage() {
 		}
 		this.width = this.windowWidth();
 		this.refresh();
-		if ($gv) {
+		if ($gv) { //We need this condition because the window is also used on the title screen, when $gv doesn't exist yet
 			this.select($gv[22]); //Change: using specific index if it exists
 			$gv[22] = 0;
 		} else {

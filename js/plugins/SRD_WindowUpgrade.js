@@ -938,8 +938,8 @@ function Window_ChoiceMessage() {
 	};
 
 	Window.prototype._refreshColorFilter = function () {
-		this._colorFilter.hue(0);
-		this._colorFilter.adjustTone(this._colorTone[0], this._colorTone[1], this._colorTone[2]);
+		this._colorFilter?.hue(0);
+		this._colorFilter?.adjustTone(this._colorTone[0], this._colorTone[1], this._colorTone[2]);
 	};
 
 	Window.prototype._refreshBack = function () {

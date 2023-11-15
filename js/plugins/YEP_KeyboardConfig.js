@@ -1072,7 +1072,7 @@ Window_KeyConfig.prototype._updateCursor = function () {
 };
 
 //Reordered the draw order to make the cursor appear on top
-Window.prototype._createAllParts = function () {
+Window_KeyConfig.prototype._createAllParts = function () {
 	this._windowSpriteContainer = new PIXI.Container();
 	this._windowBackSprite = new Sprite();
 	this._windowCursorSprite = new Sprite();
@@ -1091,6 +1091,7 @@ Window.prototype._createAllParts = function () {
 	this.addChild(this._upArrowSprite);
 	this.addChild(this._windowPauseSignSprite);
 	this.addChild(this._windowCursorSprite);
+	this._createColorFilter(); //Required by Window Upgrade, which adds that as an alias of Window
 };
 
 //=============================================================================

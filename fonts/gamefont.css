@@ -8,6 +8,15 @@
     src: url("antar.ttf");
 }
 
+@font-face {
+    font-family: Roboto;
+    src: url("RobotoMono-VariableFont_wght.ttf");
+}
+
+@font-face {
+    font-family: Chakra;
+    src: url("ChakraPetch-Regular.ttf");
+}
 
 .IIV::-webkit-media-controls-play-button,
 video::-webkit-media-controls-start-playback-button {

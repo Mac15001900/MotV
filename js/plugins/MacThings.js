@@ -237,7 +237,7 @@ g.checkKey = function (input) {
 g.processNewKey = function (inp) {
     let currentKeys = g.data.keysTotal;
     let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
-    let message = ""
+    let message = "\\fn<Chakra>"
     if (newStage > 0) {
         $gv[41] = newStage;
         message += s.newAreaUnlocked + '\n';
@@ -1077,6 +1077,13 @@ Graphics.endLoading = function () {
 };
 
 //=====================================Various engine changes=====================================
+
+//Loading multiple fonts at start-up
+Graphics._createGameFontLoader = function () {
+    this._createFontLoader('GameFont');
+    this._createFontLoader('Chakra');
+    this._createFontLoader('Antar');
+};
 
 
 //Clears up things when going back to main menu

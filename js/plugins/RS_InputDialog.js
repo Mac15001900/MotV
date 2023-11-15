@@ -563,7 +563,7 @@ function Scene_InputDialog() {
       border : 2px solid #414141;
       border-radius : 10px;
       text-shadow : 0px 1px 3px #696969;
-      font-family : arial;
+      font-family : chakra;
       color : #1a1a1a;
       outline : none;
       font-size: 1rem;
@@ -571,7 +571,7 @@ function Scene_InputDialog() {
   
   .defaultButton {
       opacity : 0.8;
-      font-family : arial;
+      font-family : chakra;
       border : 1px solid rgb(73, 73, 73);
       background-image: -webkit-linear-gradient(top, rgba(255,255,255,.2) 0%, rgba(255,255,255,0) 100%);
       color : rgb(19, 19, 19);

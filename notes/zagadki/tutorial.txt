@@ -5,24 +5,13 @@ Pierwsza:
 cezar("nexus[beginning]", -1, alphabetEnglish)
 'mdwtr[adfhmmhmf]'
 
-Tutorialowa zagadka (stara):
-
-klu
-cz[p
-owo
-dzen
-ia]
-
-k_l_u_ | _cz_[p | _o__wo | dz_e_n | i_a__] | 
-kxltue | rcz,[p | uo.iwo | dzoe'n | ijayj]
-
-kxltue
-rcz,[p
-uo.iwo
-dzoe'n
-ijayj]
-
-Nowa:
+Druga:
+Floor pattern:
+X X X 
+ XX XX
+X  X  
+  X XX
+XX XX
 
 klucz[otoczenie]
 
@@ -47,11 +36,33 @@ ro
 und
 you]
 
-n_e_x_ | _us_[a | _r__o_ | __u_nd | yo_u]_
-nne x{ | tus@[a | tr o-) | łśu}nd | yo<u]h
+n_e_x_ | _us_[a | r__o__ | __u_nd | yo_u]_
+nne x{ | tus@[a | rt o-) | lsu}nd | yo<u]h
 
 nne x{ 
 tus@[a 
-tr o-) 
-łśu}nd 
+rt o-) 
+lsu}nd 
 yo<u]h
+
+nne x{\ntus@[a\nrt o-)\nlsu}nd\nyo<u]h\n
+
+
+
+--------------------------------
+Stara wersja:
+
+klu
+cz[p
+owo
+dzen
+ia]
+
+k_l_u_ | _cz_[p | _o__wo | dz_e_n | i_a__] | 
+kxltue | rcz,[p | uo.iwo | dzoe'n | ijayj]
+
+kxltue
+rcz,[p
+uo.iwo
+dzoe'n
+ijayj]

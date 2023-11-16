@@ -829,19 +829,61 @@ g.simpleUnescape = function (string) {
         .replace(/\x1b\w/g, ''); //Replaces single-character \x codes
 }
 
-function copyTextToClipboard(inp, text, escapeSpecial = true) {
+/**
+ * Puts the provided text into the user's clipboard, optionally doing some processing on it. Sets $gs[24] to true on success and to false otherwise.
+ * Sets the provided interpreter's wait mode to indefinite until the operation completes.
+ * @param {Game_Interpreter} inp 
+ * @param {String} text The text to add to the clipboard
+ * @param {Boolean} escapeSpecial Whether all RM text codes (e.g. \c[4]) should be removed
+ * @param {Boolean} trimText Whether each line of the text should be trimmed
+ */
+function copyTextToClipboard(inp, text, escapeSpecial = true, trimText = true) {
     if (inp) inp._waitMode = 'indefinite';
-    navigator.clipboard.writeText(escapeSpecial ? g.simpleUnescape(text) : text).then(
+    let processedText = text;
+    if (trimText) processedText = processedText.split('\n').map(line => line.trim()).join('\n');
+    if (escapeSpecial) processedText = g.simpleUnescape(processedText);
+    navigator.clipboard.writeText(processedText).then(
         () => {
-            $gs[25] = true;
+            $gs[24] = true;
             if (inp) inp._waitMode = '';
         },
         () => {
-            $gs[25] = false;
+            //If the proper way failed, try the old one
+            oldCopyTextToClipboard(processedText);
             if (inp) inp._waitMode = '';
         },
     );
 }
+
+//Old text to clipboard, could be more compatible with older devices. Function by Dean Taylor taken from https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+function oldCopyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+    //Some styling shenanigans in case the element renders for some reason
+    textArea.style.position = 'fixed';
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = 0;
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        var success = document.execCommand('copy');
+        $gs[24] = success;
+    } catch (err) {
+        console.warn('Failed to copy to clipboard');
+        $gs[24] = false;
+    }
+    document.body.removeChild(textArea);
+}
+
 
 
 

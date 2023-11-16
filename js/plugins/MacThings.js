@@ -627,7 +627,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
         switch (choice) {
             case -2: break;
             case -1:
-                copyTextToClipboard(imageTexts[x + "-" + y]);
+                copyTextToClipboard(inp, imageTexts[x + "-" + y]);
                 g.showMessage(inp, s.clipboardMessage);
                 break;
             case 0: self.moveLeft(); break;
@@ -829,33 +829,21 @@ g.simpleUnescape = function (string) {
         .replace(/\x1b\w/g, ''); //Replaces single-character \x codes
 }
 
-//Text to clipboard, function by Dean Taylor taken from https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-function copyTextToClipboard(text, escapeSpecial = true) {
-    var textArea = document.createElement("textarea");
-    //Some styling shenanigans in case the element renders for some reason
-    textArea.style.position = 'fixed';
-    textArea.style.top = 0;
-    textArea.style.left = 0;
-    textArea.style.width = '2em';
-    textArea.style.height = '2em';
-    textArea.style.padding = 0;
-    textArea.style.border = 'none';
-    textArea.style.outline = 'none';
-    textArea.style.boxShadow = 'none';
-    textArea.style.background = 'transparent';
-
-    textArea.value = escapeSpecial ? g.simpleUnescape(text) : text;
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-        var success = document.execCommand('copy');
-        //console.log('Copying text to clipboard was ' + (success ? 'successful' : 'unsuccessful'));
-    } catch (err) {
-        console.warn('Failed to copy to clipboard');
-    }
-    document.body.removeChild(textArea);
+function copyTextToClipboard(inp, text, escapeSpecial = true) {
+    if (inp) inp._waitMode = 'indefinite';
+    navigator.clipboard.writeText(escapeSpecial ? g.simpleUnescape(text) : text).then(
+        () => {
+            $gs[25] = true;
+            if (inp) inp._waitMode = '';
+        },
+        () => {
+            $gs[25] = false;
+            if (inp) inp._waitMode = '';
+        },
+    );
 }
+
+
 
 //=====================================  Translation system (and colorblindness) =====================================
 

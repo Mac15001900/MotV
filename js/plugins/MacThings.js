@@ -774,9 +774,9 @@ g.padToLength = function (string, targetLength, side = 'both', onlyFirstLine = f
     let res = '';
     switch (side) {
         case 'both':
-        case 'center': res = lines.map(l => padding + l + padding).join('\n');
-        case 'left': res = lines.map(l => padding + padding + l).join('\n');
-        case 'right': res = lines.map(l => l + padding + padding).join('\n');
+        case 'center': res = lines.map(l => padding + l + padding).join('\n'); break;
+        case 'left': res = lines.map(l => padding + padding + l).join('\n'); break;
+        case 'right': res = lines.map(l => l + padding + padding).join('\n'); break;
     }
     if (onlyFirstLine) return res + '\n' + string.split('\n').slice(1).join('\n');
     else return res;

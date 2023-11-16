@@ -437,7 +437,7 @@ g.encrypterPuzzle = function (text) {
     for (let i = 0; i < values.length; i++) {
         encrypted[i] = s.encryptList[(values[i] - 1 + sum * (i + 1)) % (s.encryptList.length)];
     }
-    return encrypted.join("") + "-" + sum;
+    return "\\c[4]" + encrypted.join("") + "-" + sum + " "; //For some reason the width calculations for Chakra are just slightly off, so we're adding a space to compensate
 }
 
 g.calculatorPuzzle = function (text) { //Factorisation for testing: https://www.alpertron.com.ar/ECM.HTM
@@ -450,7 +450,8 @@ g.calculatorPuzzle = function (text) { //Factorisation for testing: https://www.
     for (let i = 0; i < values.length; i++) {
         sum = sum * PRIMES[i] ** BigInt(values[i]);
     }
-    return g.breakString("" + sum, 80).split('\n').map(line => "\\fn<Segment>" + line).join('\n');
+    let res = g.breakString("" + sum, 80).split('\n').map(line => "\\fn<Segment>\\c[4]" + line);
+    return res.join('\n');
 }
 
 
@@ -763,18 +764,22 @@ g.showMessages = function (inp, messages, defaultId) {
 }
 
 //Adds extra spaces to make sure the text is of certain width
-g.padToLength = function (string, targetLength, side = 'both') {
+g.padToLength = function (string, targetLength, side = 'both', onlyFirstLine = false) {
     console.assert(typeof string === 'string', "padToLength: string must be a string");
     let lines = string.split('\n');
+    if (onlyFirstLine) lines = [lines[0]];
     let maxLength = lines.map(g.simpleUnescape).map(l => l.length).reduce((a, b) => a > b ? a : b);
     if (maxLength >= targetLength) return string;
     let padding = ' '.repeat(Math.ceil((targetLength - maxLength) / 2));
+    let res = '';
     switch (side) {
         case 'both':
-        case 'center': return lines.map(l => padding + l + padding).join('\n');
-        case 'left': return lines.map(l => padding + padding + l).join('\n');
-        case 'right': return lines.map(l => l + padding + padding).join('\n');
+        case 'center': res = lines.map(l => padding + l + padding).join('\n');
+        case 'left': res = lines.map(l => padding + padding + l).join('\n');
+        case 'right': res = lines.map(l => l + padding + padding).join('\n');
     }
+    if (onlyFirstLine) return res + '\n' + string.split('\n').slice(1).join('\n');
+    else return res;
 }
 
 //Breaks up a string into multiple lines. Rather crude, does not look at spaces
@@ -817,12 +822,11 @@ Window_Base.prototype.convertEscapeCharacters = function (text) {
 //Removes or converts some special escape characters, for saving strings as plain text. Might not handle everything
 //TODO: remove text shaking stuff as well
 g.simpleUnescape = function (string) {
-    console.log("Processing ", Window_Base.prototype.convertEscapeCharacters(string))
     return Window_Base.prototype.convertEscapeCharacters(string)
-        .replace(/\x1bMSGCORE\[(\d+)\]/g, '') //replaces Yanfly MessageCore codes //TODO Replace \fn<fontName>
-        .replace(/\x1bfn<(\w+)>/g, '') //replaces Yanfly MessageCore codes //TODO Replace \fn<fontName>
-        .replace(/\x1b\w\[(\d+)\]/g, '') //Replaces single-letter \x[n] codes
-        .replace(/\x1b\w/g, ''); //Replaces single-letter \x codes
+        .replace(/\x1bMSGCORE\[(\d+)\]/g, '') //replaces Yanfly MessageCore codes
+        .replace(/\x1bfn<(\w+)>/g, '') //replaces \fn<Fontname>
+        .replace(/\x1b\w\[(\d+)\]/g, '') //Replaces single-character \x[n] codes
+        .replace(/\x1b\w/g, ''); //Replaces single-character \x codes
 }
 
 //Text to clipboard, function by Dean Taylor taken from https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript

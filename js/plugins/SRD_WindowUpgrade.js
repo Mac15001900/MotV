@@ -1441,14 +1441,23 @@ function Window_ChoiceMessage() {
 	};
 
 	Window_ChoiceMessage.prototype.setupWidth = function (width) {
+		/*if ($gv && $gv[24] > 0) {
+			width = $gv[24] + (this.standardPadding() * 2);
+			$gv[24] = 0;
+		}*/
 		if (!width) {
 			this._width = 0;
 			for (let i = 0; i < this._lines.length; i++) {
 				//const textWidth = this.textWidth(this._lines[i]); //Change: Fixed getting width
-				const textWidth = this.textWidth(g.simpleUnescape(this._lines[i]));
+				let unEscaped = g.simpleUnescape(this._lines[i]);
+				const textWidth = this._lines[i].startsWith("\\fn<Segment>") ? unEscaped.length * 20 : this.textWidth(unEscaped); //Speed up the calculation if we're using the monospace font
 				if (this._width < textWidth) {
 					this._width = textWidth;
 				}
+			}
+			if ($gv && this._width < $gv[24]) {
+				this._width = $gv[24];
+				$gv[24] = 0;
 			}
 			this._width += (this.standardPadding() * 2);
 		} else {

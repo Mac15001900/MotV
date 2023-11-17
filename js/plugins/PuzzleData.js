@@ -122,8 +122,8 @@ const $dataPuzzles = {
             name: "sudoku",
             solution: "reverseness",
         }, {
-            name: "framuga", //TODO !
-            solution: "odcyrklowywanie",
+            name: "framuga", //TODO the wrong answers!
+            solution: "antepenultima",
             failure: function (guess) {
                 switch (guess) {
                     case "jgbuśmłnzruąręf":

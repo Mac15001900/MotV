@@ -13,6 +13,9 @@ Wzór + pominięcie [ : ódęśukrncpyśści
 Łysy : ódęśukrncpyśśch (różni się końcem, zrobił j->h zamiast j->i)
 
 
+Dodatkowa podpowiedź:
+] + n = ]
+[ + n = [
 
 
 English: nexus[antepenultima] (ends with pi)
@@ -20,6 +23,66 @@ English: nexus[antepenultima] (ends with pi)
 qfbvx[ctyhumwbuwkpi]
 qfbvx[ct yh um w bu wk pi] - alternating colours to highlight pi
 
+Mistakes:
+Ignoring [: trscrhosnnhnf
+n,1,n+1,1,n+2 pattern: 
+
 
 (some extra hint for the end?)
 16 greek flags?
+
+No better words that antepenultima unfortunately. Only "nco" starts with pi, and the ones that end with it are:
+'antiparagraphe','adenolymphoma', 'angiokeratoma', 'angiolymphoma', 'antepenultima', 'archiblastoma', 'arthroempyema', 'blepharophyma', 'branchiostoma', 'cardiorrheuma', 'cholesteatoma', 'chondrenchyma', 'chondrolipoma', 'chondromyxoma', 
+'chondrosteoma', 'chorioadenoma', 'cinemelodrama', 'edriophthalma', 'enterocystoma', 'fibropsammoma', 'generalissima', 'ginglymostoma', 'haematotherma', 'hypermegasoma', 'hypernephroma', 'iridocoloboma', 'keratoangioma', 'keratoleukoma', 
+'lymphoadenoma', 'lymphosarcoma', 'liomyofibroma', 'lipochondroma', 'melanosarcoma', 'metromalacoma', 'myxochondroma', 'myxopapilloma', 'neuroblastoma', 'orchiomyeloma', 'osteoblastoma', 'osteosteatoma', 'panstereorama', 'phacoglaucoma', 
+'phylactolaema', 'polypapilloma', 'psammosarcoma', 'quinquagesima', 'rhinoscleroma', 'schizophragma', 'scytoblastema', 'sclerosarcoma', 'scrofuloderma', 'spermatogemma', 'sphaceloderma', 'sphaerenchyma', 'staphyloedema', 'typhloempyema', 
+'xanthomyeloma', 'extraquiz', 'mustahfiz', 'rheumatiz', 'adhaka', 'alaska', 'aupaka', 'baraka', 'bareka', 'batoka', 'camaka', 'charka', 'chouka', 'chukka', 'eureka', 'goloka', 'habuka', 'halaka', 'jataka', 'judoka', 'kabaka', 'kamika', 
+'kanaka', 'kanuka', 'kapuka', 'karaka', 'katuka', 'kavika', 'kawaka', 'kawika', 'khirka', 'kipuka', 'kishka', 'kolkka', 'koorka', 'kozuka', 'langka', 'latuka', 'manuka', 'markka', 'medaka', 'motyka', 'nangka', 'nataka', 'nootka', 'palaka', 
+'panaka', 'pashka', 'pataka', 'phooka', 'pianka', 'polska', 'pukeka', 'quokka', 'shapka', 'sifaka', 'straka', 'taluka', 'tanaka', 'tangka', 'tankka', 'tcheka', 'thitka', 'tilaka', 'typika', 'topeka', 'tranka', 'troika', 'vedika', 'velika', 
+'wayaka', 'wovoka', 'fremd', 'hdkf', 'wakf'
+
+With pi somewhere in the middle (assuming we colour every 2 characters alternating colors):
+4 (kf): inkfish
+6 (ka): stickability, megakaryoblast, thinkable
+'triskaidekaphobes', 'triskaidekaphobia', 'triskaidekaphobe', 'blockaderunning', 'megakaryoblast', 'megakaryocytic', 'afrikanderdom', 'afrikanderism', 'breakableness', 'crackableness', 'drinkableness', 'endokaryogamy', 'frankalmoigne', 'leuckartiidae', 'megakaryocyte', 'polykaryocyte', 'porokaiwhiria', 'speakableness', 'thinkableness', 'unlikableness', 'untakableness', 'analkalinity', 'breakability', 'chickahominy', 'crackability', 'drinkability', 'frankability', 'frankalmoign', 'hemikaryotic', 'hypokaliemia', 'kalokagathia', 'shockability', 'stickability', 'thinkability', 'antikathode', 'blackamoors', 'chickabiddy', 'chickamauga', 'chockablock', 'chuckawalla', 'dreikanters', 'frankalmoin', 'hypokalemia', 'hypokalemic', 'karakatchan', 'speakablies', 'afrikander', 'aleukaemic', 'anankastic', 'antikamnia', 'apickaback', 'blackamoor', 'blockaders', 'blockading', 'breakables', 'chickadees', 'chickasaws', 'crackajack', 'dealkalize', 'dreikanter', 'drinkables', 'hemikaryon', 'iceskating', 'knockabout', 'leuckartia', 'marekanite', 'oriskanian', 'palikarism', 'perikaryal', 'perikaryon', 'piankashaw', 'shackanite', 'shackatory', 'shtokavski', 'stickadore', 'stickadove', 'stinkardly', 'stockading', 'stockannet', 'stockateer', 'afrikaans', 'afrikaner', 'alackaday', 'alaskaite', 'baaskaaps', 'blackacre', 'blinkards', 'blockaded', 'blockader', 'blockades', 'blockages', 'breakable', 'breakably', 'breakages', 'breakaway', 'brockages', 'brookable', 'chamkanni', 'checkable', 'chickadee', 'chickaree', 'chickasaw', 'chinkapin', 'crackable', 'drinkable', 'drinkably', 'drunkards', 'frankable', 'gladkaite', 'iceskated', 'kahikatea', 'kamikazes', 'katakanas', 'knackaway', 'knockaway', 'malikadna', 'marakapas', 'masskanne', 'perikarya', 'pipikaula', 'rebukable', 'revokable', 'shockable', 'singkamas', 'speakable', 'speakably', 'stackable', 'stalkable', 'stickable', 'stinkards', 'stinkaroo', 'stockaded', 'stockades', 'tagakaolo', 'tarnkappe', 'thinkable', 'thinkably', 'trackable', 'trackages', 'truckages', 'unaskable', 'unfakable', 'unlikable', 'unlikably', 'unmakable', 'untakable', 'wreckages', 'ahamkara', 'ahankara', 'alaskans', 'baaskaap', 'blackarm', 'blankard', 'blinkard', 'blockade', 'blockage', 'breakage', 'breakaxe', 'brockage', 'checkage', 'chinkara', 'chukkars', 'clackama', 'clerkage', 'clinkant', 'cloakage', 'crockard', 'drunkard', 'fanakalo', 'flankard', 'halakahs', 'hangkang', 'harikari', 'horokaka', 'iceskate', 'kadikane', 'kamikaze', 'katakana', 'kawakawa', 'khirkahs', 'kurikata', 'lashkars', 'malikala', 'malikana', 'palikars', 'peshkash', 'phulkari', 'plackart', 'plankage', 'pluckage', 'prickado', 'prickant', 'samskara', 'slackage', 'stackage', 'stickage', 'stinkard', 'stockade', 'stockado', 'stockage'
+8 (gb): hummingbird | 'herringbones', 'hummingbirds', 'mockingbirds', 'puddingberry', 'alibangbang', 'fellingbird', 'herringbone', '', 'mockingbird', 'demihagbut'
+10 (gf): 'unmeaningfulness', 'unmeaningfully', 'unmeaningful'
+12: none
+14 (he): 'electrotelethermometer', 'hexanitrodiphenylamine', 'photospectroheliograph', 'chondroendothelioma', 'dishexecontahedroid', 'historiographership', 'undistinguishedness', 'benzalacetophenone', 'chloroacetophenone', 'dyakisdodecahedron', 'hexakistetrahedron', 'pseudorhombohedral', 'tetrakaidecahedron', 'tetrakishexahedron', 'thermoradiotherapy', 'triakisicosahedral', 'triakisicosahedron', 'triakistetrahedral', 'triakistetrahedron', 'zygomaticosphenoid', 'adenohypersthenia', 'bromochlorophenol', 'cardiodysesthesia', 'counterhypothesis', 'electroanesthesia', 'glossokinesthetic', 'hamamelidanthemum', 'hemihyperesthesia', 'hemiparanesthesia', 'hypercryaesthesia', 'hypergeusesthesia', 'paranitrosophenol', 'pentachlorophenol', 'spondylolisthesis', 'spondylolisthetic', 'cinematographers', 'historiographers', 'mesothoracotheca', 'alligatorfishes', 'archphilosopher', 'bumblebeefishes', 'butterflyfishes', 'cinematographer', 'dacryohemorrhea', 'dactyliographer', 'enigmatographer', 'epistolographer', 'ethnogeographer', 'gastromyxorrhea', 'historiographer', 'indistinguished', 'kinematographer', 'nemathelminthes', 'nonextinguished', 'overembellished', 'overembellishes', 'paradoxographer', 'paroemiographer', 'phytogeographer', 'platyhelminthes', 'pneumatographer', 'sargassumfishes', 'stepgrandfather', 'stepgrandmother', 'thalassographer', 'undistinguished', 'xylopyrographer', 'antiparagraphe'
+
+Temp solve:
+qfbvx[ctyhumwbuwkpi]
+nexus[antepenultima]
+3141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844
+
+
+
+
+
+
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+m
+n
+o
+p
+q
+r
+s
+t
+u
+v
+w
+x
+y
+z

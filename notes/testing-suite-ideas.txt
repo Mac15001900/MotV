@@ -7,15 +7,17 @@ Warp to selected map
 Show toasts for console errors, warnings and logs
 Show a persistent toast with a specific variable
 Play a sound when a variable changes
+Last changed variable/switch
 Instant / very fast text
 Show collisions?
 Choose event page
-Show event pages
+Show currently active event pages, as toasts above events
 Toggle music key / show currently playing music
 Instant text - Window_Message.prototype.updateShowFast = function() {this._showFast = true;}
-Last changed variable/switch
 Warn about the lack of changes since last test
 Modify evalDamageFormula to print errors in the formulas instead of returning 0
-Allow selecting disabled options
+Allow selecting disabled options from menus
 Info for the console (like g.getInterpreterInfo())
-Pause the game, do one frame at a time
+Pause the game, run one frame at a time
+Print event comments in console
+Colourblind testing filters

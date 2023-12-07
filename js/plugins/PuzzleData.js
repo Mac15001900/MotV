@@ -66,30 +66,27 @@ const $dataPuzzles = {
             name: "decrypto",
             solution: "chocolate pizza squirrel Sparta",
             success: {
-                string: "Tak patrząc po tamtej instruckji, to chyba w pewnym sensie udało\nmi się jednak zagrać w Decrypto.",
+                string: "Well, from having a look through its manual, it seems like in\na way I did kind of manage to play some Decrypto.",
                 id: 1,
             },
             failure: function (guess) {
-                let keyWords = ["czekolada", "pizza", "wiewiórka", "sparta"];
+                let keyWords = ["chocolate", "pizza", "squirrel", "sparta"];
                 let correct = 0;
                 for (let i = 0; i < keyWords.length; i++) {
                     if (guess.contains(keyWords[i])) correct++;
                 }
-                if (correct === 2) return ({ string: "Niektóre z tych słów zdecydowanie mają sens,\nno ale chyba jeszcze nie wszystkie.", id: 0 });
+                if (correct === 2) return ({ string: "I think some of these words should be correct, though apprently\nnot all of them are.", id: 0 });
                 else if (correct === 3) {
                     let wrongPart = key;
                     for (let i = 0; i < keyWords.length; i++) wrongPart = wrongPart.replace(keyWords[i], '');
                     wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
-                    return ({ string: "To musi być już blisko!\n" + wrongPart + " tu chyba najmniej pasuje.", id: 0 })
+                    return ({ string: "Ah, not yet, but this has got to be close! Out of these, I think\n" + wrongPart + " is the worst fit.", id: 0 })
                 } else return null;
             }
         }, {
             name: "kolory",
             solution: "deliciousness",
-            success: { string: "Trochę robię się teraz głodna przez tę zagadkę.", id: 1 },
-            failure: function (guess) {
-                if (guess === "miżdmalina") return "To musi być jakoś blisko. Może trzeba po prostu potraktować\ntamtą spację jak zwykły znak?"
-            }
+            success: { string: "Well, I certainly did't expect to learn some fun new colour\nnames here.", id: 1 },
         }, {
             name: "rotowanie",
             solution: "rotatious",
@@ -112,8 +109,8 @@ const $dataPuzzles = {
             name: "liczby pierwsze",
             solution: "eulerishness",
         }, {
-            name: "parzystość",
-            solution: "terazmyśliszparzystością",
+            name: "parzystość", //TODO create possible wrong solutions
+            solution: "now you're thinking with parity",
             failure: function (guess) {
                 if (guess === "terazmyśli" || guess === "terazmyśl") return "Wydaje się to działać, no ale nijak ten końcowy nawias tu nie\npasuje. Może jednak trzeba tu zrobić coś więcej?";
                 else if (guess === "terazścią") return [{ string: "Czyli nie o to chodziło." }, { string: "Chyba jendak powinnam potraktować tą drugą spację tak samo\njak pierwszą\\..\\..\\.. tylko co dalej?", id: 4, balloon: BALLOON_ID.SILENCE }];
@@ -126,12 +123,16 @@ const $dataPuzzles = {
             solution: "antepenultima",
             failure: function (guess) {
                 switch (guess) {
-                    case "jgbuśmłnzruąręf":
-                        return [{ string: "Nie!? Ale przecież tu wszystko tak idealnie wskazuje na pi.", id: 3, balloon: BALLOON_ID.COBWEB },
-                        { string: "Chociaż właściwie to póki co rozwiązania zawsze były raczej\njakimiś słowami. Może trzeba to zrobić jakoś odrobinę inczej?", id: 0 }];
-                    case "łhąźoóltuźńbklż":
-                    case "ódęśukrncpyśści":
-                        return "Szkoda, tak ładnie ta zasada działała dla pierwszych pięciu,\nno ale chyba nie działa dalej. Czyli chodzi pewnie a coś innego.\nMoże fakt, że ten tekst jest okrągły ma jakieś znaczenie?"
+                    case "trscrhosnnhnf":
+                        return [{ string: "No? Oh come on, everything here was pointing to pi!", id: 3, balloon: BALLOON_ID.COBWEB },
+                        { string: "Well, alright, to think about it, most codes so far turned out\nto be some kind of words, even if they were a bit weird.\nMaybe I just need to do this a little bit differently?", id: 0 }];
+                    case "wsrgmlnakvzow":
+                    case "wsrgmlnauvjog":
+                    case "wsrgmlnatviof":
+                    case "bnxatevstmjeh":
+                    case "bnxatevstwjoh":
+                    case "bnxatevstvjnh":
+                        return "Ah, so it's not going to be so easy.\\. The pattern held up for\nthe first 5, but I guess it doesn't really hold for the rest,\nso it has to be something different\\.. Maybe the fact that the\nwhole thing is circular is somehow relevant?";
                     default: return null;
                 }
             }
@@ -201,12 +202,18 @@ const $dataPuzzles = {
         }, {
             name: "grobowiec_2",
             solution: "activized ballistocardiogram",
+            success: {
+                string: "And apparently that \\fiis\\fi a real word. I really didn't\nexpect it to be.",
+                id: 1,
+            }
+
+
         }, {
             name: "mors",
             solution: "ideas to worlds",
             success: "Well, that was fun to spot.\nAnd I really didn't expect to learn more about Morse code of\nall things, but now I know that '-.--.' can be stand for any\ntype of bracket. The more you know.",
             lastRemaining: {
-                string: "Alright, but where is that one remaining fragment?\nEverything seem to be accounted for already\\..\\..\\..\nMaybe this one is hidden in a different way?",
+                string: "Alright, but where is that one remaining fragment?\nEverything seems to be accounted for already\\..\\..\\..\nMaybe this one is hidden in a different way?",
                 id: 0,
                 balloon: BALLOON_ID.QUESTION,
             }

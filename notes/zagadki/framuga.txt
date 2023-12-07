@@ -1,3 +1,5 @@
+Pi digits: 3141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844
+
 klucz[odcyrklowywanie]
 
 Przesuwając litery o 3,1,4,1,5 itd:
@@ -24,8 +26,12 @@ qfbvx[ctyhumwbuwkpi]
 qfbvx[ct yh um w bu wk pi] - alternating colours to highlight pi
 
 Mistakes:
-Ignoring [: trscrhosnnhnf
-n,1,n+1,1,n+2 pattern: 
+Just ignoring "[:" trscrhosnnhnf
+
+Correctly accounting for "["   |  Ignoring "["
+n,1,n+1,1,n+2 pattern: [wsrgmlnakvzow] | [bnxatevstmjeh]
+Above, but at 10 it rolls back to 0: [wsrgmlnauvjog] | [bnxatevstwjoh]
+Above, but at 10 it rolls back to 1: [wsrgmlnatviof] | [bnxatevstvjnh]
 
 
 (some extra hint for the end?)

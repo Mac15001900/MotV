@@ -1281,10 +1281,19 @@ Window_Base.prototype.convertEscapeCharacters = function (text, x, y) {
     let res = text;
     let match = res.match(pattern);
     while (match) {
-        res = res.replace(pattern, eval(match[1]));
+        res = res.replace(pattern, fallbackEval(match[1]));
         match = res.match(pattern);
     }
     return _Window_Base_convertEscapeCharacters.call(this, res, x, y);
+}
+
+fallbackEval = function (expression, defaultValue) {
+    try {
+        return eval(expression);
+    } catch (e) {
+        console.warn("In-message eval failed", e);
+        return defaultValue ?? expression;
+    }
 }
 
 //New delay character: in messages \, works like \. but for half the time

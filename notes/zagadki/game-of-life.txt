@@ -13,6 +13,7 @@ Calibration step (one with directions) / compass with N E S W NE NW SE SW
 Two lists of numbers - one all even, the other all odd.
 
 3 25 171 1 ??? - no way to create something that won't look like it has a pattern to it
+So don't bother - a list with 1,3,5,7... and 2,4,6,8... will suffice
 
 An image with the target grid and letters.
 

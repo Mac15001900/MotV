@@ -18,3 +18,6 @@ kslzu cpza[rtzeyrsatzo śmcyiśąl]i
 klucz[teraz myślisz parzystością]
 nexus[now you're thinking with parity]
 nienxkuisn[gn owwi tyho up'arrei ttyh]
+
+Messing up spaces and getting the letter after then: nexus[nowthu'rety]
+Only first half: nexus[now you're th

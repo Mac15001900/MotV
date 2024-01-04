@@ -109,17 +109,17 @@ const $dataPuzzles = {
             name: "liczby pierwsze",
             solution: "eulerishness",
         }, {
-            name: "parzystość", //TODO create possible wrong solutions
+            name: "parzystość",
             solution: "now you're thinking with parity",
             failure: function (guess) {
-                if (guess === "terazmyśli" || guess === "terazmyśl") return "Wydaje się to działać, no ale nijak ten końcowy nawias tu nie\npasuje. Może jednak trzeba tu zrobić coś więcej?";
-                else if (guess === "terazścią") return [{ string: "Czyli nie o to chodziło." }, { string: "Chyba jendak powinnam potraktować tą drugą spację tak samo\njak pierwszą\\..\\..\\.. tylko co dalej?", id: 4, balloon: BALLOON_ID.SILENCE }];
+                if (guess === "nowyou'reth") return "That appears to look like something, but the closing bracket\ndoesn't really fit properly here. There must be something I'm\nmissing...";
+                else if (guess === "nowthu'rety") return [{ string: "Well, that's clearly not it." }, { string: "I think I might have slightly messed up around those spaces...", id: 1 }];
             }
         }, {
             name: "sudoku",
             solution: "reverseness",
         }, {
-            name: "framuga", //TODO the wrong answers!
+            name: "framuga",
             solution: "antepenultima",
             failure: function (guess) {
                 switch (guess) {

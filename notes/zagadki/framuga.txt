@@ -16,8 +16,10 @@ Wzór + pominięcie [ : ódęśukrncpyśści
 
 
 Dodatkowa podpowiedź:
-] + n = ]
+Dla każdej liczby naturalnej n:
+
 [ + n = [
+] + n = ]
 
 
 English: nexus[antepenultima] (ends with pi)
@@ -33,6 +35,11 @@ n,1,n+1,1,n+2 pattern: [wsrgmlnakvzow] | [bnxatevstmjeh]
 Above, but at 10 it rolls back to 0: [wsrgmlnauvjog] | [bnxatevstwjoh]
 Above, but at 10 it rolls back to 1: [wsrgmlnatviof] | [bnxatevstvjnh]
 
+Hint:
+For every natural number n, the following must be true:
+
+[ + n = [
+] + n = ]
 
 (some extra hint for the end?)
 16 greek flags?

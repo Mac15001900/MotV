@@ -826,7 +826,7 @@ g.simpleUnescape = function (string) {
         .replace(/\x1bMSGCORE\[(\d+)\]/g, '') //replaces Yanfly MessageCore codes
         .replace(/\x1bfn<(\w+)>/g, '') //replaces \fn<Fontname>
         .replace(/\x1b\w\[(\d+)\]/g, '') //Replaces single-character \x[n] codes
-        .replace(/\x1b\w/g, ''); //Replaces single-character \x codes
+        .replace(/\x1b\S/g, ''); //Replaces single-character \x codes
 }
 
 /**

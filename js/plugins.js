@@ -38,5 +38,6 @@ var $plugins =
 {"name":"LifeRoom","status":true,"description":"","parameters":{}},
 {"name":"MAC_RunNearbyEvent","status":true,"description":"v1.1 Allows events to run other events in various ways.","parameters":{"With an invalid target":"Show a warning in console","Max chain length":"500","Events with trigger \"none\"":"Disabled","Lock ran events":"true"}},
 {"name":"PuzzleData","status":true,"description":"Manages puzzle-related data.","parameters":{}},
-{"name":"ShakeScreen","status":true,"description":"Simply shakes the screen","parameters":{}}
+{"name":"ShakeScreen","status":true,"description":"Simply shakes the screen","parameters":{}},
+{"name":"StringExtractor","status":true,"description":"Extracts all strings into a file","parameters":{}}
 ];

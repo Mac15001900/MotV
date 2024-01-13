@@ -65,7 +65,10 @@ function runExtractor(useEnglish, currentId) {
     if (currentId >= $dataMapInfos.length) {
         DataManager.loadMapData($gameMap.mapId()); //Load the previous map back
         setTimeout(SceneManager.resume, 1000);
-        copyTextToClipboard(null, window.extractedString, true, false);
+        let escapedText = g.simpleUnescape(window.extractedString); //(new Date()).toLocaleString() $dataSystem.gameTitle
+        let finalText = "Text extracted from " + $dataSystem.gameTitle + " on " + (new Date()).toLocaleString() + "\n\n\n" + escapedText;
+        copyTextToClipboard(null, escapedText, false, false);
+        saveExtractedText(finalText);
         console.log("All done.");
         alert("Done! The string has been copied to your clipboard.");
         return;
@@ -96,3 +99,14 @@ function pageIsEnglish(page) {
 function tryLoadingMap(mapId) {
     if ($dataMapInfos[mapId]) DataManager.loadMapData(mapId);
 }
+
+function saveExtractedText(text) {
+    var fs = require('fs');
+    var path = require('path');
+    var dirPath = path.dirname(process.mainModule.filename);
+    var filePath = path.join(dirPath, "extractedText.txt");
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath);
+    }
+    fs.writeFileSync(filePath, text);
+};

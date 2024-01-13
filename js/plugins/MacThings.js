@@ -820,11 +820,11 @@ Window_Base.prototype.convertEscapeCharacters = function (text) {
 }*/
 
 //Removes or converts some special escape characters, for saving strings as plain text. Might not handle everything
-//TODO: remove text shaking stuff as well
 g.simpleUnescape = function (string) {
     return Window_Base.prototype.convertEscapeCharacters(string)
         .replace(/\x1bMSGCORE\[(\d+)\]/g, '') //replaces Yanfly MessageCore codes
         .replace(/\x1bfn<(\w+)>/g, '') //replaces \fn<Fontname>
+        .replace(/\x1b((Shake|Slide|Wave)(<.*?>)?|Circle|ResetShake)/g, '') //Replaces codes from SRD_ShakingText
         .replace(/\x1b\w\[(\d+)\]/g, '') //Replaces single-character \x[n] codes
         .replace(/\x1b\S/g, ''); //Replaces single-character \x codes
 }

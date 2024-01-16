@@ -30,9 +30,12 @@ Window_Sudoku.prototype = Object.create(Window_Command.prototype);
 Window_Sudoku.prototype.constructor = Window_Sudoku;
 Window_Sudoku.prototype.initialize = function () {
     this.values = Array(81).fill(0);
-    for (let i = 0; i < 81; i++) {
-        this.values[i] = Number("600000701010079603273801000800750002007018000021040008180025300030004060400307200"[i]);
-    }
+    this.givens = Array(81).fill(true); //We start with everything being a given, so the player can't change the board before it's generated
+    this.generated = false;
+    this.sudoku = null; //If it's null then it hasn't generated yet
+    let self = this;
+    sudokuJs({ level: 2 }).then(sudoku => { self.sudoku = sudoku });
+
     Window_Command.prototype.initialize.call(this, 0, 0);
     this.height = CELL_SIZE * 9 + this.standardPadding() * 2;
     this.x = Graphics.boxWidth / 2 - this.width / 2;
@@ -67,6 +70,16 @@ Window_Sudoku.prototype.itemTextAlign = function () {
 Window_Sudoku.prototype.itemHeight = function () {
     return CELL_SIZE;
 };
+
+Window_Sudoku.prototype.update = function () {
+    Window_Command.prototype.update.call(this);
+    if (!this.generated && this.sudoku) {
+        this.values = this.sudoku.board.map(x => x === '.' ? 0 : x);
+        this.givens = this.sudoku.board.map(x => x !== '.');
+        this.generated = true;
+        this.refresh();
+    }
+}
 
 
 Window_Sudoku.prototype.refresh = function () {
@@ -105,8 +118,48 @@ Window_Sudoku.prototype.refresh = function () {
 Window_Sudoku.prototype.drawItem = function (index) {
     var rect = this.itemRectForText(index);
     var align = this.itemTextAlign();
+    this.contents.textColor = this.givens[index] ? "aqua" : "#ffffff";
+    if (this.checkForConflicts(index) === true) this.contents.textColor = this.givens[index] ? "chocolate" : "red";
     if (this.values[index] > 0) this.drawText(this.values[index], rect.x, rect.y + (CELL_SIZE - this.standardFontSize()) / 2, rect.width, align);
 };
+
+Window_Sudoku.prototype.checkForConflicts = function (index) {
+    let value = this.values[index];
+    if (value === 0) return -1;
+    let indexesToCheck = [];
+
+    //Check the row and column
+    let rowStart = Math.floor(index / 9) * 9;
+    let columnStart = index % 9;
+    for (let i = 0; i < 9; i++) {
+        indexesToCheck.push(rowStart + i);
+        indexesToCheck.push(columnStart + i * 9);
+    }
+    //Check the box
+    let boxStart = Math.floor(index / 3) * 3 - (Math.floor(index / 9) % 3) * 9;
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            indexesToCheck.push(boxStart + i * 9 + j);
+        }
+    }
+
+    //See if any of those indexes have the same value
+    for (let i = 0; i < indexesToCheck.length; i++) {
+        if (indexesToCheck[i] !== index && this.values[indexesToCheck[i]] === value) return true;
+    }
+    return false;
+}
+/**
+ * 
+ * @returns True iff the grid is entirely filled and there are no conflicts
+ */
+Window_Sudoku.prototype.checkForVictory = function () {
+    if (this.values.any(x => x === 0)) return false;
+    for (let i = 0; i < 81; i++) {
+        if (this.checkForConflicts(i)) return false;
+    }
+    return true;
+}
 
 //Number selection
 
@@ -189,6 +242,11 @@ Scene_Sudoku.prototype.update = function () {
 
 
 Scene_Sudoku.prototype.onOkButton = function () {
+    if (this.mainWindow.givens[this.mainWindow.index()]) { //We can't modify this one
+        SoundManager.playBuzzer();
+        this.mainWindow.activate();
+        return;
+    }
     this.numberInput = new Window_NumberSelect();
     this.numberInput.setHandler('ok', this.onNumberOk.bind(this));
     this.numberInput.setHandler('cancel', this.onNumberCancel.bind(this));
@@ -203,6 +261,7 @@ Scene_Sudoku.prototype.onNumberOk = function () {
     this.numberInput.close();
     this.mainWindow.values[this.mainWindow.index()] = this.numberInput.currentExt();
     this.mainWindow.activate();
+    // if(this.mainWindow.checkForConflicts(this.mainWindow.index()))
     this.mainWindow.refresh();
     SoundManager.playEquip();
 }
@@ -212,16 +271,17 @@ Scene_Sudoku.prototype.onNumberCancel = function () {
     this.mainWindow.activate();
 }
 
-// ---- Sudoku generator ----
+
+//***************************************************************************
+// ---------------------------- Sudoku generator ----------------------------
+//***************************************************************************
+
 //The following sudoku generator is adapted from MIT-licenced code by mucahidyazar, available here https://www.npmjs.com/package/node-sudoku
 
 "use strict"
-window.exports = {};
 //Constants
-Object.defineProperty(exports, "__esModule", { value: true });
 const EMPTY_HOLE_CHAR = '.';
 //Helpers
-Object.defineProperty(exports, "__esModule", { value: true });
 function convertBoard(board, args) {
     let convertedBoard = board;
     if (typeof board === 'string') {
@@ -438,7 +498,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 const NUMS = (0, range)(9, (num) => num + 1);
 // generator max job limit
 const MAX_JOB_COUNT_LIMIT = 6;
@@ -594,7 +653,6 @@ function solve(board, args) {
 
 
 //Sudoku
-Object.defineProperty(exports, "__esModule", { value: true });
 class Sudoku {
     constructor(board, strict = false, emptyHoleChar = EMPTY_HOLE_CHAR) {
         this.board = board;
@@ -630,7 +688,6 @@ class Sudoku {
 }
 
 //Utils
-Object.defineProperty(exports, "__esModule", { value: true });
 function range(max, cb) {
     return [...Array(max).keys()].map((num) => cb(num));
 }
@@ -742,11 +799,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-Object.defineProperty(exports, "generate", { enumerable: true, get: function () { return generate; } });
-Object.defineProperty(exports, "generateAsync", { enumerable: true, get: function () { return generateAsync; } });
-Object.defineProperty(exports, "generateByLevel", { enumerable: true, get: function () { return generateByLevel; } });
-Object.defineProperty(exports, "solve", { enumerable: true, get: function () { return solve; } });
 function sudokuJs({ level, emptyHoleCount, strict = true }) {
     return __awaiter(this, void 0, void 0, function* () {
         let board;

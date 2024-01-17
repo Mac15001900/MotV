@@ -28,13 +28,13 @@ const CELL_SIZE = 64;
 
 Window_Sudoku.prototype = Object.create(Window_Command.prototype);
 Window_Sudoku.prototype.constructor = Window_Sudoku;
-Window_Sudoku.prototype.initialize = function () {
+Window_Sudoku.prototype.initialize = function (puzzle) {
     this.values = Array(81).fill(0);
     this.givens = Array(81).fill(true); //We start with everything being a given, so the player can't change the board before it's generated
     this.generated = false;
     this.sudoku = null; //If it's null then it hasn't generated yet
     let self = this;
-    sudokuJs({ level: 2 }).then(sudoku => { self.sudoku = sudoku });
+    sudokuJs({ level: 1 }).then(sudoku => { self.sudoku = sudoku });
 
     Window_Command.prototype.initialize.call(this, 0, 0);
     this.height = CELL_SIZE * 9 + this.standardPadding() * 2;
@@ -79,6 +79,11 @@ Window_Sudoku.prototype.update = function () {
         this.generated = true;
         this.refresh();
     }
+    if (this.victory) {
+        if (!this.victorySteps) this.victorySteps = 0;
+        this.victorySteps++;
+        this.refresh();
+    }
 }
 
 
@@ -119,13 +124,14 @@ Window_Sudoku.prototype.drawItem = function (index) {
     var rect = this.itemRectForText(index);
     var align = this.itemTextAlign();
     this.contents.textColor = this.givens[index] ? "aqua" : "#ffffff";
+    if (this.victory && this.victorySteps / 15 > index % 9 + Math.floor(index / 9)) this.contents.textColor = "chartreuse";
     if (this.checkForConflicts(index) === true) this.contents.textColor = this.givens[index] ? "chocolate" : "red";
     if (this.values[index] > 0) this.drawText(this.values[index], rect.x, rect.y + (CELL_SIZE - this.standardFontSize()) / 2, rect.width, align);
 };
 
 Window_Sudoku.prototype.checkForConflicts = function (index) {
     let value = this.values[index];
-    if (value === 0) return -1;
+    if (value === 0 || this.victory) return false;
     let indexesToCheck = [];
 
     //Check the row and column
@@ -154,7 +160,7 @@ Window_Sudoku.prototype.checkForConflicts = function (index) {
  * @returns True iff the grid is entirely filled and there are no conflicts
  */
 Window_Sudoku.prototype.checkForVictory = function () {
-    if (this.values.any(x => x === 0)) return false;
+    if (this.values.some(x => x === 0)) return false;
     for (let i = 0; i < 81; i++) {
         if (this.checkForConflicts(i)) return false;
     }
@@ -169,8 +175,9 @@ function Window_NumberSelect() {
 
 Window_NumberSelect.prototype = Object.create(Window_Command.prototype);
 Window_NumberSelect.prototype.constructor = Window_NumberSelect;
-Window_NumberSelect.prototype.initialize = function () {
+Window_NumberSelect.prototype.initialize = function (currentValue) {
     Window_Command.prototype.initialize.call(this, 0, 0);
+    this.currentValue = currentValue;
     this.height = CELL_SIZE * 3 + this.standardPadding() * 2;
     this.x = Graphics.boxWidth / 2 - this.width / 2;
     this.y = Graphics.boxHeight / 2 - this.height / 2;
@@ -208,6 +215,7 @@ Window_NumberSelect.prototype.maxCols = function () {
 Window_NumberSelect.prototype.drawItem = function (index) {
     var rect = this.itemRectForText(index);
     var align = this.itemTextAlign();
+    this.contents.textColor = this.currentValue === index + 1 ? "aqua" : "#ffffff";
     this.drawText(index + 1, rect.x, rect.y + (CELL_SIZE - this.standardFontSize()) / 2, rect.width, align);
 };
 
@@ -247,7 +255,11 @@ Scene_Sudoku.prototype.onOkButton = function () {
         this.mainWindow.activate();
         return;
     }
-    this.numberInput = new Window_NumberSelect();
+    if (this.mainWindow.victory) { //No more modifications after victory
+        this.mainWindow.activate();
+        return;
+    }
+    this.numberInput = new Window_NumberSelect(this.mainWindow.values[this.mainWindow.index()]);
     this.numberInput.setHandler('ok', this.onNumberOk.bind(this));
     this.numberInput.setHandler('cancel', this.onNumberCancel.bind(this));
     this.addWindow(this.numberInput);
@@ -261,14 +273,20 @@ Scene_Sudoku.prototype.onNumberOk = function () {
     this.numberInput.close();
     this.mainWindow.values[this.mainWindow.index()] = this.numberInput.currentExt();
     this.mainWindow.activate();
-    // if(this.mainWindow.checkForConflicts(this.mainWindow.index()))
     this.mainWindow.refresh();
     SoundManager.playEquip();
+    if (this.mainWindow.checkForVictory()) {
+        AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
+        this.mainWindow.victory = true;
+    }
 }
 
 Scene_Sudoku.prototype.onNumberCancel = function () {
     this.numberInput.close();
+    this.mainWindow.values[this.mainWindow.index()] = 0;
     this.mainWindow.activate();
+    this.mainWindow.refresh();
+    SoundManager.playCancel();
 }
 
 
@@ -558,7 +576,7 @@ function generateAsync(digHoleCount, jobCount = 1) {
 }
 ;
 /**
- * @param level 0 - 4
+ * @param level 0 - 4 (changed to 1-5, since 0 broke the "if(level)" check)
  * @author mucahidyazar
  */
 function generateByLevel(level = 0) {
@@ -566,19 +584,19 @@ function generateByLevel(level = 0) {
         // level to make dig hold count
         let digHoleCount = 40;
         switch (level) {
-            case 0:
+            case 1:
                 digHoleCount = 40;
                 break;
-            case 1:
+            case 2:
                 digHoleCount = 45;
                 break;
-            case 2:
+            case 3:
                 digHoleCount = 50;
                 break;
-            case 3:
+            case 4:
                 digHoleCount = 54;
                 break;
-            case 4:
+            case 5:
                 digHoleCount = 58;
                 break;
             default:

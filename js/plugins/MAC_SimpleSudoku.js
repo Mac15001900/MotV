@@ -1,7 +1,61 @@
 /*:
  * @plugindesc Adds a simple sudoku minigame
- * @author Mac15001900
+ * @author Plugin by Mac15001900, puzzle generator by Mucahidyazar
  * 
+ * 
+ * @param Outputs
+ * 
+ * @param Victory
+ * @desc Switch with this number will be set to ON if the puzzle is successfully completed, and to OFF is the player gives up.
+ * @type number
+ * @parent Outputs
+ * @default 0
+ * 
+ * @param Total seconds
+ * @desc Variable with this number will be set to the total amount of seconds the player spent in the puzzle.
+ * @type number
+ * @parent Outputs
+ * @default 0
+ * 
+ * @param Display seconds
+ * @desc Variable with this number will be set to amount of seconds on the clock (between 0 and 59) when the player finished the puzzle.
+ * @type number
+ * @parent Outputs
+ * @default 0
+ * 
+ * @param Display minutes
+ * @desc Variable with this number will be set to amount of minutes on the clock (between 0 and 59) when the player finished the puzzle.
+ * @type number
+ * @parent Outputs
+ * @default 0
+ * 
+ * @param Display hours
+ * @desc Variable with this number will be set to amount of hours it took  the player to finish the puzzle.
+ * @type number
+ * @parent Outputs
+ * @default 0
+ * 
+ * @param Display
+ * 
+ * @param Draw window
+ * @desc Whether to draw a regular window behind the puzzle.
+ * @type boolean
+ * @default true
+ * @on yes
+ * @off no
+ * @parent Display
+ * 
+ * @param Background image
+ * @desc Name of the image in the pictures folder to use as a background. Leave empty to not use any.
+ * @type text
+ * @default 
+ * @parent Display
+ * 
+ * @param Cell size
+ * @desc The width (and height) of a single cell in the grid, in pixels. The entire grid will be 9 times larger.
+ * @type number
+ * @default 64
+ * @parent Display
  * 
  * @param Colours
  * 
@@ -30,7 +84,7 @@
  * @default chocolate
  * 
  * @param Victory digits
- * @desc All digits will change their colour into this when the puzzle is solved
+ * @desc All digits will change their colour into this one when the puzzle is solved
  * @type text
  * @parent Colours
  * @default chartreuse 
@@ -41,40 +95,27 @@
  * @parent Colours
  * @default white 
  * 
- * @param Exit text
+ * @param Other
+ * 
+  * @param Exit text
  * @desc Text on the exit button
  * @type text
  * @default Exit
+ * @parent Other
  * 
  * @param Cancel text
  * @desc Text on the button to cancel leaving the puzzle
  * @type text
  * @default Cancel
- * 
- * @param Draw window
- * @desc Whether to draw a regular window behind the puzzle.
- * @type boolean
- * @default true
- * @on yes
- * @off no
- * 
- * @param Background image
- * @desc Name of the image to use as a background. Leave empty to not use any.
- * @type text
- * @default 
- * 
- * @param Cell size
- * @desc The width (and height) of a single cell in the grid, in pixels. The entire grid will be 9 times larger.
- * @type number
- * @default 64
+ * @parent Other
  * 
  * @param Use number keys
  * @desc Should the plugin allow regular number keys to be used to input digits
  * @type boolean
  * @default true
  * @on Yes
- * @off No
- * 
+ * @off No 
+ * @parent Other
  * 
  * @param Use numpad keys
  * @desc Should the plugin allow numpad number keys to  be used to input digits
@@ -82,40 +123,85 @@
  * @default true
  * @on Yes
  * @off No
+ * @parent Other
  * 
  * @param Victory music
  * @desc The music effect that will play upon victory
  * @type text
  * @default Victory1
+ * @parent Other
  * 
  * 
  * @help
+ * This plugin adds a simple sudoku minigame.                                      
+ * To start it, simply use the plugin command SimpleSudoku, followed by either a
+ * difficulty to generate a puzzle for or a puzzle to use.
+ * 
+ * If you want a puzzle to be generated, use a number between 1 and 5 to indicate
+ * the difficulty. Higher numbers produce higher puzzles. Recommended values are
+ * between 1 and 3. 4 and 5 take considerably longer to generate, and solving such
+ * difficult puzzles with such a simple interface without pencil marks might be
+ * somewhat annoying for the players.
+ * 
+ * Example: SimpleSudoku 2
+ * 
+ * To use an existing puzzle, specify it using a string of 81 characters, 
+ * representing all sudoku cells, going from left to right, and then top to bottom 
+ * (i.e. the first 9 characters represent the first row, then 10-18 the second row).
+ * You can use any character other than space to represent empty cells.
+ * 
+ * Examples: 
+ * SimpleSudoku 2.7....8693.1.6......2.79.5..9.53.61.5.8614.9.6142..5.3.2594..8.9...837...8.7..9.
+ * SimpleSudoku 001000400352400891407090050903025604005674903004000025000230700030706518740010009
+ * 
+ * Both a difficulty level and a puzzle can instead be specified with a variable,
+ * using the letter 'v' and its id. The value of that variable will then be
+ * used as the argument.
+ * 
+ * Example: SimpleSudoku v42
+ * 
+ * 
+ * After the player either gives up or solves the puzzle, the results are stored
+ * in variables and a switch that you need to choose in the plugin options.
+ * 
+ * Notably, total seconds is the total amount of seconds spent on the puzzle
+ * (e.g. 900 if the player spent 15 minutes), and is useful for conditional branches,
+ * e.g. if that value is less than 900, the puzzle was completed in under 15 minutes.
+ * Display seconds is the amount you might want to display to the player, and only
+ * has values between 0 and 59 - to tell the player what their time was, you'll
+ * need both display minutes and seconds (and potentially hours).
+ * 
+ * -----------------------------------------------------------------------------------
+ * 
+ * Dynamic puzzle generation in this plugin is powered by the node-sudoku package, 
+ * created by Mucahidyazar and available under the MIT Licence.
+ * You can learn more about it here: https://www.npmjs.com/package/node-sudoku
+ * 
+ * This plugin is available under the MIT Licence. You're free to use it in any 
+ * games, commercial or not, or use the code in your own plugins. Credit is 
+ * appreciated, but not required. If including credits, please remember to also
+ * credit Mucahidyazar for making the puzzle generator!
  * 
  */
 
 var Imported = Imported || {}
 Imported.MAC_SimpleSudoku = "1.0";
+
 /**
  * The global object MAC_SimpleSudoku can be used by other plugins to access various things.
  * It contains the following properties:
  * currentWindow - the currently active Window_Sudoku window, or null if no puzzle is currently active
  * scene - the last active Scene_Sudoku scene
- * sudokuJs - sudoku generator, created by mucahidyazar. More info here https://www.npmjs.com/package/node-sudoku
+ * sudokuJs - sudoku generator, created by Mucahidyazar. More info here https://www.npmjs.com/package/node-sudoku
  * solve - Show the solution to a provided puzzle (same format as for the plugin, but it must use '.' for empty cells)
+ * printSolution - Shows the solution to the currently active puzzle
  * getPuzzle - Returns the current puzzle
+ * printPuzzle - Nicely prints the current puzzle
  */
 window.MAC_SimpleSudoku = {
     currentWindow: null,
     scene: null,
     sudokuJs: null,
-    printBoard: function () {
-        if (this.currentWindow) console.log(this.currentWindow.sudoku.getBoard());
-        else console.warn("No window active");
-    },
-    printPuzzle: function () {
-        if (this.currentWindow) console.log(this.currentWindow.values.map(x, index => this.currentWindow.givens[index] ? x : 0).map(x => x === 0 ? '.' : x + "").join());
-        else console.warn("No window active");
-    }
 }
 
 void function () {
@@ -128,17 +214,25 @@ void function () {
     //Adding things to the interface object
     window.MAC_SimpleSudoku.sudokuJs = sudokuJs;
     window.MAC_SimpleSudoku.solve = function (puzzle) {
-        console.log(solve(puzzle, { strict: true, emptyHoleChar: '.', as: 'string' }).replace(/(\.\.\.\.\.\.\.\.\.)/, "$1\n"));
+        console.log(solve(puzzle, { strict: true, emptyHoleChar: '.', as: 'string' }).replace(/(.........)/g, "$1\n"));
     }
-    window.MAC_SimpleSudoku.solveCurrent = function () {
-        if (this.currentWindow) this.solve(this.currentWindow.values);
+    window.MAC_SimpleSudoku.printSolution = function () {
+        if (currentWindow) console.log(solve(currentWindow.values.map((v, i) => currentWindow.givens[i] ? v : 0), { strict: true, emptyHoleChar: '0', as: 'string' }).replace(/(.........)/g, "$1\n"));
+        else console.warn("No window active");
+    }
+    window.MAC_SimpleSudoku.getPuzzle = function () {
+        if (this.currentWindow) return this.currentWindow.values.map((x, index) => this.currentWindow.givens[index] ? x : 0).map(x => x === 0 ? '.' : x + "").join("")
+        else console.warn("No window active");
+    }
+    window.MAC_SimpleSudoku.printPuzzle = function () {
+        if (this.currentWindow) console.log(this.getPuzzle().replace(/(.........)/g, "$1\n"));
         else console.warn("No window active");
     }
 
     var _Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
     Game_Interpreter.prototype.pluginCommand = function (command, args) {
         _Game_Interpreter_pluginCommand.call(this, command, args);
-        if (['sudoku'].includes(command.toLowerCase())) {
+        if (['simplesudoku'].includes(command.toLowerCase())) {
             console.log("MAC_SimpleSudoku: Sudoku command detected.");
             if (args.length === 0) throw new Error("MAC_SimpleSudoku: At least one argument is required.");
             puzzleArgument = args[0];
@@ -175,9 +269,10 @@ void function () {
         this.givens = Array(81).fill(true); //We start with everything being a given, so the player can't change the board before it's generated
         this.generated = false;
         this.sudoku = null; //If it's null then it hasn't finished generating yet
+        this.framesPassed = 0;
 
         //Parse or generate a puzzle
-        if (puzzle[0] === 'v') puzzle = $gameVariables.value(Number(puzzle.substr(1))); //If the argument is a variable, get its value
+        if (puzzle[0] === 'v' && puzzle.length <= 10) puzzle = $gameVariables.value(Number(puzzle.substr(1))); //If the argument is a variable, get its value
         if (puzzle.length > 10) {
             if (puzzle.length !== 81) throw new Error("MAC_SimpleSudoku: Puzzle must be exactly 81 characters long. " + puzzle.length + " characters were provided.");
             for (let i = 0; i < 81; i++) {
@@ -251,6 +346,7 @@ void function () {
 
     Window_Sudoku.prototype.update = function () {
         Window_Command.prototype.update.call(this);
+        this.framesPassed++;
         if (!this.generated && this.sudoku) { //If the puzzle just finished generating
             this.values = this.sudoku.board.map(x => x === '.' ? 0 : x);
             this.givens = this.sudoku.board.map(x => x !== '.');
@@ -391,7 +487,20 @@ void function () {
         if (this.checkForVictory()) {
             AudioManager.playMe({ name: params["Victory music"], volume: 100, pitch: 100 });
             this.victory = true;
+            this.setupOutputs();
         }
+    }
+
+    /**
+     * Called when the puzzle is completed or given up on, sets the output switches and variables to the results
+     */
+    Window_Sudoku.prototype.setupOutputs = function () {
+        $gameSwitches.setValue(Number(params["Victory"]), this.victory)
+        let seconds = Math.floor(this.framesPassed / 60);
+        $gameVariables.setValue(Number(params["Total seconds"]), seconds);
+        $gameVariables.setValue(Number(params["Display seconds"]), seconds % 60);
+        $gameVariables.setValue(Number(params["Display minutes"]), Math.floor((seconds % 3600) / 60));
+        $gameVariables.setValue(Number(params["Display hours"]), Math.floor(seconds / 3600));
     }
 
     /**
@@ -430,7 +539,6 @@ void function () {
      * @returns True iff the grid is entirely filled and there are no conflicts
      */
     Window_Sudoku.prototype.checkForVictory = function () {
-        if ($gv[42]) return true; //TODO temp
         if (this.values.some(x => x === 0)) return false;
         for (let i = 0; i < 81; i++) {
             if (this.checkForConflicts(i)) return false;
@@ -560,6 +668,7 @@ void function () {
     }
 
     Scene_Sudoku.prototype.onCancelButton = function () {
+        if (this.mainWindow.victory) return; //We will exit in a moment anyway
         this.cancelWindow = new Window_SudokuExitConfirmation();
         this.cancelWindow.setHandler('ok', this.onCancelWindowOk.bind(this));
         this.cancelWindow.setHandler('cancel', () => { this.mainWindow.activate(); this.cancelWindow.close(); });
@@ -569,6 +678,7 @@ void function () {
     Scene_Sudoku.prototype.onCancelWindowOk = function () {
         if (this.cancelWindow.index() === 0) {
             currentWindow = null;
+            this.mainWindow.setupOutputs();
             this.popScene();
         }
         else {
@@ -959,7 +1069,7 @@ void function () {
             };
             (0, dsfOneSolutionCalculate)(answer, rows, cols, zones, firstCheckPoint, traceBackNums, mark, emptyHoleChar);
             if (mark.finishes > 1) {
-                throw new Error("board is not one-solution sudoku");
+                throw new Error("MAC_SimpleSudoku: This board has more than one solution");
             }
             else if (mark.finishes === 0) {
                 isSuccess = false;
@@ -973,7 +1083,7 @@ void function () {
             isSuccess = (0, backtrackCalculate)(answer, rows, cols, zones, firstCheckPoint, traceBackNums, emptyHoleChar);
         }
         if (!isSuccess) {
-            throw new Error("not found the solution. is that you give me the board with mistake?");
+            throw new Error("MAC_SimpleSudoku: this board has no valid solutions");
         }
         return (0, convertBoard)(answer, { as });
     }
@@ -985,7 +1095,7 @@ void function () {
             this.board = board;
             this.emptyHoleChar = emptyHoleChar;
             if (!board || board.length !== 81) {
-                throw new Error("is not a 9 * 9 matrix sudoku board");
+                throw new Error("MAC_SimpleSudoku: invalid board.");
             }
             const timeBegin = new Date().getTime();
             this.answer = (0, solve)(this.board, { strict, emptyHoleChar });

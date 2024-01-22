@@ -15,9 +15,9 @@ String.prototype.capitalise = function () {
     return this[0].toUpperCase() + this.substring(1);
 }
 
-Array.prototype.pickRandom = function () {
+/*Array.prototype.pickRandom = function () {
     return this[Math.floor(Math.random() * this.length)];
-}
+}*/
 
 //===================================== Initialisation =====================================
 
@@ -288,7 +288,7 @@ g.correctKeyReactions = function (inp) {
         inp.setupChild(commandList, 0);
     } else {
         if (puzzle.success) g.showMessages(inp, puzzle.success, 0);
-        else g.showMessages(inp, s.randomSuccessMessages(currentKeys).pickRandom(), Math.random() < 0.66 ? 0 : 1);
+        else g.showMessages(inp, g.pickRandom(s.randomSuccessMessages(currentKeys)), Math.random() < 0.66 ? 0 : 1);
     }
 }
 
@@ -323,7 +323,7 @@ g.wrongKeyReactions = function (inp) {
         }
     }
     let previousAttempts = g.data.wrongGuesses.filter(x => x === guess).length - 1;
-    if (previousAttempts === 0) g.showMessages(inp, s.randomFailureMessages($gv[42], guess, g.data.wrongGuesses.length).filter(m => m).pickRandom(), 0);
+    if (previousAttempts === 0) g.showMessages(inp, g.pickRandom(s.randomFailureMessages($gv[42], guess, g.data.wrongGuesses.length).filter(m => m)), 0);
     else if (previousAttempts === 1) g.showMessages(inp, s.secondWrong);
     else g.showMessages(inp, s.anotherWrong(previousAttempts + 1));
 
@@ -710,8 +710,9 @@ g.showPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
     $gameScreen.showPicture(id, name, 1, x, y, scale, scale, 255, 0);
 }
 
-g.niceShowPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
-    WindowManager.show(1,)
+//Picks a random element from a non-sparse array
+g.pickRandom = function (array) {
+    return array[Math.floor(Math.random() * array.length)];
 }
 
 /**
@@ -1195,8 +1196,7 @@ Graphics._onKeyDown = () => { }; //Removed the default actions, since they're ha
 //Marks the event as seen whenever it's launched
 var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
 Game_Interpreter.prototype.setup = function (list, eventId) {
-    if (eventId) $es[eventId] = true;
-    _Game_Interpreter_setup.call(this, list, eventId);
+    _Game_Interpreter_setup.call(this, [...list, { "code": 355, "indent": 0, "parameters": ["$es[this.eventId()] = true;"] }], eventId);
 }
 
 //Debug thingy for quitting the game with Q

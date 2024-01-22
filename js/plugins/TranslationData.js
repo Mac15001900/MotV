@@ -319,7 +319,7 @@ wordBank = {
             "Czyli raczej nie o to chodziło.",
             { string: "Następny razem się uda!", id: 1 },
             "No może powinnam była bardziej się nad tym zastanowić.",
-            "Chyba jednak muszę to jeszcze przemyśleć",
+            "Chyba jednak muszę to jeszcze przemyśleć.",
             { string: "Czyli to nie tak.\\.\nAle w takim razie \\fijak\\fi?", id: 4, balloon: BALLOON_ID.SILENCE },
             [{ string: "Każda zła odpowiedź jest krokiem w kierunku prawidłowej." }, { string: "A przynajmniej taką mam nadzieję..." }],
             [{ string: "A już myślałam, że to mam." }, { string: "Prędej czy później jakoś to rozwiążę!" }],

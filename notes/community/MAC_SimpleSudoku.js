@@ -118,9 +118,9 @@
  * @parent Other
  * 
  * @param Use numpad keys
- * @desc Should the plugin allow numpad number keys to  be used to input digits
+ * @desc Should the plugin allow numpad number keys to  be used to input digits.
  * @type boolean
- * @default true
+ * @default false.
  * @on Yes
  * @off No
  * @parent Other

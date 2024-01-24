@@ -38,6 +38,5 @@ var $plugins =
 {"name":"LifeRoom","status":true,"description":"","parameters":{}},
 {"name":"MAC_RunNearbyEvent","status":true,"description":"v1.1 Allows events to run other events in various ways.","parameters":{"With an invalid target":"Show a warning in console","Max chain length":"500","Events with trigger \"none\"":"Disabled","Lock ran events":"true"}},
 {"name":"PuzzleData","status":true,"description":"Manages puzzle-related data.","parameters":{}},
-{"name":"ShakeScreen","status":true,"description":"Simply shakes the screen","parameters":{}},
-{"name":"MAC_SimpleSudoku","status":true,"description":"Adds a simple sudoku minigame","parameters":{"Outputs":"","Victory":"0","Total seconds":"0","Display seconds":"0","Display minutes":"0","Display hours":"0","Display":"","Draw window":"true","Background image":"","Cell size":"64","Colours":"","Player digits":"lime","Clue digits":"aqua","Icorrect player digits":"red","Icorrect clue digits":"chocolate","Victory digits":"chartreuse","Lines":"rgb(250,100,250)","Other":"","Exit text":"Exit","Cancel text":"Cancel","Use number keys":"true","Use numpad keys":"true","Victory music":"Victory1"}}
+{"name":"ShakeScreen","status":true,"description":"Simply shakes the screen","parameters":{}}
 ];

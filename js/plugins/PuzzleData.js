@@ -390,4 +390,7 @@ const $dataPuzzles = {
     getBySolution: function (solution) {
         return $dataPuzzles[g.lang].find(p => p.solution.toLocaleLowerCase().replaceAll(' ', '') === solution);
     },
+    getAmount: function () {
+        return $dataPuzzles[g.lang].length;
+    },
 }

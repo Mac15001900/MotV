@@ -44,7 +44,6 @@ let $ss;
 let $es;
 
 const GAME_VERSION = "Alpha 1.0.0";
-const SECRET_KEYS = ["otoczenie", "nokianazawsze", "całkiemjakżycie", "kalkulacja", "charleskrum", "rakietakiwitęcza", "iksytonawiasy", "nowesrebro", "deuteranopia", "akumulatron", "pierwiastekcotam", "powodzenia", "semikonteneryzacja", "czekoladapizzawiewiórkasparta", "miódmalina", "delatorcukrzenia", "bojadrukfigahartmenuopiswiza", "obracańko", "grynszpany", "eulerowsko", "945", "terazmyśliszparzystością", "zaznaczacz", "banachowo", "wielkaunifikacjahaseł", "zaczynamy", "kjf947fosi yu094", "zacezarowane", "wykładniczowością", "odcyrklowywanie"]
 const AUTOSAVE_DELAY = 300 * 1000; //How often to autosave (in miliseconds)
 const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try again
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 19, 22]; //How many keys are needed for each unlock stage
@@ -246,12 +245,12 @@ g.processNewKey = function (inp) {
     }
     if ($gv[41] < ROOM_UNCLOKS.length) {
         message += s.remainingToNextArea(displayKeys(ROOM_UNCLOKS[$gv[41]] - currentKeys));
-    } else if (currentKeys === SECRET_KEYS.length) {
+    } else if (currentKeys === $dataPuzzles.getAmount()) {
         AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
         message += s.tempVictory;
         //TODO: rolls credits?
     } else {
-        message += s.keysRemaining(displayKeys(SECRET_KEYS.length - currentKeys));
+        message += s.keysRemaining(displayKeys($dataPuzzles.getAmount() - currentKeys));
     }
     g.showMessages(inp, message);
 }
@@ -1196,7 +1195,7 @@ Graphics._onKeyDown = () => { }; //Removed the default actions, since they're ha
 //Marks the event as seen whenever it's launched
 var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
 Game_Interpreter.prototype.setup = function (list, eventId) {
-    _Game_Interpreter_setup.call(this, [...list, { "code": 355, "indent": 0, "parameters": ["$es[this.eventId()] = true;"] }], eventId);
+    _Game_Interpreter_setup.call(this, [...list, { "code": 355, "indent": 0, "parameters": DataManager.isEventTest() ? ["SceneManager.exit()"] : ["$es[this.eventId()] = true;"] }], eventId);
 }
 
 //Debug thingy for quitting the game with Q
@@ -1212,8 +1211,8 @@ var _DataManager_makeSavefileInfo = DataManager.makeSavefileInfo;
 DataManager.makeSavefileInfo = function () {
     var res = _DataManager_makeSavefileInfo.call(this);
     res.title = "";
-    if (g.data.keysTotal === 0) res.title += "Początek";
-    else if (g.data.keysTotal === SECRET_KEYS.length) res.title += "Wszystkie klucze!";
+    if (g.data.keysTotal === 0) res.title += s.beginning;
+    else if (g.data.keysTotal === $dataPuzzles.getAmount()) res.title += s.allKeys;
     else res.title += displayKeys(g.data.keysTotal);
     res.title += " | " + (new Date()).toLocaleString();
     return res;
@@ -1376,6 +1375,7 @@ if (MAC_DEBUG) {
         switch (event.key) {
             case 'f': SceneManager.update(true); break;
             case 'g':
+                console.log("Toggling game freeze");
                 $gs[4] = !$gs[4];
                 if (!$gs[4]) SceneManager.requestUpdate();
 

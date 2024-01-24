@@ -140,6 +140,8 @@ wordBank = {
         maximumLengthIs: "Maximum length is",
         characters: "characters",
         allowedCharactersAre: "Only the following characters are allowed",
+        beginning: "The Beginning",
+        allKeys: "All fragments found!",
 
         //Puzzle related
         newAreaUnlocked: "New area has been unlocked.",
@@ -297,6 +299,8 @@ wordBank = {
         maximumLengthIs: "Maksymalna długość to",
         characters: "znaków",
         allowedCharactersAre: "Dozwolone znaki to",
+        beginning: "Początek",
+        allKeys: "Wszystkie klucze!",
 
         //Puzzle related
         newAreaUnlocked: "Nowy obszar odbklowowany.",

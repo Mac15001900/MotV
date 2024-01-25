@@ -1070,8 +1070,6 @@ g.importSave = function (compressedString) {
 }
 
 Scene_Title.prototype.commandImport = function () {
-    let commandList = [];
-    commandList.push({ "code": 117, "indent": 0, "parameters": [2] });
     g.getInterpreter().setup([{ "code": 117, "indent": 0, "parameters": [2] }], 0);
 }
 
@@ -1096,7 +1094,7 @@ Scene_Menu.prototype.commandExport = function () {
 
 //===================================== Loading spinner =====================================
 
-//Creating the spinnder
+//Creating the spinner
 Graphics._createLoadingSpinner = function () {
     const loadingSpinner = document.createElement("div");
     const loadingSpinnerImage = document.createElement("div");

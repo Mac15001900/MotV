@@ -994,7 +994,16 @@ Scene_LangugeChoice.prototype.update = function () {
     } else if (this.stage === 2 && !inp._waitMode) {
         g.isColorblind = $gameVariables.value(3) === 0;
         ConfigManager.save();
-        this.popScene()
+        if (Utils.isMobileDevice()) {
+            inp.pluginCommand('SetQuestionWindowData', ['1', '1', 'center']);
+            inp.pluginCommand('SetQuestionWindowChoices', [s.ok]);
+            inp.pluginCommand('CreateQuestionWindow', ['3', g.padToLength(s.mobileWarning + '\n', 50)]);
+            this.stage = 3;
+        } else {
+            this.popScene()
+        }
+    } else if (this.stage === 3 && !inp._waitMode) {
+        this.popScene();
     }
 }
 //===================================== Save exporting / importing =====================================

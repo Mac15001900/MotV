@@ -190,7 +190,7 @@ initialiseGData = function () {
 //=====================================Puzzle logic=====================================
 
 /**
- * Checks whether a key entered by the player is correct, and stores the resulting guess in g.data.
+ * Checks whether a key entered by the player is correct. Stores the resulting guess in g.data.lastSolved if correct
  * @param {String} input Player input
  * @returns 0 if the format is invalid, 1 if the key is incorrect, 2 if the key is correct but was already found before, 3 if the key is correct and new
  */
@@ -216,6 +216,8 @@ g.checkKey = function (input) {
     let puzzleName = $dataPuzzles.getBySolution(key)?.name;
     if (!puzzleName) {
         g.data.wrongGuesses.push(key);
+        g.persistentData.wrongGuesses.push(key);
+        ConfigManager.save();
         return 1; //There is no such key
     }
     if (g.data.solved[puzzleName]) return 2; //Correct, but already collected
@@ -225,6 +227,10 @@ g.checkKey = function (input) {
         $gv[42]++;
         g.data.keysTotal += 1;
         g.data.lastSolved = puzzleName;
+        if (!g.persistentData.keyTimes[key]) {
+            g.persistentData.keyTimes[key] = Graphics.frameCount;
+            ConfigManager.save();
+        }
         return 3; //Correct, and not collected yet!
     }
 }
@@ -310,7 +316,6 @@ g.progressReactionExists = function (keysAmount, gameStage) {
  * Handles reactions by the protagonist to entering an incorrect key (not an already existing key or incorrectly formatted one).
  * If a failure reaction exists for the guess, it's shown. Otherwise, a random failure reaction is shown.
  * @param {Game_Interpreter} inp Current game interpreter
- * @returns 
  */
 g.wrongKeyReactions = function (inp) {
     let guess = g.data.lastGuess
@@ -325,7 +330,6 @@ g.wrongKeyReactions = function (inp) {
     if (previousAttempts === 0) g.showMessages(inp, g.pickRandom(s.randomFailureMessages($gv[42], guess, g.data.wrongGuesses.length).filter(m => m)), 0);
     else if (previousAttempts === 1) g.showMessages(inp, s.secondWrong);
     else g.showMessages(inp, s.anotherWrong(previousAttempts + 1));
-
 }
 
 /**
@@ -334,67 +338,6 @@ g.wrongKeyReactions = function (inp) {
 g.events = {
     PROGRESS_CUTSCENES: () => { return { pl: 215, en: 216 }[g.lang] },
 }
-
-/*
-keyReactions = function (inp) {
-    let currentKeys = g.data.keysTotal;
-    let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
-    let keyName = g.data.lastCollected;
-    let randomMessages = [
-        "Kolejny klucz do kolekcji.",
-        "I kolejny!",
-        "Ładna się robi ta moja mała kolekcja kluczy.",
-        "Zostało o jeden mniej.",
-        `${currentKeys} to ładna liczba. Ale ${currentKeys + 1} będzie lepszą!`,
-        "Tak!",
-        "Ha, mam cię!",
-        "Ta zagadka nie była taka zła.",
-        "Zaczyna mi to iść coraz lepiej.",
-    ];
-
-    if ($gv[41] < ROOM_UNCLOKS.length) randomMessages.push("Ciekawe, ile ich tu jeszcze jest.\\.\nPrzynajmniej teraz na pewno o jeden mniej!");
-    else if (currentKeys < SECRET_KEYS.length) randomMessages.push(`Jakoś powinno mi się udać zdobyć te pozostałe ${SECRET_KEYS.length - currentKeys}.`);
-    else {
-        //Just one left
-        if (g.data.keysCollected["iksytonawiasy"]) g.showMessage(inp, "Jeszcze tylko ten ostatni. Idę po ciebie!", 0);
-        else g.showMessage(inp, "No dobra, tylko gdzie niby jest ten jeden pozostały klucz?\nChyba musi być ukryty inaczej niż pozostałe.", 0);
-        return;
-    }
-
-    switch (newStage) {
-        case 1: g.showMessage(inp, "O, to brzmi przydatnie. Zobaczmy, co tu teraz mamy.", 0); break;
-        case 2: g.showMessage(inp, "Ha, to chyba koniec potencjalnie zabójczych laserów!", 0); break;
-        case 3:
-            //TODO: Support for multiple messages from a script. Temporarily, this message is in the event
-            //g.showMessage(inp, "\\{AAA!\\.\\.\\.", 3);
-            //g.showMessage(inp, "Ok, w sumie to nie wiem, czego dokładnie się spodziewałam\\..\nAle raczej nie tego, że ściana obok mnie sobie nagle zniknie.", 0);
-            break;
-        case 6: g.showMessage(inp, `W sumie to ciekawe, do czego te klucze właściwie służą.\nTych zagadek rozwiązałam już ${ROOM_UNCLOKS[5]}, ale dalej jak nie miałam, tak \nw dalszym ciągu nie mam zielonego pojęcia, czym jest to miejsce. \nMam nadzieję, że gdzieś dalej będzie jakaś odpowiedź.`, 0); break;
-        default: switch (keyName) {
-            case "czekoladapizzawiewiórkasparta": g.showMessage(inp, "No, w pewnym sensie udało mi się zagrać w Decrypto.", 1); break;
-            case "miódmalina": g.showMessage(inp, "Trochę robię się teraz głodna przez tę zagadkę.", 1); break;
-            case "nokianazawsze": g.showMessage(inp, "Zdecydowanie nie spodziewałam się, że ta umiejętność jeszcze\nkiedykolwiek mi się w życiu przyda.", 1); break;
-            case "rakietakiwitęcza": g.showMessage(inp, 'Z cyklu \\fi"Rzeczy, Których Zdecydowanie Się Nie Spodziewałam \nW Tym Miejscu"\\fi: emoji.', 1); break;
-            default: g.showMessage(inp, randomMessages[Math.floor(Math.random() * randomMessages.length)], Math.random() < 0.66 ? 0 : 1);
-        }
-    }
-}
-
-wrongKeyReactions = function (inp, key) {
-    //Decrypto partial hints
-    let keyWords = ["czekolada", "pizza", "wiewiórka", "sparta"];
-    let correct = 0;
-    for (let i = 0; i < keyWords.length; i++) {
-        if (key.contains(keyWords[i])) correct++;
-    }
-    if (correct === 2) g.showMessage(inp, "Niektóre z tych słów zdecydowanie mają sens,\nno ale chyba jeszcze nie wszystkie.", 0);
-    else if (correct === 3) {
-        let wrongPart = key;
-        for (let i = 0; i < keyWords.length; i++) wrongPart = wrongPart.replace(keyWords[i], '');
-        wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
-        g.showMessage(inp, "To musi być już blisko!\n" + wrongPart + " tu chyba najmniej pasuje.", 0);
-    }
-}*/
 
 function displayKeys(amount, color = false) {
     let res = (color ? "\\c[4]" : "") + amount + " " + (color ? "\\c[0]" : "");
@@ -413,10 +356,9 @@ function keyWordEN(amount) {
 }
 
 function keyWordPL(amount) {
-    let name = "klucze";
-    if (amount === 1) name = "klucz";
-    else if (useDopełniacz(amount)) name = "kluczy";
-    return name;
+    if (amount === 1) return "klucz";
+    else if (useDopełniacz(amount)) return "kluczy";
+    else return "klucze";
 }
 
 function useDopełniacz(amount) {
@@ -611,7 +553,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
         choices.push(-2); //The cancel option
 
         let startingOption = choices.indexOf($gv[3]); //If previously chosen option is available, it will start selected
-        if (startingOption < 0) startingOption = 0; //Otheriwse use the first option
+        if (startingOption < 0) startingOption = 0; //Otherwise use the first option
 
         $gameMessage.setChoices(textOptions, startingOption, choices.length - 1);
         $gameMessage.setChoiceBackground(0);
@@ -638,8 +580,6 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
     };
 
     this.showImage = function (scale = 1) {
-        /*$gameScreen.erasePicture(1);
-        $gameScreen.showPicture(1, `${filename}/${filename}-${x}-${y}`, 1, 960, 375, size, size, 255, 0);*/
         g.showPictureWindow(`${filename}/${filename}-${x}-${y}`, false, scale);
     }
 
@@ -944,6 +884,7 @@ ConfigManager.makeData = function () {
     var config = _ConfigManager_makeData.call(this);
     config.lang = g.lang;
     config.isColorblind = g.isColorblind;
+    config.persistentData = g.persistentData;
     return config;
 };
 
@@ -953,6 +894,7 @@ ConfigManager.applyData = function (config) {
     if (config.lang && config.lang !== "none") g.setLanguage(config.lang);
     else g.lang = "none";
     if (config.isColorblind !== undefined) g.isColorblind = config.isColorblind;
+    if (config.persistentData) g.persistentData = config.persistentData;
 };
 
 var _DataManager_onLoad = DataManager.onLoad;
@@ -976,6 +918,7 @@ Scene_LangugeChoice.prototype.initialize = function () {
 Scene_LangugeChoice.prototype.start = function () {
     console.log("Starting lang scene");
     Scene_MenuBase.prototype.start.call(this);
+    g.persistentData = { keyTimes: {}, wrongGuesses: [] };
     let inp = g.getInterpreter();
     inp.pluginCommand('SetQuestionWindowData', ['2', '1', 'center']);
     inp.pluginCommand('SetQuestionWindowChoices', ['English,', 'Polski']);
@@ -1024,6 +967,7 @@ g.exportSave = function () {
     // contents.player = $gamePlayer; //Excluded to clear any effects, like transparency or move speed modifications
     contents.version = GAME_VERSION;
     contents.language = g.lang;
+    contents.persistentData = g.persistentData;
     return LZString.compressToBase64(JsonEx.stringify(contents));
 }
 
@@ -1053,6 +997,23 @@ g.importSave = function (compressedString) {
     $gameVariables = contents.variables;
     $gameSelfSwitches = contents.selfSwitches;
     g.setLanguage(contents.language);
+
+    //Importing persistent data
+    if (!g.persistentData.keyTimes["tutorial_1"] && g.persistentData.wrongGuesses.length === 0) {
+        g.persistentData = contents.persistentData; //No data yet, simply use the imported one
+    } else {
+        //For key times, if both exists, pick whichever time is greater
+        for (const key in contents.persistentData.keyTimes) {
+            if (g.persistentData.keyTimes.hasOwnProperty(key)) {
+                g.persistentData.keyTimes[key] = Math.max(contents.persistentData.keyTimes[key], g.persistentData.keyTimes[key]);
+            } else {
+                g.persistentData.keyTimes[key] = contents.persistentData.keyTimes[key];
+            }
+        }
+        //For wrong guesses, simply combine the two lists, removing duplicates
+        g.persistentData.wrongGuesses = [...new Set([...g.persistentData.wrongGuesses, ...contents.persistentData.wrongGuesses])];
+        g.persistentData.isCombined = true; //Noting this down, just in case all of this goes wrong
+    }
 
     switch (contents.version) {
         //Any version-specific logic will go here
@@ -1219,7 +1180,10 @@ DataManager.makeSavefileInfo = function () {
     var res = _DataManager_makeSavefileInfo.call(this);
     res.title = "";
     if (g.data.keysTotal === 0) res.title += s.beginning;
-    else if (g.data.keysTotal === $dataPuzzles.getAmount()) res.title += s.allKeys;
+    else if (g.data.keysTotal === $dataPuzzles.getAmount()) {
+        res.title += s.allKeys;
+        res.faces[0] = ['mc', 6]; //Using the happy face if the game is done
+    }
     else res.title += displayKeys(g.data.keysTotal);
     res.title += " | " + (new Date()).toLocaleString();
     return res;
@@ -1246,10 +1210,11 @@ Scene_Title.prototype.commandExit = function () {
 Scene_Title.prototype.commandFeedback = function () {
     switch (g.lang) {
         case "en":
-            window.open("https://www.google.com"); //TODO eng feedback form
+            let baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120=";
+            window.open(baseUrl + encodeURI(JsonEx.stringify(g.persistentData)));
             break;
         case "pl":
-            window.open("https://forums.rpgmakerweb.com/");
+            window.open("https://forums.rpgmakerweb.com/");//TODO pl feedback form
             break;
         default: console.error("Language is not set, but the feedback form was requested.");
     }

@@ -228,7 +228,7 @@ g.checkKey = function (input) {
         g.data.keysTotal += 1;
         g.data.lastSolved = puzzleName;
         if (!g.persistentData.keyTimes[key]) {
-            g.persistentData.keyTimes[key] = Graphics.frameCount;
+            g.persistentData.keyTimes[key] = Math.floor(Graphics.frameCount / 60);
             ConfigManager.save();
         }
         return 3; //Correct, and not collected yet!
@@ -1211,7 +1211,7 @@ Scene_Title.prototype.commandFeedback = function () {
     switch (g.lang) {
         case "en":
             let baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120=";
-            window.open(baseUrl + encodeURI(JsonEx.stringify(g.persistentData)));
+            window.open(baseUrl + encodeURI(JSON.stringify(g.persistentData)));
             break;
         case "pl":
             window.open("https://forums.rpgmakerweb.com/");//TODO pl feedback form

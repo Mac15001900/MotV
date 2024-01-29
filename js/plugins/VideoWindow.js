@@ -23,7 +23,8 @@ VideoWindow.prototype.initialize = function () {
 }
 
 VideoWindow.prototype.show = function (filename, independent = true, loop = false, scale = 1) {
-    if (this.isOpen()) this.finish();
+    // if (this.isOpen()) this.finish();
+    const DIMENSIONS = { "seal-reversed.webm": [640, 360], "testVideo.webm": [1920, 937] }; //This is rather hacky, but much simpler than waiting until a file is loaded to know what its dimentions will be
     this.independent = independent;
     this.loop = loop;
     this.scale = scale;
@@ -33,26 +34,58 @@ VideoWindow.prototype.show = function (filename, independent = true, loop = fals
     video.src = 'movies/' + filename;
     video.loop = loop;
     video.autoplay = true;
-    video.style.width = (video.videoWidth * scale) + 'px';
-    video.style.height = (video.videoHeight * scale) + 'px';
-    video.style.objectFit = 'contain';
-    video.style.objectPosition = 'center';
-    this.contents.appendChild(video);
+    if (DIMENSIONS[filename]) {
+        video.width = DIMENSIONS[filename][0] * scale;
+        video.height = DIMENSIONS[filename][1] * scale;
+    }
+    video.style.zIndex = 3
+    video.setAttribute('playsinline', '');
+    Graphics._centerElement(video);
+    makeVideoPlayableInline(video);
+    document.body.appendChild(video);
+    this.video = video;
 
     if (independent) g.getInterpreter().setWaitMode('indefinite');
-    this.recenter();
     this.openness = 0;
     this.open();
 
-
-    this.open();
-
-
+    this.lastScale = Graphics._realScale;
+    this.onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
 }
+
+VideoWindow.prototype.printDimensions = function () {
+    console.log([this.video.videoWidth, this.video.videoHeight]);
+}
+
+VideoWindow.prototype.update = function () {
+    Window_Base.prototype.update.call(this);
+    if (!this.isOpen()) return;
+    if (this.independent) {
+        if (Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed()) {
+            if (this.onPreviousPress) return; //We're still on the keypress from last event
+            this.finish();
+        } else {
+            this.onPreviousPress = false;
+        }
+    }
+}
+
+VideoWindow.prototype.finish = function () {
+    Input.update();
+    this.close();
+    this.video.pause();
+    this.video.removeAttribute('src'); // empty source
+    this.video.load(); //This will 'load' and empty video, effectively removing the existing one from memory
+    // SceneManager._scene.removeChild(this);
+    if (this.independent) g.getInterpreter().setWaitMode('');
+}
+
 /*
 Required to get a video to play: (we might want to add playInLine stuff from screenshot just in case of iPhones)
 let video = document.createElement('video'); document.body.appendChild(video);
 <video>​</video>​
+video.setAttribute('playsinline','');
+makeVideoPlayableInline(video);
 video.width = 640; video.height = 360;
 video.style.zIndex = 3
 Graphics._centerElement(video)

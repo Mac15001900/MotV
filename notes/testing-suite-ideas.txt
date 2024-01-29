@@ -21,3 +21,6 @@ Info for the console (like g.getInterpreterInfo())
 Pause the game, run one frame at a time
 Print event comments in console
 Colourblind testing filters
+
+Recommended additions:
+https://trihan.itch.io/trilobytes-mv-dude-wheres-my-autorun

@@ -99,6 +99,6 @@ PictureWindow.prototype.recenter = function () {
 Window_ChoiceList.prototype.close = function () {
     Window_Base.prototype.close.call(this);
     this.ready = false;
-    g.pictureWindow.recenter(); //TODO: check next event, don't recenter if it's also a choice
+    g.pictureWindow.recenter(); //TODO maybe: check next event, don't recenter if it's also a choice. (it won't effect anything for now though). Maybe integrate with show multiple images better instead?
 }
 //There's also a modification in Window_ChoiceList.prototype.start

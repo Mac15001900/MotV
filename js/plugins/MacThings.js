@@ -168,8 +168,10 @@ macThingsInit = function () {
     g.gameInitialised = true;
     g.saveWorker = new Worker("./js/plugins/compressor.js");
     scheduleAutosave(true);
-    console.log("MacThings init complete", $gv[1]);
     g.pictureWindow = new PictureWindow();
+    g.videoWindow = new VideoWindow();
+
+    console.log("MacThings init complete", $gv[1]);
 }
 
 initialiseGData = function () {

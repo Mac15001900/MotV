@@ -1208,16 +1208,19 @@ Scene_Title.prototype.commandExit = function () {
 };
 
 Scene_Title.prototype.commandFeedback = function () {
+    let baseUrl = "";
     switch (g.lang) {
         case "en":
-            let baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120=";
-            window.open(baseUrl + encodeURI(JSON.stringify(g.persistentData)));
+            baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120=";
             break;
         case "pl":
-            window.open("https://forums.rpgmakerweb.com/");//TODO pl feedback form
+            baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLScI6sZmdHN3ZXCd-SYpnyVLUZTQiQKRWIlHqeqdBjEQ13dM0w/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120="
             break;
-        default: console.error("Language is not set, but the feedback form was requested.");
+        default:
+            console.error("Language is not set, but the feedback form was requested.");
+            return;
     }
+    window.open(baseUrl + encodeURI(JSON.stringify(g.persistentData)));
 }
 
 //Player default speed thingy

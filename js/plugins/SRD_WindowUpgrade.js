@@ -734,13 +734,21 @@ function Window_ChoiceMessage() {
 		}
 	};
 
-	// _.Game_Interpreter_updateWaitMode = Game_Interpreter.prototype.updateWaitMode;
-	// Game_Interpreter.prototype.updateWaitMode = function () {
-	// 	if (this._waitMode === 'indefinite') {
-	// 		return true;
-	// 	}
-	// 	return _.Game_Interpreter_updateWaitMode.apply(this, arguments);
-	// };
+	if (!SRD.Game_Interpreter_pluginCommand) {
+
+		SRD.Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
+		Game_Interpreter.prototype.pluginCommand = function (command, args) {
+			const com = command.trim().toLowerCase();
+			if (SRD.PluginCommands[com]) {
+				SRD.PluginCommands[com].call(this, args);
+				return;
+			}
+			SRD.Game_Interpreter_pluginCommand.apply(this, arguments);
+		};
+
+	}
+
+	// Game_Interpreter.prototype.updateWaitMode got absorbed by MacThings
 
 	//-----------------------------------------------------------------------------
 	// SRD.Requirements

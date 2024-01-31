@@ -18,17 +18,14 @@ function VideoWindow() {
 VideoWindow.prototype = Object.create(Window_Base.prototype);
 VideoWindow.prototype.constructor = VideoWindow;
 VideoWindow.prototype.initialize = function () {
-    this.offsetX = 0;
     Window_Base.prototype.initialize.call(this, 0, 0, SceneManager._screenWidth, SceneManager._screenHeight);
 }
 
 VideoWindow.prototype.show = function (filename, independent = true, loop = false, scale = 1) {
-    // if (this.isOpen()) this.finish();
+    if (this.isOpen()) this.finish();
     const DIMENSIONS = { "seal-reversed.webm": [640, 360], "testVideo.webm": [1920, 937] }; //This is rather hacky, but much simpler than waiting until a file is loaded to know what its dimentions will be
     this.independent = independent;
     this.loop = loop;
-    this.scale = scale;
-    this.contents.clear();
 
     let video = document.createElement('video');
     video.src = 'movies/' + filename;
@@ -37,6 +34,12 @@ VideoWindow.prototype.show = function (filename, independent = true, loop = fals
     if (DIMENSIONS[filename]) {
         video.width = DIMENSIONS[filename][0] * scale;
         video.height = DIMENSIONS[filename][1] * scale;
+        this.width = video.width + this.standardPadding() * 2;
+        this.height = video.height + this.standardPadding() * 2;
+        this.x = Graphics.boxWidth / 2 - this.width / 2;
+        this.y = Graphics.boxHeight / 2 - this.height / 2;
+    } else {
+        console.warn("No dimensions found for " + filename + " in VideoWindow.js");
     }
     video.style.zIndex = 3
     video.setAttribute('playsinline', '');
@@ -45,12 +48,19 @@ VideoWindow.prototype.show = function (filename, independent = true, loop = fals
     document.body.appendChild(video);
     this.video = video;
 
-    if (independent) g.getInterpreter().setWaitMode('indefinite');
-    this.openness = 0;
-    this.open();
+    //Block the interpreter if independent
+    if (independent) {
+        g.getInterpreter().setWaitMode('indefinite');
+        this.pause = true;
+    }
 
     this.lastScale = Graphics._realScale;
     this.onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
+
+    //Open the back window
+    this.openness = 0;
+    this.open();
+    SceneManager._scene.addWindow(this);
 }
 
 VideoWindow.prototype.printDimensions = function () {
@@ -60,6 +70,11 @@ VideoWindow.prototype.printDimensions = function () {
 VideoWindow.prototype.update = function () {
     Window_Base.prototype.update.call(this);
     if (!this.isOpen()) return;
+    if (Graphics._realScale !== this.lastScale) {
+        this.lastScale = Graphics._realScale;
+        Graphics._centerElement(this.video);
+    }
+
     if (this.independent) {
         if (Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed()) {
             if (this.onPreviousPress) return; //We're still on the keypress from last event
@@ -73,10 +88,12 @@ VideoWindow.prototype.update = function () {
 VideoWindow.prototype.finish = function () {
     Input.update();
     this.close();
-    this.video.pause();
-    this.video.removeAttribute('src'); // empty source
-    this.video.load(); //This will 'load' and empty video, effectively removing the existing one from memory
-    // SceneManager._scene.removeChild(this);
+    if (this.video) {
+        this.video.pause();
+        this.video.removeAttribute('src'); // empty source
+        this.video.load(); //This will 'load' and empty video, effectively removing the existing one from memory
+    }
+    SceneManager._scene._windowLayer.removeChild(this);
     if (this.independent) g.getInterpreter().setWaitMode('');
 }
 

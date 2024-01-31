@@ -89,7 +89,7 @@
 	ConfigManager.applyData = function (config) {
 		_ConfigManager_applyData.call(this, config);
 		let value = this.readFullscreen(config, 'fullscreen');
-		this.fullscreen = value;
+		this.fullscreen = Utils.isNwjs ? value : false; //We can't start full-screen in browsers, so we won't try to
 		g.fullScreen = value;
 	};
 

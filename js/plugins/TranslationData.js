@@ -28,7 +28,7 @@ wordBank = {
         optionDescriptions: {
             cancel: "",
             alwaysDash: "When enabled, you will run by default and walk when holding the dash button.",
-            fullscreen: "Toggles between fullscreen and winowed mode.",
+            fullscreen: "Toggles between fullscreen and windowed mode.\n" + (!Utils.isNwjs ? "This is not very reliable in browsers, it's recommended to use F11 instead." : "You can also change this setting anytime with the F4 key (by default)."),
             keyConfig: "Allows you to customise the game's controls.",
             lang: "Sets the language of the game.\nCan only be changed in the main menu.",
             cBlind: "This option adjusts some puzzles that would othrewise require distinguishing between colors in order to solve them.",
@@ -187,7 +187,7 @@ wordBank = {
         optionDescriptions: {
             cancel: "",
             alwaysDash: "Z tą opcją będziesz biec domyślnie, a iść normalnie tylko przy wciśniętym klawiszu biegu.",
-            fullscreen: "Przełącza pomiędzy trybem pełnoekranowym a oknem.",
+            fullscreen: "Przełącza pomiędzy trybem pełnoekranowym a oknem.\n" + (!Utils.isNwjs ? "Nie działa najlepiej w wersji przeglądarkowej - zalecane jest po prostu używanie F11." : "Można to również zrobić w dowolnym momencie klawiszem F4 (domyślnie)"),
             keyConfig: "Pozawala na zmianę ustawień sterowania.",
             lang: "Zmienia język gry.\nTę opcję można zmienić tylko w menu głównym.",
             cBlind: "Zmienia nieco niektóre zagadki, tak, aby ich rozwiązanie nie wymagało zdolności rozróżniania kolorów.",

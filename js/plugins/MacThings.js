@@ -1154,7 +1154,11 @@ Input.update = function () {
 //Special things that happen on certain button presses
 g.buttonPressed = function (button) {
     switch (button) {
-        case "f4": Graphics._switchFullScreen(); break;
+        case "f4":
+            Graphics._switchFullScreen();
+            g.fullScreen = !g.fullScreen;
+            if (g.scene() instanceof Scene_Options) g.getActiveWindows()[0].refresh()
+            break;
         case "fps": Graphics._switchFPSMeter(); break;
         case "frame": g.scene().update(); break;
     }
@@ -1173,7 +1177,7 @@ Input.keyMapper["81"] = "quit"; //Setting for the 'q' key
 var _Scene_Base_update = Scene_Base.prototype.update;
 Scene_Base.prototype.update = function () {
     _Scene_Base_update.apply(this);
-    if (MAC_DEBUG && Input.isTriggered("quit")) SceneManager.exit(); //TODO QInpit prevents this, find out why
+    if (MAC_DEBUG && Input.isTriggered("quit")) SceneManager.exit(); //TODO KeyboardConfig overwrites this :(
 }
 
 //Creates save titles when saving

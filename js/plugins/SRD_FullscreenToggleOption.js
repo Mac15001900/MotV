@@ -65,7 +65,6 @@
 	Object.defineProperty(ConfigManager, 'fullscreen', {
 		get: function () {
 			return g.fullScreen;
-			//return !Graphics._isFullScreen(); //TODO This should have a smarter return
 		},
 		set: function (value) {
 			if (value) {

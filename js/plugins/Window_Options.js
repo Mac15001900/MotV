@@ -1,7 +1,13 @@
+/*:
+ * @plugindesc Overhaul of the Window_Options class
+ * @author Mac15001900
+ */
+
 //-----------------------------------------------------------------------------
 // OptionDescriptionWindow
 //
 // The window for displaying the description of an option.
+
 
 function OptionDescriptionWindow() {
     this.initialize.apply(this, arguments);

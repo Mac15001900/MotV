@@ -21,6 +21,14 @@ VideoWindow.prototype.initialize = function () {
     Window_Base.prototype.initialize.call(this, 0, 0, SceneManager._screenWidth, SceneManager._screenHeight);
 }
 
+g.showVideoWindow = function (filename, independent = true, loop = false, scale = 1) {
+    g.videoWindow.show(filename, independent, loop, scale);
+}
+
+g.hideVideoWindow = function () {
+    g.videoWindow.finish();
+}
+
 VideoWindow.prototype.show = function (filename, independent = true, loop = false, scale = 1) {
     if (this.isOpen()) this.finish();
     const DIMENSIONS = { "seal-reversed.webm": [640, 360], "testVideo.webm": [1920, 937] }; //This is rather hacky, but much simpler than waiting until a file is loaded to know what its dimentions will be
@@ -37,28 +45,29 @@ VideoWindow.prototype.show = function (filename, independent = true, loop = fals
         this.width = video.width + this.standardPadding() * 2;
         this.height = video.height + this.standardPadding() * 2;
         this.x = Graphics.boxWidth / 2 - this.width / 2;
-        this.y = Graphics.boxHeight / 2 - this.height / 2;
+        this.y = (Graphics.boxHeight - (independent ? 0 : SceneManager._scene._messageWindow.height)) / 2 - this.height / 2;
+        if (this.y < 0 || this.x < 0) console.warn("The video doesn't fit on screen. Consider using a smaller scale.");
     } else {
         console.warn("No dimensions found for " + filename + " in VideoWindow.js");
     }
     video.style.zIndex = 3
     video.setAttribute('playsinline', '');
     Graphics._centerElement(video);
+    if (!independent) video.style.marginTop = ((this.y + this.standardPadding()) * Graphics._realScale + Graphics._canvas.offsetTop) + "px";
     makeVideoPlayableInline(video);
     document.body.appendChild(video);
     this.video = video;
 
     //Block the interpreter if independent
-    if (independent) {
-        g.getInterpreter().setWaitMode('indefinite');
-        this.pause = true;
-    }
+    if (independent) g.getInterpreter().setWaitMode('indefinite');
 
     this.lastScale = Graphics._realScale;
+    this.lastOffset = Graphics._canvas.offsetTop;
     this.onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
 
     //Open the back window
     this.openness = 0;
+    this.pause = independent;
     this.open();
     SceneManager._scene.addWindow(this);
 }
@@ -70,9 +79,11 @@ VideoWindow.prototype.printDimensions = function () {
 VideoWindow.prototype.update = function () {
     Window_Base.prototype.update.call(this);
     if (!this.isOpen()) return;
-    if (Graphics._realScale !== this.lastScale) {
+    if (Graphics._realScale !== this.lastScale || this.lastOffset !== Graphics._canvas.offsetTop) {
         this.lastScale = Graphics._realScale;
+        this.lastOffset = Graphics._canvas.offsetTop;
         Graphics._centerElement(this.video);
+        if (!this.independent) this.video.style.marginTop = ((this.y + this.standardPadding()) * Graphics._realScale + Graphics._canvas.offsetTop) + "px";
     }
 
     if (this.independent) {

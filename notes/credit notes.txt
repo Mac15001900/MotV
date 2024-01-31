@@ -40,6 +40,7 @@ SRD's also require a link: http://sumrndm.site/
 Icons:
 Lorc
 Delapouite (exercise)
+sbed (key icon)
 
 Retro sci-fi expansion (required block):
 [Copyright](C) 2012 ENTERBRAIN, INC;
@@ -50,6 +51,7 @@ Sounds:
 Spotlight - reidmangan
 80921__justinbw__buttonchime02up.wav - CC 4.0 JustinBW
 Button - CC0 JarredGibb
+Cursor-FS - CC0 by Loyalty_Freak_Music
 
 Seal new music: https://www.youtube.com/watch?v=Np9N0XXL7UY
 (remix of Happy H. Christmas by Maniacs of Noise)

@@ -31,7 +31,7 @@ g.hideVideoWindow = function () {
 
 VideoWindow.prototype.show = function (filename, independent = true, loop = false, scale = 1) {
     if (this.isOpen()) this.finish();
-    const DIMENSIONS = { "seal-reversed.webm": [640, 360], "testVideo.webm": [1920, 937] }; //This is rather hacky, but much simpler than waiting until a file is loaded to know what its dimentions will be
+    const DIMENSIONS = { "seal-reversed.webm": [640, 360], "testVideo.webm": [1920, 937], "loading.webm": [200, 200] }; //This is rather hacky, but much simpler than waiting until a file is loaded to know what its dimentions will be
     this.independent = independent;
     this.loop = loop;
 

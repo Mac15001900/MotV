@@ -32,6 +32,19 @@
  * @on Yes
  * @off No
  * 
+ * @param Enable region events
+ * @desc Allows regions to act like events, running an event with <Region:id> when interacted with.
+ * @type boolean
+ * @default true
+ * @on Enable
+ * @off Disable
+ * 
+ * @param Region tag name
+ * @desc The name of the notetag used to mark the event that's ran after interacting with a region
+ * @type text
+ * @default Region
+ * @parent Enable region events
+ * 
  * @help
  * This plugin provides a command "RunEvent [id|name|tag|offset]", which allows you
  * to run another event, specified either by an offset from the current event,
@@ -147,10 +160,12 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
      * Runs a target event, specified either by an offset from current event or a target event id.
      * @param {String|Number} arg Direction instructions, composed of dash-separated words, e.g. "left-left-up". Alternatively, the ID of the target event, 
      * it's name enclosed in [square brackets], or the notetag enclosed in <angle brackets>
-     * @param {Game_Interpreter} [inp] Interpreter to use. If not specified, the plugin will use the map's main interpreter.
+     * @param {Game_Interpreter} [inp] Interpreter to use. If not specified, will use the map's main interpreter.
      * @param {Number} [page] The page of the target event to run. Uses indexes as shown in the editor, i.e. starting at 1. Will run the currently active page if not specified.
+     * @param {Boolean} [surpressErrors] If true, invalid target errors will be suppressed and nothing will happen if the target event doesn't exist. If false or omitted, those errors will follow plugin settings.
+     * @returns {Boolean} True iff the event was successfully run.
      */
-    $.run = function (arg, inp, pageId) {
+    $.run = function (arg, inp, pageId, surpressErrors) {
         inp ??= $.getInterpreter(); //If not specified we'll just grab the main intepreter
         if (inp.chainLength > Number(params["Max chain length"])) throw new Error("MAC_RunNearbyEvent: looks like you've made an infinite loop (or a chain that's longer than allowed maximum).");
         let event = null;
@@ -197,7 +212,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
                     case 'this':
                         break;
                     default:
-                        throw new Error(`invalid direction: ${part}`);
+                        throw new Error(`"MAC_RunNearbyEvent: invalid direction: ${part}`);
                 }
             }
             event = $gameMap._events[$gameMap.eventIdXy(x, y)];
@@ -225,7 +240,8 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
             } else {
                 inp.setup(commandList, event.eventId());
             }
-        } else {
+            return true;
+        } else if (!surpressErrors) {
             switch (params['With an invalid target']) {
                 case "Do nothing":
                     break;
@@ -236,6 +252,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
                     throw new Error("MAC_RunNearbyEvent: " + error);
             }
         }
+        return false;
     }
     /**
      * 
@@ -273,6 +290,23 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
             break;
     }
 
+    if (params["Enable region events"] === "true") {
+        void function (alias) {
+            Game_Player.prototype.startMapEvent = function (x, y, triggers, normal) {
+                alias.call(this, x, y, triggers, normal);
+                if (!$gameMap.isEventRunning()) {
+                    let region = $gameMap.regionId(x, y);
+                    if (region > 0) {
+                        let events = $gameMap.events().filter(e => e.event().meta[params["Region tag name"]] == region); //Comparing a string and a number, so '==' and not '==='
+                        events.forEach(event => {
+                            if (event.isTriggerIn(triggers) && event.isNormalPriority() === normal) {
+                                event.start();
+                            }
+                        });
+                    }
+                }
+            }
+        }(Game_Player.prototype.startMapEvent);
+    }
+
 })(window.MAC_RunNearbyEvent);
-
-

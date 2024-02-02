@@ -1,6 +1,6 @@
 Skip title, to new game
-Quit after event test finishes
 Set starting variables and switches
+Quit after event test finishes
 Change movement speed (regular and sprint)
 Phase through blocks on sprint
 Warp to selected map
@@ -9,11 +9,11 @@ Show a persistent toast with a specific variable
 Play a sound when a variable changes
 Last changed variable/switch
 Instant / very fast text
+Instant text - Window_Message.prototype.updateShowFast = function() {this._showFast = true;}
 Show collisions?
-Choose event page
+Choose event page to run
 Show currently active event pages, as toasts above events
 Toggle music key / show currently playing music
-Instant text - Window_Message.prototype.updateShowFast = function() {this._showFast = true;}
 Warn about the lack of changes since last test
 Modify evalDamageFormula to print errors in the formulas instead of returning 0
 Allow selecting disabled options from menus
@@ -21,6 +21,7 @@ Info for the console (like g.getInterpreterInfo())
 Pause the game, run one frame at a time
 Print event comments in console
 Colourblind testing filters
+Disable compression for savefiles (so that you can look at them)
 
 Recommended additions:
 https://trihan.itch.io/trilobytes-mv-dude-wheres-my-autorun

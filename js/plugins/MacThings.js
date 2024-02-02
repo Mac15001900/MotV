@@ -211,6 +211,7 @@ g.checkKey = function (input) {
     }
 
     let lowered = input.toLowerCase().replaceAll(' ', '');
+    if (lowered === "secret-debug-mode" && Utils.isNwjs()) require('nw.gui').Window.get().showDevTools(); //A secret way to open the console if needed
     if (lowered.substr(0, 6) !== startString || lowered[lowered.length - 1] !== ']') return 0; //Invalid format
     let key = lowered.substr(6, lowered.length - 7);
     g.data.lastGuess = key;
@@ -1160,7 +1161,7 @@ g.buttonPressed = function (button) {
             if (g.scene() instanceof Scene_Options) g.getActiveWindows()[0].refresh()
             break;
         case "fps": Graphics._switchFPSMeter(); break;
-        case "frame": g.scene().update(); break;
+        case "frame": g.scene().update(); break; //TODO special combo for devtools access
     }
 }
 

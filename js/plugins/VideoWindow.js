@@ -21,7 +21,7 @@ VideoWindow.prototype.initialize = function () {
     Window_Base.prototype.initialize.call(this, 0, 0, SceneManager._screenWidth, SceneManager._screenHeight);
 }
 
-g.showVideoWindow = function (filename, independent = true, loop = false, scale = 1) {
+g.showVideoWindow = function (filename, independent = true, loop = true, scale = 1) {
     g.videoWindow.show(filename, independent, loop, scale);
 }
 
@@ -29,7 +29,7 @@ g.hideVideoWindow = function () {
     g.videoWindow.finish();
 }
 
-VideoWindow.prototype.show = function (filename, independent = true, loop = false, scale = 1) {
+VideoWindow.prototype.show = function (filename, independent = true, loop = true, scale = 1) { //TODO refactor to use setIndependent
     if (this.isOpen()) this.finish();
     const DIMENSIONS = { "seal-reversed.webm": [640, 360], "testVideo.webm": [1920, 937], "loading.webm": [200, 200] }; //This is rather hacky, but much simpler than waiting until a file is loaded to know what its dimentions will be
     this.independent = independent;
@@ -51,6 +51,7 @@ VideoWindow.prototype.show = function (filename, independent = true, loop = fals
         console.warn("No dimensions found for " + filename + " in VideoWindow.js");
     }
     video.style.zIndex = 3
+    video.style.display = 'none'; //Start with the video hidden
     video.setAttribute('playsinline', '');
     Graphics._centerElement(video);
     if (!independent) video.style.marginTop = ((this.y + this.standardPadding()) * Graphics._realScale + Graphics._canvas.offsetTop) + "px";
@@ -76,9 +77,25 @@ VideoWindow.prototype.printDimensions = function () {
     console.log([this.video.videoWidth, this.video.videoHeight]);
 }
 
+VideoWindow.prototype.setIndependent = function (independent, updatePosition = true) {
+    this.independent = independent;
+    this.pause = independent;
+    this.onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
+
+    if (independent) g.getInterpreter().setWaitMode('indefinite');
+    else if (g.getInterpreter()._waitMode === 'indefinite') g.getInterpreter().setWaitMode(''); //If we're blocking the interpreter, let's stop
+
+    if (updatePosition) {
+        this.y = (Graphics.boxHeight - (independent ? 0 : SceneManager._scene._messageWindow.height)) / 2 - this.height / 2;
+        Graphics._centerElement(this.video);
+        if (!independent) this.video.style.marginTop = ((this.y + this.standardPadding()) * Graphics._realScale + Graphics._canvas.offsetTop) + "px";
+    }
+}
+
 VideoWindow.prototype.update = function () {
     Window_Base.prototype.update.call(this);
     if (!this.isOpen()) return;
+    if (this.openness >= 255 && this.video.style.display === 'none') this.video.style.display = '';
     if (Graphics._realScale !== this.lastScale || this.lastOffset !== Graphics._canvas.offsetTop) {
         this.lastScale = Graphics._realScale;
         this.lastOffset = Graphics._canvas.offsetTop;

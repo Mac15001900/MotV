@@ -22,6 +22,8 @@ Pause the game, run one frame at a time
 Print event comments in console
 Colourblind testing filters
 Disable compression for savefiles (so that you can look at them)
+Add video controls
+
 
 Recommended additions:
 https://trihan.itch.io/trilobytes-mv-dude-wheres-my-autorun

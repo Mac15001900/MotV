@@ -164,13 +164,18 @@ macThingsInit = function () {
     g.persistentWindows.push(g.topRightToast);
     //It will be added to the scene later on in the onMapLoaded alias
 
+    //Event test spellchecking TODO
+    if (DataManager.isEventTest()) {
+        console.log("We're in an event test");
+        g.setupSpellcheck();
+    }
+
     //Other init stuff
     g.gameInitialised = true;
     g.saveWorker = new Worker("./js/plugins/compressor.js");
     scheduleAutosave(true);
     g.pictureWindow = new PictureWindow();
     g.videoWindow = new VideoWindow();
-
     console.log("MacThings init complete", $gv[1]);
 }
 
@@ -1368,7 +1373,53 @@ if (MAC_DEBUG) {
     document.addEventListener('keydown', proccessKeyDown);
 }
 
+//===================================== Typo checking =====================================
 
+g.setupSpellcheck = function () {
+    g.spellWorker = new Worker("./js/plugins/Spellchecker.js");
+    const fs = require('fs');
+    const path = require('path');
+    for (const file of ["dictUK.dic", "dictUK.aff", "dictPL.dic", "dictPL.aff"]) {
+        fs.readFile(path.join(path.dirname(process.mainModule.filename), "cdata/" + file), 'utf8', (err, data) => {
+            if (err) throw err;
+            g.spellWorker.postMessage({ type: 'file', filename: file, contents: data });
+        });
+    }
+    g.spellWorker.addEventListener('message', message => {
+        console.log(message.data);
+        if (message.data === "ready") {
+            console.log("Spellchecker ready");
+            if (DataManager.isEventTest()) g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(g.getInterpreter()._list.filter(c => c.code === 401).map(c => c.parameters[0]).join('\n')) });
+            return;
+        } else {
+            g.typos ??= [];
+            g.typos.concat(message.data);
+        }
+    });
+}
+
+g.loadFile = function (filepath) {
+    var fs = require('fs');
+    var path = require('path');
+    return fs.readFileSync(path.join(path.dirname(process.mainModule.filename), filepath), { encoding: 'utf8' });
+}
+//"dictUK.dic", "dictUK.aff", "dictPL.dic", "dictPL.aff"
+g.newFileLoaded = function () {
+    if (!Typo) return;
+    if (!g.typoEn && g.files["dictUK.aff"] && g.files["dictUK.dic"]) g.typoEn = new Typo("un_UK", g.files["dictUK.aff"], g.files["dictUK.dic"]);
+    if (!g.typoPl && g.files["dictPL.aff"] && g.files["dictPL.dic"]) g.typoPl = new Typo("pl", g.files["dictPL.aff"], g.files["dictPL.dic"]);
+}
+
+g.loadFileInto = function (filepath, obj, name) {
+    var fs = require('fs');
+    var path = require('path');
+    fs.readFile(path.join(path.dirname(process.mainModule.filename), filepath), { encoding: 'utf8' }, (err, data) => {
+        if (err) throw err;
+        obj[name] = data;
+        // console.log("Loaded " + filepath + " into " + name);
+        g.newFileLoaded();
+    });
+}
 
 //===================================== Engine fixes =====================================
 
@@ -1473,6 +1524,14 @@ g.resizeTo = function (width = 1920, height = 1080) {
     var dh = height - window.innerHeight;
     window.moveBy(-dw / 2, -dh / 2);
     window.resizeBy(dw, dh);
+}
+
+/**
+ * Synchronously create "typoEn" and "typoPl" objects from Typo.js, for experimenting with the library's functions
+ */
+g.buildTypo = function () {
+    window.typoEn = new Typo("en_GB", g.loadFile("cdata/dictUK.aff"), g.loadFile("cdata/dictUK.dic"));
+    window.typoPl = new Typo("pl", g.loadFile("cdata/dictPL.aff"), g.loadFile("cdata/dictPL.dic"));
 }
 
 

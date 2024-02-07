@@ -146,5 +146,6 @@ void function () {
     }
 
     window.runExtractor = runExtractor;
+    window.showMap = showMap;
 
 }();

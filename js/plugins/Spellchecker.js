@@ -5,8 +5,8 @@
  */
 
 let g = { queue: [], en: true, pl: true };
-const CUSTOM_WORDS_EN = "testonium".split(" ");
-const CUSTOM_WORDS_PL = "testarium".split(" ");
+const CUSTOM_WORDS_EN = "testonium ev cypher decrypt decrypto Penrose teleporting Awww eg Urgh hypnotisingly Ooooh cutscene Hahaha WASD".toLocaleLowerCase().split(" ");
+const CUSTOM_WORDS_PL = "testarium ev decrypto Penrose Awww planszówka hipnotyzująco".toLocaleLowerCase().split(" ");
 
 g.files = {};
 newFileLoaded = function () {
@@ -79,7 +79,7 @@ addEventListener("message", (message) => {
 });
 
 processMessage = function (message) {
-    let words = message.replace(/-/, ' ').replace(/[^\p{L}'\s]/gu, '').split(/\s/).filter(w => w.length > 1);
+    let words = message.replace(/[--]/g, ' ').replace(/[^\p{L}'\s]/gu, '').split(/\s/).filter(w => w.length > 1);
     let res = [];
     for (const word of words) {
         let valid = false;

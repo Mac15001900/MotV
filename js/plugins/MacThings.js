@@ -165,8 +165,7 @@ macThingsInit = function () {
     //It will be added to the scene later on in the onMapLoaded alias
 
     //Event test spellchecking TODO
-    if (DataManager.isEventTest()) {
-        console.log("We're in an event test");
+    if (DataManager.isEventTest() || MAC_DEBUG) {
         g.setupSpellcheck();
     }
 
@@ -1389,11 +1388,12 @@ g.setupSpellcheck = function () {
         if (message.data === "ready") {
             console.log("Spellchecker ready");
             if (DataManager.isEventTest()) g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(g.getInterpreter()._list.filter(c => c.code === 401).map(c => c.parameters[0]).join('\n')) });
+            else g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(showMap($dataMap)) });
             return;
         } else {
             g.typos = message.data;
             console.log(g.typos);
-            if (g.typos.length === 0) g.topRightToast.enqueueToast("No typos found", Infinity, 0, 255, 50);
+            if (g.typos.length === 0) g.topRightToast.enqueueToast("No typos found", 120, 0, 255, 50);
             else g.topRightToast.enqueueToast(g.typos.join('\n'), Infinity, 210, 0, 0);
         }
     });

@@ -1386,14 +1386,15 @@ g.setupSpellcheck = function () {
         });
     }
     g.spellWorker.addEventListener('message', message => {
-        console.log(message.data);
         if (message.data === "ready") {
             console.log("Spellchecker ready");
             if (DataManager.isEventTest()) g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(g.getInterpreter()._list.filter(c => c.code === 401).map(c => c.parameters[0]).join('\n')) });
             return;
         } else {
-            g.typos ??= [];
-            g.typos.concat(message.data);
+            g.typos = message.data;
+            console.log(g.typos);
+            if (g.typos.length === 0) g.topRightToast.enqueueToast("No typos found", Infinity, 0, 255, 50);
+            else g.topRightToast.enqueueToast(g.typos.join('\n'), Infinity, 210, 0, 0);
         }
     });
 }
@@ -1419,6 +1420,20 @@ g.loadFileInto = function (filepath, obj, name) {
         // console.log("Loaded " + filepath + " into " + name);
         g.newFileLoaded();
     });
+}
+
+if (MAC_DEBUG || DataManager.isEventTest()) {
+    void function (alias) {
+        Game_Message.prototype.add = function (text) {
+            let res = text;
+            if (g.typos && g.typos.length > 0) {
+                for (let i = 0; i < g.typos.length; i++) {
+                    res = res.replace(g.typos[i], "\\c[18]" + g.typos[i] + "\\c[0]");
+                }
+            }
+            alias.call(this, res);
+        }
+    }(Game_Message.prototype.add);
 }
 
 //===================================== Engine fixes =====================================

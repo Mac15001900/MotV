@@ -22,7 +22,7 @@ Game_Player.prototype.update = function (sceneActive) {
     var lastScrolledX = this.scrolledX();
     var lastScrolledY = this.scrolledY();
     var wasMoving = this.isMoving();
-    if (wasMoving && Input.isPressed('ok')) this.actionQueued = true; //This is the only line changed here
+    if (wasMoving && Input.isPressed('ok') && !g.getInterpreter().isRunning()) this.actionQueued = true; //This is the only line changed here
     this.updateDashing();
     if (sceneActive) {
         this.moveByInput();

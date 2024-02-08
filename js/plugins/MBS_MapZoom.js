@@ -312,12 +312,13 @@ MBS.MapZoom = {};
   var _GamePlayer_centerY = Game_Player.prototype.centerY;
   var _GamePlayer_updateScroll = Game_Player.prototype.updateScroll;
 
+  //Change: fixing the center functions
   Game_Player.prototype.centerX = function () {
-    return _GamePlayer_centerX.call(this) / $gameMap.zoom.x;
+    return ((Graphics.width / ($gameMap.tileWidth() * $gameMap.zoom.x) - 1) / 2.0);
   };
 
   Game_Player.prototype.centerY = function () {
-    return _GamePlayer_centerY.call(this) / $gameMap.zoom.y;
+    return ((Graphics.height / ($gameMap.tileHeight() * $gameMap.zoom.y) - 1) / 2.0);
   };
 
   Game_Player.prototype.updateScroll = function (lastScrolledX, lastScrolledY) {

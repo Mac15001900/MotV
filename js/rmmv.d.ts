@@ -12079,10 +12079,20 @@ declare class Game_CharacterBase {
      */
     isObjectCharacter(): boolean;
     shiftY(): number;
+    /**
+     * Return's the character's screen x position in tiles
+     * @returns {number}
+     * @memberof Game_CharacterBase
+     */
     scrolledX(): number;
+    /**
+     * Return's the character's screen y position in tiles
+     * @returns {number}
+     * @memberof Game_CharacterBase
+     */
     scrolledY(): number;
     /**
-     * Returns the character's scrreen x position.
+     * Returns the character's screen x position.
      * 
      * @returns {number} 
      * @memberof Game_CharacterBase

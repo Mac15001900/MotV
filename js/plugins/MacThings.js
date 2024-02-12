@@ -1175,8 +1175,12 @@ Graphics._onKeyDown = () => { }; //Removed the default actions, since they're ha
 //Marks the event as seen whenever it's launched
 var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
 Game_Interpreter.prototype.setup = function (list, eventId) {
-    _Game_Interpreter_setup.call(this, [...list, { "code": 355, "indent": 0, "parameters": DataManager.isEventTest() ? ["SceneManager.exit()"] : ["$es[this.eventId()] = true;"] }], eventId);
+    if (g.scene() instanceof Scene_Map)
+        _Game_Interpreter_setup.call(this, [...list, { "code": 355, "indent": 0, "parameters": DataManager.isEventTest() ? ["SceneManager.exit()"] : ["$es[this.eventId()] = true;"] }], eventId);
+    else
+        _Game_Interpreter_setup.call(this, list, eventId);
 }
+
 
 //Debug thingy for quitting the game with Q
 Input.keyMapper["81"] = "quit"; //Setting for the 'q' key

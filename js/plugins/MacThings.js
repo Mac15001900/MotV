@@ -29,6 +29,7 @@ try {
 }
 
 let MAC_DEBUG = true;
+const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this
 const DEBUG_SWITCHES = [141]; //Switches that will be turned on when debug mode is on 
@@ -1219,19 +1220,39 @@ Scene_Title.prototype.commandExit = function () {
 };
 
 Scene_Title.prototype.commandFeedback = function () {
-    let baseUrl = "";
+    window.open(this.getFeedbackUrl());
+}
+
+Scene_Title.prototype.getFeedbackUrl = function () {
+    const puzzleData = encodeURI(JSON.stringify(g.persistentData));
+    const screenData = encodeURI(JSON.stringify(this.buildScreenInfo()));
+    const device = encodeURI(g.lang === "pl" && DEVICE_TARGET === "Web" ? "Przeglądarkowy" : DEVICE_TARGET);
     switch (g.lang) {
         case "en":
-            baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120=";
-            break;
+            //baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120=";
+            return `https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.1796237400=${device}&entry.508621120=${puzzleData}&entry.1935065278=${screenData}`;
         case "pl":
-            baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLScI6sZmdHN3ZXCd-SYpnyVLUZTQiQKRWIlHqeqdBjEQ13dM0w/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120="
-            break;
+            //baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLScI6sZmdHN3ZXCd-SYpnyVLUZTQiQKRWIlHqeqdBjEQ13dM0w/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120="
+            return `https://docs.google.com/forms/d/e/1FAIpQLScI6sZmdHN3ZXCd-SYpnyVLUZTQiQKRWIlHqeqdBjEQ13dM0w/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.273184204=${device}&entry.508621120=${puzzleData}&entry.1426691407=${screenData}`
         default:
             console.error("Language is not set, but the feedback form was requested.");
-            return;
+            return "";
     }
-    window.open(baseUrl + encodeURI(JSON.stringify(g.persistentData)));
+}
+
+Scene_Title.prototype.buildScreenInfo = function () {
+    let res = {};
+    const fields = ["width", "height", "availHeight", "availWidth", "availLeft", "availTop", "colorDepth", "isExtended"]
+    for (field of fields) {
+        if (screen[field]) res[field] = screen[field];
+    }
+    res.angle = screen.orientation.angle;
+    res.type = screen.orientation.type;
+    res.windowWidth = window.innerWidth;
+    res.windowHeight = window.innerHeight;
+    res.isMobile = Utils.isMobileDevice();
+    res.isFullscreen = g.fullScreen;
+    return res;
 }
 
 //Player default speed thingy
@@ -1549,6 +1570,21 @@ g.buildTypo = function () {
     window.typoPl = new Typo("pl", g.loadFile("cdata/dictPL.aff"), g.loadFile("cdata/dictPL.dic"));
 }
 
+//Show the problematic script when there's an error in command355
+Game_Interpreter.prototype.command355 = function () {
+    var script = this.currentCommand().parameters[0] + '\n';
+    while (this.nextEventCode() === 655) {
+        this._index++;
+        script += this.currentCommand().parameters[0] + '\n';
+    }
+    try {
+        eval(script);
+    } catch (err) {
+        console.log(script);
+        throw err;
+    }
+    return true;
+};
 
 
 

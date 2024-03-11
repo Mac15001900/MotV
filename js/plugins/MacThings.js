@@ -591,7 +591,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
         g.showPictureWindow(`${filename}/${filename}-${x}-${y}`, false, scale);
     }
 
-    this.getCoords = () => console.log(x, y);
+    this.printCoords = () => console.log(x, y);
 
     this.setOptions = function (options) { text = options; };
     this.setDescription = function (desc) { description = "\\>" + desc.replaceAll('\n', '\n\\>'); };
@@ -1341,6 +1341,20 @@ Game_Character.prototype.isStuck = function () {
     return [2, 4, 6, 8].every(dir => !this.isMapPassable(this.x, this.y, dir));
 }
 
+//Allow compound paths in sounds
+AudioManager.createBuffer = function (folder, name) {
+    var ext = this.audioFileExt();
+    var encodedName = name.split('/').map(encodeURIComponent).join('/');
+    var url = this._path + folder + '/' + encodedName + ext;
+    if (this.shouldUseHtml5Audio() && folder === 'bgm') {
+        if (this._blobUrl) Html5Audio.setup(this._blobUrl);
+        else Html5Audio.setup(url);
+        return Html5Audio;
+    } else {
+        return new WebAudio(url);
+    }
+};
+
 //===================================== Frame advance stuff =====================================
 
 if (MAC_DEBUG) {
@@ -1680,3 +1694,5 @@ void ((alias) => {
 /*  document.body.style.cursor = file == ""
         ? "default"
         : `url("${base_url}${file}.png") ${x_offset} ${y_offset}, ${fallbackStyle}`;*/
+
+

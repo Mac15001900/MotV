@@ -154,6 +154,7 @@ Window_Options.prototype.processOk = function () {
     if (symbol === "controls") this.showControlsScreen();
     if (symbol === 'lang') {
         this.changeValue(symbol, langData.next());
+        this.refresh();
         return;
     }
     var value = this.getConfigValue(symbol);
@@ -219,7 +220,7 @@ Window_Options.prototype.cursorLeft = function (wrap) {
 };*/
 
 Window_Options.prototype.processDisabledOption = function (symbol) {
-    //TODO: make a sound?
+    SoundManager.playBuzzer();
 }
 
 Window_Options.prototype.volumeOffset = function () {

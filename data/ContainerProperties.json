@@ -72,18 +72,18 @@
     "Scene_Title": {
         "WindowLayer": {
             "0,Window_TitleCommand": {
-                "x": 760,
-                "y": 540,
-                "width": 400,
-                "height": 426,
+                "x": 32,
+                "y": 458,
+                "width": 384,
+                "height": 590,
                 "opacity": 255,
                 "hidden": false,
                 "_customFontSize": "56",
                 "_customPadding": 18,
                 "_customLineHeight": "78",
-                "_customBackOpacity": 255,
+                "_customBackOpacity": "255",
                 "_customBackFileName": "",
-                "_customFontFace": ""
+                "_customFontFace": "chakra"
             }
         },
         "Scene_Title": {

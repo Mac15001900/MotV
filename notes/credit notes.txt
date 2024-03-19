@@ -32,6 +32,8 @@ Enterbrain
 Shiro
 Kaduki
 
+Unused, spaceship tiles: https://opengameart.org/content/spaceship-tiles
+
 comshou - a bunch of graphical assets
 
 Aqua's tiles require a link

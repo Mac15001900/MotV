@@ -9284,6 +9284,7 @@ function ResourceHandler() {
 ResourceHandler._reloaders = [];
 ResourceHandler._defaultRetryInterval = [500, 1000, 3000];
 
+//Note: this is a terrible function name. It creates a function that doesn't load anything, but handles responding to errors
 ResourceHandler.createLoader = function (url, retryMethod, resignMethod, retryInterval) {
     retryInterval = retryInterval || this._defaultRetryInterval;
     var reloaders = this._reloaders;

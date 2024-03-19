@@ -9380,6 +9380,8 @@ Game_Interpreter.prototype.command117 = function () {
         var eventId = this.isOnCurrentMap() ? this._eventId : 0;
         this.setupChild(commonEvent.list, eventId);
         this._childInterpreter.commonEventId = commonEvent.id; //Change: added a new field to store the id of the current common event
+    } else {
+        console.warn("Common event " + this._params[0] + " does not exist"); //Change: added a warning
     }
     return true;
 };

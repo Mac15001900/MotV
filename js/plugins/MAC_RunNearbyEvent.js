@@ -255,8 +255,8 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
         return false;
     }
     /**
-     * 
-     * @param {String|Number} string A number or variable indentifier, as used in MAC_RunNearbyEvent.run()
+     * Converts a string (from plugin parameters) to a number, regardless is that string contains a number literal of a variable indentifier
+     * @param {String|Number} string A number or variable indentifier (in the form v42 or v0042)
      * @returns The string converted to a number
      */
     $.numberValue = function (string) {

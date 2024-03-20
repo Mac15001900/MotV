@@ -25,7 +25,7 @@ String.prototype.capitalise = function () {
 try {
     let test = BigInt(1);
 } catch (e) {
-    throw "The JavaScript version is too old.";
+    throw new Error("The JavaScript version is too old.");
 }
 
 let MAC_DEBUG = true;
@@ -49,7 +49,6 @@ const AUTOSAVE_DELAY = 300 * 1000; //How often to autosave (in miliseconds)
 const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try again
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 19, 22]; //How many keys are needed for each unlock stage
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
-const WINDOW_MESSAGE_HEIGHT = 336; //This is only descriptive, doesn't actually influence Window_Message
 
 var _Scene_Map_loaded = Scene_Map.prototype.onMapLoaded;
 Scene_Map.prototype.onMapLoaded = function () {
@@ -145,6 +144,10 @@ macThingsInit = function () {
     //Movespeed and debug stuff
     if (MAC_DEBUG) {
         $gs[2] = true; //Set the debug switch
+        //Turn on other debug-relate switches
+        for (let i = 0; i < DEBUG_SWITCHES.length; i++) {
+            $gs[DEBUG_SWITCHES[i]] = true;
+        }
         $gv[41] = DEBUG_STAGE;
         $gamePlayer.defaultSpeed = () => 5;
     }
@@ -1369,7 +1372,7 @@ if (MAC_DEBUG) {
             }
             this.updateManagers();
             this.updateMain();
-            this.tickEnd();
+            //this.tickEnd();
         } catch (e) {
             this.catchException(e);
         }
@@ -1385,13 +1388,17 @@ if (MAC_DEBUG) {
             if (fTime > 0.25) fTime = 0.25;
             this._currentTime = newTime;
             this._accumulator += fTime;
+            let ranFrame = false;
             while (this._accumulator >= this._deltaTime) {
+                if (!ranFrame) this.tickStart();
+                ranFrame = true;
                 this.updateInputData();
                 this.changeScene();
                 this.updateScene();
                 this._accumulator -= this._deltaTime;
                 if ($gs && $gs[4]) break;
             }
+            if (ranFrame) this.tickEnd();
         }
         this.renderScene();
         this.requestUpdate();
@@ -1410,6 +1417,45 @@ if (MAC_DEBUG) {
     }
 
     document.addEventListener('keydown', proccessKeyDown);
+} else {
+    SceneManager.update = function () {
+        try {
+            // this.tickStart();
+            if (Utils.isMobileSafari()) {
+                this.updateInputData();
+            }
+            this.updateManagers();
+            this.updateMain();
+            // this.tickEnd();
+        } catch (e) {
+            this.catchException(e);
+        }
+    };
+
+    SceneManager.updateMain = function () {
+        if (Utils.isMobileSafari()) {
+            this.changeScene();
+            this.updateScene();
+        } else {
+            var newTime = this._getTimeInMsWithoutMobileSafari();
+            var fTime = (newTime - this._currentTime) / 1000;
+            if (fTime > 0.25) fTime = 0.25;
+            this._currentTime = newTime;
+            this._accumulator += fTime;
+            let ranFrame = false;
+            while (this._accumulator >= this._deltaTime) {
+                if (!ranFrame) this.tickStart();
+                ranFrame = true;
+                this.updateInputData();
+                this.changeScene();
+                this.updateScene();
+                this._accumulator -= this._deltaTime;
+            }
+            if (ranFrame) this.tickEnd();
+        }
+        this.renderScene();
+        this.requestUpdate();
+    };
 }
 
 //===================================== Typo checking =====================================
@@ -1695,5 +1741,3 @@ void ((alias) => {
 /*  document.body.style.cursor = file == ""
         ? "default"
         : `url("${base_url}${file}.png") ${x_offset} ${y_offset}, ${fallbackStyle}`;*/
-
-

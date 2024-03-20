@@ -5,7 +5,7 @@
  */
 
 let g = { queue: [], en: true, pl: true };
-const CUSTOM_WORDS_EN = "testonium ev cypher decrypt decrypto Penrose teleporting Awww eg Urgh hypnotisingly Ooooh cutscene Hahaha WASD".toLocaleLowerCase().split(" ");
+const CUSTOM_WORDS_EN = "testonium ev cypher decrypt decrypto Penrose teleporting Awww eg Urgh hypnotisingly Ooooh cutscene Hahaha WASD teleporter teleported undecorated".toLocaleLowerCase().split(" ");
 const CUSTOM_WORDS_PL = "testarium ev decrypto Penrose Awww planszówka hipnotyzująco".toLocaleLowerCase().split(" ");
 
 g.files = {};

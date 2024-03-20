@@ -345,6 +345,7 @@ g.wrongKeyReactions = function (inp) {
  */
 g.events = {
     PROGRESS_CUTSCENES: () => { return { pl: 215, en: 216 }[g.lang] },
+    LIFE_MAP: () => { return 6 },
 }
 
 function displayKeys(amount, color = false) {

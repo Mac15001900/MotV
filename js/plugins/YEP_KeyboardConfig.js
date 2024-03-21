@@ -14,7 +14,7 @@ Yanfly.KeyConfig.version = 1.04;
 /*:
 * @plugindesc v1.04 Allows players to adjust their button configuration
 * for keyboards.
-* @author Yanfly Engine Plugins, with modofications by Mac15001900
+* @author Yanfly Engine Plugins, with modifications by Mac15001900
 *
 * @param ---General---
 * @default
@@ -1126,7 +1126,7 @@ Window_KeyAction.prototype.windowHeight = function () {
 Window_KeyAction.prototype.makeCommandList = function () {
 	this.addCommand(s.back, 'ok', true, 'cancel');
 	if (this.unbindable) this.addCommand(s.controls.clearText, 'ok', true, 'clear');
-	this.addCommand('', 'ok', true, 'skipThis'); //This command will render as an empty line on won't be selectable
+	this.addCommand('', 'ok', true, 'skipThis'); //This command will render as an empty line and won't be selectable
 	this.addCommand(s.controls.okText, 'ok', true, 'ok');
 	this.addCommand(s.controls.escapeText, 'ok', true, 'escape');
 	this.addCommand(s.controls.upText, 'ok', true, 'up');
@@ -1232,7 +1232,7 @@ Scene_KeyConfig.prototype.update = function () {
 				break;
 			case 1: //Discard changes
 				this.commandDiscard();
-				this.commandExit();
+				// this.commandExit();
 				break;
 			case 2: //Apply changes
 				this.commandExit();
@@ -1276,6 +1276,8 @@ Scene_KeyConfig.prototype.commandDiscard = function () {
 	ConfigManager.applyKeyConfig();*/
 	this._configWindow.configCopy = JSON.parse(JSON.stringify(ConfigManager.keyMapper));
 	this.refreshWindows();
+	this.exitingViaDiscard = true;
+	this.commandExit();
 };
 
 Scene_KeyConfig.prototype.commandKey = function () {
@@ -1327,9 +1329,13 @@ Scene_KeyConfig.prototype.commandExit = function () {
 		SoundManager.playBuzzer();
 		return;
 	}
-	ConfigManager.keyMapper = JSON.parse(JSON.stringify(this._configWindow.configCopy));
-	ConfigManager.applyKeyConfig();
-	SoundManager.playSave();
+	if (!this.exitingViaDiscard) {
+		ConfigManager.keyMapper = JSON.parse(JSON.stringify(this._configWindow.configCopy));
+		ConfigManager.applyKeyConfig();
+		SoundManager.playSave();
+	} else {
+		SoundManager.playEquip();
+	}
 	this.popScene();
 };
 

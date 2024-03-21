@@ -18,37 +18,51 @@ image   = image name in /img/titles1/ folder to use as background. Leave
 
 
 <block:100000,0,10,10,50,center,starfield>
+\c[4]Zagadki, programowanie, mapy, fabuła:
+Mac15001900
 
-\c[4]Programowanie, zagadki, mapa, fabuła:
-Maciej Bogacki
+\c[4]Grafika:
+Archeia, Avery, Caz, Degica,
+Dungeon Crawl: Stone Soup, Enterbrain, 
+Indrah, Kaduki, Kokoro Reflactions, 
+Milu, Nomicom, SchwarzeNacht, 
+Screaming Brain Studios, Shiro
 
-\c[4]Grafiki:
-Degica, Indrah, SchwarzeNacht, Dungeon Crawl: Stone Soup, 
-Kokoro Reflactions, Screaming Brain Studios
+\c[4]Dodatkowe ilustracje:
+Akira, Christaras A, Eva Hejda, George Hodan, Halfdan, 
+Huntster, Indolences, Myotus, NASA, Nieuw, Niteshift
 
-\c[4]Ilustracje:
-Akira, Niteshift, George Hodan, Myotus, Halfdan, Indolences, 
-Nieuw, Huntster, Christaras A, Eva Hejda, NASA
+</block>
+
+<block:100000,0,10,10,50,center,starfield>
+\c[4]Muzyka
+Menu tytułowe: Tristan Wattin
+Muzyka w grze: Eric Matyas (www.soundimage.org)
+
+\c[4]Dźwięki
+JarredGibb, JustinBW, Loyalty_Freak_Music, Reidmangan
+
+\c[4]Silnik
+RPG Maker MV
+
+\c[4]RPGMaker'owe pluginy:
+Biud436, Castiger, Darkkitten, Galv, Kido0617, Masked, 
+OcRam, Quxios, Rhyme, Shaz, SumRndmDde, TheoAllen, 
+Triacontane, Yanfly, Yoji Ojima
 
 </block>
 
 <block:100000,0,10,10,50,center,starfield>
 
-\c[4]RPGMaker'owe pluginy:
-Biud436, Darkkitten, Galv, Masked, OcRam, Quxios, Rhyme, Shaz, 
-SumRndmDde, Triacontane, Yanfly, Yoji Ojima
-
-\c[4]Muzyka
-Eric Matyas (www.soundimage.org)
+\c[4]Specjalne podziękowania
+Całej społeczności forums.rpgmakerweb.com
 
 </block>
 
 block:-1,-10,10,10,offbot,center,Island>
 CREDITS
 
-\c[2]Engine
-Degica
-RPG Maker MV
+
 
 \c[2]Plugin Programmer
 Galv

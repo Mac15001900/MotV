@@ -443,7 +443,7 @@ Sprite_CredBg.prototype.update = function () {
 Scene_Title.prototype.commandCredits = function () {
 	this._commandWindow.close();
 	Galv.CRED.start('Credits');
-	AudioManager.playBgm(Galv.CRED.bgm);
+	// AudioManager.playBgm(Galv.CRED.bgm); //TODO Use custom music, but only on game finish
 };
 
 if (Galv.CRED.titleText != "") {

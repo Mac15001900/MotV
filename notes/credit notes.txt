@@ -1,5 +1,3 @@
-Very incomplete rn
-
 bób - public domain, ?
 elbląskie - needed: Akira (wiki)
 fonograf - public domain, ?
@@ -31,6 +29,12 @@ Nomicom
 Enterbrain
 Shiro
 Kaduki
+IceDragon (IMFT-Scifi resources, in assets)
+Kimaila and FirstSeedMaterial - lab tiles (http://sepiarche.web.fc2.com/kimacage/map/map01.html)
+FirstSeedMaterial - potions and things (the horror-themed set)
+NuraRay - 48x48 lab stuff (lab vials included)
+
+Second half of detale2 (and moar pipes): Ameblo Nomicom
 
 Unused, spaceship tiles: https://opengameart.org/content/spaceship-tiles
 
@@ -44,10 +48,26 @@ Lorc
 Delapouite (exercise)
 sbed (key icon)
 
-Retro sci-fi expansion (required block):
+RPG MAKER DS+ Expansion: Retro Scifi Pack: 
+"Your game must include additional documentation that clearly indicates the use of the Resource Pack and the following copy:
 [Copyright](C) 2012 ENTERBRAIN, INC;
 artists Archeia, Caz, Enterbrain
-composers Joren "Tensei" de Bruin, Enterbrain
+composers Joren "Tensei" de Bruin, Enterbrain"
+
+Similar for DS+ Resource Pack:
+[Copyright](C) 2012 Gotcha Gotcha Games Inc.
+artists Archeia, EvilEagles, Tobby Ong, Caz
+
+PVG Sci Fi Tiles
+[Copyright](C) Degica, Co. LTD
+Resource creators: PVGames
+
+Futuristic Tiles Resource Pack
+[Copyright](C) 2012 ENTERBRAIN, INC; artist Celianna
+
+RPG Maker itself:
+2. The attached documentation shall have the following Statement of Rights.
+● Statement of Rights: “©2015 GOTCHA GOTCHA GAMES/YOJI OJIMA”
 
 Sounds:
 Spotlight - reidmangan
@@ -57,7 +77,10 @@ Cursor-FS - CC0 by Loyalty_Freak_Music
 
 Loading animation (CC0): loading.io
 
-Seal new music: https://www.youtube.com/watch?v=Np9N0XXL7UY
+Music:
+Title screen: https://soundcloud.com/tristan-wattin/dungeon_secret_door
+Most in-game: Eric Matyas (www.soundimage.org)
+(unused) Seal new music: https://www.youtube.com/watch?v=Np9N0XXL7UY 
 (remix of Happy H. Christmas by Maniacs of Noise)
 
 Nebula backgrounds: Screaming Brain Studios (CC0)
@@ -65,8 +88,36 @@ Nebula backgrounds: Screaming Brain Studios (CC0)
 Interesting pixel font: https://www.1001fonts.com/born2bsporty-fs-font.html
 
 Fonts:
-Logo font (andar) - Andrew Young, Disaster Fonts, Creative Commons Attribution-ShareAlike
+Logo font (antar) - Andrew Young, Disaster Fonts, Creative Commons Attribution-ShareAlike
 Old fonts: VileR, Creative Commons Attribution-ShareAlike 4.0, https://int10h.org/oldschool-pc-fonts/
 Chakra-Petch (computer-ish one): Open font licence https://github.com/m4rc1e/Chakra-Petch/blob/master/OFL.txt, multiple contributors: https://github.com/cadsondemak/Chakra-Petch
 Square sans: Sizenko Alexander (freeware)
-"Video SSD" font: GuyStruct
+"Video SSD" font: GuyStruct (https://fontstruct.com/fontstructions/show/1355331)
+
+
+Detale 2 investigation:
+Left half is an official release, just credit Enterbrain
+Right half?
+
+https://ameblo.jp/nomicom/imagelist-200903.html (Ameblo Nomicom)- has most items from it:
+dripfeed
+curtain
+fence
+sink (not in file)
+large overhead pipes
+toilet
+microwave thingy
+box
+desk with laptop
+barrels
+large scren
+fridge
+shelving thingy (left of plants)
+big grill thingy
+Missing:
+notes, small screen, floor, chair, MISCROSCOPE, LADDER, PLANTS, beds, sofas, lockers, big water tanks
+
+Neat icons, with gems:
+https://ameblo.jp/apostleheart/image-12018065892-13285112984.html
+
+Alchemy set: https://opengameart.org/content/lpc-alchemy

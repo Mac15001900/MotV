@@ -211,6 +211,7 @@ Window_Credits.prototype.createVars = function () {
 	};
 	this._align = a[5] || "left";
 	// 6 is image
+	this._textScale = a[7] || 1;
 };
 
 Window_Credits.prototype.update = function () {
@@ -275,7 +276,7 @@ Window_Credits.prototype.refresh = function () {
 			x = this.contents.width - this.textPadding() - w;
 		};
 		this.drawTextEx(textState.text, x, cy);
-		cy += h;
+		cy += h * this._textScale;
 	};
 
 	this._allTextHeight = cy;

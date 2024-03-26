@@ -22,13 +22,14 @@ image   = image name in /img/titles1/ folder to use as background. Leave
 Mac15001900
 
 \c[4]Grafika:
-Archeia, Avery, Caz, Degica,
-Dungeon Crawl: Stone Soup, Enterbrain, 
-Indrah, Kaduki, Kokoro Reflactions, 
-Milu, Nomicom, SchwarzeNacht, 
-Screaming Brain Studios, Shiro
+Archeia, Avery, Caz, Celianna, Degica, 
+Dungeon Crawl: Stone Soup, Enterbrain, EvilEagles, 
+Indrah, Kaduki, Kokoro Reflactions, Milu, Nomicom, 
+PVGames, SchwarzeNacht, Screaming Brain Studios, 
+Shiro, Tobby Ong
 
 \c[4]Dodatkowe ilustracje:
+\}(tzn. zdjęcia użyte w niektórych zagadkach)
 Akira, Christaras A, Eva Hejda, George Hodan, Halfdan, 
 Huntster, Indolences, Myotus, NASA, Nieuw, Niteshift
 
@@ -43,7 +44,8 @@ Muzyka w grze: Eric Matyas (www.soundimage.org)
 JarredGibb, JustinBW, Loyalty_Freak_Music, Reidmangan
 
 \c[4]Silnik
-RPG Maker MV
+RPG Maker MV 
+\}©2015 GOTCHA GOTCHA GAMES/YOJI OJIMA
 
 \c[4]RPGMaker'owe pluginy:
 Biud436, Castiger, Darkkitten, Galv, Kido0617, Masked, 
@@ -52,12 +54,44 @@ Triacontane, Yanfly, Yoji Ojima
 
 </block>
 
+<block:100000,0,10,10,50,center,starfield,0.75>
+\c[4]Paczki zasobów
+
+\}DS+ Resource Pack
+\}[Copyright](C) 2012 Gotcha Gotcha Games Inc.
+\}artists Archeia, EvilEagles, Tobby Ong, Caz
+
+\}RPG MAKER DS+ Expansion: Retro Scifi Pack
+\}[Copyright](C) 2012 ENTERBRAIN, INC;
+\}artists Archeia, Caz, Enterbrain
+\}composers Joren "Tensei" de Bruin, Enterbrain
+
+\}PVG Sci Fi Tiles
+\}[Copyright](C) Degica, Co. LTD
+\}Resource creators: PVGames
+
+\}Futuristic Tiles Resource Pack
+\}[Copyright](C) 2012 ENTERBRAIN, INC; artist Celianna
+</block>
+
 <block:100000,0,10,10,50,center,starfield>
+\c[4]Czcionki
+Antar - Andrew Young, Disaster Fonts
+Chakra Ptech - Theerawat Pojvibulsiri
+Video SSD - GuyStruct
+
 
 \c[4]Specjalne podziękowania
 Całej społeczności forums.rpgmakerweb.com
+Klubowi astronomicznemu "Almukantarat"
+Tobie - za pomoc w testowaniu tej wczesnej wersji ;)
+
 
 </block>
+
+
+
+\}\}(note: no music from this pack is used in the game)
 
 block:-1,-10,10,10,offbot,center,Island>
 CREDITS

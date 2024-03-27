@@ -382,7 +382,7 @@ function useDopełniacz(amount) {
 g.encrypterPuzzle = function (text) {
     text = text + "";
     if (text.length > 100) return s.maximumLengthIs + ' 100 ' + s.characters;
-    if (Array.from(text).find(c => !s.encryptList.includes(c))) return s.allowedCharactersAre + ": " + s.encryptList;
+    if (Array.from(text).find(c => !s.encryptList.includes(c))) return s.allowedCharactersAre + ": " + s.encryptList + " ";
 
     let values = text.split("").map(c => s.encryptList.indexOf(c) + 1);
     let sum = values.reduce((a, b) => a + b, 0);
@@ -692,7 +692,7 @@ g.showMessage = function (inp, message, face, faceFile = 'mc') {
 g.showMessages = function (inp, messages, defaultId) {
     if (typeof messages === "string") messages = { string: messages };
     if (!Array.isArray(messages)) messages = [messages];
-    console.assert(Array.isArray(messages), "showMessages: messages must be an array");
+    console.assert(Array.isArray(messages), "showMessages: messages must be an array (at this point)");
     console.assert(messages.every(m => typeof m === 'object'), "showMessages: messages must be an array of objects");
     console.assert(messages.every(m => m.hasOwnProperty('string')), "showMessages: message missing a string");
     let commandList = [];

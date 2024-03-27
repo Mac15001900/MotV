@@ -1,16 +1,18 @@
 bób - public domain, ?
-elbląskie - needed: Akira (wiki)
+elbląskie - needed: Akira and Swohmeck (wiki), CC-SA 2.5 [ Akira (https://commons.wikimedia.org/wiki/File:POL_województwo_elblaskie_1975.svg), „POL województwo elblaskie 1975“, Added years, https://creativecommons.org/licenses/by-sa/2.5/legalcode ]
 fonograf - public domain, ?
-gazociąg - needed: Niteshift
-illuminati - public domain, since it's from currencys
+gazociąg - needed: Niteshift [ Niteshift (https://commons.wikimedia.org/wiki/File:Hasenhäge_NEL-Erdgas-Pipeline_Bau_2011-05-15_009.JPG), „Hasenhäge NEL-Erdgas-Pipeline Bau 2011-05-15 009“, Added molecule icons, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
+illuminati - public domain, since it's from currency
 kciuk - pd, George Hodan
-muzeum - CC Attribution-Share Alike, Myotus (wiki)
-neutron - CC Attribution-Share Alike 3, Made by Halfdan. SVG by Indolences
-okno - CC Attribution-Share Alike, Nieuw~commonswiki
+muzeum [OLD] - CC Attribution-Share Alike, Myotus (wiki)
+muzeum [NEW] - Richard Mortel, CC Attribution 2.0, title: Hermitage Museum, St. Petersburg [ Richard Mortel (https://commons.wikimedia.org/wiki/File:Hermitage_Museum,_St._Petersburg_(38)_(36791963890).jpg), „Hermitage Museum, St. Petersburg (38)“, https://creativecommons.org/licenses/by/2.0/legalcode ]
+neutron [NO LONGER USED] - CC Attribution-Share Alike 3, Made by Halfdan. SVG by Indolences
+okno [OLD] - CC Attribution-Share Alike, Nieuw~commonswiki
+okno [NEW] - Zarateman, PD
 radar - public domain, ?
 Sagittarius - public domain, NASA
 uluru - PD, Huntster
-zakaz - Christaras A
+zakaz - Christaras A, CC-SA [ Christaras A (https://commons.wikimedia.org/wiki/File:Traffic_Sign_GR_-_KOK_2009_-_R-27.svg), „Traffic Sign GR - KOK 2009 - R-27“, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
 Eng:
 clinic - ViršuLF (CC0)
 diamond - Cmglee
@@ -117,7 +119,13 @@ big grill thingy
 Missing:
 notes, small screen, floor, chair, MISCROSCOPE, LADDER, PLANTS, beds, sofas, lockers, big water tanks
 
+Cool miscroscope (not for use, but a good reference): https://www.pixil.art/art/microscope-sr22ab520468f12
+
 Neat icons, with gems:
 https://ameblo.jp/apostleheart/image-12018065892-13285112984.html
 
 Alchemy set: https://opengameart.org/content/lpc-alchemy
+Neat typing sound (5zł): https://www.pond5.com/sound-effects/item/74660380-ui-interface-typing-text-hi-tech-sci-fi-computer-typing-beep
+Neat scifi pack, on a subscription site: https://splice.com/sounds/packs/blastwave-fx/bw-sci-fi-vol-1/samples
+
+Wikipedia attribution generator: https://lizenzhinweisgenerator.de/?lang=en

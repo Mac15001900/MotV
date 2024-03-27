@@ -162,10 +162,10 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
      * it's name enclosed in [square brackets], or the notetag enclosed in <angle brackets>
      * @param {Game_Interpreter} [inp] Interpreter to use. If not specified, will use the map's main interpreter.
      * @param {Number} [page] The page of the target event to run. Uses indexes as shown in the editor, i.e. starting at 1. Will run the currently active page if not specified.
-     * @param {Boolean} [surpressErrors] If true, invalid target errors will be suppressed and nothing will happen if the target event doesn't exist. If false or omitted, those errors will follow plugin settings.
+     * @param {Boolean} [supressErrors] If true, invalid target errors will be suppressed and nothing will happen if the target event doesn't exist. If false or omitted, those errors will follow plugin settings.
      * @returns {Boolean} True iff the event was successfully run.
      */
-    $.run = function (arg, inp, pageId, surpressErrors) {
+    $.run = function (arg, inp, pageId, supressErrors) {
         inp ??= $.getInterpreter(); //If not specified we'll just grab the main intepreter
         if (inp.chainLength > Number(params["Max chain length"])) throw new Error("MAC_RunNearbyEvent: looks like you've made an infinite loop (or a chain that's longer than allowed maximum).");
         let event = null;
@@ -220,7 +220,6 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
         }
 
         if (pageId !== undefined && event) {
-            //if (pageId[0] === 'v') pageId = $gameVariables.value(Number(pageId.substring(1)));
             let actualPageId = $.numberValue(pageId);
             page = event.event().pages[actualPageId - 1];
             if (!page) error = `tried to run page ${actualPageId} on event ${event.eventId()}. This page doesn't exist.`;
@@ -241,7 +240,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
                 inp.setup(commandList, event.eventId());
             }
             return true;
-        } else if (!surpressErrors) {
+        } else if (!supressErrors) {
             switch (params['With an invalid target']) {
                 case "Do nothing":
                     break;

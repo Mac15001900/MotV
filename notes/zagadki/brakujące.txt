@@ -66,7 +66,7 @@ US: user, usual, useful, usurper
 CO: cosmos, codex, cold, correlation -- Make sure to close the doors to keep the inside cold enough
 DEC: decision, decryption, december, decade -- Decrypto
 LIN: link, linguist, linear, lineage -- linear support vector machine
-AT: atom, attraction, atmosphere, atlas  -- Not just cold enough, the inside actually maintains a different atmosphere composition!
+AT: atom, attraction, atmosphere, atlas  -- Not just cold enough, the inside actually maintains a different atmospheric composition!
 I: igloo, image, iron, iris
 ON: onyx, onion, onlooker, one -- Toaster "ON"
 ]

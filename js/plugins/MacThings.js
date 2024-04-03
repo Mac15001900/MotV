@@ -30,7 +30,7 @@ try {
 
 let MAC_DEBUG = true;
 const DEVICE_TARGET = "Web";
-const VERBOSE_LOGS = false;
+const VERBOSE_LOGS = true;
 const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this
 const DEBUG_SWITCHES = [141]; //Switches that will be turned on when debug mode is on 
 const MUSIC_DEBUG = false;
@@ -446,9 +446,9 @@ autosaveAttempt = function (synchronous = false) {
         /*g.topRightToast.enqueueToast(s.autosaving, Infinity);
         g.topRightToast.fadeInLeft = 0;*/ //Removed the autosaving... toast, since it only appeared for a fraction of a second, and had weird behaviour if there was already another toast present
         $gameSystem.onBeforeSave();
-        if (synchronous) autosave(LZString.compressToBase64(JsonEx.stringify(DataManager.makeSaveContents())), true);
+        if (synchronous) autosave(null, true);
         else {
-            g.saveWorker.addEventListener('message', autosave);
+            g.saveWorker.addEventListener('message', autosave); //It if already exists it won't change anything
             g.saveWorker.postMessage({ saveData: JsonEx.stringify(DataManager.makeSaveContents()) })
         }
     } else {
@@ -465,7 +465,8 @@ scheduleAutosave = function (wasSuccess = true) {
 
 //Will autosave the game, and call scheduleAutosave afterwards to schedule the next one
 autosave = function (message, synchronous = false, index = 1) {
-    if (DataManager.saveGame(index, message.data)) {
+    if (VERBOSE_LOGS) console.log("Autosave called at " + new Date().getSeconds());
+    if (DataManager.saveGame(index, message?.data)) {
         StorageManager.cleanBackup(index);
         if (VERBOSE_LOGS) console.log("Saved at " + new Date().getSeconds());
         scheduleAutosave(true);
@@ -1650,6 +1651,15 @@ Game_Interpreter.prototype.command355 = function () {
     }
     return true;
 };
+
+//Track a function (print whenever it's called)
+g.track = function (func) {
+    return function () {
+        func.call(this, ...arguments);
+        if (arguments) console.log("Tracking: " + func.name, arguments);
+    }
+};
+
 
 
 

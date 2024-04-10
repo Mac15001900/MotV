@@ -1186,15 +1186,6 @@ Game_Interpreter.prototype.setup = function (list, eventId) {
         _Game_Interpreter_setup.call(this, list, eventId);
 }
 
-
-//Debug thingy for quitting the game with Q
-Input.keyMapper["81"] = "quit"; //Setting for the 'q' key
-var _Scene_Base_update = Scene_Base.prototype.update;
-Scene_Base.prototype.update = function () {
-    _Scene_Base_update.apply(this);
-    if (MAC_DEBUG && Input.isTriggered("quit")) SceneManager.exit(); //TODO KeyboardConfig overwrites this :(
-}
-
 //Creates save titles when saving
 var _DataManager_makeSavefileInfo = DataManager.makeSavefileInfo;
 DataManager.makeSavefileInfo = function () {
@@ -1412,13 +1403,16 @@ if (MAC_DEBUG) {
                 console.log("Toggling game freeze");
                 $gs[4] = !$gs[4];
                 if (!$gs[4]) SceneManager.requestUpdate();
-
                 break;
+            case 'q':
+                if (MAC_DEBUG) SceneManager.exit();
         }
     }
 
     document.addEventListener('keydown', proccessKeyDown);
 } else {
+    //Fixing frame counting
+
     SceneManager.update = function () {
         try {
             // this.tickStart();

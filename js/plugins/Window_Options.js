@@ -87,6 +87,7 @@ Window_Options.prototype.addVolumeOptions = function () {
 };
 
 Window_Options.prototype.drawItem = function (index) {
+
     var rect = this.itemRectForText(index);
     var statusWidth = this.statusWidth();
     var titleWidth = rect.width - statusWidth;
@@ -117,6 +118,8 @@ Window_Options.prototype.statusText = function (index) {
         return "";  //Change: not doing anything for ON/OFF when it's not needed
     } else if (symbol === "lang") {
         return langData.dict[value];
+    } else if (this.isKeySymbol(symbol)) {
+        return this.keyStatusText(symbol, value);
     } else {
         return this.booleanStatusText(value);
     }
@@ -165,6 +168,13 @@ Window_Options.prototype.processOk = function () {
         }
         value = value.clamp(0, 100);
         this.changeValue(symbol, value);
+    } else if (this.isKeySymbol(symbol)) {
+        value += 1;
+        if (value > this.keyLength(symbol)) {
+            value = 0;
+        }
+        value = value.clamp(0, this.keyLength(symbol));
+        this.changeValue(symbol, value);
     } else {
         this.changeValue(symbol, !value);
     }
@@ -188,8 +198,17 @@ Window_Options.prototype.cursorRight = function (wrap, reverse = false) {
         value += this.volumeOffset() * (reverse ? -1 : 1);
         value = value.clamp(0, 100);
         this.changeValue(symbol, value);
+    } else if (this.isKeySymbol(symbol)) {
+        value += reverse ? -1 : 1;
+        if (wrap && value > this.keyLength(symbol)) {
+            value = 0;
+        } else if (wrap && value < 0) {
+            value = this.keyLength(symbol);
+        }
+        value = value.clamp(0, this.keyLength(symbol));
+        this.changeValue(symbol, value);
     } else {
-        this.changeValue(symbol, !reverse);
+        this.changeValue(symbol, !value);
     }
 };
 

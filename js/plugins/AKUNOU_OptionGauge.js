@@ -7,56 +7,56 @@
 //=============================================================================
 
 /*:
- * @plugindesc オプションの数値で表されている一部項目にゲージを描画します。
+ * @plugindesc Draws gauges for some items represented by optional numbers.
  * @author Tsutumi Kawahara
  *
  * @param Gauge Color 1
- * @desc ゲージのグラデーションに使われるカラー1。
- * 各数値は R(赤), G(緑), B(青), A(アルファ値) 。
+ * @desc Color 1 used for gauge gradation.
+ *Each value is R (red), G (green), B (blue), A (alpha value).
  * @default 255, 204, 32, 255
  *
  * @param Gauge Color 2
- * @desc ゲージのグラデーションに使われるカラー2。
- * 各数値は R(赤), G(緑), B(青), A(アルファ値) 。
+ * @desc Color 2 used for gauge gradation.
+ *Each value is R (red), G (green), B (blue), A (alpha value).
  * @default 255, 255, 160, 255
  *
  * @param Gauge Color R 1
- * @desc R値ゲージのグラデーションに使われるカラー1。
- * ウィンドウカラーオプションを使用する場合にのみ必要。
+ * @desc Color 1 used for the R value gauge gradation.
+ *Only required if using the window color option.
  * @default 255, 96, 96, 255
  *
  * @param Gauge Color R 2
- * @desc R値ゲージのグラデーションに使われるカラー2。
- * ウィンドウカラーオプションを使用する場合にのみ必要。
+ * @desc Color 2 used for the gradation of the R value gauge.
+ *Only required if using the window color option.
  * @default 255, 192, 192, 255
  *
  * @param Gauge Color G 1
- * @desc G値ゲージのグラデーションに使われるカラー1。
- * ウィンドウカラーオプションを使用する場合にのみ必要。
+ * @desc Color 1 used for the gradation of the G value gauge.
+ *Only required if using the window color option.
  * @default 96, 255, 96, 255
  *
  * @param Gauge Color G 2
- * @desc G値ゲージのグラデーションに使われるカラー2。
- * ウィンドウカラーオプションを使用する場合にのみ必要。
+ * @desc Color 2 used for the gradation of the G value gauge.
+ *Only required if using the window color option.
  * @default 192, 255, 192, 255
  *
  * @param Gauge Color B 1
- * @desc B値ゲージのグラデーションに使われるカラー1。
- * ウィンドウカラーオプションを使用する場合にのみ必要。
+ * @desc Color 1 used for the gradation of the B value gauge.
+ *Only required if using the window color option.
  * @default 96, 96, 255, 255
  *
  * @param Gauge Color B 2
- * @desc B値ゲージのグラデーションに使われるカラー2。
- * ウィンドウカラーオプションを使用する場合にのみ必要。
+ * @desc Color 2 used for the gradation of the B value gauge.
+ *Only required if using the window color option.
  * @default 192, 192, 255, 255
  *
  * @help
- * プラグインコマンド:
- *   必要なし
- * プラグイン ON にするだけで適用されるスクリプトです。
+ * Plugin command:
+ *  no need
+ * This is a script that is applied just by turning on the plugin.
  */
 
-(function() {
+(function () {
 
 	var parameters = PluginManager.parameters('AKUNOU_OptionGauge');
 	var gaugeColor1 = 'rgba(' + parameters['Gauge Color 1'] + ')';
@@ -74,7 +74,7 @@
 
 	var akunou10_drawItem = Window_Options.prototype.drawItem;
 
-	Window_Options.prototype.drawItem = function(index) {
+	Window_Options.prototype.drawItem = function (index) {
 		var symbol = this.commandSymbol(index);
 		if (this.isVolumeSymbol(symbol) || this.isHexSymbol(symbol)) {
 			if (this.isVolumeSymbol(symbol)) {

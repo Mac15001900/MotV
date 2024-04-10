@@ -71,6 +71,7 @@ Window_Options.prototype.makeCommandList = function () {
     this.addCommand(TextManager.alwaysDash, 'alwaysDash');
     this.addCommand(s.fullScreen, 'fullscreen');
     this.addVolumeOptions();
+    this.addCommand(s.messageSpeedOption, 'messageSpeedKey');
     this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title' || MAC_DEBUG); //We really don't want the language to change mid-game
     this.addCommand(s.colorblindMode, 'cBlind');
     if (!Utils.isMobileDevice()) this.addCommand(s.controlsOption, 'keyConfig', true);
@@ -118,8 +119,8 @@ Window_Options.prototype.statusText = function (index) {
         return "";  //Change: not doing anything for ON/OFF when it's not needed
     } else if (symbol === "lang") {
         return langData.dict[value];
-    } else if (this.isKeySymbol(symbol)) {
-        return this.keyStatusText(symbol, value);
+    } else if (symbol === 'messageSpeedKey') {
+        return s.speedOptions[Number(value)];
     } else {
         return this.booleanStatusText(value);
     }

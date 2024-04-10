@@ -61,11 +61,11 @@
 	};
 
 	var akunou8_makeCommandList = Window_Options.prototype.makeCommandList;
-
-	Window_Options.prototype.makeCommandList = function () {
-		this.addExtraOptions();
-		akunou8_makeCommandList.call(this);
-	}
+	/*
+		Window_Options.prototype.makeCommandList = function () {
+			this.addExtraOptions();
+			akunou8_makeCommandList.call(this);
+		}*/
 
 	Window_Options.prototype.addExtraOptions = function () {
 	};

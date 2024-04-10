@@ -73,21 +73,21 @@
 	//-------------------------------------------------------------------------
 
 	var akunou4_addExtraOptions = Window_Options.prototype.addExtraOptions;
-
-	Window_Options.prototype.addExtraOptions = function () {
-		this.addCommand(messageSpeedText, 'messageSpeedKey');
-		akunou4_addExtraOptions.call(this);
-	};
+	/*
+		Window_Options.prototype.addExtraOptions = function () {
+			this.addCommand(messageSpeedText, 'messageSpeedKey');
+			akunou4_addExtraOptions.call(this);
+		};*/
 
 	var akunou4_keyStatusText = Window_Options.prototype.keyStatusText;
-
-	Window_Options.prototype.keyStatusText = function (symbol, value) {
-		if (symbol === 'messageSpeedKey') {
-			return String(Object.keys(messageSpeedList)[Number(value)]);
-		} else {
-			return akunou4_keyStatusText.call(this, symbol, value);
-		}
-	};
+	/*
+		Window_Options.prototype.keyStatusText = function (symbol, value) {
+			if (symbol === 'messageSpeedKey') {
+				return String(Object.keys(messageSpeedList)[Number(value)]);
+			} else {
+				return akunou4_keyStatusText.call(this, symbol, value);
+			}
+		};*/
 
 	var akunou4_keyLength = Window_Options.prototype.keyLength;
 

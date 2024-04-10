@@ -1,3 +1,5 @@
+TODO: Update second eng version!!!
+
 Rebuso - kod:
 Pomysły:
 !a - andromeda, akrecja
@@ -182,7 +184,7 @@ H - Hannah (hint: Charlotte Skeoch, Chamber of Secrets) / Holograph / Huh / hatc
 I - Illuminati / Isiahi, Issi (names)
 J - Jujij (insect, Mi'kmaq)
 K - Kayak / Kook
-L - Level
+L - Lambaol (On Ushant) - also know as Lampaul, so don't use right letter / Level / Lumbermill / Lumisterol or Lichesterol (C28H44O) / Liverpool / landgafol (old English, https://en.wiktionary.org/wiki/landgafol) / Landfill / Longwool (https://en.wikipedia.org/wiki/Leicester_Longwool, https://breeds.okstate.edu/sheep/leicester-longwool-sheep.html)
 M - Museum / Mum (famility tree?)
 N - Neutron / Neon / Noon
 O - Oncativo (w3w ///specifying.positions.manufacturing, ///expel.dimension.scammed)  / Oslo / oreo / orlando (city in Florida)
@@ -220,7 +222,7 @@ Chosen:
 +K (aa) - kayak 
 +L (ee) - level
 +M (uu) - museum 
--N (eo) - neutron [UPDATE THE IMAGE]
++N (eo) - neutron (text from awarding the Nobel)
 +O (nv) - oncativo - 31° 54' 48" S 63° 40' 55" W (-31.913444452800753, -63.68208046344461 )
 +P (ai) - parsnip (Pastinaca sativa)
 =Q (ui) - qulliq (https://en.wikipedia.org/wiki/Inuit_culture) - use the photo, with clue "Nanavut"
@@ -363,3 +365,9 @@ research. This year the Nobel Prize for Physics is awarded as a reward for a dis
 of a new fundamental building-stone of atoms and molecules, viz. the discovery of the so-called ███████. By a combination 
 of intuition, logical thought, and experimental research Professor J. Chadwick, the laureate of this year, has succeeded 
 in proving the existence of the ███████ and establishing its properties.
+
+Illuminati:
+
+Dan Brown: Angels & Demons
+Umberto Eco: Foucault's Pendulum
+Larry Burkett: ███ ██████████  (The Illuminati)

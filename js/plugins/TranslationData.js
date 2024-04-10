@@ -145,9 +145,9 @@ wordBank = {
         allKeys: "All fragments found!",
 
         //Puzzle related
-        newAreaUnlocked: "New area has been unlocked.",
+        newAreaUnlocked: "New Vault segment has been unlocked.",
         tempVictory: "You've found every Nexus fragment in this version of the game.\n\\c[4]Congratulations!",
-        remainingToNextArea: (keys) => `${keys.capitalise()} still required to unlock the next area.`,
+        remainingToNextArea: (keys) => `${keys.capitalise()} still required to unlock the next segment.`,
         keysRemaining: (keys) => `${keys.capitalise()} ${keys === 1 ? "is" : "are"} still remaining.`,
         randomSuccessMessages: (currentKeys) => [
             "And another fragment done.",
@@ -159,7 +159,7 @@ wordBank = {
             "Ha, I've got it!",
             "That one wasn't so bad.",
             "I'm getting better and better at this.",
-            $gv[41] < ROOM_UNCLOKS.length ? "I wonder how many of these are left.\\.\nAt least it's one less now!" : `Just ${$dataPuzzles.pl.length - currentKeys} remaining now, that shouldn't be too hard.`,
+            $gv[41] < ROOM_UNCLOKS.length ? "I wonder how many of these are left.\\.\nAt least it's one less now!" : `Just ${$dataPuzzles.pl.length - currentKeys} left now, that shouldn't be too hard.`,
         ],
         randomFailureMessages: (currentKeys, lastGuess, guessAmount) => [
             "I guess that wasn't it.",
@@ -305,7 +305,7 @@ wordBank = {
         allKeys: "Wszystkie klucze!",
 
         //Puzzle related
-        newAreaUnlocked: "Nowy obszar odbklowowany.",
+        newAreaUnlocked: "Nowy obszar Skarbca odbklowowany.",
         tempVictory: "Udało Ci się zdobyć wszystkie klucze dostępne w tej wersji gry.\n\\c[4]Gratulacje!",
         remainingToNextArea: (keys) => `Do odblokowania kolejnego obszaru zdobyć trzeba jeszcze ${keys}.`,
         keysRemaining: (keys) => `Do zdobycia jeszcze ${keys}.`,

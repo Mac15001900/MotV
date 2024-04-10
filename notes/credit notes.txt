@@ -14,13 +14,16 @@ Sagittarius - public domain, NASA
 uluru - PD, Huntster
 zakaz - Christaras A, CC-SA [ Christaras A (https://commons.wikimedia.org/wiki/File:Traffic_Sign_GR_-_KOK_2009_-_R-27.svg), „Traffic Sign GR - KOK 2009 - R-27“, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
 Eng:
+bomb - PD, author unknown (https://www.rawpixel.com/image/6287121/png-public-domain-black)
 clinic - ViršuLF (CC0)
-diamond - Cmglee
-kayak - Thruxton
-level - aTarom (PD)
-qulliq - CC Attribution-Share Alike 2.5 Generic, Ansgar Walk
+diamond - Cmglee [ Cmglee (https://commons.wikimedia.org/wiki/File:Visualisation_diamond_cubic.svg), „Visualisation diamond cubic“, Rearranged and added extra hints, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
+gong - Tropenmuseum, CC Share-Alike [ Tropenmuseum (https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Gong_hangend_in_een_standaard_onderdeel_van_gamelan_Semar_Pagulingan_TMnr_1340-13.jpg), „COLLECTIE TROPENMUSEUM Gong hangend in een standaard onderdeel van gamelan Semar Pagulingan TMnr 1340-13“, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
+kayak - Thruxton [ Jürgen Friede (https://commons.wikimedia.org/wiki/File:Seekajak_B.jpg), "Seekajak B", https://creativecommons.org/licenses/by-sa/4.0/legalcode ]
+level [NOT USED] - aTarom (PD)
+qulliq [NOT USED] - CC Attribution-Share Alike 2.5 Generic, Ansgar Walk
 teapot - PD George Chernilevsky
 scissors - PD Evan-amos
+zgierz (map of Poalnd) - Share-Alike [ Karte: NordNordWest, Lizenz: Creative Commons by-sa-3.0 de (https://commons.wikimedia.org/wiki/File:Poland_adm_location_map.svg), „Poland adm location map“, Added the flag and marked a spot., https://creativecommons.org/licenses/by-sa/3.0/de/legalcode ]
 
 Library tiles (and more) - Indrah
 Books - Milu (more things here) https://forums.rpgmakerweb.com/index.php?threads/milus-tiles-characters-icons-autumn-updating.99358/
@@ -46,9 +49,13 @@ Aqua's tiles require a link
 SRD's also require a link: http://sumrndm.site/
 
 Icons:
-Lorc
-Delapouite (exercise)
-sbed (key icon)
+Lorc (cycle icon in bedroom) [ Lorc, https://game-icons.net/1x1/lorc/cycle.html, "Cycle icon", https://creativecommons.org/licenses/by-sa/3.0/legalcode]
+The following 4 works were recoloured and combined into one:
+Delapouite (punching bag), [Delapouite (https://game-icons.net/1x1/delapouite/punching-bag.html), „Punching bag icon“, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
+Delapouite (weight lifting), [Delapouite (https://game-icons.net/1x1/delapouite/weight-lifting-down.html), „Weight lifting down icon“, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
+Delapouite (hand-stand), [Delapouite (https://game-icons.net/1x1/delapouite/body-balance.html), „Body balance icon“, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
+Delapouite (hand-stand), [Delapouite (https://game-icons.net/1x1/delapouite/jumping-rope.html), „Jumping rope icon“, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
+sbed (key icon) - https://game-icons.net/1x1/sbed/key.html, not yet used
 
 RPG MAKER DS+ Expansion: Retro Scifi Pack: 
 "Your game must include additional documentation that clearly indicates the use of the Resource Pack and the following copy:
@@ -129,3 +136,7 @@ Neat typing sound (5zł): https://www.pond5.com/sound-effects/item/74660380-ui-i
 Neat scifi pack, on a subscription site: https://splice.com/sounds/packs/blastwave-fx/bw-sci-fi-vol-1/samples
 
 Wikipedia attribution generator: https://lizenzhinweisgenerator.de/?lang=en
+
+Extra modern tiles to check out: http://chocobana.my.coocan.jp/data/data/material/map.html
+
+Pixel mart thingy: ghostpixxells, CC0, https://ghostpixxells.itch.io/pixel-mart

@@ -5,6 +5,18 @@ Pierwsza:
 cezar("nexus[beginning]", -1, alphabetEnglish)
 'mdwtr[adfhmmhmf]'
 
+Dodatkowe podpowiedzi:
+Polski alfabet:
+a ą b c ć d e ę f g h i j k l ł m n ń o ó p r s ś t u w y z ź ż
+Początek alfabetu, przesunięty
+ŻAĄBCĆDEĘF...
+ŻAĄB.ĆDEĘF.HIJ..ŁM.Ń.Ó...Ś...Y.Ź
+ŻAĄB◌ĆDEĘF◌HIJ◌◌ŁM◌Ń◌Ó◌◌◌Ś◌◌◌Y◌Ź
+
+Extras:
+a b c d e f g h i j k l m n o p q r s t u v w x y z
+ZABCDEFG...
+
 Druga:
 Floor pattern:
 X X X 

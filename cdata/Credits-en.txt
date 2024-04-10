@@ -24,7 +24,7 @@ Mac15001900
 \c[4]Graphics:
 Archeia, Avery, Caz, Celianna, Degica, 
 Dungeon Crawl: Stone Soup, Enterbrain, EvilEagles, 
-Indrah, Kaduki, Kokoro Reflactions, Milu, Nomicom, 
+Ghostpixxells, Indrah, Kaduki, Kokoro Reflactions, Milu, Nomicom, 
 PVGames, SchwarzeNacht, Screaming Brain Studios, 
 Shiro, Tobby Ong
 
@@ -50,7 +50,7 @@ RPG Maker MV
 \c[4]RPGMaker plugins:
 Biud436, Castiger, Darkkitten, Galv, Kido0617, Masked, 
 OcRam, Quxios, Rhyme, Shaz, SumRndmDde, TheoAllen, 
-Triacontane, Yanfly, Yoji Ojima
+Triacontane, Tsutumi Kawahara, Yanfly, Yoji Ojima
 
 </block>
 

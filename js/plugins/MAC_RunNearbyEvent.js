@@ -227,6 +227,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
 
         if (!error) {
             event.refresh(); //Refresh the event in case some conditions were changed on this frame
+            if (event._pageIndex === -1) return false; //No page is active on this event
             let commandList = page ? page.list : event.list();
             if (params["Lock ran events"] === "true") {
                 event.lock();
@@ -287,6 +288,24 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
                 }
             };
             break;
+    }
+
+    if (params["Lock ran events"]) { //Making sure the events unlock when they end via "exit event processing" or "erase event"
+        //Aliasing exiting event processing 
+        void ((alias) => {
+            Game_Interpreter.prototype.command115 = function () {
+                this.event().unlock();
+                return alias.call(this);
+            }
+        })(Game_Interpreter.prototype.command115);
+
+        //Aliasing erasing event
+        void ((alias) => {
+            Game_Interpreter.prototype.command214 = function () {
+                this.event().unlock();
+                alias.call(this);
+            }
+        })(Game_Interpreter.prototype.command214);
     }
 
     if (params["Enable region events"] === "true") {

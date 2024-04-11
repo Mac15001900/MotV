@@ -107,7 +107,7 @@ Window_Options.prototype.drawItem = function (index) {
         }*/
 
 Window_Options.prototype.statusWidth = function () {
-    return 120;
+    return 160;
 };
 
 Window_Options.prototype.statusText = function (index) {

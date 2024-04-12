@@ -290,7 +290,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
             break;
     }
 
-    if (params["Lock ran events"]) { //Making sure the events unlock when they end via "exit event processing" or "erase event"
+    if (params["Lock ran events"]) { //Making sure the events unlock when they end via "exit event processing"
         //Aliasing exiting event processing 
         void ((alias) => {
             Game_Interpreter.prototype.command115 = function () {
@@ -299,13 +299,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
             }
         })(Game_Interpreter.prototype.command115);
 
-        //Aliasing erasing event
-        void ((alias) => {
-            Game_Interpreter.prototype.command214 = function () {
-                this.event().unlock();
-                alias.call(this);
-            }
-        })(Game_Interpreter.prototype.command214);
+        //No need to alias erasing event, since those will reset themselves anyway
     }
 
     if (params["Enable region events"] === "true") {

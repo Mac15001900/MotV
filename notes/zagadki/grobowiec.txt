@@ -13,7 +13,7 @@ Pomysły:
 !i - illuminati
 !j - jaśniej (Jantaj jest miastem, ale raczej nazywa się je "Yantai"), Jastrzębie-Zdrój
 !k - kajak, kciuk
-!l - latorośl, Liverpool, lokal, Lidl, leptocefal
+!l - leptocefal, latorośl, Liverpool, lokal, Lidl
 !m - metrokilogram (1m * 1kg), modem, muzeum, magnetyzm
 !n - neutron, neuron
 !o - obozowisko, okienko, oregano
@@ -35,7 +35,7 @@ k| |j  | |  T| |s
 -+-+- -+-+- -+-+-
 C|u|i p|l|b o|w|n
 
-Wybrane:
+Wybrane [STARTA WERSJA]:
 !a - andromeda (M31)
 !b - bób (\,)
 !c - czterozgłoskowiec (wiersz!)
@@ -55,7 +55,7 @@ Wybrane:
 !r - radar (\,)
 !s - Sagittarius (\,)
 !t - tybet (བོད་)
-!u - Uluru (\,)
+!u - Uluru
 !w - Wrocław (\,)
 !z - zakaz (\,)
 [ - 
@@ -68,11 +68,11 @@ d - a>
 r - w<
 z - c<
 k - o<
-t - i>
+t - u> (poprzednio i>)
 c - k<
 u - s>
 i - e>
-l - u<
+l - i< (poprzednio u<)
 o - p>
 n - <a
 [ - [
@@ -113,7 +113,7 @@ C|u|i p|l|b o|w|n
 Light: 03D0D9
 Dark: 034761
 
-Wersja 2.0:
+Wersja 3.0:
 
 Wybrane:
 !a - andromeda (M31)
@@ -124,7 +124,7 @@ Wybrane:
 !f - fonograf (\,)
 !g - gazociąg (\,)
 !h - Hannah (48°58′23″N 98°41′26″W)
-!i - illuminati (\,)
+!i - illuminaci (\,)
 !j - Jastrzębie-Zdrój (\,)
 !k - kciuk (\,)
 !l - Leptocefal (Stadium larwalne ryb zaliczanych do nadrzędu Elopomorpha)
@@ -135,7 +135,7 @@ Wybrane:
 !r - radar (\,)
 !s - Sagittarius (\,)
 !t - tybet (བོད་)
-!u - Uluru (\,)
+!u - Ubuntu (poprzednio: Uluru) (20.10.2004 (wersja 4.10))
 !w - Wisław (imieniny obchodzi 7 czerwca i 15 czerwca.) - [Imię\n07.06\n15.06]
 !z - zakaz (\,)
 [ - 
@@ -147,25 +147,30 @@ k| |j  | |  T| |s
 -+-+- -+-+- -+-+-
 C|u|i P|L|b o|W|n
 
-Adv:
+Adv (<- to zmiany w 2.0, <<- to zmiany w 3.0):
 e - c>
 a - g<
 d - a>
 r - u>  <-  w<
 z - c<
 k - o<
-t - i>
+t - u>  <<- i>
 c - k<
 u - s>
 i - e>
-l - u<
+l - i<  <<- u<
 o - f<  <-  p>
 n - <a
 [ - [
 ] - ]
 
+Zmiany 2.0:
 k  l  u  c  z  [ d  e  l  a  t  !o!  !r!  | c  u  k  !r!  z  e  n  i  a ]
 o< u< s> k< c< [ a> c> u< g< i> !f<! !u>! | k< s> o< !u>! c< c> <a e> g<]
+
+Zmiany 3.0:
+k  l  u  c  z  [ d  e  !l!  a  !t!  o  r  | c  u  k  r  z  e  n  i  a ]
+o< u< s> k< c< [ a> c> !i<! g< !u>! f<  u>  | k< s> o< u> c< c> <a e> g<]
 
 klucz[delator cukrzenia] \,
 
@@ -220,7 +225,7 @@ Chosen:
 +I (lt) - illuminati 
 +J (ui) - jujij (insect, Mi'kmaq)
 +K (aa) - kayak 
-+L (ee) - level
++L (a_) - Lambaol (On Ushant) [also know as Lampaul] (previously level)
 +M (uu) - museum 
 +N (eo) - neutron (text from awarding the Nobel)
 +O (nv) - oncativo - 31° 54' 48" S 63° 40' 55" W (-31.913444452800753, -63.68208046344461 )
@@ -251,7 +256,7 @@ Missing: fhjkpqwy
 !b - x<
 !c - s<
 !d - a>
-!e - +l>, +n<, f>, l<, t<
+!e - +n<, +f>, +t< (previously +l>)
 !g - z<
 !i - +v<, c>, d<, j>, p>, q>, v>, w<
 !l - +c<, i<
@@ -371,3 +376,8 @@ Illuminati:
 Dan Brown: Angels & Demons
 Umberto Eco: Foucault's Pendulum
 Larry Burkett: ███ ██████████  (The Illuminati)
+
+Pl:
+Dan Brown: Anioły i demony
+Umberto Eco: Wahadło Foucaulta
+Larry Burkett: ██████████

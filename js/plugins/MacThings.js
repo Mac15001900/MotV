@@ -1469,7 +1469,7 @@ g.setupSpellcheck = function () {
         if (message.data === "ready") {
             console.log("Spellchecker ready");
             if (DataManager.isEventTest()) g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(g.getInterpreter()._list.filter(c => c.code === 401).map(c => c.parameters[0]).join('\n')) });
-            else g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(showMap($dataMap)) });
+            else if ($dataMap) g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(showMap($dataMap)) });
             return;
         } else {
             g.typos = message.data;

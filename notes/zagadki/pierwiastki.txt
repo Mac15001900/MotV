@@ -3,7 +3,7 @@ K  Lu C Zn P  I  Er W  I  As Te K  Co Ta Md
 19 71 6 30 15 53 68 74 53 33 52 19 27 73 101
 (n -> [) (d -> ])
 
-
+Dodatkowe podpowiedzi (przy czerwonej, pomarańczowej, żółtej i zielonej substancji): Potas, Lutet, Węgiel, Cynk
 
 Stare:
 K  Lu C Zn  P  I  Er W  I  As Te K  Gd                   
@@ -24,3 +24,6 @@ Ne Xe U  Sb P  Er I  O  Dy C  Al Ne S  Sm
 10 54 92 51 15 68 53 8 66 6 13 10 16 62
 eu -> u | b -> [ | m -> ]
 
+Extra hints: containers with Neon, Xenon, Uranium and Antimony. Ordered by rainbow colours: red, orange, yellow and green
+
+["neon", "\\fixenon\\fi", "uranium", "antimony"]

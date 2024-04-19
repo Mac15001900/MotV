@@ -265,7 +265,7 @@ g.processNewKey = function (inp) {
     } else if (currentKeys === $dataPuzzles.getAmount()) {
         AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
         message += s.tempVictory;
-        //TODO: rolls credits?
+        Galv.CRED.start('Credits'); //TODO Only start credits after the message?
     } else {
         message += s.keysRemaining(displayKeys($dataPuzzles.getAmount() - currentKeys));
     }
@@ -1121,7 +1121,6 @@ Scene_Title.prototype.start = function () {
 };
 
 //Adding unpressed key support
-
 /**
  * Checks whether a key was just released.
  * @param {String} keyName The mapped name of the key
@@ -1740,6 +1739,17 @@ void ((alias) => {
     this.contents = new Bitmap(this.contentsWidth(), this.contentsHeight() * 2);
     this.resetFontSettings();
 };*/
+
+//Choices as switch statements
+/*void ((alias) => {
+    Game_Interpreter.prototype.setupChoices = function (params) {
+        if (this.switchChoices) {
+            this.switchChoices = false;
+            this._branch[this._indent] = 3; //temp
+            return true;
+        } else alias.call(this, params);
+    }
+})(Game_Interpreter.prototype.setupChoices);*/
 
 //TODO custom cursor!
 /*  document.body.style.cursor = file == ""

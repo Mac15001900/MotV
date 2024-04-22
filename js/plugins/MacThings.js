@@ -444,7 +444,7 @@ autosaveAttempt = function (synchronous = false) {
     if (SceneManager.getSceneName && SceneManager.getSceneName() === 'Scene_Map' && !g.getInterpreter().isRunning() || synchronous) {
         if (VERBOSE_LOGS) console.log("Starting save at " + new Date().getSeconds());
         /*g.topRightToast.enqueueToast(s.autosaving, Infinity);
-        g.topRightToast.fadeInLeft = 0;*/ //Removed the autosaving... toast, since it only appeared for a fraction of a second, and had weird behaviour if there was already another toast present
+        g.topRightToast.fadeInLeft = 0;*/ //Removed the "Autosaving..." toast, since it only appeared for a fraction of a second, and had weird behaviour if there was already another toast present
         $gameSystem.onBeforeSave();
         if (synchronous) autosave(null, true);
         else {
@@ -1212,6 +1212,11 @@ Game_Interpreter.prototype.updateWaitMode = function () {
     return _Game_Interpreter_updateWaitMode.apply(this, arguments);
 };
 
+//Reduce the opacity of the message window
+Window_Message.prototype.standardBackOpacity = function () {
+    return 225; //Default: 192
+};
+
 //Adds an exit command to the main menu 
 Scene_Title.prototype.commandExit = function () {
     this._commandWindow.close();
@@ -1286,7 +1291,7 @@ Window_Base.prototype.convertEscapeCharacters = function (text, x, y) {
     let res = text;
     let match = res.match(pattern);
     while (match) {
-        res = res.replace(pattern, fallbackEval(match[1]));
+        res = res.replace(pattern, fallbackEval(match[1], "<In-message script error>"));
         match = res.match(pattern);
     }
     return _Window_Base_convertEscapeCharacters.call(this, res, x, y);

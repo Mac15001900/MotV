@@ -784,7 +784,7 @@ function Window_ChoiceMessage() {
 		const win = new Window_InfoDisplay(info['Text'], info['Width'], info['Line Height'], info['Default Font Size']);
 		scene.addWindow(win);
 		win.setCloseCallback(function () {
-			scene.removeChild(win);
+			scene._windowLayer.removeChild(win);
 			this.setWaitMode('');
 		}.bind(this));
 		this.setWaitMode('indefinite');
@@ -834,7 +834,7 @@ function Window_ChoiceMessage() {
 		);
 		scene.addWindow(win);
 		win.setCloseCallback(function () {
-			scene.removeChild(win);
+			scene._windowLayer.removeChild(win);
 			this.setWaitMode('');
 		}.bind(this));
 		this.setWaitMode('indefinite');
@@ -905,7 +905,7 @@ function Window_ChoiceMessage() {
 		}, 5000);*/
 		win.setCloseCallback(function () {
 			//clearTimeout(timeout);
-			scene.removeChild(win);
+			scene._windowLayer.removeChild(win);
 			this.setWaitMode('');
 		}.bind(this));
 		// g.test = this;

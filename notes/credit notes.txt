@@ -84,6 +84,7 @@ Spotlight - reidmangan
 Button - CC0 JarredGibb
 Cursor-FS - CC0 by Loyalty_Freak_Music
 Coffe brewing - CC0 by oggers
+Metal click - CC0 by SinusPi
 
 Loading animation (CC0): loading.io
 

@@ -4,6 +4,10 @@ K  Lu C Zn P  I  Er W  I  As Te K  Co Ta Md
 (n -> [) (d -> ])
 
 Dodatkowe podpowiedzi (przy czerwonej, pomarańczowej, żółtej i zielonej substancji): Potas, Lutet, Węgiel, Cynk
+https://en.wikipedia.org/wiki/Potassium
+https://en.wikipedia.org/wiki/Lutetium
+https://en.wikipedia.org/wiki/Carbon
+https://en.wikipedia.org/wiki/Zinc
 
 Stare:
 K  Lu C Zn  P  I  Er W  I  As Te K  Gd                   

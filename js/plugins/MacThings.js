@@ -30,7 +30,7 @@ try {
 
 let MAC_DEBUG = true;
 const DEVICE_TARGET = "Web";
-const VERBOSE_LOGS = true;
+const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this
 const DEBUG_SWITCHES = [141]; //Switches that will be turned on when debug mode is on 
 const MUSIC_DEBUG = false;
@@ -627,7 +627,6 @@ g.interpreterInfo = function () {
     }
 }
 
-
 void ((alias) => {
     Game_Interpreter.prototype.executeCommand = function () {
         this.command = this.currentCommand();
@@ -640,6 +639,12 @@ void ((alias) => {
 g.topLevelScene = function () {
     if (SceneManager._stack.length > 0) return SceneManager._stack[0].toString().split(' ')[1].split('(')[0]
     else return SceneManager.getSceneName();
+}
+
+//Checks how many events in a given list of event IDs have been seen already
+g.countSeen = function (list) {
+    console.assert(list.every(Number.isInteger));
+    return list.filter(e => $es[e]).length;
 }
 
 //Creates a single use toast window at target location

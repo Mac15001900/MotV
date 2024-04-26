@@ -1,6 +1,6 @@
 /*:
  * @author Mac15001900
- * @plugindesc v1.1 Allows events to run other events in various ways.
+ * @plugindesc v1.2.1 Allows events to run other events in various ways.
  * 
  * @param With an invalid target
  * @desc What should the plugin do when trying to run a non-existent event or page?
@@ -45,13 +45,27 @@
  * @default Region
  * @parent Enable region events
  * 
- * @help
- * This plugin provides a command "RunEvent [id|name|tag|offset]", which allows you
- * to run another event, specified either by an offset from the current event,
- * a target event id, name or notetag.
+ * @param Enable terrain events
+ * @desc Allows terrain tags to act like events, running an event with <Terrain:id> when interacted with.
+ * @type boolean
+ * @default true
+ * @on Enable
+ * @off Disable
+ *
+ * @param Terrain tag name
+ * @desc The name of the notetag used to mark the event that's ran after interacting with a tile of a given terrain tag
+ * @type text
+ * @default Terrain
+ * @parent Enable terrain events
  * 
- * ------------------------------------------------------------------------------
- * Specifying by ID:
+ * @help
+ * This plugin provides a command "RunEvent [id|name|tag|offset]", which allows 
+ * you to run another event, specified either by an offset from the current 
+ * event, a target event id, name or notetag. 
+ * It also allows you to use regions to create very large events.
+ * 
+ * ------------------------- RunEvent: specifying by ID -------------------------
+ * 
  * You can specify the target event by ID. It's useful for one-off situations, 
  * when the target event is far away or doesn't have a predictable position. 
  * You can use a number, or use a variable by adding the letter v before its id.
@@ -60,8 +74,8 @@
  * RunEvent 42
  * RunEvent v10
  * 
- * ------------------------------------------------------------------------------
- * Specifying by name or tag:
+* --------------------- RunEvent: specifying by name or tag ---------------------
+
  * You can also specify the target event by providing its name or a notetag.
  * This works similarly to specifying the ID, but is a bit more readable.
  * The first event with the given name or the given notetag present will be run.
@@ -74,8 +88,8 @@
  * RunEvent <Gate>
  * RunEvent <Very special and rather long tag:hi!>
  * 
- * ------------------------------------------------------------------------------
- * Specifying by offset:
+ * ----------------------- RunEvent: specifying by offset -----------------------
+ * 
  * You can specify the relation in space of the target event relative to the 
  * current event.
  * This is useful for creating reusable events that always run an event 
@@ -100,14 +114,16 @@
  * Note: this uses the current positions of both events, which might be different
  * than in the editor if they move.
  * 
- * ------------------------------------------------------------------------------
+ * ---------------------- RunEvent: running a specific page ---------------------
+ * 
  * Additionally, you can specify the page of the event you'd like to run, e.g.
  * "RunEvent left 3" will run the 3rd page of the event on the left, ignoring
  * any conditions that page has. This can also be specified with a variable, e.g.
  * "RunEvent left v42".
  * If you don't specify a page the currently active one will be used.
  * 
- * ------------------------------------------------------------------------------ 
+ * --------------------------- RunEvent: script call ----------------------------
+ * 
  * The same functionality is also provided with a script call:
  * MAC_RunNearbyEvent.run(eventId|offset string, interpreter, [pageId])
  * 
@@ -115,7 +131,33 @@
  * MAC_RunNearbyEvent.run(42, this)
  * MAC_RunNearbyEvent.run("left-left-up", this, 3)
  * 
- * ------------------------------------------------------------------------------
+ * ------------------------------- Region events --------------------------------
+ * 
+ * You can also create very large events by using regions. Simply add a 
+ * <Region:id> notetag to an event (e.g. <Region:42>), and it will run whenever 
+ * the player interacts with that region. Priority and trigger settings are 
+ * preserved, so you can have regions that do something on player touch, or when 
+ * interacted with etc. They will not block the player from moving, however.
+ * 
+ * Regular events take priority over region events; if one exists, no region event
+ * will run.
+ * 
+ * Also note that you can't interact with "Same as characters" events when standing
+ * on their tile. This doesn't usually come up in RM, but here it often does.
+ * This also means that "same as player" events with a "player touch" trigger will
+ * only trigger on touch if they're on top of impassable tiles - otheriwse the
+ * player will just walk onto them without triggering them.
+ * 
+ * ------------------------------- Terrain events -------------------------------
+ * 
+ * Similarly to region events, you can also create events that trigger when the
+ * player interacts with a tile of a given terrain tag, using a <Terrain:id>
+ * notetag.
+ *
+ * If there are any, region events will priority over terrain events.
+ *   
+ * --------------------------------- Licence ------------------------------------
+ * 
  * This plugin is available under the MIT Licence. You're free to use it in any 
  * games, commercial or not, or use the code in your own plugins. Credit is 
  * appreciated but not required.
@@ -302,14 +344,25 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
         //No need to alias erasing event, since those will reset themselves anyway
     }
 
-    if (params["Enable region events"] === "true") {
+    if (params["Enable region events"] === "true" || params["Enable terrain events"] === "true") {
         void function (alias) {
             Game_Player.prototype.startMapEvent = function (x, y, triggers, normal) {
                 alias.call(this, x, y, triggers, normal);
-                if (!$gameMap.isEventRunning()) {
+                if (!$gameMap.isEventRunning() && params["Enable region events"] === "true") {
                     let region = $gameMap.regionId(x, y);
                     if (region > 0) {
                         let events = $gameMap.events().filter(e => e.event().meta[params["Region tag name"]] == region); //Comparing a string and a number, so '==' and not '==='
+                        events.forEach(event => {
+                            if (event.isTriggerIn(triggers) && event.isNormalPriority() === normal) {
+                                event.start();
+                            }
+                        });
+                    }
+                }
+                if (!$gameMap.isEventRunning() && params["Enable terrain events"] === "true") {
+                    let terrain = $gameMap.terrainTag(x, y);
+                    if (terrain > 0) {
+                        let events = $gameMap.events().filter(e => e.event().meta[params["Terrain tag name"]] == terrain);
                         events.forEach(event => {
                             if (event.isTriggerIn(triggers) && event.isNormalPriority() === normal) {
                                 event.start();

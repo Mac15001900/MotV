@@ -37,7 +37,7 @@ var $plugins =
 {"name":"ToastWindow","status":true,"description":"","parameters":{}},
 {"name":"VideoWindow","status":true,"description":"Adds a VideoWindow for displaying non-fullscreen videos nicely","parameters":{}},
 {"name":"LifeRoom","status":true,"description":"","parameters":{}},
-{"name":"MAC_RunNearbyEvent","status":true,"description":"v1.1 Allows events to run other events in various ways.","parameters":{"With an invalid target":"Show a warning in console","Max chain length":"500","Events with trigger \"none\"":"Disabled","Lock ran events":"true","Enable region events":"true","Region tag name":"Region"}},
+{"name":"MAC_RunNearbyEvent","status":true,"description":"v1.2.1 Allows events to run other events in various ways.","parameters":{"With an invalid target":"Show a warning in console","Max chain length":"500","Events with trigger \"none\"":"Disabled","Lock ran events":"false","Enable region events":"true","Region tag name":"Region","Enable terrain events":"true","Terrain tag name":"Terrain"}},
 {"name":"PuzzleData","status":true,"description":"Manages puzzle-related data.","parameters":{}},
 {"name":"ShakeScreen","status":true,"description":"Simply shakes the screen","parameters":{}},
 {"name":"MAC_Text_Extractor","status":true,"description":"v1.0 Extracts all text from a game into a single file","parameters":{}},

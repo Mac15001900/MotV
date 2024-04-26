@@ -41,5 +41,6 @@ var $plugins =
 {"name":"PuzzleData","status":true,"description":"Manages puzzle-related data.","parameters":{}},
 {"name":"ShakeScreen","status":true,"description":"Simply shakes the screen","parameters":{}},
 {"name":"MAC_Text_Extractor","status":true,"description":"v1.0 Extracts all text from a game into a single file","parameters":{}},
-{"name":"typo","status":true,"description":"","parameters":{}}
+{"name":"typo","status":true,"description":"","parameters":{}},
+{"name":"FilterController","status":true,"description":"FilterController","parameters":{"Use Decimal in Variables":"false","displacementImage":"DisplacementMap","enabledAll-Settings":"","enabledAll-ShowInOptionMenu":"false","enabledAll-Text":"Filter Effects","enabledAll-DefaultValue":"true"}}
 ];

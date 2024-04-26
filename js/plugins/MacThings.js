@@ -349,6 +349,7 @@ g.wrongKeyReactions = function (inp) {
 g.events = {
     PROGRESS_CUTSCENES: () => { return { pl: 215, en: 216 }[g.lang] },
     LIFE_MAP: () => { return 6 },
+    FLOOR_RIPPLE_ANCHOR: () => { return 25 },
 }
 
 function displayKeys(amount, color = false) {
@@ -1036,7 +1037,7 @@ g.importSave = function (compressedString) {
     switch (contents.version) {
         //Any version-specific logic will go here
     }
-    const tempSwitches = [132]; //Switches that are meant to be temporary, and it makes more sense to turn them off when importing a game
+    const tempSwitches = [132, 138]; //Switches that are meant to be temporary, and it makes more sense to turn them off when importing a game.
     for (let s of tempSwitches) {
         $gameSwitches.setValue(s, false);
     }

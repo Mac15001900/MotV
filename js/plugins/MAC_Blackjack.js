@@ -17,6 +17,7 @@
  * @
  * 
  * greenish colour - 0f7d17
+ * Blackjack guide: https://www.officialgamerules.org/card-games/blackjack
  * @help
  * 
  */
@@ -27,6 +28,15 @@ Imported.MAC_Blackjack = "1.0";
 window.MAC_Blackjack = {};
 
 void function ($) {
+
+    const GameResult = {
+        NONE: 0, //No result yet, game still in progress
+        WIN: 1, //Value higher than dealer, or dealer busts; bet doubled
+        BLACKJACK: 2, //Got a blackjack (and dealer didn't); bet doubled + bonus
+        LOSE: 3, //Value lower than dealer; bet lost
+        BUST: 4, //Busted; bet lost
+        PUSH: 5, //Tie with dealer; bet returned
+    }
 
     let params = PluginManager.parameters('MAC_Blackjack');
     $.params = params;
@@ -46,6 +56,13 @@ void function ($) {
     $.cardRowLength = 13;
     $.cardRows = 4;
     $.cardAmount = $.cardRows * $.cardRowLength;
+    $.roundEndTexts = {}
+    $.roundEndTexts[GameResult.WIN] = "Round won\nWager doubled";
+    $.roundEndTexts[GameResult.BLACKJACK] = "Blackjack!\nWager doubled and Blackjack bonus applied";
+    $.roundEndTexts[GameResult.LOSE] = "Round lost\nDealer had a higher value";
+    $.roundEndTexts[GameResult.BUST] = "Round lost\nYou got over 21";
+    $.roundEndTexts[GameResult.PUSH] = "It's a draw\nWager returned";
+
 
     void ((alias) => {
         Game_Interpreter.prototype.pluginCommand = function (command, args) {
@@ -65,9 +82,14 @@ void function ($) {
 
     Window_BlackjackMain.prototype = Object.create(Window_Base.prototype);
     Window_BlackjackMain.prototype.constructor = Window_BlackjackMain;
-    Window_BlackjackMain.prototype.initialize = function (x, y, width, height) {
+    Window_BlackjackMain.prototype.initialize = function (x, y, width, height, game) {
         Window_Base.prototype.initialize.call(this, x, y, width, height);
+        this.game = game;
+        this.playerHand = [];
+        this.dealerHand = [];
         this.ready = false;
+        this.frameLeft = 0; //How many frames are left in the current animation
+        this.roundEndText = "";
 
         let bmp = ImageManager.loadPicture("cards");
         bmp.addLoadListener(function () {
@@ -82,14 +104,48 @@ void function ($) {
         this.setTone($.colors.red, $.colors.green, $.colors.blue);
     }
 
+    Window_BlackjackMain.prototype.showResult = function (result) {
+        this.frameLeft = 180;
+        this.roundEndText = $.roundEndTexts[result];
+
+    }
+
     Window_BlackjackMain.prototype.refresh = function () {
         Window_Base.prototype.refresh.call(this);
         this.contents.clear();
-        let grad1 = this.contents._context.createLinearGradient(0, 0, this.contentsHeight() / 4, this.contentsHeight());
-        grad1.addColorStop(0, "#12991b");
-        grad1.addColorStop(1, "#0c6612");
-        this.contents.fillRect(0, 0, this.contentsWidth(), this.contentsHeight(), grad1);
+        let ctx = this.contents._context;
+        //Draw background
+        let gradient = ctx.createLinearGradient(0, 0, this.contentsHeight() / 4, this.contentsHeight());
+        gradient.addColorStop(0, "#12991b");
+        gradient.addColorStop(1, "#0c6612");
+        this.contents.fillRect(0, 0, this.contentsWidth(), this.contentsHeight(), gradient);
 
+        if (this.roundEndText) {
+            let toastWidth = 400;
+            let toastHeight = this.lineHeight() * 3;
+            let opacity = this.frameLeft > 180 ? 0.65 : 0.65 * this.frameLeft / 180;
+            this.contents.fillRect((this.contentsWidth() - toastWidth) / 2, (this.contentsHeight() - toastHeight) / 2, toastWidth, toastHeight, `rgba(0,0,0,${opacity})`);
+            this.contents.fontBold = true;
+            ctx.globalApha = opacity;
+            this.drawText(this.roundEndText.split('\n')[0], 0, (this.contentsHeight()) / 2 - this.lineHeight(), this.contentsWidth(), "center");
+            this.contents.fontBold = false;
+            this.drawText(this.roundEndText.split('\n')[1], 0, (this.contentsHeight()) / 2, this.contentsWidth(), "center");
+            ctx.globalApha = 1;
+        }
+
+    }
+
+    Window_BlackjackMain.prototype.update = function () {
+        Window_Base.prototype.update.call(this);
+        if (this.frameLeft > 0) {
+            this.frameLeft--;
+            if (this.frameLeft === 0) this.finishAnimations();
+            this.refresh();
+        }
+    }
+
+    Window_BlackjackMain.prototype.finishAnimations = function () {
+        this.roundEndText = "";
     }
 
     ////--------------------- Value window ---------------------
@@ -172,14 +228,16 @@ void function ($) {
     Window_BlackjackChoice.prototype = Object.create(Window_HorzCommand.prototype);
     Window_BlackjackChoice.prototype.constructor = Window_BlackjackChoice;
     Window_BlackjackChoice.prototype.initialize = function (x, y) {
+        this.options = [];
         Window_HorzCommand.prototype.initialize.call(this, x, y);
         this.maxCols = () => 6;
         this.refresh();
     }
 
     Window_BlackjackChoice.prototype.makeCommandList = function () {
-        this.addCommand("Hit", "hit");
-        this.addCommand("Stand", "stand");
+        for (let i = 0; i < this.options.length; i++) {
+            this.addCommand(this.options[i], 'ok');
+        }
     }
 
     Window_BlackjackChoice.prototype.updateTone = function () {
@@ -202,6 +260,9 @@ void function ($) {
     Scene_Blackjack.prototype.create = function () {
         Scene_MenuBase.prototype.create.call(this);
         this.addExtraWindowLayer();
+        this.game = Game;
+        this.game.initialize();
+        this.inAnimation = false;
         // let basicHeight = (new Window_Base()).fittingHeight(1);
 
         this.helpWindow = new Window_BlackjackInfo($.PADDING, 0, Graphics.boxWidth - $.PADDING * 2, Graphics.boxHeight);
@@ -214,7 +275,8 @@ void function ($) {
         this.choiceWindow = new Window_BlackjackChoice($.PADDING, 0, Graphics.boxWidth - $.PADDING * 2);
         this.choiceWindow.width = Graphics.boxWidth - $.PADDING * 2;
         this.choiceWindow.y = Graphics.boxHeight - this.helpWindow.height - this.choiceWindow.height - $.PADDING * 2;
-        this.choiceWindow.refresh();
+        this.choiceWindow.setHandler('ok', this.buttonSelected.bind(this));
+        this.setupChoices();
 
         this.mainWindow = new Window_BlackjackMain($.PADDING, $.PADDING, Graphics.boxWidth - $.PADDING * 2,
             Graphics.boxHeight - this.helpWindow.height - this.choiceWindow.height - $.PADDING * 4);
@@ -229,7 +291,26 @@ void function ($) {
         this.addWindow(this.choiceWindow);
         this.addWindow(this.helpWindow);
 
+
         this.choiceWindow.activate();
+    }
+
+    Scene_Blackjack.prototype.setupChoices = function () {
+        switch (this.game.phase) {
+            case GamePhase.PICK_WAGER:
+                this.choiceWindow.options = ["1", "10", "50", "250", "Quit"];
+                break;
+            case GamePhase.FIRST_TURN:
+                this.choiceWindow.options = ["Hit", "Stand"]; //We'll add side strategies here later
+                break;
+            case GamePhase.OTHER_TURN:
+                this.choiceWindow.options = ["Hit", "Stand"];
+                break;
+            case GamePhase.END:
+                this.choiceWindow.options = []; //Just wait for the animation here
+                break;
+        }
+        this.choiceWindow.refresh();
     }
 
     Scene_Blackjack.prototype.addExtraWindowLayer = function () {
@@ -242,6 +323,27 @@ void function ($) {
         this.addChild(this._extraWindowLayer);
     }
 
+    Scene_Blackjack.prototype.buttonSelected = function () {
+        let index = this.choiceWindow.index();
+        let result = null;
+        switch (this.game.phase) {
+            case GamePhase.PICK_WAGER:
+                if (index === 4) this.popScene();
+                else this.game.startRound([1, 10, 50, 250][index]);
+                break;
+            case GamePhase.FIRST_TURN:
+            //Side strategies will go here, without break
+            case GamePhase.OTHER_TURN:
+                if (index === 0) result = this.game.hit();
+                else if (index === 1) result = this.game.stand();
+                this.inAnimation = true; //TODO tell the main window to update
+                break;
+            default:
+                console.error("No buttons should be pressed in this phase");
+        }
+        if (result) this.mainWindow.showResult(result);
+    }
+
 
     //--------------------- Game logic ---------------------
 
@@ -250,15 +352,6 @@ void function ($) {
         FIRST_TURN: 1,
         OTHER_TURN: 2,
         END: 3
-    }
-
-    const GameResult = {
-        NONE: 0, //No result yet, game still in progress
-        WIN: 1, //Value higher than dealer, or dealer busts; bet doubled
-        BLACKJACK: 2, //Got a blackjack (and dealer didn't); bet tripled
-        LOSE: 3, //Value lower than dealer; bet lost
-        BUST: 4, //Busted; bet lost
-        PUSH: 5, //Tie with dealer; bet returned
     }
 
     let Game = {};
@@ -282,8 +375,6 @@ void function ($) {
         this.playerHand = [this.drawCard(), this.drawCard()];
         this.dealerHand = this.makeDealerHand();
         this.phase = GamePhase.FIRST_TURN;
-        this.playerHand = [];
-        this.dealerHand = [];
         this.dealerValue = 0;
     }
 
@@ -293,11 +384,12 @@ void function ($) {
             hand.push(this.drawCard());
         }
         this.dealerValue = this.handValue(hand);
+        return hand;
     }
 
     Game.hit = function () {
         this.playerHand.push(this.drawCard());
-        this.result = this.checkResult();
+        this.result = this.checkHitResult();
         if (this.result) {
             this.handleResult(this.result);
             this.phase = GamePhase.END;
@@ -311,6 +403,7 @@ void function ($) {
 
         let playerValue = this.handValue(this.playerHand);
         if (this.dealerValue > 21) return GameResult.WIN;
+        else if (playerValue > this.dealerValue) return GameResult.WIN;
         else if (this.dealerValue === playerValue) return GameResult.PUSH;
         else return GameResult.LOSE;
     }
@@ -318,15 +411,14 @@ void function ($) {
     Game.checkHitResult = function () {
         let value = this.handValue(this.playerHand);
         if (value > 21) return GameResult.BUST; //Bust
-        else if (this.isBlackjack(this.playerHand())) { //Got a blackjack
-            if (this.isBlackjack(this.dealerHand())) return GameResult.PUSH; //And so did the dealer
+        else if (this.isBlackjack(this.playerHand)) { //Got a blackjack
+            if (this.isBlackjack(this.dealerHand)) return GameResult.PUSH; //And so did the dealer
             else return GameResult.BLACKJACK; //And the dealer didn't
         } else return GameResult.NONE;
     }
 
     Game.handleResult = function (result) {
         if (result === GameResult.NONE) return;
-        this.wager = 0;
         this.discard.concat(this.playerHand);
         this.discard.concat(this.dealerHand);
         switch (result) {
@@ -344,6 +436,7 @@ void function ($) {
                 this.tokens += this.wager;
                 break;
         }
+        this.wager = 0;
     }
 
     //Point value for a given hand (using aces optimally)
@@ -362,7 +455,7 @@ void function ($) {
 
     //Check if the hand contains an ace
     Game.hasAce = function (hand) {
-        return hand.any(c => $.aces.includes(c));
+        return hand.some(c => $.aces.includes(c));
     }
 
     //Check if the hand is a blackjack (natural 21)

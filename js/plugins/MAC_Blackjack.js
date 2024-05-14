@@ -105,6 +105,9 @@ void function ($) {
         this.animationFramesLeft = 0; //How many frames are left in the current animation
         this.dealerCardRevealed = false;
 
+        this.tokenCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight(), "Tokens: ", game.tokens, true, true);
+        this.wagerCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight() * 2, "Wager: ", 0, true, false);
+
         let bmp = ImageManager.loadPicture("cards");
         bmp.addLoadListener(function () {
             this.image = bmp;
@@ -118,12 +121,6 @@ void function ($) {
 
     Window_BlackjackMain.prototype.updateTone = function () {
         this.setTone($.colors.red, $.colors.green, $.colors.blue);
-    }
-
-    Window_BlackjackMain.prototype.showResult = function (result) {
-        this.animationFramesLeft = 180;
-        this.roundEndText = $.roundEndTexts[result];
-
     }
 
     Window_BlackjackMain.prototype.refresh = function () {
@@ -142,7 +139,10 @@ void function ($) {
         for (let i = 0; i < this.playerHand.length; i++) {
             let handSize = this.playerHand.length
             if (this.inAnimation(AnimationType.ADD_PLAYER_CARD)) handSize = this.between(handSize, handSize + 1);
-            this.drawCard(this.playerHand[i], this.cardX(i, handSize), this.contentsHeight() - this.cardHeight - $.cardPadding);
+            let y = this.contentsHeight() - this.cardHeight - $.cardPadding;
+            // if (this.inAnimation(AnimationType.REMOVE_CARDS)) y = this.between(y, this.contentsHeight() + this.cardHeight * 2);
+            if (this.inAnimation(AnimationType.REMOVE_CARDS)) y = this.between(y, -this.cardHeight * 2);
+            this.drawCard(this.playerHand[i], this.cardX(i, handSize), y);
         }
 
         //Draw the dealer's hand
@@ -151,8 +151,23 @@ void function ($) {
             let handSize = this.dealerHand.length;
             if (this.inAnimation(AnimationType.ADD_DEALER_CARD)) handSize = this.between(handSize, handSize + 1);
             let showCard = i !== 1 || this.dealerCardRevealed;
-            this.drawCard(this.dealerHand[i], this.cardX(i, handSize), $.cardPadding, showCard);
+            let y = $.cardPadding;
+            if (this.inAnimation(AnimationType.REMOVE_CARDS)) y = this.between(y, -this.cardHeight * 2);
+            this.drawCard(this.dealerHand[i], this.cardX(i, handSize), y, showCard);
         }
+
+        //Draw hand values
+        if (this.playerHand.length > 0)
+            this.drawText(this.game.displayValue(this.playerHand), 0, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight(), this.contentsWidth(), "center");
+        if (this.dealerHand.length > 0) {
+            if (this.dealerCardRevealed) this.drawText(this.game.displayValue(this.dealerHand), 0, this.cardHeight + $.cardPadding * 2, this.contentsWidth(), "center");
+            else this.drawText(this.game.displayValue([this.dealerHand[0]]) + " + ?", 0, this.cardHeight + $.cardPadding * 2, this.contentsWidth(), "center");
+        }
+
+        //Draw tokens and wager
+        this.tokenCounter.refresh(this, this.contents);
+        this.wagerCounter.refresh(this, this.contents);
+
 
         //Handle the animation (if one is active)
         if (!this.currentAnimation) return;
@@ -233,25 +248,48 @@ void function ($) {
      */
     Window_BlackjackMain.prototype.cardX = function (index, amount) {
         let x0 = this.contentsWidth() / 2 - (amount * this.cardWidth) / 2;
-        return x0 + index * this.cardWidth;
+        let res = x0 + index * this.cardWidth;
+        if (this.inAnimation(AnimationType.REMOVE_CARDS)) return this.between(res, (this.contentsWidth() - this.cardWidth) / 2);
+        else return res;
+    }
+
+    /**
+     * Handles custom logic at the end of some animations
+     * @param {Animation} animation 
+     */
+    Window_BlackjackMain.prototype.handleAnimationEnd = function (animation) {
+        switch (animation.type) {
+            case AnimationType.ADD_PLAYER_CARD:
+                this.playerHand.push(animation.card);
+                break;
+            case AnimationType.ADD_DEALER_CARD:
+                this.dealerHand.push(animation.card);
+                break;
+            case AnimationType.REVEAL_DEALER_CARD:
+                this.dealerCardRevealed = true;
+                break;
+            case AnimationType.REMOVE_CARDS:
+                this.playerHand = [];
+                this.dealerHand = [];
+                this.dealerCardRevealed = false;
+                break;
+        }
     }
 
     Window_BlackjackMain.prototype.update = function () {
         Window_Base.prototype.update.call(this);
+        let needsRefresh = false;
+        //Update counters
+        if (this.tokenCounter.needsUpdate() || this.wagerCounter.needsUpdate()) {
+            this.tokenCounter.update();
+            this.wagerCounter.update();
+            needsRefresh = true;
+        }
+        //Update animations
         if (this.animationFramesLeft > 0) {
             this.animationFramesLeft--;
             if (this.animationFramesLeft === 0) {
-                switch (this.currentAnimation.type) { //Custom logic at the end of some animations
-                    case AnimationType.ADD_PLAYER_CARD:
-                        this.playerHand.push(this.currentAnimation.card);
-                        break;
-                    case AnimationType.ADD_DEALER_CARD:
-                        this.dealerHand.push(this.currentAnimation.card);
-                        break;
-                    case AnimationType.REVEAL_DEALER_CARD:
-                        this.dealerCardRevealed = true;
-                        break;
-                }
+                this.handleAnimationEnd(this.currentAnimation);
                 if (this.animationQueue.length > 0) {
                     this.currentAnimation = this.animationQueue.shift();
                     this.animationFramesLeft = this.currentAnimation.frames;
@@ -259,23 +297,36 @@ void function ($) {
                     this.currentAnimation = null;
                 }
             }
-            this.refresh();
+            needsRefresh = true;
         }
+        //Refresh if needed
+        if (needsRefresh) this.refresh();
     }
 
     /**
      * Enqueues a new animation to be played. An animation is an object with (at least) a 'type' and 'frames' fields.
+     * Each animation will be played for the specified amount of frames, and only one will play at a time.
      * Possible 'field' values:
      * - AnimationType.ADD_PLAYER_CARD: adds a new card for the player. Requires field 'card', an integer with the card value
      * - AnimationType.ADD_DEALER_CARD: adds a new card for the dealer. Requires field 'card', an integer with the card value
+     * - AnimationType.REVEAL_DEALER_CARD: reveals the dealer's second card.
      * - AnimationType.SHOW_RESULT: shows the result of the game. Requires field 'text', a string with the result text
      * - AnimationType.REMOVE_CARDS: removes all cards from the table.
+     * - AnimationType.DELAY: waits for the specified amount of frames
      */
     Window_BlackjackMain.prototype.addAnimation = function (animation) {
         if (this.currentAnimation === null) {
             this.currentAnimation = animation;
             this.animationFramesLeft = animation.frames;
         } else this.animationQueue.push(animation);
+    }
+
+    Window_BlackjackMain.prototype.setTokenAmount = function (amount) {
+        this.tokenCounter.setValue(amount)
+    }
+
+    Window_BlackjackMain.prototype.setWagerAmount = function (amount) {
+        this.wagerCounter.setValue(amount)
     }
 
     Window_BlackjackMain.prototype.areAnimationsFinished = function () {
@@ -298,47 +349,48 @@ void function ($) {
         return start + (end - start) * (1 - this.animationFramesLeft / this.currentAnimation.frames);
     }
 
-    ////--------------------- Value window ---------------------
+    ////--------------------- Value component ---------------------
     /**
-     * Window for displaying the current amount of tokens or wager size
+     * Component for displaying a value, with an animation for it changing. Used for the current amount of tokens and wager size.
      */
-    function Window_BlackjackValue() {
+    function Value_Component() {
         this.initialize.apply(this, arguments);
     };
 
-    Window_BlackjackValue.prototype = Object.create(Window_Base.prototype);
-    Window_BlackjackValue.prototype.constructor = Window_BlackjackValue;
-    Window_BlackjackValue.prototype.initialize = function (x, y, width, height, name, value, doAnimations = true) {
-        Window_Base.prototype.initialize.call(this, x, y, width, height);
+    // Value_Component.prototype = Object.create(Window_Base.prototype);
+    Value_Component.prototype.constructor = Value_Component;
+    Value_Component.prototype.initialize = function (x, y, name, value, doAnimations = true, showChange = false) {
+        this.x = x;
+        this.y = y;
         this.name = name;
         this.value = value;
         this.displayValue = value;
         this.doAnimations = doAnimations;
-        this.refresh();
+        this.showChange = showChange;
+        this.change = 0;
     }
 
-    Window_BlackjackValue.prototype.refresh = function () {
-        this.contents.clear();
-        this.drawText(this.name + this.displayValue, 0, 0, this.contentsWidth(), 'center');
-        Window_Base.prototype.refresh.call(this);
+    Value_Component.prototype.needsUpdate = function () {
+        return this.displayValue !== this.value;
     }
 
-    Window_BlackjackValue.prototype.changeTokens = function (newValue) {
-        this.tokens = newValue;
-        this.refresh();
+    Value_Component.prototype.refresh = function (parent, contents) {
+        let changeDisplay = (this.change > 0 ? "+" : "") + this.change;
+        parent.drawText(this.name + this.displayValue + (this.showChange ? " " + changeDisplay : ""), this.x, this.y, parent.contentsWidth(), 'left');
     }
 
-    Window_BlackjackValue.prototype.update = function () {
-        Window_Base.prototype.update.call(this);
+    Value_Component.prototype.setValue = function (newValue) {
+        this.change = newValue - this.value;
+        this.value = newValue;
+    }
+
+    Value_Component.prototype.update = function () {
         if (this.doAnimations && this.displayValue !== this.value) {
             if (Math.abs(this.displayValue - this.value) > 10) this.displayValue += (this.value - this.displayValue) / 10;
             else this.displayValue += Math.sign(this.value - this.displayValue);
-            this.refresh();
-        }
-    }
 
-    Window_BlackjackValue.prototype.updateTone = function () {
-        this.setTone($.colors.red, $.colors.green, $.colors.blue);
+            if (this.displayValue === this.value) this.change = 0;
+        }
     }
 
     ////--------------------- Info window ---------------------
@@ -409,7 +461,7 @@ void function ($) {
 
     Scene_Blackjack.prototype.create = function () {
         Scene_MenuBase.prototype.create.call(this);
-        this.addExtraWindowLayer();
+        // this.addExtraWindowLayer();
         this.game = Game;
         this.game.initialize();
         this.inAnimation = false;
@@ -429,15 +481,16 @@ void function ($) {
         this.setupChoices();
 
         this.mainWindow = new Window_BlackjackMain($.PADDING, $.PADDING, Graphics.boxWidth - $.PADDING * 2,
-            Graphics.boxHeight - this.helpWindow.height - this.choiceWindow.height - $.PADDING * 4);
-        /*this.tokenWindow = new Window_BlackjackValue($.PADDING, Graphics.boxHeight - $.PADDING - basicHeight,
+            Graphics.boxHeight - this.helpWindow.height - this.choiceWindow.height - $.PADDING * 4, this.game);
+
+        /*this.tokenWindow = new Value_Component($.PADDING, Graphics.boxHeight - $.PADDING - basicHeight,
             (Graphics.boxWidth - this.mainWindow.width) / 2 - $.PADDING / 2, basicHeight, "Tokens: ", 1000);
-        this.wagerWindow = new Window_BlackjackValue($.PADDING, Graphics.boxHeight - $.PADDING * 2 - basicHeight * 2,
+        this.wagerWindow = new Value_Component($.PADDING, Graphics.boxHeight - $.PADDING * 2 - basicHeight * 2,
             (Graphics.boxWidth - this.mainWindow.width) / 2 - $.PADDING / 2, basicHeight, "Wager: ", 0);*/
 
         this.addWindow(this.mainWindow);
-        // this.addWindow(this.tokenWindow);
-        // this.addWindow(this.wagerWindow);
+        /*this._extraWindowLayer.addChild(this.tokenWindow);
+        this._extraWindowLayer.addChild(this.wagerWindow);*/
         this.addWindow(this.choiceWindow);
         this.addWindow(this.helpWindow);
 
@@ -460,7 +513,9 @@ void function ($) {
                 this.choiceWindow.options = []; //Just wait for the animation here
                 break;
         }
+        if (this.choiceWindow.options.length <= this.choiceWindow.index()) this.choiceWindow._index = 0;
         this.choiceWindow.refresh();
+        this.choiceWindow.activate();
     }
 
     Scene_Blackjack.prototype.addExtraWindowLayer = function () {
@@ -479,19 +534,54 @@ void function ($) {
         switch (this.game.phase) {
             case GamePhase.PICK_WAGER:
                 if (index === 4) this.popScene();
-                else this.game.startRound([1, 10, 50, 250][index]);
+                else {
+                    let wager = [1, 10, 50, 250][index]; //TODO do this properly
+                    this.game.startRound(wager);
+                    this.mainWindow.setWagerAmount(wager);
+                    for (let i = 0; i < this.game.playerHand.length; i++) {
+                        this.mainWindow.addAnimation({ type: AnimationType.ADD_PLAYER_CARD, frames: 15, card: this.game.playerHand[i] });
+                    }
+                    for (let i = 0; i <= 1; i++) {
+                        this.mainWindow.addAnimation({ type: AnimationType.ADD_DEALER_CARD, frames: 10, card: this.game.dealerHand[i] });
+                    }
+                }
                 break;
             case GamePhase.FIRST_TURN:
-            //Side strategies will go here, without break
+            //Side strategies will go here, without break;
             case GamePhase.OTHER_TURN:
-                if (index === 0) result = this.game.hit();
+                if (index === 0) {
+                    result = this.game.hit();
+                    this.mainWindow.addAnimation({ type: AnimationType.ADD_PLAYER_CARD, frames: 15, card: this.game.playerHand.at(-1) });
+                }
                 else if (index === 1) result = this.game.stand();
-                this.inAnimation = true; //TODO tell the main window to update
                 break;
             default:
                 console.error("No buttons should be pressed in this phase");
         }
-        if (result) this.mainWindow.showResult(result);
+        if (result) this.handleRoundEnd(result);
+        else this.setupChoices();
+    }
+
+    Scene_Blackjack.prototype.handleRoundEnd = function (result) {
+        if (result !== GameResult.BUST) { //Reveal dealer's hand (unless the player went bust)
+            this.mainWindow.addAnimation({ type: AnimationType.REVEAL_DEALER_CARD, frames: 15 });
+            for (let i = 2; i < this.game.dealerHand; i++) {
+                this.mainWindow.addAnimation({ type: AnimationType.ADD_DEALER_CARD, frames: 15, card: this.game.dealerHand[i] });
+            }
+        }
+        this.mainWindow.addAnimation({ type: AnimationType.DELAY, frames: 5 });
+        this.mainWindow.addAnimation({ type: AnimationType.SHOW_RESULT, frames: 120, text: $.roundEndTexts[result] });
+        this.mainWindow.addAnimation({ type: AnimationType.REMOVE_CARDS, frames: 20 });
+    }
+
+    Scene_Blackjack.prototype.update = function () {
+        Scene_MenuBase.prototype.update.call(this);
+        if (this.game.phase === GamePhase.END && !this.mainWindow.inAnimation()) { //Phase finished, move on the next round
+            this.mainWindow.setTokenAmount(this.game.tokens);
+            this.mainWindow.setWagerAmount(0);
+            this.game.phase = GamePhase.PICK_WAGER;
+            this.setupChoices();
+        }
     }
 
 
@@ -528,6 +618,12 @@ void function ($) {
         this.dealerValue = 0;
     }
 
+    //Triggered after all animation for the end phase are done
+    Game.endRound = function () {
+        this.phase = GamePhase.PICK_WAGER;
+
+    }
+
     Game.makeDealerHand = function () {
         let hand = [this.drawCard(), this.drawCard()];
         while (this.handValue(hand) < 17) {
@@ -549,13 +645,17 @@ void function ($) {
 
     Game.stand = function () {
         this.phase = GamePhase.END;
-        if (this.checkHitResult()) return this.checkHitResult();
-
-        let playerValue = this.handValue(this.playerHand);
-        if (this.dealerValue > 21) return GameResult.WIN;
-        else if (playerValue > this.dealerValue) return GameResult.WIN;
-        else if (this.dealerValue === playerValue) return GameResult.PUSH;
-        else return GameResult.LOSE;
+        let res = GameResult.NONE;
+        if (this.checkHitResult()) res = this.checkHitResult();
+        else {
+            let playerValue = this.handValue(this.playerHand);
+            if (this.dealerValue > 21) res = GameResult.WIN;
+            else if (playerValue > this.dealerValue) res = GameResult.WIN;
+            else if (this.dealerValue === playerValue) res = GameResult.PUSH;
+            else res = GameResult.LOSE;
+        }
+        this.handleResult(res);
+        return res;
     }
 
     Game.checkHitResult = function () {
@@ -569,8 +669,8 @@ void function ($) {
 
     Game.handleResult = function (result) {
         if (result === GameResult.NONE) return;
-        this.discard.concat(this.playerHand);
-        this.discard.concat(this.dealerHand);
+        this.discard.push(...this.playerHand);
+        this.discard.push(...this.dealerHand);
         switch (result) {
             case GameResult.WIN:
                 this.tokens += this.wager * 2;
@@ -589,16 +689,23 @@ void function ($) {
         this.wager = 0;
     }
 
+    //Returns the value of a hand, counting aces as their base value
+    Game.baseValue = function (hand) {
+        if (!hand) return 0;
+        return hand.map(c => $.cardValues[c]).reduce((a, b) => a + b, 0);
+    }
+
     //Point value for a given hand (using aces optimally)
     Game.handValue = function (hand) {
-        let value = hand.map(c => $.cardValues[c]).reduce((a, b) => a + b, 0);
+        let value = this.baseValue(hand);
         if (this.hasAce(hand) && value <= 11) value += 10;
         return value;
     }
 
     //Hand value as displayed to the player
     Game.displayValue = function (hand) {
-        let value = this.handValue(hand);
+        if (!hand) return "0";
+        let value = this.baseValue(hand);
         if (this.hasAce(hand) && value <= 11) return `${value} / ${value + 10}`;
         else return `${value}`;
     }

@@ -43,8 +43,9 @@ void function ($) {
         ADD_DEALER_CARD: 2,
         REVEAL_DEALER_CARD: 3,
         SHOW_RESULT: 4,
-        REMOVE_CARDS: 5,
-        DELAY: 6,
+        HIDE_RESULT: 5,
+        REMOVE_CARDS: 6,
+        DELAY: 7,
     }
 
     let params = PluginManager.parameters('MAC_Blackjack');
@@ -70,7 +71,7 @@ void function ($) {
 
     $.roundEndTexts = {}
     $.roundEndTexts[GameResult.WIN] = "Round won\nWager doubled";
-    $.roundEndTexts[GameResult.BLACKJACK] = "Blackjack!\nWager doubled and Blackjack bonus applied";
+    $.roundEndTexts[GameResult.BLACKJACK] = "Blackjack!\nWager doubled and Blackjack bonus added";
     $.roundEndTexts[GameResult.LOSE] = "Round lost\nDealer had a higher value";
     $.roundEndTexts[GameResult.BUST] = "Round lost\nYou got over 21";
     $.roundEndTexts[GameResult.PUSH] = "It's a draw\nWager returned";
@@ -80,8 +81,7 @@ void function ($) {
         Game_Interpreter.prototype.pluginCommand = function (command, args) {
             alias.call(this, command, args);
             if (command.toLowerCase() === 'blackjack') {
-                console.log("Blackjack command");
-                $.arguments.tokens = numberValue(args[1]) || $gameParty.gold();
+                $.arguments.tokens = numberValue(args[0]) || $gameParty.gold();
                 SceneManager.push(Scene_Blackjack);
             }
         }
@@ -104,9 +104,8 @@ void function ($) {
         this.currentAnimation = null;
         this.animationFramesLeft = 0; //How many frames are left in the current animation
         this.dealerCardRevealed = false;
-
-        this.tokenCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight(), "Tokens: ", game.tokens, true, true);
-        this.wagerCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight() * 2, "Wager: ", 0, true, false);
+        this.roundEndTextShown = false;
+        this.roundEndText = "";
 
         let bmp = ImageManager.loadPicture("cards");
         bmp.addLoadListener(function () {
@@ -114,7 +113,10 @@ void function ($) {
             this.framesPassed = 0;
             this.cardWidth = this.image.width / ($.cardRowLength + 1);
             this.cardHeight = this.image.height / $.cardRows;
+            this.tokenCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight(), "Tokens: ", game.tokens, true, true);
+            this.wagerCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight() * 2, "Wager: ", 0, true, false);
             this.ready = true;
+            this.refresh();
         }.bind(this));
         this.refresh();
     }
@@ -168,6 +170,44 @@ void function ($) {
         this.tokenCounter.refresh(this, this.contents);
         this.wagerCounter.refresh(this, this.contents);
 
+        //Draw the round end text (if present)
+        if (this.roundEndTextShown) {
+            let title = this.roundEndText.split('\n')[0];
+            let subtitle = this.roundEndText.split('\n')[1];
+            let toastWidth = Math.max(400, this.contents.measureTextWidth(subtitle) + this.lineHeight() * 2);
+            let toastHeight = this.lineHeight() * 4;
+            let opacity = 1;
+            if (this.inAnimation(AnimationType.SHOW_RESULT)) opacity = this.between(0, 1);
+            else if (this.inAnimation(AnimationType.HIDE_RESULT)) opacity = this.between(1, 0);
+            // if (progress < 0.1) opacity = progress / 0.1; //Fade in
+            // else if (progress > 0.85) opacity = 1 - (progress - 0.85) / 0.15; //Fade out
+
+            //Drawing background
+            this.contents.fillRect((this.contentsWidth() - toastWidth) / 2, (this.contentsHeight() - toastHeight) / 2, toastWidth, toastHeight, `rgba(0,0,0,${opacity * 0.65})`);
+
+            //Drawing text. Default drawText doesn't support a custom opacity, so we need to do it ourselves
+            ctx.save();
+            let oldFontSize = this.contents.fontSize;
+            this.contents.fontSize = oldFontSize * 1.5;
+            this.contents.fontBold = true;
+            ctx.font = this.contents._makeFontNameText();
+            ctx.textAlign = "center";
+            ctx.textBaseline = 'alphabetic'; //Workaround for Firefox bug 737852
+            ctx.globalAlpha = opacity;
+            this.contents._drawTextOutline(title, this.contentsWidth() / 2, (this.contentsHeight()) / 2 - this.lineHeight() / 4, this.contentsWidth());
+            this.contents._drawTextBody(title, this.contentsWidth() / 2, (this.contentsHeight()) / 2 - this.lineHeight() / 4, this.contentsWidth());
+
+            this.contents.fontSize = oldFontSize;
+            this.contents.fontBold = false;
+            if (subtitle) {
+                ctx.font = this.contents._makeFontNameText();
+                this.contents._drawTextOutline(subtitle, this.contentsWidth() / 2, this.contentsHeight() / 2 + this.lineHeight() * 1.25, this.contentsWidth());
+                this.contents._drawTextBody(subtitle, this.contentsWidth() / 2, this.contentsHeight() / 2 + this.lineHeight() * 1.25, this.contentsWidth());
+            }
+            ctx.restore();
+            this.contents._setDirty();
+        }
+
 
         //Handle the animation (if one is active)
         if (!this.currentAnimation) return;
@@ -191,41 +231,7 @@ void function ($) {
                 this.drawCard(this.dealerHand[1], this.cardX(1, this.dealerHand.length), $.cardPadding, flipProgress > 1, Math.abs(1 - flipProgress));
                 break;
             }
-            case AnimationType.SHOW_RESULT:
-                let progress = this.between(0, 1);
-                let title = this.currentAnimation.text.split('\n')[0];
-                let subtitle = this.currentAnimation.text.split('\n')[1];
-                let toastWidth = 400;
-                let toastHeight = this.lineHeight() * 4;
-                let opacity = 1;
-                if (progress < 0.1) opacity = progress / 0.1; //Fade in
-                else if (progress > 0.85) opacity = 1 - (progress - 0.85) / 0.15; //Fade out
 
-                //Drawing background
-                this.contents.fillRect((this.contentsWidth() - toastWidth) / 2, (this.contentsHeight() - toastHeight) / 2, toastWidth, toastHeight, `rgba(0,0,0,${opacity * 0.65})`);
-
-                //Drawing text. Default drawText doesn't support a custom opacity, so we need to do it ourselves
-                ctx.save();
-                let oldFontSize = this.contents.fontSize;
-                this.contents.fontSize = oldFontSize * 1.5;
-                this.contents.fontBold = true;
-                ctx.font = this.contents._makeFontNameText();
-                ctx.textAlign = "center";
-                ctx.textBaseline = 'alphabetic'; //Workaround for Firefox bug 737852
-                ctx.globalAlpha = opacity;
-                this.contents._drawTextOutline(title, this.contentsWidth() / 2, (this.contentsHeight()) / 2 - this.lineHeight() / 4, this.contentsWidth());
-                this.contents._drawTextBody(title, this.contentsWidth() / 2, (this.contentsHeight()) / 2 - this.lineHeight() / 4, this.contentsWidth());
-
-                this.contents.fontSize = oldFontSize;
-                this.contents.fontBold = false;
-                if (subtitle) {
-                    ctx.font = this.contents._makeFontNameText();
-                    this.contents._drawTextOutline(subtitle, this.contentsWidth() / 2, this.contentsHeight() / 2 + this.lineHeight() * 1.25, this.contentsWidth());
-                    this.contents._drawTextBody(subtitle, this.contentsWidth() / 2, this.contentsHeight() / 2 + this.lineHeight() * 1.25, this.contentsWidth());
-                }
-                ctx.restore();
-                this.contents._setDirty();
-                break;
         }
     }
 
@@ -253,29 +259,6 @@ void function ($) {
         else return res;
     }
 
-    /**
-     * Handles custom logic at the end of some animations
-     * @param {Animation} animation 
-     */
-    Window_BlackjackMain.prototype.handleAnimationEnd = function (animation) {
-        switch (animation.type) {
-            case AnimationType.ADD_PLAYER_CARD:
-                this.playerHand.push(animation.card);
-                break;
-            case AnimationType.ADD_DEALER_CARD:
-                this.dealerHand.push(animation.card);
-                break;
-            case AnimationType.REVEAL_DEALER_CARD:
-                this.dealerCardRevealed = true;
-                break;
-            case AnimationType.REMOVE_CARDS:
-                this.playerHand = [];
-                this.dealerHand = [];
-                this.dealerCardRevealed = false;
-                break;
-        }
-    }
-
     Window_BlackjackMain.prototype.update = function () {
         Window_Base.prototype.update.call(this);
         let needsRefresh = false;
@@ -290,12 +273,8 @@ void function ($) {
             this.animationFramesLeft--;
             if (this.animationFramesLeft === 0) {
                 this.handleAnimationEnd(this.currentAnimation);
-                if (this.animationQueue.length > 0) {
-                    this.currentAnimation = this.animationQueue.shift();
-                    this.animationFramesLeft = this.currentAnimation.frames;
-                } else {
-                    this.currentAnimation = null;
-                }
+                if (this.animationQueue.length > 0) this.startAnimation(this.animationQueue.shift());
+                else this.currentAnimation = null;
             }
             needsRefresh = true;
         }
@@ -316,9 +295,44 @@ void function ($) {
      */
     Window_BlackjackMain.prototype.addAnimation = function (animation) {
         if (this.currentAnimation === null) {
-            this.currentAnimation = animation;
-            this.animationFramesLeft = animation.frames;
+            this.startAnimation(animation);
         } else this.animationQueue.push(animation);
+    }
+
+    Window_BlackjackMain.prototype.startAnimation = function (animation) {
+        this.currentAnimation = animation;
+        this.animationFramesLeft = animation.frames;
+        if (animation.type === AnimationType.SHOW_RESULT) {
+            this.roundEndTextShown = true;
+            this.roundEndText = animation.text;
+        }
+    }
+
+    /**
+    * Handles custom logic at the end of some animations
+    * @param {Animation} animation 
+    */
+    Window_BlackjackMain.prototype.handleAnimationEnd = function (animation) {
+        switch (animation.type) {
+            case AnimationType.ADD_PLAYER_CARD:
+                this.playerHand.push(animation.card);
+                break;
+            case AnimationType.ADD_DEALER_CARD:
+                this.dealerHand.push(animation.card);
+                break;
+            case AnimationType.REVEAL_DEALER_CARD:
+                this.dealerCardRevealed = true;
+                break;
+            case AnimationType.REMOVE_CARDS:
+                this.playerHand = [];
+                this.dealerHand = [];
+                this.dealerCardRevealed = false;
+                break;
+            case AnimationType.HIDE_RESULT:
+                this.roundEndTextShown = false;
+                this.roundEndText = "";
+                break;
+        }
     }
 
     Window_BlackjackMain.prototype.setTokenAmount = function (amount) {
@@ -376,6 +390,7 @@ void function ($) {
 
     Value_Component.prototype.refresh = function (parent, contents) {
         let changeDisplay = (this.change > 0 ? "+" : "") + this.change;
+        if (this.change === 0) changeDisplay = "";
         parent.drawText(this.name + this.displayValue + (this.showChange ? " " + changeDisplay : ""), this.x, this.y, parent.contentsWidth(), 'left');
     }
 
@@ -386,7 +401,7 @@ void function ($) {
 
     Value_Component.prototype.update = function () {
         if (this.doAnimations && this.displayValue !== this.value) {
-            if (Math.abs(this.displayValue - this.value) > 10) this.displayValue += (this.value - this.displayValue) / 10;
+            if (Math.abs(this.displayValue - this.value) > 20) this.displayValue += Math.round((this.value - this.displayValue) / 20);
             else this.displayValue += Math.sign(this.value - this.displayValue);
 
             if (this.displayValue === this.value) this.change = 0;
@@ -538,6 +553,12 @@ void function ($) {
                     let wager = [1, 10, 50, 250][index]; //TODO do this properly
                     this.game.startRound(wager);
                     this.mainWindow.setWagerAmount(wager);
+                    this.mainWindow.setTokenAmount(this.game.tokens);
+                    if (this.mainWindow.roundEndTextShown) {
+                        this.mainWindow.addAnimation({ type: AnimationType.HIDE_RESULT, frames: 10 });
+                        this.mainWindow.addAnimation({ type: AnimationType.REMOVE_CARDS, frames: 20 });
+                        this.mainWindow.addAnimation({ type: AnimationType.DELAY, frames: 15 });
+                    }
                     for (let i = 0; i < this.game.playerHand.length; i++) {
                         this.mainWindow.addAnimation({ type: AnimationType.ADD_PLAYER_CARD, frames: 15, card: this.game.playerHand[i] });
                     }
@@ -565,13 +586,13 @@ void function ($) {
     Scene_Blackjack.prototype.handleRoundEnd = function (result) {
         if (result !== GameResult.BUST) { //Reveal dealer's hand (unless the player went bust)
             this.mainWindow.addAnimation({ type: AnimationType.REVEAL_DEALER_CARD, frames: 15 });
-            for (let i = 2; i < this.game.dealerHand; i++) {
+            for (let i = 2; i < this.game.dealerHand.length; i++) {
+                this.mainWindow.addAnimation({ type: AnimationType.DELAY, frames: 15 });
                 this.mainWindow.addAnimation({ type: AnimationType.ADD_DEALER_CARD, frames: 15, card: this.game.dealerHand[i] });
             }
         }
         this.mainWindow.addAnimation({ type: AnimationType.DELAY, frames: 5 });
-        this.mainWindow.addAnimation({ type: AnimationType.SHOW_RESULT, frames: 120, text: $.roundEndTexts[result] });
-        this.mainWindow.addAnimation({ type: AnimationType.REMOVE_CARDS, frames: 20 });
+        this.mainWindow.addAnimation({ type: AnimationType.SHOW_RESULT, frames: 10, text: $.roundEndTexts[result] });
     }
 
     Scene_Blackjack.prototype.update = function () {
@@ -615,7 +636,6 @@ void function ($) {
         this.playerHand = [this.drawCard(), this.drawCard()];
         this.dealerHand = this.makeDealerHand();
         this.phase = GamePhase.FIRST_TURN;
-        this.dealerValue = 0;
     }
 
     //Triggered after all animation for the end phase are done

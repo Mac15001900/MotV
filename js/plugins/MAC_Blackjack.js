@@ -16,6 +16,10 @@
  * @type number
  * @default 608
  * 
+ * @param Test
+ * @type note
+ * @default "Hello\nthere"
+ * 
  * 
  * 
  * nice greenish colour - 0f7d17
@@ -51,9 +55,16 @@ void function ($) {
         DELAY: 7,
     }
 
+    const SoundType = { //GameResult can be used to identify sounds for round ending
+        DRAW_CARD: 11,
+        COLLECT_CARDS: 12,
+        PLACE_WAGER: 13,
+        FLIP_CARD: 14,
+    }
+
     let params = PluginManager.parameters('MAC_Blackjack');
     $.params = params;
-    $.PADDING = 4;
+    $.PADDING = 4; //Padding between windows
     $.arguments = {};
     $.colors = {
         red: -15,
@@ -61,6 +72,7 @@ void function ($) {
         blue: -23
     };
 
+    $.cardsFile = "cardsBig";
     $.cardValues = [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
@@ -93,6 +105,20 @@ void function ($) {
     $.colorBest = "#2196F3";
     $.colorBust = "#B71C1C";
 
+    $.sounds = {};
+    $.sounds[SoundType.DRAW_CARD] = ['cardPlace1'];
+    $.sounds[SoundType.PLACE_WAGER] = ['placeWager'];
+    $.sounds[SoundType.COLLECT_CARDS] = ['collectCards'];
+    $.sounds[SoundType.FLIP_CARD] = ['cardFlip'];
+    $.sounds[GameResult.WIN] = ['victoryJingle'];
+    $.sounds[GameResult.BLACKJACK] = ['blackjackJingle'];
+    $.sounds[GameResult.LOSE] = ['losingJingle'];
+    $.sounds[GameResult.BUST] = ['losingJingle'];
+    $.sounds[GameResult.PUSH] = ['tieJingle'];
+    $.sounds[GameResult.SURRENDER] = ['tieJingle'];
+    // $.sounds[SoundType.DRAW_CARD] = ['cardPlace1', 'cardPlace2', 'cardPlace3', 'cardPlace4'];
+
+    $.animationLength = 100;
 
     void ((alias) => {
         Game_Interpreter.prototype.pluginCommand = function (command, args) {
@@ -124,7 +150,7 @@ void function ($) {
         this.roundEndTextShown = false;
         this.roundEndText = "";
 
-        let bmp = ImageManager.loadPicture("cards");
+        let bmp = ImageManager.loadPicture($.cardsFile);
         bmp.addLoadListener(function () {
             this.image = bmp;
             this.framesPassed = 0;
@@ -177,6 +203,7 @@ void function ($) {
 
         //Draw hand values
         let oldColor = this.contents.textColor;
+        let shiftRight = this.roundEndTextShown && this.cardHeight + $.cardPadding * 2 + this.lineHeight() > (this.contentsHeight() - toastHeight) / 2; //TODO shift labels right when covered
         if (this.playerHand.length > 0) {
             this.contents.textColor = this.valueColor(this.game.handValue(this.playerHand), oldColor);
             this.drawText(this.game.displayValue(this.playerHand), 0, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight(), this.contentsWidth(), "center");
@@ -204,13 +231,14 @@ void function ($) {
             let toastWidth = Math.max(400, this.contents.measureTextWidth(subtitle) + this.lineHeight() * 2);
             let toastHeight = this.lineHeight() * 4;
             let opacity = 1;
+            let rectOpacity = shiftRight ? 0.8 : 0.5;
             if (this.inAnimation(AnimationType.SHOW_RESULT)) opacity = this.between(0, 1);
             else if (this.inAnimation(AnimationType.HIDE_RESULT)) opacity = this.between(1, 0);
             // if (progress < 0.1) opacity = progress / 0.1; //Fade in
             // else if (progress > 0.85) opacity = 1 - (progress - 0.85) / 0.15; //Fade out
 
             //Drawing background
-            this.contents.fillRect((this.contentsWidth() - toastWidth) / 2, (this.contentsHeight() - toastHeight) / 2, toastWidth, toastHeight, `rgba(0,0,0,${opacity * 0.5})`);
+            this.contents.fillRect((this.contentsWidth() - toastWidth) / 2, (this.contentsHeight() - toastHeight) / 2, toastWidth, toastHeight, `rgba(0,0,0,${opacity * rectOpacity})`);
 
             //Drawing text. Default drawText doesn't support a custom opacity, so we need to do it ourselves
             ctx.save();
@@ -287,7 +315,12 @@ void function ($) {
      */
     Window_BlackjackMain.prototype.cardX = function (index, amount) {
         let x0 = this.contentsWidth() / 2 - (amount * this.cardWidth) / 2;
-        let res = x0 + index * this.cardWidth;
+        let cardSpacing = this.cardWidth;
+        if (x0 + amount * this.cardWidth > this.contentsWidth()) {
+            x0 = 0;
+            cardSpacing = (this.contentsWidth() - this.cardWidth) / (amount - 1);
+        }
+        let res = x0 + index * cardSpacing
         if (this.inAnimation(AnimationType.REMOVE_CARDS)) return this.between(res, (this.contentsWidth() - this.cardWidth) / 2);
         else return res;
     }
@@ -322,7 +355,7 @@ void function ($) {
      * - AnimationType.ADD_PLAYER_CARD: adds a new card for the player. Requires field 'card', an integer with the card value
      * - AnimationType.ADD_DEALER_CARD: adds a new card for the dealer. Requires field 'card', an integer with the card value
      * - AnimationType.REVEAL_DEALER_CARD: reveals the dealer's second card.
-     * - AnimationType.SHOW_RESULT: shows the result of the game. Requires field 'text', a string with the result text
+     * - AnimationType.SHOW_RESULT: shows the result of the game. Requires field 'text', a string with the result text, and 'type' with the result type
      * - AnimationType.REMOVE_CARDS: removes all cards from the table.
      * - AnimationType.DELAY: waits for the specified amount of frames
      */
@@ -333,12 +366,33 @@ void function ($) {
     }
 
     Window_BlackjackMain.prototype.startAnimation = function (animation) {
+        animation.frames = Math.round(animation.frames * $.animationLength / 100);
         this.currentAnimation = animation;
         this.animationFramesLeft = animation.frames;
-        if (animation.type === AnimationType.SHOW_RESULT) {
-            this.roundEndTextShown = true;
-            this.roundEndText = animation.text;
+        switch (animation.type) {
+            case AnimationType.SHOW_RESULT:
+                this.roundEndTextShown = true;
+                this.roundEndText = animation.text;
+                this.playSound(animation.resultType);
+                break;
+            case AnimationType.ADD_DEALER_CARD:
+            case AnimationType.ADD_PLAYER_CARD:
+                this.playSound(SoundType.DRAW_CARD);
+                break;
+            case AnimationType.REVEAL_DEALER_CARD:
+                this.playSound(SoundType.FLIP_CARD);
+                break;
+            case AnimationType.REMOVE_CARDS:
+                this.playSound(SoundType.COLLECT_CARDS);
+                break;
         }
+    }
+
+    Window_BlackjackMain.prototype.playSound = function (soundType) {
+        let soundName = $.sounds[soundType];
+        if (!soundName) return;
+        if (Array.isArray(soundName)) soundName = soundName[Math.floor(Math.random() * soundName.length)];
+        AudioManager.playSe({ name: soundName, volume: 70, pitch: 100 });
     }
 
     /**
@@ -603,7 +657,7 @@ void function ($) {
                     this.setupOutputs();
                 }
                 else {
-                    let wager = $.wagerOptions[index]; //TODO do this properly
+                    let wager = $.wagerOptions[index]; //TODO dynamic wager options
                     this.game.startRound(wager);
                     this.mainWindow.setWagerAmount(wager);
                     this.mainWindow.setTokenAmount(this.game.tokens);
@@ -615,9 +669,11 @@ void function ($) {
                     for (let i = 0; i < this.game.playerHand.length; i++) {
                         this.mainWindow.addAnimation({ type: AnimationType.ADD_PLAYER_CARD, frames: 15, card: this.game.playerHand[i] });
                     }
-                    for (let i = 0; i <= 1; i++) {
-                        this.mainWindow.addAnimation({ type: AnimationType.ADD_DEALER_CARD, frames: 10, card: this.game.dealerHand[i] });
-                    }
+                    this.mainWindow.addAnimation({ type: AnimationType.ADD_DEALER_CARD, frames: 10, card: this.game.dealerHand[0] });
+                    this.mainWindow.addAnimation({ type: AnimationType.DELAY, frames: 5 }); //Since dealer's animations are shorter, we wait to make sure the sound has the same delay
+                    this.mainWindow.addAnimation({ type: AnimationType.ADD_DEALER_CARD, frames: 10, card: this.game.dealerHand[1] });
+                    this.lastSelectedBidIndex = index;
+                    this.choiceWindow._index = 0;
                     this.updateInfo();
                 }
                 break;
@@ -631,9 +687,7 @@ void function ($) {
                     this.mainWindow.addAnimation({ type: AnimationType.DELAY, frames: 30, card: this.game.playerHand[this.game.playerHand.length - 1] });
                 } else if (index === 3) {
                     this.game.surrender();
-                    // this.mainWindow.setWagerAmount(this.game.wager);
-                    // this.mainWindow.setTokenAmount(this.game.tokens);
-                    this.mainWindow.addAnimation({ type: AnimationType.SHOW_RESULT, frames: 10, text: $.roundEndTexts[GameResult.SURRENDER] });
+                    this.mainWindow.addAnimation({ type: AnimationType.SHOW_RESULT, frames: 10, text: $.roundEndTexts[GameResult.SURRENDER], resultType: GameResult.SURRENDER });
                 }
             case GamePhase.OTHER_TURN:
                 if (index === 0) {
@@ -658,7 +712,7 @@ void function ($) {
             }
         }
         this.mainWindow.addAnimation({ type: AnimationType.DELAY, frames: 5 });
-        this.mainWindow.addAnimation({ type: AnimationType.SHOW_RESULT, frames: 10, text: $.roundEndTexts[result] });
+        this.mainWindow.addAnimation({ type: AnimationType.SHOW_RESULT, frames: 10, text: $.roundEndTexts[result], resultType: result });
     }
 
     Scene_Blackjack.prototype.update = function () {
@@ -668,6 +722,7 @@ void function ($) {
             this.mainWindow.setTokenAmount(this.game.tokens);
             this.mainWindow.setWagerAmount(0);
             this.game.phase = GamePhase.PICK_WAGER;
+            this.choiceWindow._index = this.lastSelectedBidIndex;
             this.setupChoices();
             this.updateInfo();
         } else if (this.choiceWindow.index() !== lastCursorIndex) this.updateInfo();
@@ -761,14 +816,19 @@ void function ($) {
     }
 
     Game.hit = function () {
-        this.playerHand.push(this.drawCard());
+        let newCard = this.drawCard();
         //Handle the luck system
-        if (this.luck > Math.random() * 100 && this.handValue(this.playerHand) > 21 ||
-            this.luck < -Math.random() * 100 && this.handValue(this.playerHand) <= 21) {
-            this.deck.push(this.playerHand.pop());
-            this.playerHand.push(this.deck.splice(Math.floor(Math.random() * this.deck.length), 1)[0]);
+        if (Math.abs(this.luck) > Math.random() * 100 && this.deck.length > 0) { //If luck triggers, draw another card, and swap to it if it's better (or if it's worse on negative luck)
+            let index = Math.floor(Math.random() * this.deck.length);
+            console.log(`Luck triggered! Deciding between ${this.printCard(newCard)} and ${this.printCard(this.deck[index])}`);
+            if (this.isCardBetter(this.deck[index], newCard, this.playerHand) === this.luck > 0) {
+                let otherCard = this.deck.splice(index, 1)[0];
+                this.shuffleInto(newCard, this.deck);
+                newCard = otherCard;
+            }
         }
         //Process the result
+        this.playerHand.push(newCard);
         this.result = this.checkHitResult();
         if (this.result) {
             this.handleResult(this.result);
@@ -790,6 +850,15 @@ void function ($) {
         }
         this.handleResult(res);
         return res;
+    }
+
+    //Checks if adding card1 to a given hand is better than adding card2 ("better" meaning simply that hand value would be larger, without going bust)
+    Game.isCardBetter = function (card1, card2, hand) {
+        let value1 = this.handValue([...hand, card1]);
+        let value2 = this.handValue([...hand, card2]);
+        if (value1 > 21) return false;
+        else if (value2 > 21) return true;
+        else return value1 > value2;
     }
 
     Game.checkHitResult = function () {
@@ -875,6 +944,12 @@ void function ($) {
             array[i] = array[j];
             array[j] = temp;
         }
+    }
+
+    //Inserts a card into a random spot in the deck
+    Game.shuffleInto = function (card, array) {
+        let index = Math.floor(Math.random() * array.length);
+        array.splice(index, 0, card);
     }
 
     Game.printCard = function (card) {

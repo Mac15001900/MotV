@@ -64,61 +64,85 @@ void function ($) {
 
     let params = PluginManager.parameters('MAC_Blackjack');
     $.params = params;
-    $.PADDING = 4; //Padding between windows
     $.arguments = {};
-    $.colors = {
-        red: -15,
-        green: 110,
-        blue: -23
-    };
 
-    $.cardsFile = "cardsBig";
-    $.cardValues = [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,];
-    $.aces = [0, 13, 26, 39]; //Indexes of cards that are aces (i.e. cards that are optionally +10)
-    $.cardRowLength = 13;
-    $.cardRows = 4;
-    $.cardAmount = $.cardRows * $.cardRowLength;
-    $.cardPadding = 16; //How many pixels from the edge are cards drawn
+    $.updateParams = function () {
+        $.PADDING = 4; //Padding between windows
+        $.windowColors = {
+            red: -15,
+            green: 110,
+            blue: -23
+        };
 
-    $.roundEndTexts = {}
-    $.roundEndTexts[GameResult.WIN] = "Round won\nWager doubled";
-    $.roundEndTexts[GameResult.BLACKJACK] = "Blackjack!\nWager doubled and Blackjack bonus added";
-    $.roundEndTexts[GameResult.LOSE] = "Round lost\nDealer had a higher value";
-    $.roundEndTexts[GameResult.BUST] = "Round lost\nYou went over 21";
-    $.roundEndTexts[GameResult.PUSH] = "It's a draw\nWager returned";
-    $.roundEndTexts[GameResult.SURRENDER] = "Round surrendered\nHalf of the wager returned";
+        $.cardsFile = "cardsBig2";
+        $.cardValues = [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,];
+        $.aces = [0, 13, 26, 39]; //Indexes of cards that are aces (i.e. cards that are optionally +10)
+        $.cardRowLength = 13;
+        $.cardRows = 4;
+        $.cardAmount = $.cardRows * $.cardRowLength;
+        $.cardPadding = 16; //How many pixels from the edge are cards drawn
 
-    $.infoTexts = {};
-    $.infoTexts.wager = w => `Wager ${w} and start a new round`;
-    $.infoTexts.exit = "Leave the game";
-    $.infoTexts.hit = "Draw another card";
-    $.infoTexts.stand = "Finish the round";
-    $.infoTexts.double = "Double your wager and draw one more card.\nYou won't be able to draw more cards after that.";
-    $.infoTexts.surrender = "Give up on this round and get half of your wager back.";
+        $.roundEndTexts = {}
+        $.roundEndTexts[GameResult.WIN] = "Round won\nWager doubled";
+        $.roundEndTexts[GameResult.BLACKJACK] = "Blackjack!\nWager doubled and Blackjack bonus added";
+        $.roundEndTexts[GameResult.LOSE] = "Round lost\nDealer had a higher value";
+        $.roundEndTexts[GameResult.BUST] = "Round lost\nYou went over 21";
+        $.roundEndTexts[GameResult.PUSH] = "It's a draw\nWager returned";
+        $.roundEndTexts[GameResult.SURRENDER] = "Round surrendered\nHalf of the wager returned";
 
-    $.wagerOptions = [1, 10, 50, 250];
+        $.infoTexts = {};
+        $.infoTexts.wager = w => `Wager ${w} and start a new round`;
+        $.infoTexts.exit = "Leave the game";
+        $.infoTexts.hit = "Draw another card";
+        $.infoTexts.stand = "Finish the round";
+        $.infoTexts.double = "Double your wager and draw one more card.\nYou won't be able to draw more cards after that.";
+        $.infoTexts.surrender = "Give up on this round and get half of your wager back.";
 
-    $.colorBest = "#2196F3";
-    $.colorBust = "#B71C1C";
+        $.terms = {};
+        $.terms.wager = "Wager";
+        $.terms.quit = "Quit";
+        $.terms.hit = "Hit";
+        $.terms.stand = "Stand";
+        $.terms.double = "Double";
+        $.terms.surrender = "Surrender";
+        $.terms.tokensCounter = "Tokens: ";
+        $.terms.wagerCounter = "Wager: ";
 
-    $.sounds = {};
-    $.sounds[SoundType.DRAW_CARD] = ['cardPlace1'];
-    $.sounds[SoundType.PLACE_WAGER] = ['placeWager'];
-    $.sounds[SoundType.COLLECT_CARDS] = ['collectCards'];
-    $.sounds[SoundType.FLIP_CARD] = ['cardFlip'];
-    $.sounds[GameResult.WIN] = ['victoryJingle'];
-    $.sounds[GameResult.BLACKJACK] = ['blackjackJingle'];
-    $.sounds[GameResult.LOSE] = ['losingJingle'];
-    $.sounds[GameResult.BUST] = ['losingJingle'];
-    $.sounds[GameResult.PUSH] = ['tieJingle'];
-    $.sounds[GameResult.SURRENDER] = ['tieJingle'];
-    // $.sounds[SoundType.DRAW_CARD] = ['cardPlace1', 'cardPlace2', 'cardPlace3', 'cardPlace4'];
+        $.wagerOptions = [1, 10, 50, 250000];
 
-    $.animationLength = 100;
+        //Value colors
+        $.colorBest = "#2196F3";
+        $.colorBust = "#B71C1C";
+        //Round end text colors
+        $.colorLose = "#E57373";
+        $.colorWin = "#12991b";
+        $.colorBlackjack = "#2196F3";
+
+        $.sounds = {};
+        $.sounds[SoundType.DRAW_CARD] = ['cardPlace1'];
+        $.sounds[SoundType.PLACE_WAGER] = ['placeWager'];
+        $.sounds[SoundType.COLLECT_CARDS] = ['collectCards'];
+        $.sounds[SoundType.FLIP_CARD] = ['cardFlip'];
+        $.sounds[GameResult.WIN] = ['victoryJingle'];
+        $.sounds[GameResult.BLACKJACK] = ['blackjackJingle'];
+        $.sounds[GameResult.LOSE] = ['losingJingle'];
+        $.sounds[GameResult.BUST] = ['losingJingle'];
+        $.sounds[GameResult.PUSH] = ['tieJingle'];
+        $.sounds[GameResult.SURRENDER] = ['tieJingle'];
+        // $.sounds[SoundType.DRAW_CARD] = ['cardPlace1', 'cardPlace2', 'cardPlace3', 'cardPlace4'];
+
+        $.animationLength = 100;
+
+        $.background = "Gradient";
+        $.backgroundColor1 = "#12991b";
+        $.backgroundColor2 = "#0c6612";
+        $.backgroundImage = "Ikona do kolorów";
+
+    }
 
     void ((alias) => {
         Game_Interpreter.prototype.pluginCommand = function (command, args) {
@@ -149,6 +173,7 @@ void function ($) {
         this.dealerCardRevealed = false;
         this.roundEndTextShown = false;
         this.roundEndText = "";
+        this.roundResult = GameResult.NONE;
 
         let bmp = ImageManager.loadPicture($.cardsFile);
         bmp.addLoadListener(function () {
@@ -156,16 +181,20 @@ void function ($) {
             this.framesPassed = 0;
             this.cardWidth = this.image.width / ($.cardRowLength + 1);
             this.cardHeight = this.image.height / $.cardRows;
-            this.tokenCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight(), "Tokens: ", game.tokens, true, true);
-            this.wagerCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight() * 2, "Wager: ", 0, true, false);
+            this.tokenCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight(), $.terms.tokensCounter, game.tokens, true, true);
+            this.wagerCounter = new Value_Component($.cardPadding, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight() * 2, $.terms.wagerCounter, 0, true, false);
             this.ready = true;
             this.refresh();
         }.bind(this));
+        if ($.background === "Image") {
+            let bmp2 = ImageManager.loadPicture($.backgroundImage);
+            bmp2.addLoadListener(function () {
+                this.backgroundImage = bmp2;
+                // if (bmp2.width < this.contentsWidth() || bmp2.height < this.contentsHeight()) console.warn("MAC_Blackjack: the background image is too small and might not render properly");
+                this.refresh();
+            }.bind(this));
+        }
         this.refresh();
-    }
-
-    Window_BlackjackMain.prototype.updateTone = function () {
-        this.setTone($.colors.red, $.colors.green, $.colors.blue);
     }
 
     Window_BlackjackMain.prototype.refresh = function () {
@@ -174,12 +203,22 @@ void function ($) {
         let ctx = this.contents._context;
 
         //Draw the background
-        let gradient = ctx.createLinearGradient(0, 0, this.contentsHeight() / 4, this.contentsHeight());
-        gradient.addColorStop(0, "#12991b");
-        gradient.addColorStop(1, "#0c6612");
-        this.contents.fillRect(0, 0, this.contentsWidth(), this.contentsHeight(), gradient);
-        if (!this.image) return; //We're not ready to draw anything else yet
+        switch ($.background) {
+            case "Gradient":
+                let gradient = ctx.createLinearGradient(0, 0, this.contentsHeight() / 4, this.contentsHeight());
+                gradient.addColorStop(0, $.backgroundColor1);
+                gradient.addColorStop(1, $.backgroundColor2);
+                this.contents.fillRect(0, 0, this.contentsWidth(), this.contentsHeight(), gradient);
+                break;
+            case "Image":
+                if (!this.backgroundImage) return;
+                this.contents.blt(this.backgroundImage, 0, 0, Math.min(this.contentsWidth(), this.backgroundImage.width), Math.min(this.contentsHeight(), this.backgroundImage.height), 0, 0);
+                break;
+            case "None":
+                break;
+        }
 
+        if (!this.image) return; //We're not ready to draw anything else yet
         //Draw the player's hand
         for (let i = 0; i < this.playerHand.length; i++) {
             let handSize = this.playerHand.length
@@ -202,21 +241,35 @@ void function ($) {
         }
 
         //Draw hand values
+        let shiftRight = false;
+        let toastHeight = this.lineHeight() * 4;
+        let valuesNewX = null;
+        if (this.roundEndTextShown) { //If the round end text covers the values, shift them right
+            shiftRight = this.cardHeight + $.cardPadding * 2 + this.lineHeight() > (this.contentsHeight() - toastHeight) / 2;
+            if (shiftRight) {
+                valuesNewX = (this.contentsWidth() + Math.max(400, this.contents.measureTextWidth(this.roundEndText.split('\n')[1] || "") + this.lineHeight() * 2)) / 2 + this.lineHeight() / 2;
+            }
+        }
         let oldColor = this.contents.textColor;
-        let shiftRight = this.roundEndTextShown && this.cardHeight + $.cardPadding * 2 + this.lineHeight() > (this.contentsHeight() - toastHeight) / 2; //TODO shift labels right when covered
+        // let shiftRight = this.roundEndTextShown && this.cardHeight + $.cardPadding * 2 + this.lineHeight() > (this.contentsHeight() - toastHeight) / 2; //TODO shift labels right when covered
         if (this.playerHand.length > 0) {
             this.contents.textColor = this.valueColor(this.game.handValue(this.playerHand), oldColor);
-            this.drawText(this.game.displayValue(this.playerHand), 0, this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight(), this.contentsWidth(), "center");
+            let y = this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight();
+            if (shiftRight) this.drawText(this.game.displayValue(this.playerHand), valuesNewX, y, this.contentsWidth() - valuesNewX, "left");
+            else this.drawText(this.game.displayValue(this.playerHand), 0, y, this.contentsWidth(), "center");
         }
         if (this.dealerHand.length > 0) {
+            let drawnValue;
             if (this.dealerCardRevealed) {
                 this.contents.textColor = this.valueColor(this.game.handValue(this.dealerHand), oldColor);
-                this.drawText(this.game.displayValue(this.dealerHand), 0, this.cardHeight + $.cardPadding * 2, this.contentsWidth(), "center");
+                drawnValue = this.game.displayValue(this.dealerHand);
             }
             else {
                 this.contents.textColor = oldColor;
-                this.drawText(this.game.displayValue([this.dealerHand[0]]) + " + ?", 0, this.cardHeight + $.cardPadding * 2, this.contentsWidth(), "center");
+                drawnValue = this.game.displayValue([this.dealerHand[0]]) + " + ?"
             }
+            if (shiftRight) this.drawText(drawnValue, valuesNewX, this.cardHeight + $.cardPadding * 2, this.contentsWidth() - valuesNewX, "left");
+            else this.drawText(drawnValue, 0, this.cardHeight + $.cardPadding * 2, this.contentsWidth(), "center");
         }
         this.contents.textColor = oldColor;
 
@@ -227,11 +280,12 @@ void function ($) {
         //Draw the round end text (if present)
         if (this.roundEndTextShown) {
             let title = this.roundEndText.split('\n')[0];
-            let subtitle = this.roundEndText.split('\n')[1];
+            let subtitle = this.roundEndText.split('\n')[1] || "";
             let toastWidth = Math.max(400, this.contents.measureTextWidth(subtitle) + this.lineHeight() * 2);
-            let toastHeight = this.lineHeight() * 4;
             let opacity = 1;
             let rectOpacity = shiftRight ? 0.8 : 0.5;
+            // this.contents.textColor = this.roundEndTextColor(this.roundResult, oldColor);
+
             if (this.inAnimation(AnimationType.SHOW_RESULT)) opacity = this.between(0, 1);
             else if (this.inAnimation(AnimationType.HIDE_RESULT)) opacity = this.between(1, 0);
             // if (progress < 0.1) opacity = progress / 0.1; //Fade in
@@ -242,22 +296,34 @@ void function ($) {
 
             //Drawing text. Default drawText doesn't support a custom opacity, so we need to do it ourselves
             ctx.save();
+
+
+            //Drawing title text
             let oldFontSize = this.contents.fontSize;
             this.contents.fontSize = oldFontSize * 1.5;
             this.contents.fontBold = true;
             ctx.font = this.contents._makeFontNameText();
+            //Making a gradient for the title
+            let titleLength = this.contents.measureTextWidth(title);
+            let titleX = this.contentsWidth() / 2; //Those coordinates are for the *center* of text, since that's what lower-level functions expect
+            let titleY = this.contentsHeight() / 2 - this.lineHeight() / 4;
+            let gradient = ctx.createLinearGradient(titleX - titleLength / 2, titleY - this.lineHeight() * 0.75, titleX + titleLength / 2, titleY + this.lineHeight() * 0.75);
+            this.makeRainbowGradient(gradient);
+            this.contents.textColor = gradient;
             ctx.textAlign = "center";
             ctx.textBaseline = 'alphabetic'; //Workaround for Firefox bug 737852
             ctx.globalAlpha = opacity;
-            this.contents._drawTextOutline(title, this.contentsWidth() / 2, (this.contentsHeight()) / 2 - this.lineHeight() / 4, this.contentsWidth());
-            this.contents._drawTextBody(title, this.contentsWidth() / 2, (this.contentsHeight()) / 2 - this.lineHeight() / 4, this.contentsWidth());
+            this.contents._drawTextOutline(title, titleX, titleY, this.contentsWidth());
+            this.contents._drawTextBody(title, titleX, titleY, this.contentsWidth());
 
+            //Drawing the subtitle
+            this.contents.textColor = oldColor;
             this.contents.fontSize = oldFontSize;
             this.contents.fontBold = false;
             if (subtitle) {
                 ctx.font = this.contents._makeFontNameText();
-                this.contents._drawTextOutline(subtitle, this.contentsWidth() / 2, this.contentsHeight() / 2 + this.lineHeight() * 1.25, this.contentsWidth());
-                this.contents._drawTextBody(subtitle, this.contentsWidth() / 2, this.contentsHeight() / 2 + this.lineHeight() * 1.25, this.contentsWidth());
+                this.contents._drawTextOutline(subtitle, titleX, this.contentsHeight() / 2 + this.lineHeight() * 1.25, this.contentsWidth());
+                this.contents._drawTextBody(subtitle, titleX, this.contentsHeight() / 2 + this.lineHeight() * 1.25, this.contentsWidth());
             }
             ctx.restore();
             this.contents._setDirty();
@@ -308,6 +374,18 @@ void function ($) {
         else return defaultValue;
     }
 
+    Window_BlackjackMain.prototype.roundEndTextColor = function (result, defaultValue) {
+        switch (result) {
+            case GameResult.WIN: return $.colorWin;
+            case GameResult.BLACKJACK: return $.colorBlackjack;
+            case GameResult.LOSE:
+            case GameResult.BUST: return $.colorLose;
+            case GameResult.PUSH:
+            case GameResult.SURRENDER: return defaultValue;
+        }
+    }
+
+
     /**
      * Calculates the X position of a card held in a hand (either the player's or the dealer's).
      * @param {Number} index Index of the card in a hand
@@ -335,15 +413,13 @@ void function ($) {
             needsRefresh = true;
         }
         //Update animations
-        if (this.animationFramesLeft > 0) {
-            this.animationFramesLeft--;
-            if (this.animationFramesLeft === 0) {
-                this.handleAnimationEnd(this.currentAnimation);
-                if (this.animationQueue.length > 0) this.startAnimation(this.animationQueue.shift());
-                else this.currentAnimation = null;
-            }
-            needsRefresh = true;
+        if (this.animationFramesLeft > 0) this.animationFramesLeft--;
+        if (this.inAnimation() && this.animationFramesLeft === 0) {
+            this.handleAnimationEnd(this.currentAnimation);
+            if (this.animationQueue.length > 0) this.startAnimation(this.animationQueue.shift());
+            else this.currentAnimation = null;
         }
+        needsRefresh = true;
         //Refresh if needed
         if (needsRefresh) this.refresh();
     }
@@ -373,6 +449,7 @@ void function ($) {
             case AnimationType.SHOW_RESULT:
                 this.roundEndTextShown = true;
                 this.roundEndText = animation.text;
+                this.roundResult = animation.resultType;
                 this.playSound(animation.resultType);
                 break;
             case AnimationType.ADD_DEALER_CARD:
@@ -418,6 +495,7 @@ void function ($) {
             case AnimationType.HIDE_RESULT:
                 this.roundEndTextShown = false;
                 this.roundEndText = "";
+                this.roundResult = GameResult.NONE;
                 break;
         }
     }
@@ -447,7 +525,31 @@ void function ($) {
      * @param {Number} end Position at the end of the animation
      */
     Window_BlackjackMain.prototype.between = function (start, end) {
+        if (this.currentAnimation.frames === 0) return end;
         return start + (end - start) * (1 - this.animationFramesLeft / this.currentAnimation.frames);
+    }
+
+    Window_BlackjackMain.prototype.makeRainbowGradient = function (gradient) {
+        //Colours from https://stackoverflow.com/a/63302468
+        gradient.addColorStop(0.0, "rgba(255, 0, 0, 1)");
+        gradient.addColorStop(0.10, "rgba(255, 154, 0, 1)");
+        gradient.addColorStop(0.20, "rgba(208, 222, 33, 1)");
+        gradient.addColorStop(0.30, "rgba(79, 220, 74, 1)");
+        gradient.addColorStop(0.40, "rgba(63, 218, 216, 1)");
+        gradient.addColorStop(0.50, "rgba(47, 201, 226, 1)");
+        gradient.addColorStop(0.60, "rgba(28, 127, 238, 1)");
+        gradient.addColorStop(0.70, "rgba(95, 21, 242, 1)");
+        gradient.addColorStop(0.80, "rgba(186, 12, 248, 1)");
+        gradient.addColorStop(0.90, "rgba(251, 7, 217, 1)");
+        gradient.addColorStop(1, "rgba(255, 0, 0, 1)");
+    }
+
+    Window_BlackjackMain.prototype.brightenColor = function (colorHex, multiplier = 1) {
+        console.assert(colorHex.length === 7 && colorHex[0] === '#');
+        let values = [colorHex.substring(1, 3), colorHex.substring(3, 5), colorHex.substring(5, 7)].map(v => Number.parseInt(v, 16));
+        let max = Math.max(...values);
+        if (max * multiplier > 255) multiplier = 255 / max;
+        return "#" + values.map(v => Math.floor(v * multiplier)).map(v => v.toString(16).padZero(2)).join("");
     }
 
     ////--------------------- Value component ---------------------
@@ -520,10 +622,6 @@ void function ($) {
         this.refresh();
     }
 
-    Window_BlackjackInfo.prototype.updateTone = function () {
-        this.setTone($.colors.red, $.colors.green, $.colors.blue);
-    }
-
     ////--------------------- Choice window ---------------------
     function Window_BlackjackChoice() {
         this.initialize.apply(this, arguments);
@@ -558,9 +656,16 @@ void function ($) {
         }
     }
 
-    Window_BlackjackChoice.prototype.updateTone = function () {
-        this.setTone($.colors.red, $.colors.green, $.colors.blue);
+    ////--------------------- Setting updateTone ---------------------
+
+    let customUpdateTone = function () {
+        if ($.windowColors) this.setTone($.windowColors.red, $.windowColors.green, $.windowColors.blue);
+        else this.setTone($gameSystem.windowTone()[0], $gameSystem.windowTone()[1], $gameSystem.windowTone()[2]);
     }
+
+    Window_BlackjackMain.prototype.updateTone = customUpdateTone;
+    Window_BlackjackChoice.prototype.updateTone = customUpdateTone;
+    Window_BlackjackInfo.prototype.updateTone = customUpdateTone;
 
     ////--------------------- Scene ---------------------
 
@@ -576,6 +681,7 @@ void function ($) {
     };
 
     Scene_Blackjack.prototype.create = function () {
+        $.updateParams();
         Scene_MenuBase.prototype.create.call(this);
         // this.addExtraWindowLayer();
         this.game = Game;
@@ -619,14 +725,16 @@ void function ($) {
     Scene_Blackjack.prototype.setupChoices = function () {
         switch (this.game.phase) {
             case GamePhase.PICK_WAGER:
-                this.choiceWindow.setOptions($.wagerOptions.map(String).concat("Quit"), this.game.tokens);
+                if ($.wagerOptions.length === 1) this.choiceWindow.setOptions([String($.wagerOptions[0]), $.terms.quit], this.game.tokens);
+                else if ($.wagerOptions.length > 1) this.choiceWindow.setOptions($.wagerOptions.map(String).concat($.terms.quit), this.game.tokens);
+                else console.error("MAC_Blackjack: No wager options found");
                 break;
             case GamePhase.FIRST_TURN:
                 let canDouble = this.game.tokens >= this.game.wager;
-                this.choiceWindow.setOptions(["Hit", "Stand", "Double", "Surrender"], null, canDouble ? [] : [2]);
+                this.choiceWindow.setOptions([$.terms.hit, $.terms.stand, $.terms.double, $.terms.surrender], null, canDouble ? [] : [2]);
                 break;
             case GamePhase.OTHER_TURN:
-                this.choiceWindow.setOptions(["Hit", "Stand"]);
+                this.choiceWindow.setOptions([$.terms.hit, $.terms.stand]);
                 break;
             case GamePhase.END:
                 this.choiceWindow.options = []; //Just wait for the animation here
@@ -996,6 +1104,18 @@ void function ($) {
         if (!string) return 0;
         if (string[0] === 'v') return $gameVariables.value(Number(string.replace(/^v0*/, '')));
         else return Number(string);
+    }
+
+    /**
+    * Converts a string (from plugin parameters or commands) to a boolean, regardless if that string contains a boolean literal of a switch indentifier
+    * @param {String|Boolean} string A boolean or switch indentifier (in the form s42 or s0042)
+    * @returns The string converted to a boolean
+    */
+    booleanValue = function (string) {
+        if (typeof string === "boolean") return string;
+        if (!string || string.length === 0) return false;
+        if (string[0] === 's') return $gameSwitches.value(Number(string.replace(/^s0*/, '')));
+        else return string === "true";
     }
 
 

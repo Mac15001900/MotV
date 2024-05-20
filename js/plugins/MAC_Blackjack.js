@@ -118,9 +118,9 @@ void function ($) {
         $.colorBest = "#2196F3";
         $.colorBust = "#B71C1C";
         //Round end text colors
-        $.colorLose = "#E57373";
-        $.colorWin = "#12991b";
-        $.colorBlackjack = "#2196F3";
+        $.colorLose = "#CE0400";
+        $.colorWin = "#8EFF3C";
+        $.colorBlackjack = "rainbow"; //"#2196F3"
 
         $.sounds = {};
         $.sounds[SoundType.DRAW_CARD] = ['cardPlace1'];
@@ -133,7 +133,6 @@ void function ($) {
         $.sounds[GameResult.BUST] = ['losingJingle'];
         $.sounds[GameResult.PUSH] = ['tieJingle'];
         $.sounds[GameResult.SURRENDER] = ['tieJingle'];
-        // $.sounds[SoundType.DRAW_CARD] = ['cardPlace1', 'cardPlace2', 'cardPlace3', 'cardPlace4'];
 
         $.animationLength = 100;
 
@@ -284,32 +283,31 @@ void function ($) {
             let toastWidth = Math.max(400, this.contents.measureTextWidth(subtitle) + this.lineHeight() * 2);
             let opacity = 1;
             let rectOpacity = shiftRight ? 0.8 : 0.5;
-            // this.contents.textColor = this.roundEndTextColor(this.roundResult, oldColor);
 
             if (this.inAnimation(AnimationType.SHOW_RESULT)) opacity = this.between(0, 1);
             else if (this.inAnimation(AnimationType.HIDE_RESULT)) opacity = this.between(1, 0);
-            // if (progress < 0.1) opacity = progress / 0.1; //Fade in
-            // else if (progress > 0.85) opacity = 1 - (progress - 0.85) / 0.15; //Fade out
 
-            //Drawing background
+            //Drawing the black background
             this.contents.fillRect((this.contentsWidth() - toastWidth) / 2, (this.contentsHeight() - toastHeight) / 2, toastWidth, toastHeight, `rgba(0,0,0,${opacity * rectOpacity})`);
 
             //Drawing text. Default drawText doesn't support a custom opacity, so we need to do it ourselves
             ctx.save();
-
 
             //Drawing title text
             let oldFontSize = this.contents.fontSize;
             this.contents.fontSize = oldFontSize * 1.5;
             this.contents.fontBold = true;
             ctx.font = this.contents._makeFontNameText();
-            //Making a gradient for the title
             let titleLength = this.contents.measureTextWidth(title);
             let titleX = this.contentsWidth() / 2; //Those coordinates are for the *center* of text, since that's what lower-level functions expect
             let titleY = this.contentsHeight() / 2 - this.lineHeight() / 4;
-            let gradient = ctx.createLinearGradient(titleX - titleLength / 2, titleY - this.lineHeight() * 0.75, titleX + titleLength / 2, titleY + this.lineHeight() * 0.75);
-            this.makeRainbowGradient(gradient);
-            this.contents.textColor = gradient;
+            let titleColor = this.roundEndTextColor(this.roundResult, oldColor);
+            if (titleColor === 'rainbow') {
+                let gradient = ctx.createLinearGradient(titleX - titleLength / 2, titleY - this.lineHeight() * 0.75, titleX + titleLength / 2, titleY + this.lineHeight() * 0.75);
+                this.makeRainbowGradient(gradient);
+                this.contents.textColor = gradient;
+                this.hasAnimatedText = true;
+            } else this.contents.textColor = titleColor;
             ctx.textAlign = "center";
             ctx.textBaseline = 'alphabetic'; //Workaround for Firefox bug 737852
             ctx.globalAlpha = opacity;
@@ -413,13 +411,17 @@ void function ($) {
             needsRefresh = true;
         }
         //Update animations
-        if (this.animationFramesLeft > 0) this.animationFramesLeft--;
+        if (this.animationFramesLeft > 0) {
+            this.animationFramesLeft--;
+            needsRefresh = true;
+        }
         if (this.inAnimation() && this.animationFramesLeft === 0) {
             this.handleAnimationEnd(this.currentAnimation);
             if (this.animationQueue.length > 0) this.startAnimation(this.animationQueue.shift());
             else this.currentAnimation = null;
+            needsRefresh = true;
         }
-        needsRefresh = true;
+        if (this.hasAnimatedText) needsRefresh = true;
         //Refresh if needed
         if (needsRefresh) this.refresh();
     }
@@ -465,13 +467,6 @@ void function ($) {
         }
     }
 
-    Window_BlackjackMain.prototype.playSound = function (soundType) {
-        let soundName = $.sounds[soundType];
-        if (!soundName) return;
-        if (Array.isArray(soundName)) soundName = soundName[Math.floor(Math.random() * soundName.length)];
-        AudioManager.playSe({ name: soundName, volume: 70, pitch: 100 });
-    }
-
     /**
     * Handles custom logic at the end of some animations
     * @param {Animation} animation 
@@ -495,9 +490,17 @@ void function ($) {
             case AnimationType.HIDE_RESULT:
                 this.roundEndTextShown = false;
                 this.roundEndText = "";
+                this.hasAnimatedText = false;
                 this.roundResult = GameResult.NONE;
                 break;
         }
+    }
+
+    Window_BlackjackMain.prototype.playSound = function (soundType) {
+        let soundName = $.sounds[soundType];
+        if (!soundName) return;
+        if (Array.isArray(soundName)) soundName = soundName[Math.floor(Math.random() * soundName.length)];
+        AudioManager.playSe({ name: soundName, volume: 70, pitch: 100 });
     }
 
     Window_BlackjackMain.prototype.setTokenAmount = function (amount) {
@@ -531,17 +534,17 @@ void function ($) {
 
     Window_BlackjackMain.prototype.makeRainbowGradient = function (gradient) {
         //Colours from https://stackoverflow.com/a/63302468
-        gradient.addColorStop(0.0, "rgba(255, 0, 0, 1)");
-        gradient.addColorStop(0.10, "rgba(255, 154, 0, 1)");
-        gradient.addColorStop(0.20, "rgba(208, 222, 33, 1)");
-        gradient.addColorStop(0.30, "rgba(79, 220, 74, 1)");
-        gradient.addColorStop(0.40, "rgba(63, 218, 216, 1)");
-        gradient.addColorStop(0.50, "rgba(47, 201, 226, 1)");
-        gradient.addColorStop(0.60, "rgba(28, 127, 238, 1)");
-        gradient.addColorStop(0.70, "rgba(95, 21, 242, 1)");
-        gradient.addColorStop(0.80, "rgba(186, 12, 248, 1)");
-        gradient.addColorStop(0.90, "rgba(251, 7, 217, 1)");
-        gradient.addColorStop(1, "rgba(255, 0, 0, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.10) % 60) / 60, "rgba(255, 154, 0, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.0) % 60) / 60, "rgba(255, 0, 0, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.20) % 60) / 60, "rgba(208, 222, 33, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.30) % 60) / 60, "rgba(79, 220, 74, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.40) % 60) / 60, "rgba(63, 218, 216, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.50) % 60) / 60, "rgba(47, 201, 226, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.60) % 60) / 60, "rgba(28, 127, 238, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.70) % 60) / 60, "rgba(95, 21, 242, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.80) % 60) / 60, "rgba(186, 12, 248, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 0.90) % 60) / 60, "rgba(251, 7, 217, 1)");
+        gradient.addColorStop(((Graphics.frameCount + 60 * 1) % 60) / 60, "rgba(255, 0, 0, 1)");
     }
 
     Window_BlackjackMain.prototype.brightenColor = function (colorHex, multiplier = 1) {

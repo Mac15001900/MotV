@@ -4,23 +4,384 @@
  * @plugindesc (v0.1) Adds a blackjack minigame
  * @author Mac15001900
  * 
- * @param Layout
+ * @param Mechanics
  * 
- * @param Main window width
- * @desc Width of the main window, which includes the cards. It's recommended to make it at least as wide as 4 cards.
+ * @param Default wager options
+ * @parent Mechanics
+ * @desc Default options for wager amounts, comma separated.
+ * @type text
+ * @default 10, 20, 50, 100
+ * 
+ * @param Enable side strategies
+ * @parent Mechanics
+ * @desc Enable the "double" and "surrender" options. If disabling them, it's recommended to increase base luck to compensate.
+ * @type boolean
+ * @on Enabled
+ * @off Disabled
+ * @default true 
+ * 
+ * @param Default luck
+ * @parent Mechanics
  * @type number
- * @default 400
+ * @desc Default value for luck, from -100 to 100. 0 is neutral, behaving like a real game would.
+ * @default 10
  * 
- * @param Main window height
- * @desc Height of the main window, which includes the cards
+ * @param Show luck events
+ * @parent Luck
+ * @type boolean
+ * @desc Whenever luck is triggered, print what the card choices were in the console.
+ * @on Enabled
+ * @off Disabled
+ * @default false
+ * 
+ * @param Graphics
+ * 
+ * @param Window padding
+ * @parent Graphics
  * @type number
- * @default 608
+ * @default 4
+ * @desc Spacing between windows, in pixels.
  * 
- * @param Test
+ * @param Animation length scale
+ * @parent Graphics
+ * @type number
+ * @desc Changes how long all animations are, as percentage of default. 50 is twice as fast, 200 is twice as slow.
+ * @default 100
+ * 
+ * @param Use a custom window colour
+ * @parent Graphics
+ * @type boolean
+ * @default true
+ * 
+ * @param Window red value
+ * @parent Graphics
+ * @parent Use a custom window colour
+ * @type number
+ * @default -15
+ * 
+ * @param Window green value
+ * @parent Graphics
+ * @parent Use a custom window colour
+ * @type number
+ * @default 110
+ * 
+ * @param Window blue value
+ * @parent Graphics
+ * @parent Use a custom window colour
+ * @type number
+ * @default -23
+ * 
+ * @param Background
+ * @parent Graphics
+ * @type select
+ * @option None
+ * @option Gradient
+ * @option Image
+ * @desc What should be in the background of the main window.
+ * @default Gradient
+ * 
+ * @param Background color 1
+ * @parent Background
+ * @type text
+ * @desc If using a gradient background, this is the colour in the top-left.
+ * @default #12991b
+ * 
+ * @param Background color 2
+ * @parent Background
+ * @type text
+ * @desc If using a gradient background, this is the colour in the bottom-right.
+ * @default #0c6612
+ * 
+ * @param Background image
+ * @parent Background
+ * @desc If using an image background, the image that will appear there.
+ * @type file
+ * @dir img/pictures
+ * 
+ * @param Cards
+ * 
+ * @param Cards file
+ * @parent Cards
+ * @type text
+ * @default cardsBig2
+ * @desc File with the card images. Speciciation available in the help file
+ * 
+ * @param Card values
+ * @parent Cards
  * @type note
- * @default "Hello\nthere"
+ * @default "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,\n1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,\n1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,\n1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,\n"
+ * @desc Values for each card, going from left to right, then top to bottom, comma separated.
+ * 
+ * @param Aces
+ * @parent Cards
+ * @type text
+ * @default 1, 14, 27, 40
+ * @desc Indexes of cards that are aces (i.e. cards that are optionally +10). Starting from 1.
+ * 
+ * @param Card row length
+ * @parent Cards
+ * @type number
+ * @default 13
+ * @desc How many cards are there is a single row.
+ * 
+ * @param Card rows
+ * @parent Cards
+ * @type number
+ * @default 4
+ * @desc How many rows of cards are there
+ * 
+ * @param Card padding
+ * @parent Cards
+ * @type number
+ * @default 16
+ * @desc How many pixels from the edge are cards drawn in game.
  * 
  * 
+ * //Value colors
+ * @param Colours
+ * 
+ * @param Value 21 color
+ * @parent Colours
+ * @type text
+ * @desc Colour that values will change to when they're exactly 21.
+ * @default #2196F3
+ * 
+ * @param Bust color
+ * @parent Colours
+ * @type text
+ * @desc Colour that values will change to when they're above 21.
+ * @default #B71C1C
+ * 
+ * //Round end text colors
+ * 
+ * @param Round lost color
+ * @parent Colours
+ * @desc Colour of the title in the result text when a round is lost.
+ * @type text
+ * @default #CE0400
+ * 
+ * @param Round won color
+ * @parent Colours
+ * @type text
+ * @desc Colour of the title in the result text when a round is won.
+ * @default #8EFF3C
+ * 
+ * @param Round won with Blackjack color
+ * @parent Colours
+ * @type text
+ * @desc Colour of the title in the result text when a round is won with a Blackjack.
+ * @default rainbow
+ * 
+ * 
+ * @param Sounds
+ * 
+ * @param Sound for drawing a card
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when a card is drawn.
+ * @default cardPlace1
+ * 
+ * @param Sound for flipping a card
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when a card is flipped.
+ * @default cardFlip
+ * 
+ * @param Sound for placing a wager
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when a wager is placed.
+ * @default placeWager
+ * 
+ * @param Sound for collecting cards
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when all cards are collected at the end of a round.
+ * @default collectCards
+ * 
+ * @param Sound for round won
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when a round ends with a victory.
+ * @default victoryJingle
+ * 
+ * @param Sound for round won with blackjack
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when a round ends with a blackjack.
+ * @default blackjackJingle
+ * 
+ * @param Sound for round lost
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when a round ends with a loss (but not from going bust).
+ * @default losingJingle
+ * 
+ * @param Sound for round bust
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when a round ends with a bust (going over 21).
+ * @default losingJingle
+ * 
+ * @param Sound for round push
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when a round ends with a draw.
+ * @default tieJingle
+ * 
+ * @param Sound for round surrender
+ * @parent Sounds
+ * @type file
+ * @dir audio/se
+ * @desc Sound that will play when a round ends with a surrender.
+ * @default tieJingle
+ *  
+ * @param Text 
+ * 
+ * @param Buttons
+ * @parent Text
+ * @desc What the text on various buttons says.
+ * 
+ * @param Quit button
+ * @parent Buttons
+ * @type text
+ * @desc Text on the Quit button.
+ * @default Quit
+ * 
+ * @param Hit button
+ * @parent Buttons
+ * @type text
+ * @desc Text on the Hit button.
+ * @default Hit
+ * 
+ * @param Stand button
+ * @parent Buttons
+ * @type text
+ * @desc Text on the Stand button.
+ * @default Stand
+ * 
+ * @param Double button
+ * @parent Buttons
+ * @type text
+ * @desc Text on the Double button.
+ * @default Double
+ * 
+ * @param Surrender button
+ * @parent Buttons
+ * @type text
+ * @desc Text on the Surrender button.
+ * @default Surrender 
+ * 
+ * @param Info window text
+ * @parent Text
+ * @desc Texts that will appear in the info window, describing various options
+ * 
+ * @param Wager description part 1
+ * @parent Info window text
+ * @desc Text in the info window that describes what the wager option does, appearing before the wager amount.
+ * @type note
+ * @default "Wager "
+ * 
+ * @param Wager description part 2
+ * @parent Info window text
+ * @desc Text in the info window that describes what the wager option does, appearing after the wager amount.
+ * @type note
+ * @default " tokens and start a new round"
+ * 
+ * @param Exit description
+ * @parent Info window text
+ * @desc Text in the info window that describes what the "Exit" option does.
+ * @type note
+ * @default "Leave the game"
+ * 
+ * @param Hit description
+ * @parent Info window text
+ * @desc Text in the info window that describes what the "Hit" option does.
+ * @type note
+ * @default "Draw another card"
+ * 
+ * @param Stand description
+ * @parent Info window text
+ * @desc Text in the info window that describes what the "Stand" option does.
+ * @type note
+ * @default "Finish the round"
+ * 
+ * @param Double description
+ * @parent Info window text
+ * @desc Text in the info window that describes what the "Double" option does.
+ * @type note
+ * @default "Double your wager and draw one more card.\nYou won't be able to draw more cards after that."
+ * 
+ * @param Surrender description
+ * @parent Info window text
+ * @desc Text in the info window that describes what the "Surrender" option does.
+ * @type note
+ * @default "Give up on this round and get half of your wager back."
+ * 
+ * @param Counters
+ * @parent Text
+ * @desc Text on the side counters.
+ * 
+ * @param Tokens counter text
+ * @parent Counters
+ * @desc Text on the counter showing the current amount of tokens.
+ * @type text
+ * @default Tokens: 
+ * 
+ * @param Wager counter text
+ * @parent Counters
+ * @desc Text on the counter showing the current wager size
+ * @type text
+ * @default Wager: 
+ * 
+ * @param Round end text
+ * @parent Text
+ * @desc Texts that are displayed at the end of a round, depending on its result.
+ * 
+ * @param Round end text for win
+ * @parent Round end text
+ * @type note
+ * @desc Text that will be displayed if the round ends with a win.
+ * @default "Round won\nWager doubled"
+ * 
+ * @param Round end text for blackjack
+ * @parent Round end text
+ * @type note
+ * @desc Text that will be displayed if the round ends with a blackjack.
+ * @default "Blackjack!\nWager doubled and Blackjack bonus added"
+ * 
+ * @param Round end text for lose
+ * @parent Round end text
+ * @type note
+ * @desc Text that will be displayed if the round ends with a lose.
+ * @default "Round lost\nDealer had a higher value"
+ * 
+ * @param Round end text for bust
+ * @parent Round end text
+ * @type note
+ * @desc Text that will be displayed if the round ends with a bust.
+ * @default "Round lost\nYou went over 21"
+ * 
+ * @param Round end text for push
+ * @parent Round end text
+ * @type note
+ * @desc Text that will be displayed if the round ends with a push.
+ * @default "It's a draw\nWager returned"
+ * 
+ * @param Round end text for surrender
+ * @parent Round end text
+ * @type note
+ * @desc Text that will be displayed if the round ends with a surrender.
+ * @default "Round surrendered\nHalf of the wager returned"
  * 
  * nice greenish colour - 0f7d17
  * Blackjack guide: https://www.officialgamerules.org/card-games/blackjack
@@ -67,79 +428,86 @@ void function ($) {
     $.arguments = {};
 
     $.updateParams = function () {
-        $.PADDING = 4; //Padding between windows
-        $.windowColors = {
-            red: -15,
-            green: 110,
-            blue: -23
-        };
+        $.PADDING = numberValue(params["Window padding"]); //Padding between windows
 
-        $.cardsFile = "cardsBig2";
-        $.cardValues = [
+        $.windowColors = null;
+        if (booleanValue(params["Use a custom window colour"])) {
+            $.windowColors = {
+                red: numberValue(params["Window red value"]),
+                green: numberValue(params["Window green value"]),
+                blue: numberValue(params["Window blue value"]),
+            };
+        }
+
+        /*$.cardValues = [
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,];
-        $.aces = [0, 13, 26, 39]; //Indexes of cards that are aces (i.e. cards that are optionally +10)
-        $.cardRowLength = 13;
-        $.cardRows = 4;
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,];*/
+        $.cardsFile = params["Cards file"];
+        $.cardValues = numberListValue(JSON.parse(params["Card values"]));
+        $.aces = numberListValue(params["Aces"]).map(c => c - 1); //Indexes of cards that are aces (i.e. cards that are optionally +10)
+        $.cardRowLength = numberValue(params["Card row length"]);
+        $.cardRows = numberValue(params["Card rows"]);
         $.cardAmount = $.cardRows * $.cardRowLength;
-        $.cardPadding = 16; //How many pixels from the edge are cards drawn
+        $.cardPadding = numberValue(params["Card padding"]); //How many pixels from the edge are cards drawn
 
         $.roundEndTexts = {}
-        $.roundEndTexts[GameResult.WIN] = "Round won\nWager doubled";
-        $.roundEndTexts[GameResult.BLACKJACK] = "Blackjack!\nWager doubled and Blackjack bonus added";
-        $.roundEndTexts[GameResult.LOSE] = "Round lost\nDealer had a higher value";
-        $.roundEndTexts[GameResult.BUST] = "Round lost\nYou went over 21";
-        $.roundEndTexts[GameResult.PUSH] = "It's a draw\nWager returned";
-        $.roundEndTexts[GameResult.SURRENDER] = "Round surrendered\nHalf of the wager returned";
+        $.roundEndTexts[GameResult.WIN] = JSON.parse(params["Round end text for win"]);
+        $.roundEndTexts[GameResult.BLACKJACK] = JSON.parse(params["Round end text for blackjack"]);
+        $.roundEndTexts[GameResult.LOSE] = JSON.parse(params["Round end text for lose"]);
+        $.roundEndTexts[GameResult.BUST] = JSON.parse(params["Round end text for bust"]);
+        $.roundEndTexts[GameResult.PUSH] = JSON.parse(params["Round end text for push"]);
+        $.roundEndTexts[GameResult.SURRENDER] = JSON.parse(params["Round end text for surrender"]);
 
         $.infoTexts = {};
-        $.infoTexts.wager = w => `Wager ${w} and start a new round`;
-        $.infoTexts.exit = "Leave the game";
-        $.infoTexts.hit = "Draw another card";
-        $.infoTexts.stand = "Finish the round";
-        $.infoTexts.double = "Double your wager and draw one more card.\nYou won't be able to draw more cards after that.";
-        $.infoTexts.surrender = "Give up on this round and get half of your wager back.";
+        $.infoTexts.wager = w => JSON.parse(params["Wager description part 1"]) + w + JSON.parse(params["Wager description part 2"]);
+        $.infoTexts.exit = JSON.parse(params["Exit description"]);
+        $.infoTexts.hit = JSON.parse(params["Hit description"]);
+        $.infoTexts.stand = JSON.parse(params["Stand description"]);
+        $.infoTexts.double = JSON.parse(params["Double description"]);
+        $.infoTexts.surrender = JSON.parse(params["Surrender description"]);
 
         $.terms = {};
-        $.terms.wager = "Wager";
-        $.terms.quit = "Quit";
-        $.terms.hit = "Hit";
-        $.terms.stand = "Stand";
-        $.terms.double = "Double";
-        $.terms.surrender = "Surrender";
-        $.terms.tokensCounter = "Tokens: ";
-        $.terms.wagerCounter = "Wager: ";
+        $.terms.quit = params["Quit button"];
+        $.terms.hit = params["Hit button"];
+        $.terms.stand = params["Stand button"];
+        $.terms.double = params["Double button"];
+        $.terms.surrender = params["Surrender button"];
+        $.terms.tokensCounter = params["Tokens counter text"];
+        $.terms.wagerCounter = params["Wager counter text"];
 
-        $.wagerOptions = [1, 10, 50, 250000];
+        $.wagerOptions = numberListValue(params["Default wager options"]);
+        $.sideStrategies = booleanValue(params["Enable side strategies"]);
+        $.luck = numberValue(params["Default luck"]);
+        $.showLuckEvents = booleanValue(params["Show luck events"]);
 
         //Value colors
-        $.colorBest = "#2196F3";
-        $.colorBust = "#B71C1C";
+        $.colorBest = params["Value 21 color"];
+        $.colorBust = params["Bust color"];
         //Round end text colors
-        $.colorLose = "#CE0400";
-        $.colorWin = "#8EFF3C";
-        $.colorBlackjack = "rainbow"; //"#2196F3"
+        $.colorLose = params["Round lost color"];
+        $.colorWin = params["Round won color"];
+        $.colorBlackjack = params["Round won with Blackjack color"];
 
         $.sounds = {};
-        $.sounds[SoundType.DRAW_CARD] = ['cardPlace1'];
-        $.sounds[SoundType.PLACE_WAGER] = ['placeWager'];
-        $.sounds[SoundType.COLLECT_CARDS] = ['collectCards'];
-        $.sounds[SoundType.FLIP_CARD] = ['cardFlip'];
-        $.sounds[GameResult.WIN] = ['victoryJingle'];
-        $.sounds[GameResult.BLACKJACK] = ['blackjackJingle'];
-        $.sounds[GameResult.LOSE] = ['losingJingle'];
-        $.sounds[GameResult.BUST] = ['losingJingle'];
-        $.sounds[GameResult.PUSH] = ['tieJingle'];
-        $.sounds[GameResult.SURRENDER] = ['tieJingle'];
+        $.sounds[SoundType.DRAW_CARD] = params["Sound for drawing a card"];
+        $.sounds[SoundType.FLIP_CARD] = params["Sound for flipping a card"];
+        $.sounds[SoundType.PLACE_WAGER] = params["Sound for placing a wager"];
+        $.sounds[SoundType.COLLECT_CARDS] = params["Sound for collecting cards"];
+        $.sounds[GameResult.WIN] = params["Sound for round won"];
+        $.sounds[GameResult.BLACKJACK] = params["Sound for round won with blackjack"];
+        $.sounds[GameResult.LOSE] = params["Sound for round lost"];
+        $.sounds[GameResult.BUST] = params["Sound for round bust"];
+        $.sounds[GameResult.PUSH] = params["Sound for round push"];
+        $.sounds[GameResult.SURRENDER] = params["Sound for round surrender"];
 
-        $.animationLength = 100;
+        $.animationLength = numberValue(params["Animation length scale"]);
 
-        $.background = "Gradient";
-        $.backgroundColor1 = "#12991b";
-        $.backgroundColor2 = "#0c6612";
-        $.backgroundImage = "Ikona do kolorów";
+        $.background = params["Background"];
+        $.backgroundColor1 = params["Background color 1"];
+        $.backgroundColor2 = params["Background color 2"];
+        $.backgroundImage = params["Background image"];
 
     }
 
@@ -568,7 +936,7 @@ void function ($) {
     Value_Component.prototype.initialize = function (x, y, name, value, doAnimations = true, showChange = false) {
         this.x = x;
         this.y = y;
-        this.name = name;
+        this.name = name + " ";
         this.value = value;
         this.displayValue = value;
         this.doAnimations = doAnimations;
@@ -688,7 +1056,7 @@ void function ($) {
         Scene_MenuBase.prototype.create.call(this);
         // this.addExtraWindowLayer();
         this.game = Game;
-        this.game.initialize();
+        this.game.initialize($.luck);
         this.inAnimation = false;
         // let basicHeight = (new Window_Base()).fittingHeight(1);
 
@@ -733,8 +1101,12 @@ void function ($) {
                 else console.error("MAC_Blackjack: No wager options found");
                 break;
             case GamePhase.FIRST_TURN:
-                let canDouble = this.game.tokens >= this.game.wager;
-                this.choiceWindow.setOptions([$.terms.hit, $.terms.stand, $.terms.double, $.terms.surrender], null, canDouble ? [] : [2]);
+                if ($.sideStrategies) {
+                    let canDouble = this.game.tokens >= this.game.wager;
+                    this.choiceWindow.setOptions([$.terms.hit, $.terms.stand, $.terms.double, $.terms.surrender], null, canDouble ? [] : [2]);
+                } else {
+                    this.choiceWindow.setOptions([$.terms.hit, $.terms.stand]);
+                }
                 break;
             case GamePhase.OTHER_TURN:
                 this.choiceWindow.setOptions([$.terms.hit, $.terms.stand]);
@@ -877,8 +1249,7 @@ void function ($) {
     let Game = {};
     $.game = Game;
 
-    Game.initialize = function (parent, luck = 0) {
-        this.parent = parent;
+    Game.initialize = function (luck = 0) {
         this.luck = luck;
         this.tokens = $.arguments.tokens;
         this.wager = 0;
@@ -931,7 +1302,7 @@ void function ($) {
         //Handle the luck system
         if (Math.abs(this.luck) > Math.random() * 100 && this.deck.length > 0) { //If luck triggers, draw another card, and swap to it if it's better (or if it's worse on negative luck)
             let index = Math.floor(Math.random() * this.deck.length);
-            console.log(`Luck triggered! Deciding between ${this.printCard(newCard)} and ${this.printCard(this.deck[index])}`);
+            if ($.showLuckEvents) console.log(`Luck triggered! Deciding between ${this.printCard(newCard)} and ${this.printCard(this.deck[index])}`);
             if (this.isCardBetter(this.deck[index], newCard, this.playerHand) === this.luck > 0) {
                 let otherCard = this.deck.splice(index, 1)[0];
                 this.shuffleInto(newCard, this.deck);
@@ -1119,6 +1490,16 @@ void function ($) {
         if (!string || string.length === 0) return false;
         if (string[0] === 's') return $gameSwitches.value(Number(string.replace(/^s0*/, '')));
         else return string === "true";
+    }
+
+    /**
+    * Converts a string (from plugin parameters or commands) to a list of numbers.
+    * @param {String} string A list of comma-separated numbers
+    * @returns The string converted to a list of numbers
+    */
+    numberListValue = function (string) {
+        if (!string) return [];
+        return string.replace(/[\s\n]/g, "").split(",").filter(s => s.length > 0).map(numberValue);
     }
 
 

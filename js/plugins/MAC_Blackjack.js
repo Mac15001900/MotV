@@ -27,12 +27,75 @@
  * @default 10
  * 
  * @param Show luck events
- * @parent Luck
+ * @parent Mechanics
  * @type boolean
  * @desc Whenever luck is triggered, print what the card choices were in the console.
  * @on Enabled
  * @off Disabled
  * @default false
+ * 
+ * @param Outputs
+ * @desc What variables (or switches) will the results of the game be written to.
+ * 
+ * @param Token amount
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the total amount of tokens at the end of the game.
+ * @default 0
+ * 
+ * @param Token change
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the change in tokens after the game (can be positive or negative).
+ * @default 0
+ * 
+ * @param Number of rounds
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the total number of rounds passed.
+ * @default 0
+ * 
+ * @param Time spent
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the time spent in the game in seconds.
+ * @default 0
+ * 
+ * @param Number of rounds won
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the number of rounds won.
+ * @default 0
+ * 
+ * @param Number of blackjacks
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the number of blackjacks (note that those are also included in rounds won).
+ * @default 0
+ * 
+ * @param Number of rounds lost
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the number of rounds lost.
+ * @default 0
+ * 
+ * @param Number of rounds bust
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the number of rounds where the player went bust (they're also included in rounds lost).
+ * @default 0
+ * 
+ * @param Number of rounds tied
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the number of rounds that ended with a tie.
+ * @default 0
+ * 
+ * @param Number of rounds surrendered
+ * @parent Outputs
+ * @type number
+ * @desc This variable will be set to the number of rounds the player surrendered (those are *not* counted in any of the above).
+ * @default 0
  * 
  * @param Graphics
  * 
@@ -41,6 +104,12 @@
  * @type number
  * @default 4
  * @desc Spacing between windows, in pixels.
+ * 
+ * @param Card padding
+ * @parent Graphics
+ * @type number
+ * @default 16
+ * @desc How many pixels from the edge of the window's contents are cards drawn.
  * 
  * @param Animation length scale
  * @parent Graphics
@@ -104,7 +173,7 @@
  * @parent Cards
  * @type text
  * @default cardsBig2
- * @desc File with the card images. Speciciation available in the help file
+ * @desc File with the card images. Formatting details are available in the help file.
  * 
  * @param Card values
  * @parent Cards
@@ -129,13 +198,6 @@
  * @type number
  * @default 4
  * @desc How many rows of cards are there
- * 
- * @param Card padding
- * @parent Cards
- * @type number
- * @default 16
- * @desc How many pixels from the edge are cards drawn in game.
- * 
  * 
  * //Value colors
  * @param Colours
@@ -427,6 +489,43 @@ void function ($) {
     $.params = params;
     $.arguments = {};
 
+    void ((alias) => {
+        Game_Interpreter.prototype.pluginCommand = function (command, args) {
+            alias.call(this, command, args);
+            if (command.toLowerCase() === 'blackjack') {
+                //Set tokens
+                if (args[0] === undefined || Number.isNaN(numberValue(args[0]))) {
+                    $.arguments.tokens = $gameParty.gold();
+                    $.usingGold = true;
+                } else {
+                    $.arguments.tokens = numberValue(args[0]);
+                    $.usingGold = false;
+                }
+
+                //Set luck
+                let luck = numberValue(args[1]);
+                if (args[1] === undefined || Number.isNaN(luck)) $.arguments.luck = null;
+                else $.arguments.luck = luck;
+
+                //Set wagers
+                let wagers = args[2];
+                if (wagers === undefined || wagers === "-") $.arguments.wagerOptions = null;
+                else {
+                    console.assert(typeof wagers === 'string');
+                    if (wagers[0] === '[') $.arguments.wagerOptions = numberListValue(wagers);
+                    else $.arguments.wagerOptions = numberValue(wagers);
+                }
+
+                //Start the minigame
+                SceneManager.push(Scene_Blackjack);
+            } else if (command.toLowerCase() === 'blackjackparams') {
+                let name = args[0].replace(/_/g, ' ');
+                if (typeof params[name] === 'undefined') console.warn(name + " is not an existing plugin parameter");
+                params[name] = args[1].replace(/_/g, ' ');
+            }
+        }
+    })(Game_Interpreter.prototype.pluginCommand);
+
     $.updateParams = function () {
         $.PADDING = numberValue(params["Window padding"]); //Padding between windows
 
@@ -477,9 +576,14 @@ void function ($) {
         $.terms.tokensCounter = params["Tokens counter text"];
         $.terms.wagerCounter = params["Wager counter text"];
 
-        $.wagerOptions = numberListValue(params["Default wager options"]);
+        if ($.arguments.wagerOptions === null) $.wagerOptions = numberListValue(params["Default wager options"]);
+        else if (Array.isArray($.arguments.wagerOptions)) $.wagerOptions = $.arguments.wagerOptions;
+        else $.wagerOptions = numberListValue(params["Default wager options"]).map(w => w * $.arguments.wagerOptions);
+
+        if ($.arguments.luck === null) $.luck = numberValue(params["Default luck"]);
+        else $.luck = $.arguments.luck;
+
         $.sideStrategies = booleanValue(params["Enable side strategies"]);
-        $.luck = numberValue(params["Default luck"]);
         $.showLuckEvents = booleanValue(params["Show luck events"]);
 
         //Value colors
@@ -510,16 +614,6 @@ void function ($) {
         $.backgroundImage = params["Background image"];
 
     }
-
-    void ((alias) => {
-        Game_Interpreter.prototype.pluginCommand = function (command, args) {
-            alias.call(this, command, args);
-            if (command.toLowerCase() === 'blackjack') {
-                $.arguments.tokens = numberValue(args[0]) || $gameParty.gold();
-                SceneManager.push(Scene_Blackjack);
-            }
-        }
-    })(Game_Interpreter.prototype.pluginCommand);
 
     ////--------------------- Main window ---------------------
     function Window_BlackjackMain() {
@@ -1004,7 +1098,6 @@ void function ($) {
         this.options = []; //A list of strings, each representing an option for the user to choose from
         this.enabledOptions = []; //A list of booleans for each options, indicating whether it's enabled
         Window_HorzCommand.prototype.initialize.call(this, x, y);
-        this.maxCols = () => 6;
         this.refresh();
     }
 
@@ -1014,6 +1107,16 @@ void function ($) {
         }
     }
 
+    Window_BlackjackChoice.prototype.maxCols = function () {
+        return this.options.length || 1; //Things break a bit if this ever returns 0
+    }
+
+    /**
+     * Sets the options for the player to choose from.
+     * @param {Array<String>} newOptions List of options the player can choose from
+     * @param {Number} disableAbove A number such that all numerical options above it will be disabled
+     * @param {Array<Number>} disableOptions A list of indices of options to disable
+     */
     Window_BlackjackChoice.prototype.setOptions = function (newOptions, disableAbove, disableOptions) {
         this.options = newOptions;
         this.enabledOptions = Array(this.options.length).fill(true);
@@ -1053,12 +1156,15 @@ void function ($) {
 
     Scene_Blackjack.prototype.create = function () {
         $.updateParams();
+        this.stats = {
+            rounds: 0,
+            startTime: Graphics.frameCount,
+            roundResults: [],
+        };
         Scene_MenuBase.prototype.create.call(this);
-        // this.addExtraWindowLayer();
         this.game = Game;
         this.game.initialize($.luck);
         this.inAnimation = false;
-        // let basicHeight = (new Window_Base()).fittingHeight(1);
 
         this.helpWindow = new Window_BlackjackInfo($.PADDING, 0, Graphics.boxWidth - $.PADDING * 2, Graphics.boxHeight);
         this.helpWindow.height = this.helpWindow.fittingHeight(2);
@@ -1072,23 +1178,14 @@ void function ($) {
         this.choiceWindow.setHandler('ok', this.buttonSelected.bind(this));
         this.setupChoices();
 
-        this.updateInfo()
+        this.updateInfo();
 
         this.mainWindow = new Window_BlackjackMain($.PADDING, $.PADDING, Graphics.boxWidth - $.PADDING * 2,
             Graphics.boxHeight - this.helpWindow.height - this.choiceWindow.height - $.PADDING * 4, this.game);
 
-        /*this.tokenWindow = new Value_Component($.PADDING, Graphics.boxHeight - $.PADDING - basicHeight,
-            (Graphics.boxWidth - this.mainWindow.width) / 2 - $.PADDING / 2, basicHeight, "Tokens: ", 1000);
-        this.wagerWindow = new Value_Component($.PADDING, Graphics.boxHeight - $.PADDING * 2 - basicHeight * 2,
-            (Graphics.boxWidth - this.mainWindow.width) / 2 - $.PADDING / 2, basicHeight, "Wager: ", 0);*/
-
         this.addWindow(this.mainWindow);
-        /*this._extraWindowLayer.addChild(this.tokenWindow);
-        this._extraWindowLayer.addChild(this.wagerWindow);*/
         this.addWindow(this.choiceWindow);
-
         this.addWindow(this.helpWindow);
-
 
         this.choiceWindow.activate();
     }
@@ -1136,8 +1233,9 @@ void function ($) {
         switch (this.game.phase) {
             case GamePhase.PICK_WAGER:
                 if (index === $.wagerOptions.length) {
-                    this.popScene();
                     this.setupOutputs();
+                    if ($.usingGold) $gameParty.gainGold(this.game.tokens - $.arguments.tokens);
+                    this.popScene();
                 }
                 else {
                     let wager = $.wagerOptions[index]; //TODO dynamic wager options
@@ -1187,6 +1285,10 @@ void function ($) {
     }
 
     Scene_Blackjack.prototype.handleRoundEnd = function (result) {
+        this.stats.rounds++;
+        if (!this.stats.roundResults[result]) this.stats.roundResults[result] = 1;
+        else this.stats.roundResults[result]++;
+
         if (result !== GameResult.BUST) { //Reveal dealer's hand (unless the player went bust)
             this.mainWindow.addAnimation({ type: AnimationType.REVEAL_DEALER_CARD, frames: 15 });
             for (let i = 2; i < this.game.dealerHand.length; i++) {
@@ -1201,7 +1303,7 @@ void function ($) {
     Scene_Blackjack.prototype.update = function () {
         let lastCursorIndex = this.choiceWindow.index();
         Scene_MenuBase.prototype.update.call(this);
-        if (this.game.phase === GamePhase.END && !this.mainWindow.inAnimation()) { //Phase finished, move on the next round
+        if (this.game.phase === GamePhase.END && !this.mainWindow.inAnimation()) { //Phase finished, move on to the next round
             this.mainWindow.setTokenAmount(this.game.tokens);
             this.mainWindow.setWagerAmount(0);
             this.game.phase = GamePhase.PICK_WAGER;
@@ -1233,7 +1335,23 @@ void function ($) {
     }
 
     Scene_Blackjack.prototype.setupOutputs = function () {
-
+        let results = this.stats.roundResults;
+        let outputs = [
+            ["Token amount", this.game.tokens],
+            ["Token change", this.game.tokens - $.arguments.tokens],
+            ["Number of rounds", this.stats.rounds],
+            ["Time spent", Math.floor((Graphics.frameCount - this.stats.startTime) / 60)],
+            ["Number of rounds won", results[GameResult.WIN] + results[GameResult.BLACKJACK]],
+            ["Number of blackjacks", results[GameResult.BLACKJACK]],
+            ["Number of rounds lost", results[GameResult.LOSE] + results[GameResult.BUST]],
+            ["Number of rounds bust", results[GameResult.BUST]],
+            ["Number of rounds tied", results[GameResult.PUSH]],
+            ["Number of rounds surrendered", results[GameResult.SURRENDER]],
+        ];
+        for (let i = 0; i < outputs.length; i++) {
+            let variableIndex = numberValue(params[outputs[i][0]]);
+            if (variableIndex > 0) $gameVariables.setValue(variableIndex, outputs[i][1] || 0);
+        }
     }
 
 
@@ -1267,12 +1385,6 @@ void function ($) {
         this.playerHand = [this.drawCard(), this.drawCard()];
         this.dealerHand = this.makeDealerHand();
         this.phase = GamePhase.FIRST_TURN;
-    }
-
-    //Triggered after all animation for the end phase are done
-    Game.endRound = function () {
-        this.phase = GamePhase.PICK_WAGER;
-
     }
 
     Game.makeDealerHand = function () {
@@ -1444,29 +1556,6 @@ void function ($) {
         return cards.map(c => this.printCard(c)).join(" ");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     //--------------------- Misc utils ---------------------
 
     /**
@@ -1493,13 +1582,13 @@ void function ($) {
     }
 
     /**
-    * Converts a string (from plugin parameters or commands) to a list of numbers.
-    * @param {String} string A list of comma-separated numbers
+    * Converts a string (from plugin parameters or commands) to a list of numbers. 
+    * @param {String} string A list of comma-separated numbers. Whitespace, as well as "[" and "]" characters are ignored.
     * @returns The string converted to a list of numbers
     */
     numberListValue = function (string) {
         if (!string) return [];
-        return string.replace(/[\s\n]/g, "").split(",").filter(s => s.length > 0).map(numberValue);
+        return string.replace(/[\[\]\s\n]/g, "").split(",").filter(s => s.length > 0).map(numberValue);
     }
 
 

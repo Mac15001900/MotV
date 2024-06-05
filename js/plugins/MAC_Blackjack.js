@@ -1,7 +1,5 @@
 /*:
- * NOTE: This plugin is a work in progress. The basic functionality is done, but many essential features are still missing.
- *
- * @plugindesc (v0.1) Adds a blackjack minigame
+ * @plugindesc (v1.0) Adds a blackjack minigame
  * @author Mac15001900
  * 
  * @param Mechanics
@@ -35,7 +33,7 @@
  * @default false
  * 
  * @param Outputs
- * @desc What variables (or switches) will the results of the game be written to.
+ * @desc What variables will the results of the game be written to.
  * 
  * @param Token amount
  * @parent Outputs
@@ -208,7 +206,7 @@
  * @parent Cards
  * @type file
  * @dir img/pictures
- * @default cardsBig2
+ * @default cards
  * @desc File with the card images. Formatting details are available in the help file.
  * 
  * @param Card values
@@ -242,7 +240,7 @@
  * @type file
  * @dir audio/se
  * @desc Sound that will play when a card is drawn.
- * @default cardPlace1
+ * @default cardPlace
  * 
  * @param Sound for flipping a card
  * @parent Sounds
@@ -793,7 +791,6 @@ void function ($) {
     }
 
     Window_BlackjackMain.prototype.refresh = function () {
-        Window_Base.prototype.refresh.call(this);
         this.contents.clear();
         let ctx = this.contents._context;
 
@@ -1207,7 +1204,6 @@ void function ($) {
     }
 
     Window_BlackjackInfo.prototype.refresh = function () {
-        // Window_Base.prototype.refresh.call(this);
         this.contents.clear();
         for (let i = 0; i < this.textRows.length; i++) {
             this.drawText(this.textRows[i], 0, i * this.lineHeight(), this.contentsWidth(), 'center');

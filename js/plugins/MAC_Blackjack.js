@@ -46,7 +46,7 @@
  * @param Token change
  * @parent Outputs
  * @type number
- * @desc This variable will be set to the change in tokens after the game (can be positive or negative).
+ * @desc This variable will be set to the change in tokens after the game (this value can be positive or negative).
  * @default 0
  * 
  * @param Number of rounds
@@ -70,7 +70,7 @@
  * @param Number of blackjacks
  * @parent Outputs
  * @type number
- * @desc This variable will be set to the number of blackjacks (note that those are also included in rounds won).
+ * @desc This variable will be set to the number of blackjacks the player got.
  * @default 0
  * 
  * @param Number of rounds lost
@@ -120,6 +120,7 @@
  * @param Use a custom window colour
  * @parent Graphics
  * @type boolean
+ * @desc Should the game's windows use a custom tint colour instead of the default.
  * @default true
  * 
  * @param Window red value
@@ -149,13 +150,13 @@
  * @desc What should be in the background of the main window.
  * @default Gradient
  * 
- * @param Background color 1
+ * @param Background colour 1
  * @parent Background
  * @type text
  * @desc If using a gradient background, this is the colour in the top-left.
  * @default #12991b
  * 
- * @param Background color 2
+ * @param Background colour 2
  * @parent Background
  * @type text
  * @desc If using a gradient background, this is the colour in the bottom-right.
@@ -167,11 +168,46 @@
  * @type file
  * @dir img/pictures
  * 
+ * @param Colours
+ * 
+ * @param Value 21 colour
+ * @parent Colours
+ * @type text
+ * @desc Colour that values will change to when they're exactly 21.
+ * @default #2196F3
+ * 
+ * @param Bust colour
+ * @parent Colours
+ * @type text
+ * @desc Colour that values will change to when they're above 21.
+ * @default #B71C1C
+ * 
+ * //Round end text colours
+ * 
+ * @param Round lost colour
+ * @parent Colours
+ * @desc Colour of the title text when a round is lost.
+ * @type text
+ * @default #CE0400
+ * 
+ * @param Round won colour
+ * @parent Colours
+ * @type text
+ * @desc Colour of the title text when a round is won.
+ * @default #8EFF3C
+ * 
+ * @param Round won with Blackjack colour
+ * @parent Colours
+ * @type text
+ * @desc Colour of the title text when a round is won with a Blackjack.
+ * @default rainbow
+ * 
  * @param Cards
  * 
  * @param Cards file
  * @parent Cards
- * @type text
+ * @type file
+ * @dir img/pictures
  * @default cardsBig2
  * @desc File with the card images. Formatting details are available in the help file.
  * 
@@ -198,42 +234,6 @@
  * @type number
  * @default 4
  * @desc How many rows of cards are there
- * 
- * //Value colors
- * @param Colours
- * 
- * @param Value 21 color
- * @parent Colours
- * @type text
- * @desc Colour that values will change to when they're exactly 21.
- * @default #2196F3
- * 
- * @param Bust color
- * @parent Colours
- * @type text
- * @desc Colour that values will change to when they're above 21.
- * @default #B71C1C
- * 
- * //Round end text colors
- * 
- * @param Round lost color
- * @parent Colours
- * @desc Colour of the title in the result text when a round is lost.
- * @type text
- * @default #CE0400
- * 
- * @param Round won color
- * @parent Colours
- * @type text
- * @desc Colour of the title in the result text when a round is won.
- * @default #8EFF3C
- * 
- * @param Round won with Blackjack color
- * @parent Colours
- * @type text
- * @desc Colour of the title in the result text when a round is won with a Blackjack.
- * @default rainbow
- * 
  * 
  * @param Sounds
  * 
@@ -447,8 +447,142 @@
  * 
  * nice greenish colour - 0f7d17
  * Blackjack guide: https://www.officialgamerules.org/card-games/blackjack
+ * ------------------------------------------------------------------------------
  * @help
- * NOTE: This plugin is a work in progress. The basic functionality is done, but many essential features are still missing.
+ * This plugin adds a Blackjack minigame. It can be launched with a "Blackjack" 
+ * plugin command, which will start it using the party's gold.
+ * 
+ * When customising the plugin, it's highly recommended that you're faimilar with
+ * the rules of Blackjack. If you're not, you might find this guide helpful:
+ * https://www.officialgamerules.org/card-games/blackjack
+ * 
+ * ------------------------ Using variables and switches ------------------------
+ * 
+ * All numerical values in the plugin commands and plugin parameters can be 
+ * replaced with a variable, by using the letter "v" followed by its id, 
+ * e.g. "v42". This will use whatever the value of that variable is when the 
+ * minigame is started.
+ * 
+ * Similarly, all boolean values (true or false) can be replaced with a switch, 
+ * e.g. "s42".
+ * 
+ * When using them in plugin parameters, you'll have to select the "Text" tab, 
+ * so that the editor will let you enter a letter.
+ * 
+ * ----------------------------- The plugin command -----------------------------
+ * 
+ * The Blackjack command can take 3 optional parameters: 
+ * 
+ * 1. The amount of tokens to start the game with. When using that, you'd 
+ * probably also want to also setup the Outputs parameters to write the new 
+ * amount of tokens to a variable, and deal with that after the game is done.
+ * If not specified, party gold will be used, and automatically changed after.
+ * 
+ * 2. The level of luck. It's a number from -100 to 100, determining how "lucky"
+ * the player should be. 
+ * 
+ * 0 is the neutral value, behaving the same as a real game would. Note that this
+ * means the player will, on average, lose money over time.
+ * 
+ * Values above 0 represent a percentage chance that, when drawing a card, the 
+ * game will instead draw two cards and pick the better one (this effect is not 
+ * visible to the player; they only see one card being drawn). This only happens 
+ * with the Hit action, so starting hands keep the same chance of appearing.
+ * 
+ * Values below 0 likewise represent the chance that, instead of drawing a card, 
+ * the game will draw two cards and pick the worse one.
+ * 
+ * It's recommended to use a value slightly above 0 (e.g. 10) if you don't want
+ * the player to lose money over time. You can also enable the "Show luck events" 
+ * parameter to have the cards are being decided between printed in console.
+ * 
+ * 3. Wager options, or a wager multiplier. This is a list of wager sizes the 
+ * player will be able to choose in the game. A list should be enclosed in 
+ * [brackets], and separated by commas, e.g. [10,20,50,100]. Do not add spaces
+ * between the values. 
+ * You can also use a single number (e.g. 10). This will use the default wager 
+ * amounts, multiplied by that number.
+ * 
+ * All parameters are optional, but must be supplied in the order specified above
+ * You can skip a parameter by replacing it with "-".
+ * 
+ * Examples:
+ * Blackjack
+ * Blackjack 500
+ * Blackjack v70 15 [10,100,1000]
+ * Blackjack - v77 10
+ * Blackjack - - [v81,v82,v83,v84]
+ * Blackjack - 33
+ * 
+ * ---------------------- Changing plugin parameters in-game --------------------
+ * 
+ * You can change any plugin parameters during the game by using the 
+ * BlackjackParam command, followed by the name of the parameter and the new 
+ * value, using '_'  instead of spaces. 
+ * 
+ * Any parameters that use the Note format (allowing you to type multiple lines)
+ * must be enclosed in "quotation marks". 
+ * Use can use "\n" in those parameters to add a new line.
+ * 
+ * You can also use "color" instead of "colour" if you're used to that spelling.
+ * 
+ * For example:
+ * 
+ * BlackjackParam Window_red_value 75
+ * BlackjackParam Enable_side_strategies false
+ * BlackjackParam Enable_side_strategies s17
+ * BlackjackParam Surrender_description "Give_up_on_this_round.\nYou_coward."
+ * BlackjackParam Aces 1,2,3,4,5,6,7,8,9
+ * BlackjackParam Background_color_1 #3344DD
+ * BlackjackParam Background_colour_2 blue
+ * 
+ * The possibilities for what you can use this for are endless. Different tables 
+ * with different backgrounds. Dealers with personalities that change how 
+ * descriptions  look like, how fast the animations are and what sounds play. 
+ * Or even swap between the regular deck and a completely custom one.
+ * 
+ * Note that those changes are *not* permanent and will reset upon closing and
+ * reopening the game. It's recommended to use BlackjackParam commands 
+ * immediately before a Blackjack command.
+ * 
+ * ---------------------------------- Colours -----------------------------------
+ *
+ * All plugin parameters that require colours use CSS colours. This means that 
+ * you can use the #RRGGBB hex format (e.g. "#B71C1C"), common English names 
+ * (e.g. "white"  or "DarkSlateGray"), 0-255 RGB (e.g. "rgb(127,255,0)") etc.
+ *
+ * Additionally, for the text at the end of a round, "rainbow" will create an 
+ * animated rainbowy gradient.
+ * 
+ * -------------------------------- Custom cards --------------------------------
+ * 
+ * This section will describe how to customise the cards used in the game.
+ * 
+ * The simplest way to do so is to edit the provided card image files, e.g. by 
+ * replacing jacks, queens and kings with characters from your world. You can 
+ * also make your own file, using the provided ones as reference - it can be of
+ * any size,  and will automatically get "sliced" into cards, similar to 
+ * character sheets in the base engine. 
+ * 
+ * You can also create a completely unique fantasy/sci-fi deck that's vastly
+ * different than the regular one. The "Card row length" plugin parameter decides
+ * how many cards are in a single row, which "Card rows" decides how many rows
+ * there are. "Card values" lists the values each card has, while "Aces" lists
+ * the indexes of cards that have an optional +10 to value. These allow you to
+ * create some really weird cards, like cards with a negative value, value above
+ * 21, or with a value of either 5 or 15.
+ * 
+ * Note that the total amount of columns in a file must always be one higher that
+ * row length, since the last column contains the empty card and the card back
+ * (jokers are currently unused).
+ * 
+ * ----------------------------------- Terms ------------------------------------
+ * 
+ * This plugin is available under the MIT Licence. You're free to use it in any 
+ * games, commercial or not, or use the code in your own plugins. Credit is 
+ * appreciated, but not required. If your credits include links, please link to
+ * https://mac15001900.itch.io/ 
+ * 
  */
 
 
@@ -478,7 +612,7 @@ void function ($) {
         DELAY: 7,
     }
 
-    const SoundType = { //GameResult can be used to identify sounds for round ending
+    const SoundType = { //GameResult is used to identify sounds for round ending
         DRAW_CARD: 11,
         COLLECT_CARDS: 12,
         PLACE_WAGER: 13,
@@ -518,8 +652,9 @@ void function ($) {
 
                 //Start the minigame
                 SceneManager.push(Scene_Blackjack);
-            } else if (command.toLowerCase() === 'blackjackparams') {
-                let name = args[0].replace(/_/g, ' ');
+
+            } else if (command.toLowerCase() === 'blackjackparam') {
+                let name = args[0].replace(/_/g, ' ').replace(/color/g, 'colour');
                 if (typeof params[name] === 'undefined') console.warn(name + " is not an existing plugin parameter");
                 params[name] = args[1].replace(/_/g, ' ');
             }
@@ -587,12 +722,12 @@ void function ($) {
         $.showLuckEvents = booleanValue(params["Show luck events"]);
 
         //Value colors
-        $.colorBest = params["Value 21 color"];
-        $.colorBust = params["Bust color"];
+        $.colorBest = params["Value 21 colour"];
+        $.colorBust = params["Bust colour"];
         //Round end text colors
-        $.colorLose = params["Round lost color"];
-        $.colorWin = params["Round won color"];
-        $.colorBlackjack = params["Round won with Blackjack color"];
+        $.colorLose = params["Round lost colour"];
+        $.colorWin = params["Round won colour"];
+        $.colorBlackjack = params["Round won with Blackjack colour"];
 
         $.sounds = {};
         $.sounds[SoundType.DRAW_CARD] = params["Sound for drawing a card"];
@@ -609,8 +744,8 @@ void function ($) {
         $.animationLength = numberValue(params["Animation length scale"]);
 
         $.background = params["Background"];
-        $.backgroundColor1 = params["Background color 1"];
-        $.backgroundColor2 = params["Background color 2"];
+        $.backgroundColor1 = params["Background colour 1"];
+        $.backgroundColor2 = params["Background colour 2"];
         $.backgroundImage = params["Background image"];
 
     }
@@ -651,7 +786,6 @@ void function ($) {
             let bmp2 = ImageManager.loadPicture($.backgroundImage);
             bmp2.addLoadListener(function () {
                 this.backgroundImage = bmp2;
-                // if (bmp2.width < this.contentsWidth() || bmp2.height < this.contentsHeight()) console.warn("MAC_Blackjack: the background image is too small and might not render properly");
                 this.refresh();
             }.bind(this));
         }
@@ -685,7 +819,6 @@ void function ($) {
             let handSize = this.playerHand.length
             if (this.inAnimation(AnimationType.ADD_PLAYER_CARD)) handSize = this.between(handSize, handSize + 1);
             let y = this.contentsHeight() - this.cardHeight - $.cardPadding;
-            // if (this.inAnimation(AnimationType.REMOVE_CARDS)) y = this.between(y, this.contentsHeight() + this.cardHeight * 2);
             if (this.inAnimation(AnimationType.REMOVE_CARDS)) y = this.between(y, -this.cardHeight * 2);
             this.drawCard(this.playerHand[i], this.cardX(i, handSize), y);
         }
@@ -712,7 +845,6 @@ void function ($) {
             }
         }
         let oldColor = this.contents.textColor;
-        // let shiftRight = this.roundEndTextShown && this.cardHeight + $.cardPadding * 2 + this.lineHeight() > (this.contentsHeight() - toastHeight) / 2; //TODO shift labels right when covered
         if (this.playerHand.length > 0) {
             this.contents.textColor = this.valueColor(this.game.handValue(this.playerHand), oldColor);
             let y = this.contentsHeight() - this.cardHeight - $.cardPadding * 2 - this.lineHeight();
@@ -771,7 +903,7 @@ void function ($) {
                 this.hasAnimatedText = true;
             } else this.contents.textColor = titleColor;
             ctx.textAlign = "center";
-            ctx.textBaseline = 'alphabetic'; //Workaround for Firefox bug 737852
+            ctx.textBaseline = 'alphabetic';
             ctx.globalAlpha = opacity;
             this.contents._drawTextOutline(title, titleX, titleY, this.contentsWidth());
             this.contents._drawTextBody(title, titleX, titleY, this.contentsWidth());
@@ -897,7 +1029,7 @@ void function ($) {
      * - AnimationType.REVEAL_DEALER_CARD: reveals the dealer's second card.
      * - AnimationType.SHOW_RESULT: shows the result of the game. Requires field 'text', a string with the result text, and 'type' with the result type
      * - AnimationType.REMOVE_CARDS: removes all cards from the table.
-     * - AnimationType.DELAY: waits for the specified amount of frames
+     * - AnimationType.DELAY: does nothing, used to wait for the specified amount of frames
      */
     Window_BlackjackMain.prototype.addAnimation = function (animation) {
         if (this.currentAnimation === null) {
@@ -931,7 +1063,7 @@ void function ($) {
 
     /**
     * Handles custom logic at the end of some animations
-    * @param {Animation} animation 
+    * @param {Animation} animation The ending animation
     */
     Window_BlackjackMain.prototype.handleAnimationEnd = function (animation) {
         switch (animation.type) {
@@ -977,7 +1109,7 @@ void function ($) {
         return this.currentAnimation === null;
     }
     /**
-     * Checks if an animation (optionally of a specified type) is currently playing
+     * Checks if an animation (of a specified type if supplied, otherwise any) is currently playing
      */
     Window_BlackjackMain.prototype.inAnimation = function (type) {
         if (type === undefined) return !!this.currentAnimation;
@@ -1238,7 +1370,7 @@ void function ($) {
                     this.popScene();
                 }
                 else {
-                    let wager = $.wagerOptions[index]; //TODO dynamic wager options
+                    let wager = $.wagerOptions[index];
                     this.game.startRound(wager);
                     this.mainWindow.setWagerAmount(wager);
                     this.mainWindow.setTokenAmount(this.game.tokens);
@@ -1314,23 +1446,23 @@ void function ($) {
     }
 
     Scene_Blackjack.prototype.updateInfo = function () {
-        let index = this.choiceWindow.index();
-        switch (this.game.phase) {
+        this.helpWindow.setText(this.getHelpText(this.choiceWindow.index(), this.game.phase));
+    }
+
+    Scene_Blackjack.prototype.getHelpText = function (optionIndex, gamePhase) {
+        switch (gamePhase) {
             case GamePhase.PICK_WAGER:
-                if (index === $.wagerOptions.length) this.helpWindow.setText($.infoTexts.exit);
-                else this.helpWindow.setText($.infoTexts.wager($.wagerOptions[index]));
-                break;
+                if (optionIndex === $.wagerOptions.length) return $.infoTexts.exit;
+                else return $.infoTexts.wager($.wagerOptions[optionIndex]);
             case GamePhase.FIRST_TURN:
             case GamePhase.OTHER_TURN:
-                switch (index) {
-                    case 0: this.helpWindow.setText($.infoTexts.hit); break;
-                    case 1: this.helpWindow.setText($.infoTexts.stand); break;
-                    case 2: this.helpWindow.setText($.infoTexts.double); break;
-                    case 3: this.helpWindow.setText($.infoTexts.surrender); break;
+                switch (optionIndex) {
+                    case 0: return $.infoTexts.hit;
+                    case 1: return $.infoTexts.stand;
+                    case 2: return $.infoTexts.double;
+                    case 3: return $.infoTexts.surrender;
                 }
-                break;
-            default:
-                this.helpWindow.setText("");
+            default: return "";
         }
     }
 
@@ -1359,8 +1491,8 @@ void function ($) {
 
     const GamePhase = {
         PICK_WAGER: 0,
-        FIRST_TURN: 1,
-        OTHER_TURN: 2,
+        FIRST_TURN: 1, //The first turn, when picking a side strategy is still possible
+        OTHER_TURN: 2, //Any other turn after the first one
         END: 3
     }
 

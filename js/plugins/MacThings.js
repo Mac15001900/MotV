@@ -1171,9 +1171,8 @@ Input.update = function () {
 g.buttonPressed = function (button) {
     switch (button) {
         case "f4":
-            Graphics._switchFullScreen();
-            g.fullScreen = !g.fullScreen;
-            if (g.scene() instanceof Scene_Options) g.getActiveWindows()[0].refresh()
+            ConfigManager.fullscreen = !ConfigManager.fullscreen; //Note: "fullscreen", not "fullScreen"
+            if (g.scene() instanceof Scene_Options) $windows.get(Window_Options).refresh();
             break;
         case "fps": Graphics._switchFPSMeter(); break;
         case "frame": g.scene().update(); break; //TODO special combo for devtools access
@@ -1843,4 +1842,3 @@ void ((alias) => {
         // console.warn = oldWarn;
     }
 })(Graphics._testCanvasBlendModes);*/
-

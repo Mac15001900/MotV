@@ -5674,6 +5674,7 @@ Window_GameEnd.prototype.initialize = function () {
     this.updatePlacement();
     this.openness = 0;
     autosaveAttempt(true); //Change: added autosave when quitting
+    ConfigManager.save(); //Change: Saving config manager settings when quitting (mostly for fullscreen)
     this.open();
 };
 

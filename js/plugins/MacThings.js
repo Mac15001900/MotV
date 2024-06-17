@@ -1307,7 +1307,7 @@ fallbackEval = function (expression, defaultValue) {
     try {
         return eval(expression);
     } catch (e) {
-        console.warn("In-message eval failed", e);
+        if (!g.suppressMessageEvalWarnings) console.warn("In-message eval failed", e);
         return defaultValue ?? expression;
     }
 }
@@ -1478,8 +1478,10 @@ g.setupSpellcheck = function () {
     g.spellWorker.addEventListener('message', message => {
         if (message.data === "ready") {
             console.log("Spellchecker ready");
-            if (DataManager.isEventTest()) g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(g.getInterpreter()._list.filter(c => c.code === 401).map(c => c.parameters[0]).join('\n')) });
-            else if ($dataMap) g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(showMap($dataMap)) });
+            g.suppressMessageEvalWarnings = true;
+            if (DataManager.isEventTest()) g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(g.getInterpreter()._list.filter(c => c.code === 401).map(c => c.parameters[0]).join('\n'), false) });
+            else if ($dataMap) g.spellWorker.postMessage({ type: 'text', text: g.simpleUnescape(showMap($dataMap), false) });
+            g.suppressMessageEvalWarnings = false;
             return;
         } else {
             g.typos = message.data;
@@ -1664,9 +1666,75 @@ g.track = function (func) {
     }
 };
 
+window.$windows = {
+    /**
+     * Gets the first window (of a given class if specified) in the current scene, prioritising active windows if any are present
+     * @param {Window} [className] Name of the target window class 
+     * @returns The window object if at least one exists, otherwise undefined
+    */
+    get: function (className) {
+        let candidates = this.all(className);
+        if (candidates.length <= 1) return candidates[0];
+        let active = candidates.find(w => w.active);
+        if (active) return active;
+        else return candidates[0];
+    },
+    /**
+     * Gets all active windows in the current scene, or only those of a given class if specified
+     * @returns An array with every window matching the above criteria
+     */
+    allActive: function (className) {
+        return this.all(className).filter(w => w.active);
+    },
+    /**
+     * Gets all windows in the current scene, or only those of a given class if specified
+     * @param {Window} [className] Name of the target window class 
+     * @returns An array with all windows matching the class name
+     */
+    all: function (className) {
+        return className ? this._fullList().filter(w => w instanceof className) : this._fullList();
+    },
+    /**
+     * 
+     * @returns The currently active scene
+     */
+    scene: function () {
+        return SceneManager._scene;
+    },
+    /**
+    * @returns An array with every window in the current scene
+    */
+    _fullList: function () {
+        return SceneManager._scene?._windowLayer?.children || [];
+    },
+}
 
-
-
+//Hide the warning about willReadFrequently. I'm not entirely sure if this affects anything, so just in case it's only changed in debug mode.
+if (MAC_DEBUG) {
+    Graphics._testCanvasBlendModes = function () {
+        var canvas, context, imageData1, imageData2;
+        canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 1;
+        context = canvas.getContext('2d', { willReadFrequently: true });
+        context.globalCompositeOperation = 'source-over';
+        context.fillStyle = 'white';
+        context.fillRect(0, 0, 1, 1);
+        context.globalCompositeOperation = 'difference';
+        context.fillStyle = 'white';
+        context.fillRect(0, 0, 1, 1);
+        imageData1 = context.getImageData(0, 0, 1, 1);
+        context.globalCompositeOperation = 'source-over';
+        context.fillStyle = 'black';
+        context.fillRect(0, 0, 1, 1);
+        context.globalCompositeOperation = 'saturation';
+        context.fillStyle = 'white';
+        context.fillRect(0, 0, 1, 1);
+        imageData2 = context.getImageData(0, 0, 1, 1);
+        this._canUseDifferenceBlend = imageData1.data[0] === 0;
+        this._canUseSaturationBlend = imageData2.data[0] === 0;
+    };
+}
 
 //===================================== Temp experiments =====================================
 
@@ -1766,3 +1834,13 @@ void ((alias) => {
 /*  document.body.style.cursor = file == ""
         ? "default"
         : `url("${base_url}${file}.png") ${x_offset} ${y_offset}, ${fallbackStyle}`;*/
+
+/*void ((alias) => {
+    Graphics._testCanvasBlendModes = function () {
+        let oldWarn = console.warn;
+        console.warn = function () { };
+        alias.call(this);
+        // console.warn = oldWarn;
+    }
+})(Graphics._testCanvasBlendModes);*/
+

@@ -68,11 +68,15 @@ Window_Options.prototype.updatePlacement = function () {
 
 Window_Options.prototype.makeCommandList = function () {
     this.addCommand(s.back, 'cancel');
-    this.addCommand(TextManager.alwaysDash, 'alwaysDash');
+    this.addCommand('', '');
+    this.addVolumeOptions();
+    this.addCommand('', '');
     this.addCommand(s.fullScreen, 'fullscreen');
     this.addCommand(s.stretchMode, 'stretchMode');
-    this.addVolumeOptions();
+    this.addCommand('', '');
+    this.addCommand(TextManager.alwaysDash, 'alwaysDash');
     this.addCommand(s.messageSpeedOption, 'messageSpeedKey');
+    this.addCommand('', '');
     this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title' || MAC_DEBUG); //We really don't want the language to change mid-game
     this.addCommand(s.colorblindMode, 'cBlind');
     if (!Utils.isMobileDevice()) this.addCommand(s.controlsOption, 'keyConfig', true);
@@ -116,7 +120,7 @@ Window_Options.prototype.statusText = function (index) {
     var value = this.getConfigValue(symbol);
     if (this.isVolumeSymbol(symbol)) {
         return this.volumeStatusText(value);
-    } else if (symbol === "cancel" || symbol === "keyConfig") {
+    } else if (symbol === "cancel" || symbol === "keyConfig" || symbol === '') {
         return "";  //Change: not doing anything for ON/OFF when it's not needed
     } else if (symbol === "lang") {
         return langData.dict[value];
@@ -216,6 +220,32 @@ Window_Options.prototype.cursorRight = function (wrap, reverse = false) {
 
 Window_Options.prototype.cursorLeft = function (wrap) {
     this.cursorRight(wrap, true);
+}
+
+void ((alias) => {
+    Window_Options.prototype.cursorDown = function (wrap) {
+        alias.call(this, wrap);
+        if (this.commandSymbol(this.index()) === '') this.cursorDown();
+    }
+})(Window_Options.prototype.cursorDown);
+
+void ((alias) => {
+    Window_Options.prototype.cursorUp = function (wrap) {
+        alias.call(this, wrap);
+        if (this.commandSymbol(this.index()) === '') this.cursorUp();
+    }
+})(Window_Options.prototype.cursorUp);
+
+Window_Options.prototype.hitTest = function (x, y) {
+    let res = Window_Selectable.prototype.hitTest.call(this, x, y);
+    if (res < this._list.length && res >= 0 && this.commandSymbol(res) === '') {
+        let rect = this.itemRect(res);
+        let heightInRect = ((y - this.padding) - rect.y) / rect.height;
+        if (heightInRect > 0.66) return res + 1;
+        else if (heightInRect < 0.33) return res - 1;
+        else return -1;
+    }
+    else return res;
 }
 
 /*Window_Options.prototype.cursorLeft = function (wrap) {

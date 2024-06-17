@@ -58,7 +58,7 @@ Window_Options.prototype.windowWidth = function () {
 };
 
 Window_Options.prototype.windowHeight = function () {
-    return this.fittingHeight(Math.min(this.numVisibleRows(), 12));
+    return this.fittingHeight(Math.min(this.numVisibleRows(), 13));
 };
 
 Window_Options.prototype.updatePlacement = function () {
@@ -70,6 +70,7 @@ Window_Options.prototype.makeCommandList = function () {
     this.addCommand(s.back, 'cancel');
     this.addCommand(TextManager.alwaysDash, 'alwaysDash');
     this.addCommand(s.fullScreen, 'fullscreen');
+    this.addCommand(s.stretchMode, 'stretchMode');
     this.addVolumeOptions();
     this.addCommand(s.messageSpeedOption, 'messageSpeedKey');
     this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title' || MAC_DEBUG); //We really don't want the language to change mid-game

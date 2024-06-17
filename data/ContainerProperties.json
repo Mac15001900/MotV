@@ -97,9 +97,9 @@
         "WindowLayer": {
             "0,Window_Options": {
                 "x": 675,
-                "y": 410,
+                "y": 394,
                 "width": 570,
-                "height": 356,
+                "height": 388,
                 "opacity": 255,
                 "hidden": false,
                 "_customFontSize": 28,

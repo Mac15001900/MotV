@@ -61,6 +61,7 @@
 	var persist = String(parameters['Persist Default?']).trim().toLowerCase() === 'true';
 
 	ConfigManager.fullscreen = defaultValue;
+	ConfigManager.stretchMode = true;
 
 	Object.defineProperty(ConfigManager, 'fullscreen', {
 		get: function () {
@@ -78,19 +79,35 @@
 		configurable: true
 	});
 
+	Object.defineProperty(ConfigManager, 'stretchMode', {
+		get: function () {
+			return Graphics._stretchEnabled;
+		},
+		set: function (value) {
+			Graphics._stretchEnabled = value;
+			Graphics._updateAllElements();
+		},
+		configurable: true
+	});
+
 	var _ConfigManager_makeData = ConfigManager.makeData;
 	ConfigManager.makeData = function () {
 		var config = _ConfigManager_makeData.call(this);
 		config.fullscreen = this.fullscreen;
+		config.stretchMode = this.stretchMode;
 		return config;
 	};
 
 	var _ConfigManager_applyData = ConfigManager.applyData;
 	ConfigManager.applyData = function (config) {
 		_ConfigManager_applyData.call(this, config);
-		let value = this.readFullscreen(config, 'fullscreen');
-		this.fullscreen = Utils.isNwjs ? value : false; //We can't start full-screen in browsers, so we won't try to
-		g.fullScreen = value;
+		let fullScreenValue = this.readFullscreen(config, 'fullscreen');
+		this.fullscreen = Utils.isNwjs ? fullScreenValue : false; //We can't start full-screen in browsers, so we won't try to
+		g.fullScreen = fullScreenValue;
+
+		let stretchModeValue = config['stretchMode'];
+		if (stretchModeValue === undefined) stretchModeValue = true;
+		this.stretchMode = stretchModeValue;
 	};
 
 	ConfigManager.readFullscreen = function (config, name) {

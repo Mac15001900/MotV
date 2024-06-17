@@ -31,6 +31,7 @@ g.hideVideoWindow = function () {
 
 VideoWindow.prototype.show = function (filename, independent = true, loop = true, scale = 1) { //TODO refactor to use setIndependent
     if (this.isOpen()) this.finish();
+    this.isFinished = false;
     const DIMENSIONS = { "seal-reversed.webm": [640, 360], "testVideo.webm": [1920, 937], "loading.webm": [200, 200] }; //This is rather hacky, but much simpler than waiting until a file is loaded to know what its dimentions will be
     this.independent = independent;
     this.loop = loop;
@@ -94,6 +95,7 @@ VideoWindow.prototype.setIndependent = function (independent, updatePosition = t
 
 VideoWindow.prototype.update = function () {
     Window_Base.prototype.update.call(this);
+    if (this.isFinished && this.openness === 0) SceneManager._scene._windowLayer.removeChild(this);
     if (!this.isOpen()) return;
     if (this.openness >= 255 && this.video.style.display === 'none') this.video.style.display = '';
     if (Graphics._realScale !== this.lastScale || this.lastOffset !== Graphics._canvas.offsetTop) {
@@ -114,6 +116,7 @@ VideoWindow.prototype.update = function () {
 }
 
 VideoWindow.prototype.finish = function () {
+    this.isFinished = true;
     Input.update();
     this.close();
     if (this.video) {
@@ -121,7 +124,6 @@ VideoWindow.prototype.finish = function () {
         this.video.removeAttribute('src'); // empty source
         this.video.load(); //This will 'load' and empty video, effectively removing the existing one from memory
     }
-    SceneManager._scene._windowLayer.removeChild(this);
     if (this.independent) g.getInterpreter().setWaitMode('');
 }
 

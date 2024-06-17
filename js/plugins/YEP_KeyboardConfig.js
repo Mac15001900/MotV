@@ -482,7 +482,7 @@ if (Imported.YEP_ButtonCommonEvents) {
 ConfigManager.keyMapper = JSON.parse(JSON.stringify(Input.keyMapper));
 ConfigManager.defaultMap = {
 	9: 'tab', 13: 'ok', 16: 'shift', 17: 'control', 18: 'control',
-	27: 'escape', 32: 'ok', 35: 'pagedown', 36: 'f4', 37: 'left', 38: 'up', 39: 'right',
+	27: 'escape', 32: 'ok', 35: 'pagedown', 37: 'left', 38: 'up', 39: 'right',
 	40: 'down', 45: undefined, 46: 'escape', 65: 'left', 68: 'right', 74: 'ok', 75: 'escape',
 	77: 'escape', 83: 'down', 87: 'up', 88: 'escape', 90: 'ok', 96: 'escape', 98: 'down',
 	100: 'left', 102: 'right', 104: 'up', 110: 'escape', 113: 'fps', 115: 'f4',

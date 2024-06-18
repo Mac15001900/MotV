@@ -28,7 +28,7 @@ wordBank = {
         optionDescriptions: {
             cancel: "",
             alwaysDash: "When enabled, you will run by default and walk when holding the dash button.",
-            fullscreen: "Toggles between fullscreen and windowed mode.\n" + (!Utils.isNwjs ? "This is not very reliable in browsers, it's recommended to use F11 instead." : "You can also change this setting anytime with the F4 key (by default)."),
+            fullscreen: "Toggles between fullscreen and windowed mode.\n" + (!Utils.isNwjs() ? "This is not very reliable in browsers, it's recommended to use F11 instead." : "You can also change this setting anytime with the F4 key (by default)."),
             stretchMode: "When enabled, will stretch the game's contents to fit the whole screen. This may make it look distorted at some resolutions.\nWhen disabled, it will always render at a pixel-perfect resolution, which might not fit on smaller screens.",
             keyConfig: "Allows you to customise the game's controls.",
             lang: "Sets the language of the game.\nCan only be changed in the main menu.",
@@ -192,7 +192,7 @@ wordBank = {
         optionDescriptions: {
             cancel: "",
             alwaysDash: "Z tą opcją będziesz biec domyślnie, a iść normalnie tylko przy wciśniętym klawiszu biegu.",
-            fullscreen: "Przełącza pomiędzy trybem pełnoekranowym a oknem.\n" + (!Utils.isNwjs ? "Nie działa najlepiej w wersji przeglądarkowej - zalecane jest po prostu używanie F11." : "Można to również zmienić w dowolnym momencie klawiszem F4 (domyślnie)"),
+            fullscreen: "Przełącza pomiędzy trybem pełnoekranowym a oknem.\n" + (!Utils.isNwjs() ? "Nie działa najlepiej w wersji przeglądarkowej - zalecane jest po prostu używanie F11." : "Można to również zmienić w dowolnym momencie klawiszem F4 (domyślnie)."),
             stretchMode: "Dopasowuje rozmiar gry do rozmiaru ekranu. Przy niektórych rozdzielczościach może to zniekształcić obraz.\nGdy ta opcja jest wyłączona, gra będzie wyświetlać się w natywnej rozdzielczości, co może nie zmieścić się na mniejszych ekranach.",
             keyConfig: "Pozawala na zmianę ustawień sterowania.",
             lang: "Zmienia język gry.\nTę opcję można zmienić tylko w menu głównym.",

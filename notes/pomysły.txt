@@ -44,5 +44,4 @@ FEN chess strings
 Punchcards (https://www.masswerk.at/keypunch/)
 Flag signals
 Weź n-tą literę z linijki, używając jakoś ukrytych liczb, np. rzymskich
-
-
+Blackjack: karty zawsze są w tej samej kolejności - trzeba znaleźć strategię wygrywającą wszystkie rundy, wtedy startowe ręki stają się liczbami

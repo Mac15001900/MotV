@@ -11,8 +11,9 @@ class MarkerManager extends Window_Base {
         this.ready = false;
         this.open();
         this.opacity = 0;
-        this.contentsOpacity = 255;
+        this.contentsOpacity = 0;
         this.MAX_VERTICAL_OFFSET = 16;
+        this.FADE_SPEED = 32;
 
         let bmp = ImageManager.loadPicture(newMarker);
         bmp.addLoadListener(function () {
@@ -28,15 +29,32 @@ class MarkerManager extends Window_Base {
     }
     update() {
         if (!this.enabled || !this.ready) return;
+        if (this.hiding) {
+            this.contentsOpacity -= this.FADE_SPEED;
+            if (this.contentsOpacity <= 0) {
+                this.contentsOpacity = 0;
+                this.hiding = false;
+                if (this.disableOnHide) this.enabled = false;
+                return;
+            }
+        } else if (this.unhiding) {
+            this.contentsOpacity += this.FADE_SPEED;
+            if (this.contentsOpacity >= 255) {
+                this.contentsOpacity = 255;
+                this.unhiding = false;
+            }
+        }
+        if (g.getInterpreter().isRunning() && this.contentsOpacity > 0 && !this.hiding) this.hiding = true;
+        else if (!g.getInterpreter().isRunning() && this.contentsOpacity < 255 && !this.unhiding) this.unhiding = true;
         /*if (!Input.isPressed(this.watchedKey)) {
             this.enabled = false;
             return;
         }*/
-        this.refresh();
+        if (this.contentsOpacity > 0) this.refresh();
     }
     refresh() {
         this.contents.clear();
-        if (!this.enabled || !this.ready || g.getInterpreter().isRunning()) return;
+        if (!this.enabled || !this.ready) return;
         let events = this.validEvents.filter(e => e.isNearTheScreen(this.screenScale));
         let verticalOffset = Math.floor(this.MAX_VERTICAL_OFFSET * 2 * (Graphics.frameCount % 120) / 120);
         if (verticalOffset > this.MAX_VERTICAL_OFFSET) verticalOffset = this.MAX_VERTICAL_OFFSET - (verticalOffset - this.MAX_VERTICAL_OFFSET);
@@ -52,11 +70,13 @@ class MarkerManager extends Window_Base {
     enable(key) {
         if (!this.ready) return;
         this.enabled = true;
+        this.unhiding = true;
         this.watchedKey = key;
         this.validEvents = $gameMap.events().filter(this.isEventValid);
     }
     disable() {
-        this.enabled = false;
+        this.hiding = true;
+        this.disableOnHide = true;
     }
     isEventValid(event) {
         let page = event.page();

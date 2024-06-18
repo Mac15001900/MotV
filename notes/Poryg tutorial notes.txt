@@ -8,8 +8,13 @@ SceneManager.push(Scene_Name) - adds a new scene to the stack,
 Basic windows (that most others extend):
 Window_Base, Window_Selectable, Window_Command, Window_HorzCommand
 
-
-
 Input.keyMapper["keycode"] = "label";
 Then, inside an update function:
 if(Input.isTriggered("label")) ...
+
+PIXI stuff:
+PIXI.Texture.fromImage(path) - to make a texture
+PIXI.Sprite.fromImage(path) - to make a sprite from imgae
+new PIXI.Sprite(texture) - to make a sprite from texture
+Won't load immidiately ofc
+

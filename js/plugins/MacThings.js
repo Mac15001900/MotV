@@ -173,6 +173,10 @@ macThingsInit = function () {
         g.setupSpellcheck();
     }
 
+    //Setting up the marker manager
+    g.markers = new MarkerManager("eventLabelNew", "eventLabelOld");
+    g.persistentWindows.push(g.markers);
+
     //Other init stuff
     g.gameInitialised = true;
     g.saveWorker = new Worker("./js/plugins/compressor.js");

@@ -50,7 +50,7 @@ ToastWindow.prototype.initialize = function (position, r = 0, g = 255, b = 255) 
     this.queue = []; //Remaining toasts to be displayed
     this.opacity = 0; //Opacity of the window (this will be kept at 0 to not show the default skin)
     this.contentsOpacity = 0; //Opacity of the window's contents
-    this.framesLeft = -1; //For how many frames should we keep displaying this toast
+    this.framesLeft = -1; //For how many frames should we keep displaying the current toast
     this.fadeInLeft = 0; //How many frames of fading in are left
     this.closeListeners = []; //Listeners to be called whenever the window runs out of toasts
 }

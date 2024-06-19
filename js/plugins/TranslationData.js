@@ -56,7 +56,8 @@ wordBank = {
             downText: "Move Down ↓",
             fullscreenText: "Toggle fulscreen mode on/off",
             fastForwardText: "Skip through text",
-            fpsText: "Toggle WebGL FPS counter on/off",
+            fpsText: "Toggle FPS counter on/off",
+            markerText: "Highlight interactable objects",
 
             //Actions as displayed on top of keys
             okKey: "OK",
@@ -73,6 +74,7 @@ wordBank = {
             fastForwardKey: "Skip",
             fullscreenKey: "⛶",
             fpsKey: "FPS",
+            markerKey: "▼",
 
             //Text that appears in the help window
             keyNewHelp: "Bind an action to ",
@@ -221,6 +223,7 @@ wordBank = {
             fullscreenText: "Wł/wył. pełny ekran",
             fastForwardText: "Przewijanie tekstu",
             fpsText: "Licznik FPS",
+            markerText: "Pokaż interaktywne obiekty",
 
             //Actions as displayed on top of keys
             okKey: "OK",
@@ -237,6 +240,7 @@ wordBank = {
             fastForwardKey: ">>",
             fullscreenKey: "⛶",
             fpsKey: "FPS",
+            markerKey: "▼",
 
             //Text that appears in the help window
             keyNewHelp: "Przypisz akcję do klawisza ",

@@ -29,6 +29,7 @@ try {
 }
 
 let MAC_DEBUG = true;
+const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this
@@ -60,6 +61,7 @@ Scene_Map.prototype.onMapLoaded = function () {
     for (let i = 0; i < g.persistentWindows.length; i++) {
         this.addWindow(g.persistentWindows[i]);
     };
+    if (g.markers) this.addChild(g.markers);
     //Handle dynamic collisions 
     if ($dataMap.meta && $dataMap.meta.dynamicCollisions) {
         $dataMap.data = CollisionData[g.lang][$gameMap.mapId()];
@@ -169,13 +171,13 @@ macThingsInit = function () {
     //It will be added to the scene later on in the onMapLoaded alias
 
     //Event test spellchecking TODO
-    if (DataManager.isEventTest() || MAC_DEBUG) {
+    if (DataManager.isEventTest() || ENEBLE_SPELLCHECK) {
         g.setupSpellcheck();
     }
 
     //Setting up the marker manager
     g.markers = new MarkerManager("eventLabelNew", "eventLabelOld");
-    g.persistentWindows.push(g.markers);
+    // g.persistentWindows.push(g.markers); //We can't do that, since it would cover all other windows
 
     //Other init stuff
     g.gameInitialised = true;
@@ -1180,6 +1182,7 @@ g.buttonPressed = function (button) {
             break;
         case "fps": Graphics._switchFPSMeter(); break;
         case "frame": g.scene().update(); break; //TODO special combo for devtools access
+        case "marker": g.markers.enable(button); break;
     }
 }
 
@@ -1371,7 +1374,7 @@ if (MAC_DEBUG) {
     SceneManager.update = function (force) {
         if ($gs && $gs[4] && force !== true) return;
         try {
-            this.tickStart();
+            // this.tickStart();
             if (Utils.isMobileSafari()) {
                 this.updateInputData();
             }
@@ -1384,6 +1387,7 @@ if (MAC_DEBUG) {
     };
 
     SceneManager.updateMain = function () {
+        let ranFrame = false;
         if (Utils.isMobileSafari()) {
             this.changeScene();
             this.updateScene();
@@ -1393,7 +1397,6 @@ if (MAC_DEBUG) {
             if (fTime > 0.25) fTime = 0.25;
             this._currentTime = newTime;
             this._accumulator += fTime;
-            let ranFrame = false;
             while (this._accumulator >= this._deltaTime) {
                 if (!ranFrame) this.tickStart();
                 ranFrame = true;
@@ -1406,12 +1409,12 @@ if (MAC_DEBUG) {
             if (ranFrame) this.tickEnd();
         }
         this.renderScene();
-        this.requestUpdate();
+        if (!($gs && $gs[4])) this.requestUpdate();
     };
 
     proccessKeyDown = function (event) {
         switch (event.key) {
-            case 'f': SceneManager.update(true); break;
+            case 'h': if ($gs[4]) SceneManager.update(true); break;
             case 'g':
                 console.log("Toggling game freeze");
                 $gs[4] = !$gs[4];

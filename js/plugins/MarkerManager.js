@@ -35,6 +35,7 @@ class MarkerManager extends Window_Base {
                 this.contentsOpacity = 0;
                 this.hiding = false;
                 if (this.disableOnHide) this.enabled = false;
+                this.disableOnHide = false;
                 return;
             }
         } else if (this.unhiding) {
@@ -46,10 +47,7 @@ class MarkerManager extends Window_Base {
         }
         if (g.getInterpreter().isRunning() && this.contentsOpacity > 0 && !this.hiding) this.hiding = true;
         else if (!g.getInterpreter().isRunning() && this.contentsOpacity < 255 && !this.unhiding) this.unhiding = true;
-        /*if (!Input.isPressed(this.watchedKey)) {
-            this.enabled = false;
-            return;
-        }*/
+        if (!Input.isPressed(this.watchedKey)) this.disable();
         if (this.contentsOpacity > 0) this.refresh();
     }
     refresh() {
@@ -71,10 +69,13 @@ class MarkerManager extends Window_Base {
         if (!this.ready) return;
         this.enabled = true;
         this.unhiding = true;
+        this.hiding = false;
+        this.disableOnHide = false;
         this.watchedKey = key;
         this.validEvents = $gameMap.events().filter(this.isEventValid);
     }
     disable() {
+        this.unhiding = false;
         this.hiding = true;
         this.disableOnHide = true;
     }

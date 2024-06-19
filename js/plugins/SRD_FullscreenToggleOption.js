@@ -1,5 +1,5 @@
 /*:
- * @plugindesc Adds a Fullscreen Toggle to the Options Window
+ * @plugindesc Adds a Fullscreen Toggle to the Options Window. Also now used to add other config options.
  * @author SumRndmDde
  *
  * @param Option Name
@@ -62,6 +62,7 @@
 
 	ConfigManager.fullscreen = defaultValue;
 	ConfigManager.stretchMode = true;
+	ConfigManager.markerMode = false; //True when toggling, false when holding
 
 	Object.defineProperty(ConfigManager, 'fullscreen', {
 		get: function () {
@@ -95,6 +96,7 @@
 		var config = _ConfigManager_makeData.call(this);
 		config.fullscreen = this.fullscreen;
 		config.stretchMode = this.stretchMode;
+		config.markerMode = this.markerMode;
 		return config;
 	};
 
@@ -108,6 +110,8 @@
 		let stretchModeValue = config['stretchMode'];
 		if (stretchModeValue === undefined) stretchModeValue = true;
 		this.stretchMode = stretchModeValue;
+
+		this.markerMode = config['markerMode'] ?? false;
 	};
 
 	ConfigManager.readFullscreen = function (config, name) {

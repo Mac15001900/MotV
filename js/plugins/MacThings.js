@@ -62,6 +62,7 @@ Scene_Map.prototype.onMapLoaded = function () {
         this.addWindow(g.persistentWindows[i]);
     };
     if (g.markers) this.addChild(g.markers);
+    g.markers.updateEvents();
     //Handle dynamic collisions 
     if ($dataMap.meta && $dataMap.meta.dynamicCollisions) {
         $dataMap.data = CollisionData[g.lang][$gameMap.mapId()];
@@ -1182,7 +1183,10 @@ g.buttonPressed = function (button) {
             break;
         case "fps": Graphics._switchFPSMeter(); break;
         case "frame": g.scene().update(); break; //TODO special combo for devtools access
-        case "marker": g.markers.enable(button); break;
+        case "marker":
+            if (ConfigManager.markerMode) g.markers.toggle();
+            else g.markers.enable(button);
+            break;
     }
 }
 
@@ -1391,6 +1395,7 @@ if (MAC_DEBUG) {
         if (Utils.isMobileSafari()) {
             this.changeScene();
             this.updateScene();
+            ranFrame = true;
         } else {
             var newTime = this._getTimeInMsWithoutMobileSafari();
             var fTime = (newTime - this._currentTime) / 1000;
@@ -1408,7 +1413,7 @@ if (MAC_DEBUG) {
             }
             if (ranFrame) this.tickEnd();
         }
-        this.renderScene();
+        if (ranFrame) this.renderScene();
         if (!($gs && $gs[4])) this.requestUpdate();
     };
 
@@ -1444,16 +1449,17 @@ if (MAC_DEBUG) {
     };
 
     SceneManager.updateMain = function () {
+        let ranFrame = false;
         if (Utils.isMobileSafari()) {
             this.changeScene();
             this.updateScene();
+            ranFrame = true;
         } else {
             var newTime = this._getTimeInMsWithoutMobileSafari();
             var fTime = (newTime - this._currentTime) / 1000;
             if (fTime > 0.25) fTime = 0.25;
             this._currentTime = newTime;
             this._accumulator += fTime;
-            let ranFrame = false;
             while (this._accumulator >= this._deltaTime) {
                 if (!ranFrame) this.tickStart();
                 ranFrame = true;
@@ -1464,7 +1470,7 @@ if (MAC_DEBUG) {
             }
             if (ranFrame) this.tickEnd();
         }
-        this.renderScene();
+        if (ranFrame) this.renderScene();
         this.requestUpdate();
     };
 }

@@ -13,7 +13,7 @@ class MarkerManager extends Window_Base {
         this.opacity = 0;
         this.contentsOpacity = 0;
         this.MAX_VERTICAL_OFFSET = 16;
-        this.FADE_SPEED = 32;
+        this.FADE_SPEED = 48;
 
         let bmp = ImageManager.loadPicture(newMarker);
         bmp.addLoadListener(function () {
@@ -47,7 +47,7 @@ class MarkerManager extends Window_Base {
         }
         if (g.getInterpreter().isRunning() && this.contentsOpacity > 0 && !this.hiding) this.hiding = true;
         else if (!g.getInterpreter().isRunning() && this.contentsOpacity < 255 && !this.unhiding) this.unhiding = true;
-        if (!Input.isPressed(this.watchedKey)) this.disable();
+        if (!Input.isPressed(this.watchedKey) && !ConfigManager.markerMode) this.disable();
         if (this.contentsOpacity > 0) this.refresh();
     }
     refresh() {
@@ -61,7 +61,9 @@ class MarkerManager extends Window_Base {
             let y = event.screenY() * this.screenScale - $gameMap.tileHeight() * this.screenScale - verticalOffset;
 
             //Draw the marker
-            let bmp = $es[event._eventId] ? this.oldMarker : this.newMarker;
+            let isActive = !$es[event._eventId];
+            if (event.event().meta?.SyncMarker) isActive = !$es[parseInt(event.event().meta.SyncMarker)];
+            let bmp = isActive ? this.newMarker : this.oldMarker;
             this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, x, y, bmp.width, bmp.height);
         }
     }
@@ -72,20 +74,30 @@ class MarkerManager extends Window_Base {
         this.hiding = false;
         this.disableOnHide = false;
         this.watchedKey = key;
-        this.validEvents = $gameMap.events().filter(this.isEventValid);
+        this.validEvents = $gameMap.events().filter(this.isEventValid.bind(this));
     }
     disable() {
         this.unhiding = false;
         this.hiding = true;
         this.disableOnHide = true;
     }
+    toggle() {
+        if (!this.enabled || this.hiding) this.enable();
+        else this.disable();
+    }
+    updateEvents() {
+        if (this.enabled) {
+            this.validEvents = $gameMap.events().filter(this.isEventValid.bind(this));
+        }
+    }
     isEventValid(event) {
         let page = event.page();
         if (!page) return false; //The event has no active page
-        if (event.event().meta && event.event().meta.NoMarker) return false; //It has a <noMarker> tag
+        if (event.event().meta?.NoMarker) return false; //It has a <noMarker> tag
         let list = page.list;
         if (list.length <= 1) return false; //It's active page is empty
-        if (event.event().meta && event.event().meta.Marker) return true; //It has a <Marker> tag
+        if (event.event().meta?.Marker) return true; //It has a <Marker> tag
+        if (event.event().meta?.SyncMarker) return this.isEventValid($gameMap._events[parseInt(event.event().meta.SyncMarker)]); //It has a <SyncMarker> tag
         if (list.length === 2 && list[0].code === 355 && list[0].parameters[0].substr(0, 14) === 'runNearbyEvent') return false; //It runs a nearby event (script)
         if (list.length === 2 && list[0].code === 356 && list[0].parameters[0].substr(0, 8).toLowerCase() === 'runevent') return false; //It runs a nearby event (plugin command)
         if (event._trigger > 0) return false; //Different trigger than the action key

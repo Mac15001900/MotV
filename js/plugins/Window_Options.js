@@ -75,6 +75,7 @@ Window_Options.prototype.makeCommandList = function () {
     this.addCommand(s.stretchMode, 'stretchMode');
     this.addCommand('', '');
     this.addCommand(TextManager.alwaysDash, 'alwaysDash');
+    this.addCommand(s.markerMode, 'markerMode');
     this.addCommand(s.messageSpeedOption, 'messageSpeedKey');
     this.addCommand('', '');
     this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title' || MAC_DEBUG); //We really don't want the language to change mid-game
@@ -126,6 +127,8 @@ Window_Options.prototype.statusText = function (index) {
         return langData.dict[value];
     } else if (symbol === 'messageSpeedKey') {
         return s.speedOptions[Number(value)];
+    } else if (symbol === 'markerMode') {
+        return value ? s.markerToggle : s.markerHold;
     } else {
         return this.booleanStatusText(value);
     }
@@ -216,6 +219,7 @@ Window_Options.prototype.cursorRight = function (wrap, reverse = false) {
     } else {
         this.changeValue(symbol, !value);
     }
+    if (index + 1 < this._list.length) this.redrawItem(index + 1); //Some characters, such a 'g', extend to the option below
 };
 
 Window_Options.prototype.cursorLeft = function (wrap) {

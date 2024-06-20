@@ -14,6 +14,7 @@ class MarkerManager extends Window_Base {
         this.contentsOpacity = 0;
         this.MAX_VERTICAL_OFFSET = 16;
         this.FADE_SPEED = 48;
+        this.markerRegions = {}; //For each region event stores the list of map coordinates its synchronised with
 
         let bmp = ImageManager.loadPicture(newMarker);
         bmp.addLoadListener(function () {
@@ -29,6 +30,11 @@ class MarkerManager extends Window_Base {
     }
     update() {
         if (!this.enabled || !this.ready) return;
+        if (!g.getInterpreter().isRunning() && this.contentsOpacity < 255 && !this.unhiding && !this.disableOnHide) {
+            this.hiding = false;
+            this.unhiding = true;
+            this.updateEvents();
+        }
         if (this.hiding) {
             this.contentsOpacity -= this.FADE_SPEED;
             if (this.contentsOpacity <= 0) {
@@ -45,27 +51,35 @@ class MarkerManager extends Window_Base {
                 this.unhiding = false;
             }
         }
-        if (g.getInterpreter().isRunning() && this.contentsOpacity > 0 && !this.hiding) this.hiding = true;
-        else if (!g.getInterpreter().isRunning() && this.contentsOpacity < 255 && !this.unhiding) this.unhiding = true;
+        if (g.getInterpreter().isRunning() && !g.getInterpreter().event().event().meta?.MarkerNoHide && this.contentsOpacity > 0 && !this.hiding) this.hiding = true;
         if (!Input.isPressed(this.watchedKey) && !ConfigManager.markerMode) this.disable();
         if (this.contentsOpacity > 0) this.refresh();
     }
     refresh() {
         this.contents.clear();
         if (!this.enabled || !this.ready) return;
-        let events = this.validEvents.filter(e => e.isNearTheScreen(this.screenScale));
+        let events = this.validEvents.filter(e => e.isNearTheScreen(this.screenScale) || e.event().meta.MarkerRegion);
         let verticalOffset = Math.floor(this.MAX_VERTICAL_OFFSET * 2 * (Graphics.frameCount % 120) / 120);
         if (verticalOffset > this.MAX_VERTICAL_OFFSET) verticalOffset = this.MAX_VERTICAL_OFFSET - (verticalOffset - this.MAX_VERTICAL_OFFSET);
         for (let event of events) {
             let x = event.screenX() * this.screenScale - 28; //28 was found experimentally, I'm not sure why it's offset by that
             let y = event.screenY() * this.screenScale - $gameMap.tileHeight() * this.screenScale - verticalOffset;
 
+            if (event.event().meta?.MarkerOffset) {
+                let [dx, dy] = event.event().meta?.MarkerOffset.split(',').map(Number);
+                x += dx * $gameMap.tileWidth() * this.screenScale;
+                y += dy * $gameMap.tileHeight() * this.screenScale;
+            }
+
             //Draw the marker
             let isActive = !$es[event._eventId];
-            if (event.event().meta?.SyncMarker) isActive = !$es[parseInt(event.event().meta.SyncMarker)];
-            let bmp = isActive ? this.newMarker : this.oldMarker;
-            this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, x, y, bmp.width, bmp.height);
+            if (event.event().meta?.MarkerSync) isActive = !$es[parseInt(event.event().meta.MarkerSync)];
+            this.drawMarker(x, y, isActive);
         }
+    }
+    drawMarker(screenX, screenY, active) {
+        let bmp = active ? this.newMarker : this.oldMarker;
+        this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, screenX, screenY, bmp.width, bmp.height);
     }
     enable(key) {
         if (!this.ready) return;
@@ -74,7 +88,7 @@ class MarkerManager extends Window_Base {
         this.hiding = false;
         this.disableOnHide = false;
         this.watchedKey = key;
-        this.validEvents = $gameMap.events().filter(this.isEventValid.bind(this));
+        this.updateEvents();
     }
     disable() {
         this.unhiding = false;
@@ -88,6 +102,23 @@ class MarkerManager extends Window_Base {
     updateEvents() {
         if (this.enabled) {
             this.validEvents = $gameMap.events().filter(this.isEventValid.bind(this));
+            let regionEvents = this.validEvents.filter(e => e.event().meta?.MarkerRegion);
+            let regionsNeeded = {}; //For each region id, stores the event id that needs it
+            this.markerRegions = {};
+            for (let event of regionEvents) {
+                let regionId = event.event().meta.MarkerRegion;
+                regionsNeeded[regionId] = event.eventId();
+                this.markerRegions[event.eventId()] = [];
+            }
+            //Iterate over every tile in the map, and add to region events if its region id matches a needed one
+            for (let x = 0; x < $gameMap.width(); x++) {
+                for (let y = 0; y < $gameMap.height(); y++) {
+                    let regionId = $gameMap.regionId(x, y);
+                    if (regionsNeeded[regionId]) {
+                        this.markerRegions[regionsNeeded[regionId]].push([x, y]);
+                    }
+                }
+            }
         }
     }
     isEventValid(event) {
@@ -97,7 +128,7 @@ class MarkerManager extends Window_Base {
         let list = page.list;
         if (list.length <= 1) return false; //It's active page is empty
         if (event.event().meta?.Marker) return true; //It has a <Marker> tag
-        if (event.event().meta?.SyncMarker) return this.isEventValid($gameMap._events[parseInt(event.event().meta.SyncMarker)]); //It has a <SyncMarker> tag
+        if (event.event().meta?.MarkerSync) return this.isEventValid($gameMap._events[parseInt(event.event().meta.MarkerSync)]); //It has a <MarkerSync> tag
         if (list.length === 2 && list[0].code === 355 && list[0].parameters[0].substr(0, 14) === 'runNearbyEvent') return false; //It runs a nearby event (script)
         if (list.length === 2 && list[0].code === 356 && list[0].parameters[0].substr(0, 8).toLowerCase() === 'runevent') return false; //It runs a nearby event (plugin command)
         if (event._trigger > 0) return false; //Different trigger than the action key

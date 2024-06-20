@@ -1196,9 +1196,18 @@ Graphics._onKeyDown = () => { }; //Removed the default actions, since they're ha
 var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
 Game_Interpreter.prototype.setup = function (list, eventId) {
     if (g.scene() instanceof Scene_Map)
-        _Game_Interpreter_setup.call(this, [...list, { "code": 355, "indent": 0, "parameters": DataManager.isEventTest() ? ["SceneManager.exit()"] : ["$es[this.eventId()] = true;"] }], eventId);
+        _Game_Interpreter_setup.call(this, [...list, { "code": 355, "indent": 0, "parameters": ["g.onEventEnd(this);"] }], eventId);
     else
         _Game_Interpreter_setup.call(this, list, eventId);
+}
+
+g.onEventEnd = function (inp) {
+    //DataManager.isEventTest() ? ["SceneManager.exit()"] : ["$es[this.eventId()] = true;"]
+    if (DataManager.isEventTest()) SceneManager.exit();
+    else {
+        if (g.skipEventSeen !== inp.eventId()) $es[inp.eventId()] = true;
+        else g.skipEventSeen = 0;
+    }
 }
 
 //Creates save titles when saving

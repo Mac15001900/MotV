@@ -28,6 +28,7 @@ class MarkerManager extends Window_Base {
         let padding = Window_Base.prototype.standardPadding();
         super(0, 0, Graphics.width + padding * 2, Graphics.height + padding * 2);
         this.standardPadding = () => 0;
+        this.padding = 0;
         this.move(0, 0, Graphics.width, Graphics.height);
         this.enabled = false;
         this.watchedKey = null;
@@ -76,7 +77,10 @@ class MarkerManager extends Window_Base {
                 this.unhiding = false;
             }
         }
-        if (g.getInterpreter().isRunning() && !g.getInterpreter().event().event().meta?.MarkerNoHide && this.contentsOpacity > 0 && !this.hiding) this.hiding = true;
+        if (g.getInterpreter().isRunning() && !g.getInterpreter().event().event().meta?.MarkerNoHide && this.contentsOpacity > 0 && !this.hiding) {
+            this.hiding = true;
+            this.unhiding = false;
+        }
         if (!Input.isPressed(this.watchedKey) && !ConfigManager.markerMode) this.disable();
         if (this.contentsOpacity > 0) this.refresh();
     }
@@ -87,7 +91,7 @@ class MarkerManager extends Window_Base {
         let verticalOffset = Math.floor(this.MAX_VERTICAL_OFFSET * 2 * (Graphics.frameCount % 120) / 120);
         if (verticalOffset > this.MAX_VERTICAL_OFFSET) verticalOffset = this.MAX_VERTICAL_OFFSET - (verticalOffset - this.MAX_VERTICAL_OFFSET);
         for (let event of events) {
-            let x = event.screenX() * this.screenScale - 28; //28 was found experimentally, I'm not sure why it's offset by that
+            let x = event.screenX() * this.screenScale;
             let y = event.screenY() * this.screenScale - $gameMap.tileHeight() * this.screenScale - verticalOffset;
 
             if (event.event().meta?.MarkerOffset) {
@@ -100,11 +104,19 @@ class MarkerManager extends Window_Base {
             let isActive = !$es[event._eventId];
             if (event.event().meta?.MarkerSync) isActive = !$es[parseInt(event.event().meta.MarkerSync)];
             this.drawMarker(x, y, isActive);
+
+            //Draw region markers
+            if (event.event().meta?.MarkerRegion) {
+                for (let [x, y] of this.markerRegions[event.eventId()]) {
+                    this.drawMarker(($gameMap.adjustX(x) + 0.5) * $gameMap.tileWidth() * this.screenScale, ($gameMap.adjustY(y) * $gameMap.tileHeight() - 6) * this.screenScale - verticalOffset, isActive);
+                    //We subtract 6 (pre-scaling) pixels from Y, because that's what events are naturally offset by (see Game_CharacterBase.shiftY), and we want to sync up with those
+                }
+            }
         }
     }
     drawMarker(screenX, screenY, active) {
         let bmp = active ? this.newMarker : this.oldMarker;
-        this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, screenX, screenY, bmp.width, bmp.height);
+        this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, screenX - bmp.width / 2, screenY, bmp.width, bmp.height);
     }
     /**
      * Shows event markers. If done by holding down a key, specify it as an argument, and MarkerManager will watch for it being unpressed. 
@@ -137,16 +149,18 @@ class MarkerManager extends Window_Base {
             let regionsNeeded = {}; //For each region id, stores the event id that needs it
             this.markerRegions = {};
             for (let event of regionEvents) {
-                let regionId = event.event().meta.MarkerRegion;
+                let regionId = Number(event.event().meta.Region);
                 regionsNeeded[regionId] = event.eventId();
                 this.markerRegions[event.eventId()] = [];
             }
-            //Iterate over every tile in the map, and add to region events if its region id matches a needed one
-            for (let x = 0; x < $gameMap.width(); x++) {
-                for (let y = 0; y < $gameMap.height(); y++) {
-                    let regionId = $gameMap.regionId(x, y);
-                    if (regionsNeeded[regionId]) {
-                        this.markerRegions[regionsNeeded[regionId]].push([x, y]);
+            if (regionEvents.length > 0) {
+                //Iterate over every tile in the map, and add to region events if its region id matches a needed one
+                for (let x = 0; x < $gameMap.width(); x++) {
+                    for (let y = 0; y < $gameMap.height(); y++) {
+                        let regionId = $gameMap.regionId(x, y);
+                        if (regionsNeeded[regionId]) {
+                            this.markerRegions[regionsNeeded[regionId]].push([x, y]);
+                        }
                     }
                 }
             }

@@ -1,3 +1,28 @@
+/**
+ * Manages markers that indicate an event can be interacted with.
+ * 
+ * Markers are automatically shown for events that both:
+ * - Have an active page with at least one command (which is *not* running a nearby event)
+ * - Have an Action Button trigger; "No trigger" events (with trough enabled and below/above priority) will not get a marker either
+ * 
+ * There are various event notetags that modify this behaviour:
+ * <Marker> - draws a marker ignoring most conditions (except not having an empty page). AHK: "<mar"
+ * <NoMarker> - prevents a marker from being drawn. AHK: "<mno"
+ * <MarkerNoHide> - All markers are usually hidden while an event is running, except when said event has this notetag. AHK: "<mhi"
+ * <MarkerSync:ID> - Synchronises the marker (whether its enabled and its colour) with that of another event with the given ID. AHK: "<msy"
+ * <MarkerOffse:X,Y> - Draw the marker with some offset from where it would normally be drawn. The offset is specified in tiles. AHK: "<mof"
+ * <MarkerRegion> - For region events, it will draw markers over every tile from their region. Do NOT use this tag on the main map (for performance reasons).
+ * 
+ * 
+ * By default markers are blue (indicating an event has not yet been interacted with). After the player interacts with one (and its $es[] is set to true) it will change colour to white.
+ * There are a few exceptions to this:
+ * - When the event's interpreter's "skipEventSeen" property is set to true, it will not be marked as seen.
+ * - Tranfer commands set skipEventSeen to true. This is to avoid potentially setting an event as seen when on the new map.
+ * - Exit event processing and Erase event will skip running "g.onEventEnd", and therefore marking an event as seen. This is intentional behaviour and is often used to skip marking an event.
+ * 
+ * To override the above behaviours when needed, set the value of "$es[this.eventId()]" directly.
+ * 
+ */
 class MarkerManager extends Window_Base {
     constructor(newMarker, oldMarker) {
         let padding = Window_Base.prototype.standardPadding();
@@ -12,8 +37,8 @@ class MarkerManager extends Window_Base {
         this.open();
         this.opacity = 0;
         this.contentsOpacity = 0;
-        this.MAX_VERTICAL_OFFSET = 16;
-        this.FADE_SPEED = 48;
+        this.MAX_VERTICAL_OFFSET = 16; //Markers will animate between their base y position and one increased by this amount, always moving 2 pixels/frame.
+        this.FADE_SPEED = 48; //How much should opacity change by in a single frame when fading in/out. Opacity has values 0-255.
         this.markerRegions = {}; //For each region event stores the list of map coordinates its synchronised with
 
         let bmp = ImageManager.loadPicture(newMarker);
@@ -81,6 +106,12 @@ class MarkerManager extends Window_Base {
         let bmp = active ? this.newMarker : this.oldMarker;
         this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, screenX, screenY, bmp.width, bmp.height);
     }
+    /**
+     * Shows event markers. If done by holding down a key, specify it as an argument, and MarkerManager will watch for it being unpressed. 
+     * Otherwise it will stay enabled until disable() is called.
+     * If done by toggle, call toggle() instead.
+     * @param {Number} [key] Keycode, if enabled by holding a key
+     */
     enable(key) {
         if (!this.ready) return;
         this.enabled = true;
@@ -132,7 +163,7 @@ class MarkerManager extends Window_Base {
         if (list.length === 2 && list[0].code === 355 && list[0].parameters[0].substr(0, 14) === 'runNearbyEvent') return false; //It runs a nearby event (script)
         if (list.length === 2 && list[0].code === 356 && list[0].parameters[0].substr(0, 8).toLowerCase() === 'runevent') return false; //It runs a nearby event (plugin command)
         if (event._trigger > 0) return false; //Different trigger than the action key
-        if (event.isThrough() && event._priorityType !== 1 || event.event().meta && event.event().meta.NoTrigger) return false; //It has a disabled trigger
+        if (event.isThrough() && event._priorityType !== 1 || event.event().meta?.NoTrigger) return false; //It has a disabled trigger
 
         return true;
     }

@@ -63,7 +63,7 @@ Scene_Map.prototype.onMapLoaded = function () {
     };
     if (g.markers) this.addChild(g.markers);
     g.markers.updateEvents();
-    if (g.getInterpreter()) g.getInterpreter().skipEventSeen = false;
+    // if (g.getInterpreter()) g.getInterpreter().skipEventSeen = false;
     //Handle dynamic collisions 
     if ($dataMap.meta && $dataMap.meta.dynamicCollisions) {
         $dataMap.data = CollisionData[g.lang][$gameMap.mapId()];
@@ -1197,9 +1197,13 @@ Graphics._onKeyDown = () => { }; //Removed the default actions, since they're ha
 var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
 Game_Interpreter.prototype.setup = function (list, eventId) {
     if (g.scene() instanceof Scene_Map)
-        _Game_Interpreter_setup.call(this, [...list, { "code": 355, "indent": 0, "parameters": ["g.onEventEnd(this);"] }], eventId);
+        _Game_Interpreter_setup.call(this, [{ "code": 355, "indent": 0, "parameters": ["g.onEventStart(this);"] }, ...list, { "code": 355, "indent": 0, "parameters": ["g.onEventEnd(this);"] }], eventId);
     else
         _Game_Interpreter_setup.call(this, list, eventId);
+}
+
+g.onEventStart = function (inp) {
+    inp.skipEventSeen = false;
 }
 
 g.onEventEnd = function (inp) {
@@ -1426,9 +1430,11 @@ if (MAC_DEBUG) {
                 this._accumulator -= this._deltaTime;
                 if ($gs && $gs[4]) break;
             }
-            if (ranFrame) this.tickEnd();
         }
-        if (ranFrame) this.renderScene();
+        if (ranFrame) {
+            this.renderScene();
+            this.tickEnd();
+        }
         if (!($gs && $gs[4])) this.requestUpdate();
     };
 

@@ -63,6 +63,7 @@ Scene_Map.prototype.onMapLoaded = function () {
     };
     if (g.markers) this.addChild(g.markers);
     g.markers.updateEvents();
+    if (g.getInterpreter()) g.getInterpreter().skipEventSeen = false;
     //Handle dynamic collisions 
     if ($dataMap.meta && $dataMap.meta.dynamicCollisions) {
         $dataMap.data = CollisionData[g.lang][$gameMap.mapId()];
@@ -619,7 +620,7 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
 //Gets the currently active interpreter (or the map's default if none are active)
 g.getInterpreter = function () {
     let res = $gameMap._interpreter;
-    while (res._childInterpreter && res._childInterpreter.isRunning()) res = res._childInterpreter;
+    while (res?._childInterpreter && res._childInterpreter.isRunning()) res = res._childInterpreter;
     return res;
 }
 
@@ -1204,11 +1205,16 @@ Game_Interpreter.prototype.setup = function (list, eventId) {
 g.onEventEnd = function (inp) {
     //DataManager.isEventTest() ? ["SceneManager.exit()"] : ["$es[this.eventId()] = true;"]
     if (DataManager.isEventTest()) SceneManager.exit();
-    else {
-        if (g.skipEventSeen !== inp.eventId()) $es[inp.eventId()] = true;
-        else g.skipEventSeen = 0;
-    }
+    else if (!inp.skipEventSeen) $es[inp.eventId()] = true;
 }
+
+//We skip marking an event as seen if it has a transfer, since this would sometimes lead to an event with the same id on the new map being marked instead
+void ((alias) => {
+    Game_Interpreter.prototype.command201 = function () {
+        this.skipEventSeen = true;
+        alias.call(this);
+    }
+})(Game_Interpreter.prototype.command201);
 
 //Creates save titles when saving
 var _DataManager_makeSavefileInfo = DataManager.makeSavefileInfo;

@@ -9,6 +9,8 @@ https://en.wikipedia.org/wiki/Lutetium
 https://en.wikipedia.org/wiki/Carbon
 https://en.wikipedia.org/wiki/Zinc
 
+$gv[70].map(i=>["potasem", "lutetem", "węglem", "cynkiem"][i]).join(", ")
+
 Stare:
 K  Lu C Zn  P  I  Er W  I  As Te K  Gd                   
 19 71 6 30  15 53 68 74 53 33 52 19 64                                       

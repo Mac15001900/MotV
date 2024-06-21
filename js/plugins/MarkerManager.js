@@ -38,7 +38,8 @@ class MarkerManager extends Window_Base {
         this.open();
         this.opacity = 0;
         this.contentsOpacity = 0;
-        this.MAX_VERTICAL_OFFSET = 16; //Markers will animate between their base y position and one increased by this amount, always moving 2 pixels/frame.
+        this.MIN_VERTICAL_OFFSET = 0; //Markers will animate between their min and max offset from basic position, over the course of 1 second (or 2 both ways).
+        this.MAX_VERTICAL_OFFSET = 16;
         this.FADE_SPEED = 48; //How much should opacity change by in a single frame when fading in/out. Opacity has values 0-255.
         this.markerRegions = {}; //For each region event stores the list of map coordinates its synchronised with
 
@@ -88,11 +89,11 @@ class MarkerManager extends Window_Base {
         this.contents.clear();
         if (!this.enabled || !this.ready) return;
         let events = this.validEvents.filter(e => e.isNearTheScreen(this.screenScale) || e.event().meta.MarkerRegion);
-        let verticalOffset = Math.floor(this.MAX_VERTICAL_OFFSET * 2 * (Graphics.frameCount % 120) / 120);
+        let verticalOffset = this.MIN_VERTICAL_OFFSET + Math.floor((this.MAX_VERTICAL_OFFSET - this.MIN_VERTICAL_OFFSET) * 2 * (Graphics.frameCount % 120) / 120);
         if (verticalOffset > this.MAX_VERTICAL_OFFSET) verticalOffset = this.MAX_VERTICAL_OFFSET - (verticalOffset - this.MAX_VERTICAL_OFFSET);
         for (let event of events) {
             let x = event.screenX() * this.screenScale;
-            let y = event.screenY() * this.screenScale - $gameMap.tileHeight() * this.screenScale - verticalOffset;
+            let y = (event.screenY() + event.shiftY()) * this.screenScale - $gameMap.tileHeight() * this.screenScale + verticalOffset;
 
             if (event.event().meta?.MarkerOffset) {
                 let [dx, dy] = event.event().meta?.MarkerOffset.split(',').map(Number);
@@ -108,15 +109,20 @@ class MarkerManager extends Window_Base {
             //Draw region markers
             if (event.event().meta?.MarkerRegion) {
                 for (let [x, y] of this.markerRegions[event.eventId()]) {
-                    this.drawMarker(($gameMap.adjustX(x) + 0.5) * $gameMap.tileWidth() * this.screenScale, ($gameMap.adjustY(y) * $gameMap.tileHeight() - 6) * this.screenScale - verticalOffset, isActive);
-                    //We subtract 6 (pre-scaling) pixels from Y, because that's what events are naturally offset by (see Game_CharacterBase.shiftY), and we want to sync up with those
+                    this.drawMarker(($gameMap.adjustX(x) + 0.5) * $gameMap.tileWidth() * this.screenScale, $gameMap.adjustY(y) * $gameMap.tileHeight() * this.screenScale + verticalOffset, isActive);
                 }
             }
         }
     }
+    /**
+     * Draws a marker at the given screen position. Coordinates given specify the centre X and bottom Y of the marker.
+     * @param {Number} screenX Screen position of the centre of the marker
+     * @param {Number} screenY Screen position of the bottom of the marker
+     * @param {Boolean} active Whether the "active" sprite (indicating a new event) should be used
+     */
     drawMarker(screenX, screenY, active) {
         let bmp = active ? this.newMarker : this.oldMarker;
-        this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, screenX - bmp.width / 2, screenY, bmp.width, bmp.height);
+        this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, screenX - bmp.width / 2, screenY - bmp.height, bmp.width, bmp.height);
     }
     /**
      * Shows event markers. If done by holding down a key, specify it as an argument, and MarkerManager will watch for it being unpressed. 

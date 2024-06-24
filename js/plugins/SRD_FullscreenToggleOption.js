@@ -72,9 +72,17 @@
 			if (value) {
 				g.fullScreen = true;
 				Graphics._requestFullScreen();
+				if (!g.stretchMode) {
+					Graphics._stretchEnabled = false;
+					Graphics._updateAllElements();
+				}
 			} else {
 				g.fullScreen = false;
 				Graphics._cancelFullScreen();
+				if (!Graphics._stretchEnabled) {
+					Graphics._stretchEnabled = true;
+					Graphics._updateAllElements();
+				}
 			}
 		},
 		configurable: true
@@ -82,11 +90,14 @@
 
 	Object.defineProperty(ConfigManager, 'stretchMode', {
 		get: function () {
-			return Graphics._stretchEnabled;
+			return g.stretchMode;
 		},
 		set: function (value) {
-			Graphics._stretchEnabled = value;
-			Graphics._updateAllElements();
+			g.stretchMode = value;
+			if (g.fullScreen) {
+				Graphics._stretchEnabled = value;
+				Graphics._updateAllElements();
+			}
 		},
 		configurable: true
 	});
@@ -104,12 +115,13 @@
 	ConfigManager.applyData = function (config) {
 		_ConfigManager_applyData.call(this, config);
 		let fullScreenValue = this.readFullscreen(config, 'fullscreen');
-		this.fullscreen = Utils.isNwjs ? fullScreenValue : false; //We can't start full-screen in browsers, so we won't try to
+		this.fullscreen = Utils.isNwjs() ? fullScreenValue : false; //We can't start full-screen in browsers, so we won't try to
 		g.fullScreen = fullScreenValue;
 
 		let stretchModeValue = config['stretchMode'];
 		if (stretchModeValue === undefined) stretchModeValue = true;
 		this.stretchMode = stretchModeValue;
+		g.stretchMode = stretchModeValue;
 
 		this.markerMode = config['markerMode'] ?? false;
 	};

@@ -25,6 +25,11 @@ teapot - PD George Chernilevsky
 scissors - PD Evan-amos
 zgierz (map of Poalnd) - Share-Alike [ Karte: NordNordWest, Lizenz: Creative Commons by-sa-3.0 de (https://commons.wikimedia.org/wiki/File:Poland_adm_location_map.svg), „Poland adm location map“, Added the flag and marked a spot., https://creativecommons.org/licenses/by-sa/3.0/de/legalcode ]
 
+Misc images:
+Big paper background (sheet of old paper.tif): CC0, Q_x (https://opengameart.org/content/sheet-of-old-paper)
+Small paper background (old_paper.png): CC0, Flixberry Entertainment
+
+
 Library tiles (and more) - Indrah
 Books - Milu (more things here) https://forums.rpgmakerweb.com/index.php?threads/milus-tiles-characters-icons-autumn-updating.99358/
 Sci-fi floors, probably others - SchwarzeNacht

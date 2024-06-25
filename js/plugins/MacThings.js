@@ -29,7 +29,7 @@ try {
 }
 
 let MAC_DEBUG = true;
-const ENEBLE_SPELLCHECK = false;
+const ENEBLE_SPELLCHECK = true;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this

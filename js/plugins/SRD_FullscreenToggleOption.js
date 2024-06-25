@@ -64,6 +64,9 @@
 	ConfigManager.stretchMode = true;
 	ConfigManager.markerMode = false; //True when toggling, false when holding
 
+	const PREFERRED_WINDOW_SIZES = [[1920, 1080], [1280, 720], [640, 360]];
+	const ADJUST_WINDOW_SIZE = true;
+
 	Object.defineProperty(ConfigManager, 'fullscreen', {
 		get: function () {
 			return g.fullScreen;
@@ -87,6 +90,20 @@
 		},
 		configurable: true
 	});
+
+	onFullscreenFinish = function () {
+		if (!g.fullScreen && ADJUST_WINDOW_SIZE) g.resizeTo(...getBestWindowSize());
+	};
+
+	getBestWindowSize = function () {
+		for (let i = 0; i < PREFERRED_WINDOW_SIZES.length - 1; i++) {
+			const [x, y] = PREFERRED_WINDOW_SIZES[i];
+			if (x <= screen.availWidth && y <= screen.availHeight) return PREFERRED_WINDOW_SIZES[i];
+		}
+		return PREFERRED_WINDOW_SIZES.at(-1);
+	};
+
+	if (Utils.isNwjs()) document.addEventListener("webkitfullscreenchange", onFullscreenFinish, false);
 
 	Object.defineProperty(ConfigManager, 'stretchMode', {
 		get: function () {

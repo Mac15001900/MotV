@@ -219,7 +219,7 @@ Window_Options.prototype.cursorRight = function (wrap, reverse = false) {
     } else {
         this.changeValue(symbol, !value);
     }
-    if (index + 1 < this._list.length) this.redrawItem(index + 1); //Some characters, such a 'g', extend to the option below
+    if (index + 1 < this._list.length) this.redrawItem(index + 1); //Some characters, such a 'g', extend to the option below, so it must also be redrawn
 };
 
 Window_Options.prototype.cursorLeft = function (wrap) {

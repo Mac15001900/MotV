@@ -1390,10 +1390,11 @@ AudioManager.createBuffer = function (folder, name) {
     }
 };
 
-//===================================== Frame advance stuff =====================================
+//===================================== Debug stuff =====================================
 
 if (MAC_DEBUG) {
 
+    //Frame advancing changes
     SceneManager.update = function (force) {
         if ($gs && $gs[4] && force !== true) return;
         try {
@@ -1438,6 +1439,7 @@ if (MAC_DEBUG) {
         if (!($gs && $gs[4])) this.requestUpdate();
     };
 
+    //Custom key behaviours
     proccessKeyDown = function (event) {
         switch (event.key) {
             case 'h': if ($gs[4]) SceneManager.update(true); break;
@@ -1447,11 +1449,47 @@ if (MAC_DEBUG) {
                 if (!$gs[4]) SceneManager.requestUpdate();
                 break;
             case 'q':
-                if (MAC_DEBUG) SceneManager.exit();
+                SceneManager.exit();
+                break;
+            case 'End':
+                g.textFastForward = true;
+                break;
+        }
+    }
+
+    proccessKeyUp = function (event) {
+        switch (event.key) {
+            case 'End':
+                g.textFastForward = false;
+                break;
         }
     }
 
     document.addEventListener('keydown', proccessKeyDown);
+    document.addEventListener('keyup', proccessKeyUp);
+
+    //Text skipping
+    Window_Message.prototype.isFastForward = function () {
+        return !!g.textFastForward;
+    }
+
+    //Skip wait commands in fast-forward
+    void ((alias) => {
+        Game_Interpreter.prototype.command230 = function () {
+            if (g.textFastForward) this.wait(1);
+            else alias.call(this);
+            return true;
+        }
+    })(Game_Interpreter.prototype.command230);
+
+    //Skip move route wait commands in fast-forward
+    void ((alias) => {
+        Game_Character.prototype.processMoveCommand = function (command) {
+            if (g.textFastForward && command.code === Game_Character.ROUTE_WAIT) this._waitCount = 1;
+            else alias.call(this, command);
+        }
+    })(Game_Character.prototype.processMoveCommand);
+
 } else {
     //Fixing frame counting
 

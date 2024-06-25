@@ -1378,10 +1378,11 @@ Window_Message.prototype.newLineX = function() {
 		}
 };
 
-Window_Message.prototype.isFastForward = function() {
+//Change: Disabled this, move to MacThings debug options
+/*Window_Message.prototype.isFastForward = function() {
     if (!$gameSystem.isFastFowardEnabled()) return false;
 		return Input.isPressed(Yanfly.Param.MSGFastForwardKey);
-};
+};*/
 
 Yanfly.Message.Window_Message_updateInput =
 		Window_Message.prototype.updateInput;

@@ -6364,7 +6364,7 @@ Game_CharacterBase.prototype.resetStopCount = function () {
 
 Game_CharacterBase.prototype.realMoveSpeed = function () { //Change: the bonus depends on DEBUG
     let bonus = MAC_DEBUG ? 2 : 1.
-    return this._moveSpeed + (this.isDashing() ? bonus : 0);
+    return this._moveSpeed + (this.isDashing() ? bonus : 0) + (g.textFastForward ? 3 : 0);
 };
 
 Game_CharacterBase.prototype.distancePerFrame = function () {

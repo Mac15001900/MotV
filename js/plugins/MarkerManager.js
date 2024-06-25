@@ -3,14 +3,14 @@
  * 
  * Markers are automatically shown for events that both:
  * - Have an active page with at least one command (which is *not* running a nearby event)
- * - Have an Action Button trigger; "No trigger" events (with trough enabled and below/above priority) will not get a marker either
+ * - Have an Action Button trigger; "No trigger" events (with through enabled and below/above priority) will not get a marker either
  * 
  * There are various event notetags that modify this behaviour:
  * <Marker> - draws a marker ignoring most conditions (except not having an empty page). AHK: "<mar"
  * <NoMarker> - prevents a marker from being drawn. AHK: "<mno"
  * <MarkerNoHide> - All markers are usually hidden while an event is running, except when said event has this notetag. AHK: "<mhi"
- * <MarkerSync:ID> - Synchronises the marker (whether its enabled and its colour) with that of another event with the given ID. AHK: "<msy"
- * <MarkerOffse:X,Y> - Draw the marker with some offset from where it would normally be drawn. The offset is specified in tiles. AHK: "<mof"
+ * <MarkerSync:ID> - Synchronises the marker (whether it's enabled and its colour) with that of another event with the given ID. AHK: "<msy"
+ * <MarkerOffset:X,Y> - Draw the marker with some offset from where it would normally be drawn. The offset is specified in tiles. AHK: "<mof"
  * <MarkerRegion> - For region events, it will draw markers over every tile from their region. Do NOT use this tag on the main map (for performance reasons).
  * 
  * 
@@ -22,6 +22,7 @@
  * 
  * To override the above behaviours when needed, set the value of "$es[this.eventId()]" directly.
  * 
+ * ConfigManager.markerMode dictates whether markers are shown when an assigned key is held (when false) or are toggled by that key (when true)
  */
 class MarkerManager extends Window_Base {
     constructor(newMarker, oldMarker) {
@@ -38,10 +39,11 @@ class MarkerManager extends Window_Base {
         this.open();
         this.opacity = 0;
         this.contentsOpacity = 0;
+        this.markerRegions = {}; //For each region event stores the list of map coordinates its synchronised with
+
         this.MIN_VERTICAL_OFFSET = 0; //Markers will animate between their min and max offset from basic position, over the course of 1 second (or 2 both ways).
         this.MAX_VERTICAL_OFFSET = 16;
         this.FADE_SPEED = 48; //How much should opacity change by in a single frame when fading in/out. Opacity has values 0-255.
-        this.markerRegions = {}; //For each region event stores the list of map coordinates its synchronised with
 
         let bmp = ImageManager.loadPicture(newMarker);
         bmp.addLoadListener(function () {

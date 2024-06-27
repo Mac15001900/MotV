@@ -1176,15 +1176,16 @@ Input.update = function () {
 };
 
 //Special things that happen on certain button presses
-g.buttonPressed = function (button) {
+g.buttonPressed = function (button) { //TODO special combo for devtools access
     switch (button) {
         case "f4":
             ConfigManager.fullscreen = !ConfigManager.fullscreen; //Note: "fullscreen", not "fullScreen"
             if (g.scene() instanceof Scene_Options) $windows.get(Window_Options).refresh();
             break;
         case "fps": Graphics._switchFPSMeter(); break;
-        case "frame": g.scene().update(); break; //TODO special combo for devtools access
+        // case "frame": g.scene().update(); break; 
         case "marker":
+            if (g.scene() instanceof Scene_InputDialog) return;
             if (ConfigManager.markerMode) g.markers.toggle();
             else g.markers.enable(button);
             break;
@@ -1444,6 +1445,7 @@ if (MAC_DEBUG) {
         switch (event.key) {
             case 'h': if ($gs[4]) SceneManager.update(true); break;
             case 'g':
+                if (g.scene() instanceof Scene_InputDialog) return;
                 console.log("Toggling game freeze");
                 $gs[4] = !$gs[4];
                 if (!$gs[4]) SceneManager.requestUpdate();

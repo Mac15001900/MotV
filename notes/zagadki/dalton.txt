@@ -77,23 +77,23 @@ Podpowiedź do zapisu Hilla:
 
 \c[5]Zapis Hilla\c[0] - jednoznaczny sposób zapisu sumarycznych wzorów \c[3]związków chemicznych\c[0], w którym ustalona jest kolejność podawania symboli \c[3]pierwiastków chemicznych\c[0].
 
-- dla \c[5] związków organicznych \c[0](zawierających \c[3]wodór \c[0]i \c[3]węgiel\c[0]): na początku wzoru podawana jest liczba atomów \c[3]węgla\c[0], następnie \c[3]wodoru\c[0], a następnie w kolejności \c[3]alfabetycznej\c[0] pozostałych pierwiastków.
-- dla \c[5]związków nieorganicznych\c[0]: we wzorze \c[3]pierwiastki\c[0] występują w ściśle \c[3]alfabetycznym\c[0] porządku
+- dla związków \c[5]zawierających węgiel \c[0]: na początku wzoru podawana jest liczba atomów \c[3]węgla\c[0], następnie \c[3]wodoru\c[0], a następnie w kolejności \c[3]alfabetycznej\c[0] pozostałych pierwiastków.
+- dla związków \c[5]bez węgla\c[0]: we wzorze \c[3]pierwiastki\c[0] występują w ściśle \c[3]alfabetycznym\c[0] porządku
 - oznaczenia \c[5]izotopów\c[0], np. \c[3]D\c[0] i \c[3]T\c[0] są traktowane na równi z symbolami \c[3]pierwiastków\c[0], tj. wchodzą do ogólnego porządku \c[3]alfabetycznego\c[0] kolejności zapisu.
 
 With extra line breaks:
 
-\fb\c[3]Zapis Hilla\c[0]\fb - jednoznaczny sposób zapisu sumarycznych wzorów \c[6]związków chemicznych\c[0], 
-w którym ustalona jest kolejność podawania symboli \c[6]pierwiastków chemicznych\c[0].
+\fb\c[3]Zapis Hilla\c[0]\fb - jednoznaczny sposób zapisu sumarycznych wzorów \c[14]związków chemicznych\c[0], 
+w którym ustalona jest kolejność podawania symboli \c[14]pierwiastków chemicznych\c[0].
 
-- dla \c[3]związków nieorganicznych\c[0]: 
-we wzorze \c[6]pierwiastki\c[0] występują w ściśle \c[6]alfabetycznym\c[0] porządku.
+- dla związków \c[3]zawierających węgiel\c[0]:
+na początku wzoru podawana jest liczba atomów \c[14]węgla\c[0], następnie \c[14]wodoru\c[0], a następnie w kolejności \c[14]alfabetycznej\c[0] pozostałych pierwiastków.
 
-- dla \c[3]związków organicznych \c[0](to znaczy zawierających \c[6]wodór \c[0]i \c[6]węgiel\c[0]):
-na początku wzoru podawana jest liczba atomów \c[6]węgla\c[0], następnie \c[6]wodoru\c[0], a następnie w kolejności \c[6]alfabetycznej\c[0] pozostałych pierwiastków.
+- dla związków \c[3]bez węgla\c[0]: 
+we wzorze \c[14]pierwiastki\c[0] występują w ściśle \c[14]alfabetycznym\c[0] porządku.
 
-- oznaczenia \c[3]izotopów\c[0], np. \c[6]D\c[0] i \c[6]T\c[0] są traktowane na równi z symbolami \c[6]pierwiastków\c[0], 
-to znaczy wchodzą do ogólnego porządku \c[6]alfabetycznego\c[0] kolejności zapisu.
+- oznaczenia \c[3]izotopów\c[0], np. \c[14]D\c[0] i \c[14]T\c[0] są traktowane na równi z symbolami \c[14]pierwiastków\c[0], 
+to znaczy wchodzą do ogólnego porządku \c[14]alfabetycznego\c[0] kolejności zapisu.
 
 
 
@@ -146,3 +146,30 @@ Odnajdź oryginalny manuskrypt "How the fourth floor came to Crowley Castle". Na
 
 Find the original manuscript of "How the fourth floor came to Crowley Castle". Then exit the library by the main entrance.\nCross over the tram tracks and continue onwards via a street whose name starts with an "o".\nAfter walking under a railroad bridge take the third turn right. Then turn left, into the path cutting across the grass.\nAt the end of the path, on a chair of stone, you shall find someone who knows these symbols.\n
 
+Hill notation notes:
+
+Pl:
+Zapis Hilla - jednoznaczny sposób zapisu sumarycznych wzorów związków chemicznych, 
+w którym ustalona jest kolejność podawania symboli pierwiastków chemicznych.
+
+- dla związków zawierających węgiel:
+na początku wzoru podawana jest liczba atomów węgla, następnie wodoru, a następnie w kolejności alfabetycznej pozostałych pierwiastków.
+
+- dla związków bez węgla: 
+we wzorze pierwiastki występują w ściśle alfabetycznym porządku.
+
+- oznaczenia izotopów, np. D i T są traktowane na równi z symbolami pierwiastków, 
+to znaczy wchodzą do ogólnego porządku alfabetycznego kolejności zapisu.
+
+En:
+\c[3]Hill Notation\c[0] - an unambiguous way of writing \c[14]chemical formulae\c[0], with a fixed order of chemical element symbols.
+
+For compounds \c[3]containing carbon\c[0]:
+  The number of \c[14]carbon\c[0] atoms is given at the beginning of the formula, 
+  followed by \c[14]hydrogen\c[0] and then all other elements in \c[14]alphabetical\c[0] order.
+
+For compounds \c[3]without carbon\c[0]:
+  All elements (including \c[14]hydrogen\c[0]) appear in strict \c[14]alphabetical\c[0] order. 
+
+\c[3]Isotope\c[0] designations, e.g. \c[14]D\c[0] and \c[14]T\c[0], are treated on a par with the regular element symbols, 
+  i.e. they are part of the same \c[14]alphabetical\c[0] order.

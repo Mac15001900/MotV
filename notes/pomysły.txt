@@ -45,3 +45,4 @@ Punchcards (https://www.masswerk.at/keypunch/)
 Flag signals
 Weź n-tą literę z linijki, używając jakoś ukrytych liczb, np. rzymskich
 Blackjack: karty zawsze są w tej samej kolejności - trzeba znaleźć strategię wygrywającą wszystkie rundy, wtedy startowe ręki stają się liczbami
+Folklore classification system - https://en.wikipedia.org/wiki/Aarne%E2%80%93Thompson%E2%80%93Uther_Index. Nie wiem, co z tym zrobić, ale ma potencjał. Liczby jako podpowiedzi?

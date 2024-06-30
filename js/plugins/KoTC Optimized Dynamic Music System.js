@@ -1,4 +1,4 @@
-
+//Note: this plugin has been rather heavily rewritten, and might actually benefit from being re-made from scratch.
 /*:
  * @target MZ
  * @plugindesc v1 Allows one to have a Dynamic Music System
@@ -177,14 +177,14 @@ Scene_Map.prototype.onMapLoaded = function () {
 };
 
 function DisableKoTCDynamicMusic() {
-    $KDMS.DynamicMusicDisabled = true; //Change: 1 -> true
+    $KDMS.DynamicMusicDisabled = true;
     KoTCDStopMusic();
 }
 
 function EnableKoTCDynamicMusic() {
-    $KDMS.DynamicMusicDisabled = false; //Change: undefined -> false
+    $KDMS.DynamicMusicDisabled = false;
     AudioManager.stopBgm();
-    KoTCDynamicMusic(true); //Change: 1 -> true
+    KoTCDynamicMusic(true);
 }
 
 function KoTCDStopMusic() {
@@ -245,7 +245,8 @@ function KoTCDynamicMusic(forceplay, musiclistname) {
 
         $KDMS.PreviousMusicList = $KDMS.CurrentMusicList;
         $KDMS.NextSongTimeout3 = setTimeout(function () {
-            if (!AudioManager._bgmBuffer) return;//This shouldn't happen unless something goes very wrong, but if it does we'll break the music system rather than the whole game
+            if (!AudioManager._bgmBuffer) return;//This shouldn't happen unless something goes very wrong, but if it does let's break the music system rather than the whole game
+            if (g.topLevelScene() === 'Scene_Title') return; //We shouldn't be here, but just in case
             var timetonextsong = Math.round(AudioManager._bgmBuffer._totalTime * (pitch / 100) * timesToPlay * 1000);
             if (MUSIC_DEBUG) {
                 console.log(`${timetonextsong / 1000}s to next song. We will repeat this one ${timesToPlay - 1} times.`);

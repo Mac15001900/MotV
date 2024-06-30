@@ -1126,6 +1126,9 @@ Scene_Title.prototype.start = function () {
     if (g) {
         g.gameInitialised = false;
         if (g.autosaveTimeout) clearTimeout(g.autosaveTimeout);
+        if ($KDMS.NextSongTimeout) clearTimeout($KDMS.NextSongTimeout);
+        if ($KDMS.NextSongTimeout2) clearTimeout($KDMS.NextSongTimeout2);
+        if ($KDMS.NextSongTimeout3) clearTimeout($KDMS.NextSongTimeout3);
     }
     //Language stuff
     if (g.lang === "none") {

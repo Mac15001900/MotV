@@ -1945,7 +1945,7 @@ SceneManager.onKeyDown = function (event) {
                 }
                 break;
             case 119:   // F8
-                if (Utils.isNwjs() && Utils.isOptionValid('test')) {
+                if (Utils.isNwjs()) { //Change: TODO re-add after playtesting: && Utils.isOptionValid('test')
                     require('nw.gui').Window.get().showDevTools();
                 }
                 break;

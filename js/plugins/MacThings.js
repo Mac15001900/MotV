@@ -187,6 +187,8 @@ macThingsInit = function () {
     g.videoWindow = new VideoWindow();
     g.gameInitialised = true;
     console.log("MacThings init complete", $gv[1]);
+    console.log("%cIf you're trying to solve a puzzle, go back.", "background: black; color: aqua; font-size: x-large");
+    console.log("%cNo puzzle in this game requires using the console or interacting with the game in any way other than playing it.", "background: black; color: aqua; font-size: large");
 }
 
 initialiseGData = function () {

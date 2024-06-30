@@ -158,7 +158,7 @@ wordBank = {
 
         //Puzzle related
         newAreaUnlocked: "New Vault segment has been unlocked.",
-        tempVictory: "You've found every Nexus fragment in this version of the game.\n\\c[4]Congratulations!",
+        tempVictory: "You've found every Nexus fragment in this version of the game.\n\\c[4]\{\{\WaveCongratulations!",
         remainingToNextArea: (keys) => `${keys.capitalise()} still required to unlock the next segment.`,
         keysRemaining: (keys) => `${keys.capitalise()} ${keys === 1 ? "is" : "are"} still remaining.`,
         randomSuccessMessages: (currentKeys) => [
@@ -329,7 +329,7 @@ wordBank = {
 
         //Puzzle related
         newAreaUnlocked: "Nowy obszar Skarbca odbklowowany.",
-        tempVictory: "Udało Ci się zdobyć wszystkie klucze dostępne w tej wersji gry.\n\\c[4]Gratulacje!",
+        tempVictory: "Udało Ci się zdobyć wszystkie klucze dostępne w tej wersji gry.\n\\c[4]\{\{\WaveGratulacje!",
         remainingToNextArea: (keys) => `Do odblokowania kolejnego obszaru zdobyć trzeba jeszcze ${keys}.`,
         keysRemaining: (keys) => `Do zdobycia jeszcze ${keys}.`,
         randomSuccessMessages: (currentKeys) => [

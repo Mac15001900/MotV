@@ -172,7 +172,6 @@ macThingsInit = function () {
     g.persistentWindows.push(g.topRightToast);
     //It will be added to the scene later on in the onMapLoaded alias
 
-    //Event test spellchecking TODO
     if (DataManager.isEventTest() || ENEBLE_SPELLCHECK) {
         g.setupSpellcheck();
     }
@@ -182,11 +181,11 @@ macThingsInit = function () {
     // g.persistentWindows.push(g.markers); //We can't do that, since it would cover all other windows
 
     //Other init stuff
-    g.gameInitialised = true;
     g.saveWorker = new Worker("./js/plugins/compressor.js");
     scheduleAutosave(true);
     g.pictureWindow = new PictureWindow();
     g.videoWindow = new VideoWindow();
+    g.gameInitialised = true;
     console.log("MacThings init complete", $gv[1]);
 }
 
@@ -1179,7 +1178,7 @@ Input.update = function () {
 };
 
 //Special things that happen on certain button presses
-g.buttonPressed = function (button) { //TODO special combo for devtools access
+g.buttonPressed = function (button) { //TODO-x special combo for devtools access
     switch (button) {
         case "f4":
             ConfigManager.fullscreen = !ConfigManager.fullscreen; //Note: "fullscreen", not "fullScreen"
@@ -1906,7 +1905,7 @@ void ((alias) => {
     }
 })(Game_Interpreter.prototype.setupChoices);*/
 
-//TODO custom cursor!
+//TODO-x custom cursor!
 /*  document.body.style.cursor = file == ""
         ? "default"
         : `url("${base_url}${file}.png") ${x_offset} ${y_offset}, ${fallbackStyle}`;*/

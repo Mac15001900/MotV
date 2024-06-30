@@ -1052,7 +1052,7 @@ Window_KeyConfig.prototype.printableName = function (keyName) {
 		case '←': return s.controls.leftArrow;
 		case '→': return s.controls.rightArrow;
 		case '↓': return s.controls.downArrow;
-		case "Space": return s.controls.space; //The only key that needs translation TODO it also need translation on the key itself xD
+		case "Space": return s.controls.space; //The only key that needs translation
 		default: return keyName;
 	}
 }

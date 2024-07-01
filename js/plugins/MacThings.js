@@ -1163,7 +1163,7 @@ Scene_Title.prototype.start = function () {
 })();
 
 //Custom cursor graphic
-document.body.style.cursor = `url("img/pictures/cursorBright.png") 4 5, auto`;
+document.body.style.cursor = `url("img/pictures/cursorBlue.png") 4 5, auto`;
 
 //Adding unpressed key support
 /**

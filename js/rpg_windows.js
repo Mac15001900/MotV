@@ -1103,7 +1103,7 @@ Window_Selectable.prototype.onTouch = function (triggered) {
         }
     }
     if (this.index() !== lastIndex) {
-        SoundManager.playCursor();
+        // SoundManager.playCursor(); //Change: got rid of cursor movement sound, since this now happens on hover
     }
 };
 

@@ -111,6 +111,8 @@ Chakra-Petch (computer-ish one): Open font licence https://github.com/m4rc1e/Cha
 Square sans: Sizenko Alexander (freeware)
 "Video SSD" font: GuyStruct (https://fontstruct.com/fontstructions/show/1355331)
 
+Small scripts (that don't get their own file):
+Rehtinor - mouse on hover
 
 Detale 2 investigation:
 Left half is an official release, just credit Enterbrain
@@ -148,3 +150,4 @@ Wikipedia attribution generator: https://lizenzhinweisgenerator.de/?lang=en
 Extra modern tiles to check out: http://chocobana.my.coocan.jp/data/data/material/map.html
 
 Pixel mart thingy: ghostpixxells, CC0, https://ghostpixxells.itch.io/pixel-mart
+

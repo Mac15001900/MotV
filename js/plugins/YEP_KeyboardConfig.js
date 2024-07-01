@@ -1178,6 +1178,12 @@ Window_KeyAction.prototype.cursorDown = function (wrap) {
 	if (this.currentExt() === 'skipThis') this.cursorDown(wrap);
 }
 
+Window_KeyAction.prototype.hitTest = function (x, y) {
+	let res = Window_Selectable.prototype.hitTest.call(this, x, y);
+	if (this._list[res]?.ext === 'skipThis') return -1;
+	else return res;
+}
+
 //=============================================================================
 // Scene_Options
 //=============================================================================

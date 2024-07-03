@@ -1,6 +1,6 @@
 /*:
  * @author Mac15001900
- * @plugindesc v1.2.1 Allows events to run other events in various ways.
+ * @plugindesc v1.3.0 Allows events to run other events in various ways.
  * 
  * @param With an invalid target
  * @desc What should the plugin do when trying to run a non-existent event or page?
@@ -57,6 +57,20 @@
  * @type text
  * @default Terrain
  * @parent Enable terrain events
+* 
+ * @param Mouse movement passthrough
+ * @desc Stops mouse movement from being interrupted by touch events that run inactive events.
+ * @type boolean
+ * @default true
+ * @on Enable
+ * @off Disable
+ * 
+ * @param Force passthrough tag
+ * @desc The name of the notetag used to force mouse movement passthrough for an event.
+ * @type text
+ * @default NoStop
+ * @parent Mouse movement passthrough
+ * 
  * 
  * @help
  * This plugin provides a command "RunEvent [id|name|tag|offset]", which allows 
@@ -155,6 +169,16 @@
  * notetag.
  *
  * If there are any, region events will priority over terrain events.
+ * 
+ * ------------------------- Mouse movement passthrough -------------------------
+ * 
+ * When using mouse movement, by default the player will stop when they run over
+ * any "Player Touch" event that's not empty (has some commands). You probably
+ * don't want that to happen if that event only runs another event, which *is*
+ * empty. This option will make sure the player keeps moving in this situation.
+ * 
+ * If an event does something else as well (like setting a switch), but you still
+ * don't want it to stop the player, you can add a <NoStop> notetag.
  *   
  * --------------------------------- Licence ------------------------------------
  * 
@@ -374,27 +398,20 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
         }(Game_Player.prototype.startMapEvent);
     }
 
-    void ((alias) => {
-        Scene_Map.prototype.updateDestination = function () {
-            if (this.isMapTouchOk() || $.shouldClearDestination()) alias.call(this);
-        }
-    })(Scene_Map.prototype.updateDestination);
-
-    /*Scene_Map.prototype.updateDestination = function () {
-        if (this.isMapTouchOk()) {
-            this.processMapTouch();
-        } else if (shouldClearDestination()) {
-            $gameTemp.clearDestination();
-            this._touchCount = 0;
-        }
-    }*/;
+    if (params["Mouse movement passthrough"] === "true") {
+        void ((alias) => {
+            Scene_Map.prototype.updateDestination = function () {
+                if (this.isMapTouchOk() || $.shouldClearDestination()) alias.call(this);
+            }
+        })(Scene_Map.prototype.updateDestination);
+    }
 
     $.shouldClearDestination = function () {
         if (!$.getInterpreter() || !$.getInterpreter().event()) return false;
-        let list = $.getInterpreter().event().list(); //We're accessing the list from event() instead of directly from the interpreter to get a version that (hopefully) hasn't been modified by plugins
-        if (list.length === 2 && list[0].code === 355 && list[0].parameters[0].substr(0, 14) === 'runNearbyEvent') return false; //It runs a nearby event (script)
+        let list = $.getInterpreter().event().list().filter(e => e.code !== 108 && e.code !== 408); //We're accessing the list from event() instead of directly from the interpreter to get a version that (hopefully) hasn't been modified by plugins
+        if (list.length === 2 && list[0].code === 355 && list[0].parameters[0].substr(0, 14) === 'runNearbyEvent') return false; //It runs a nearby event (old script way)
         if (list.length === 2 && list[0].code === 356 && list[0].parameters[0].substr(0, 8).toLowerCase() === 'runevent') return false; //It runs a nearby event (plugin command)
-        if ($.getInterpreter().event().event().meta["NoStop"]) return false; //It has a notetag disabling stopping
+        if ($.getInterpreter().event().event().meta[params["Force passthrough tag"]]) return false; //It has a notetag disabling stopping
 
         return true;
     }

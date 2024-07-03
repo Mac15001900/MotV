@@ -177,7 +177,7 @@ macThingsInit = function () {
     }
 
     //Setting up the marker manager
-    g.markers = new MarkerManager("eventLabelNew", "eventLabelOld");
+    g.markers = new MarkerManager("eventLabelNew", "eventLabelOld", "eventLabelNewCB");
     // g.persistentWindows.push(g.markers); //We can't do that, since it would cover all other windows
 
     //Other init stuff

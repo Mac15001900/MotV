@@ -25,7 +25,7 @@
  * ConfigManager.markerMode dictates whether markers are shown when an assigned key is held (when false) or are toggled by that key (when true)
  */
 class MarkerManager extends Window_Base {
-    constructor(newMarker, oldMarker) {
+    constructor(newMarker, oldMarker, colorblindMarker) {
         let padding = Window_Base.prototype.standardPadding();
         super(0, 0, Graphics.width + padding * 2, Graphics.height + padding * 2);
         this.standardPadding = () => 0;
@@ -48,13 +48,19 @@ class MarkerManager extends Window_Base {
         let bmp = ImageManager.loadPicture(newMarker);
         bmp.addLoadListener(function () {
             this.newMarker = bmp;
-            if (this.oldMarker) this.ready = true;
+            if (this.oldMarker && this.colorblindMarker) this.ready = true;
         }.bind(this));
 
         let bmp2 = ImageManager.loadPicture(oldMarker);
         bmp2.addLoadListener(function () {
             this.oldMarker = bmp2;
-            if (this.newMarker) this.ready = true;
+            if (this.newMarker && this.colorblindMarker) this.ready = true;
+        }.bind(this));
+
+        let bmp3 = ImageManager.loadPicture(colorblindMarker);
+        bmp.addLoadListener(function () {
+            this.colorblindMarker = bmp3;
+            if (this.oldMarker && this.newMarker) this.ready = true;
         }.bind(this));
     }
     update() {
@@ -123,7 +129,7 @@ class MarkerManager extends Window_Base {
      * @param {Boolean} active Whether the "active" sprite (indicating a new event) should be used
      */
     drawMarker(screenX, screenY, active) {
-        let bmp = active ? this.newMarker : this.oldMarker;
+        let bmp = active ? (g.isColorblind ? this.colorblindMarker : this.newMarker) : this.oldMarker;
         this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, screenX - bmp.width / 2, screenY - bmp.height, bmp.width, bmp.height);
     }
     /**
@@ -190,6 +196,5 @@ class MarkerManager extends Window_Base {
         return true;
     }
 }
-
 
 

@@ -1057,21 +1057,6 @@ Window_KeyConfig.prototype.printableName = function (keyName) {
 	}
 }
 
-//Change cursor's opacity to be a bit more visible (change *8 to *4)
-Window_KeyConfig.prototype._updateCursor = function () {
-	var blinkCount = this._animationCount % 80;
-	var cursorOpacity = this.contentsOpacity;
-	if (this.active) {
-		if (blinkCount < 40) {
-			cursorOpacity -= blinkCount * 2;
-		} else {
-			cursorOpacity -= (80 - blinkCount) * 2;
-		}
-	}
-	this._windowCursorSprite.alpha = cursorOpacity / 255;
-	this._windowCursorSprite.visible = this.isOpen();
-};
-
 //Reordered the draw order to make the cursor appear on top
 Window_KeyConfig.prototype._createAllParts = function () {
 	this._windowSpriteContainer = new PIXI.Container();

@@ -1165,8 +1165,23 @@ Scene_Title.prototype.start = function () {
     }
 })();
 
-//Custom cursor graphic
+//Custom mouse cursor graphic
 document.body.style.cursor = `url("img/pictures/cursorBlue.png") 4 5, auto`;
+
+//Making the (selection) cursor's opacity change slower and less drastic
+Window.prototype._updateCursor = function () {
+    var blinkCount = this._animationCount % 80;
+    var cursorOpacity = this.contentsOpacity;
+    if (this.active) {
+        if (blinkCount < 40) {
+            cursorOpacity -= blinkCount * 2;
+        } else {
+            cursorOpacity -= (80 - blinkCount) * 2;
+        }
+    }
+    this._windowCursorSprite.alpha = cursorOpacity / 255;
+    this._windowCursorSprite.visible = this.isOpen();
+};
 
 //Adding unpressed key support
 /**

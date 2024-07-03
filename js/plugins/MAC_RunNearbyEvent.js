@@ -208,7 +208,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
      * @returns {Boolean} True iff the event was successfully run.
      */
     $.run = function (arg, inp, pageId, supressErrors) {
-        inp ??= $.getInterpreter(); //If not specified we'll just grab the main intepreter
+        inp ||= $.getInterpreter(); //If not specified we'll just grab the main intepreter
         if (inp.chainLength > Number(params["Max chain length"])) throw new Error("MAC_RunNearbyEvent: looks like you've made an infinite loop (or a chain that's longer than allowed maximum).");
         let event = null;
         let error = null;
@@ -254,7 +254,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
                     case 'this':
                         break;
                     default:
-                        throw new Error(`"MAC_RunNearbyEvent: invalid direction: ${part}`);
+                        throw new Error(`MAC_RunNearbyEvent: invalid direction: ${part}`);
                 }
             }
             event = $gameMap._events[$gameMap.eventIdXy(x, y)];
@@ -278,7 +278,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
             if (inp.isRunning()) {
                 inp.setupChild(commandList, event.eventId()); //The meat of this function - starting the event
                 inp._childInterpreter._depth -= 1; //We don't want to increase the depth here, so we undo the default +1
-                inp._childInterpreter.chainLength = (inp.chainLength ?? 0) + 1;
+                inp._childInterpreter.chainLength = (inp.chainLength || 0) + 1;
             } else {
                 inp.setup(commandList, event.eventId());
             }
@@ -372,6 +372,31 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
                 }
             }
         }(Game_Player.prototype.startMapEvent);
+    }
+
+    void ((alias) => {
+        Scene_Map.prototype.updateDestination = function () {
+            if (this.isMapTouchOk() || $.shouldClearDestination()) alias.call(this);
+        }
+    })(Scene_Map.prototype.updateDestination);
+
+    /*Scene_Map.prototype.updateDestination = function () {
+        if (this.isMapTouchOk()) {
+            this.processMapTouch();
+        } else if (shouldClearDestination()) {
+            $gameTemp.clearDestination();
+            this._touchCount = 0;
+        }
+    }*/;
+
+    $.shouldClearDestination = function () {
+        if (!$.getInterpreter() || !$.getInterpreter().event()) return false;
+        let list = $.getInterpreter().event().list(); //We're accessing the list from event() instead of directly from the interpreter to get a version that (hopefully) hasn't been modified by plugins
+        if (list.length === 2 && list[0].code === 355 && list[0].parameters[0].substr(0, 14) === 'runNearbyEvent') return false; //It runs a nearby event (script)
+        if (list.length === 2 && list[0].code === 356 && list[0].parameters[0].substr(0, 8).toLowerCase() === 'runevent') return false; //It runs a nearby event (plugin command)
+        if ($.getInterpreter().event().event().meta["NoStop"]) return false; //It has a notetag disabling stopping
+
+        return true;
     }
 
 })(window.MAC_RunNearbyEvent);

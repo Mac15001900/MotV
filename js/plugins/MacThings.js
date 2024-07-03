@@ -29,7 +29,7 @@ try {
 }
 
 let MAC_DEBUG = true;
-const ENEBLE_SPELLCHECK = true;
+const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this
@@ -187,8 +187,10 @@ macThingsInit = function () {
     g.videoWindow = new VideoWindow();
     g.gameInitialised = true;
     console.log("MacThings init complete", $gv[1]);
-    console.log("%cIf you're trying to solve a puzzle, go back.", "background: black; color: aqua; font-size: x-large");
-    console.log("%cNo puzzle in this game requires using the console or interacting with the game in any way other than playing it.", "background: black; color: aqua; font-size: large");
+    if (!MAC_DEBUG) {
+        console.log("%cIf you're trying to solve a puzzle, go back.", "background: black; color: aqua; font-size: x-large");
+        console.log("%cNo puzzle in this game requires using the console or interacting with the game in any way other than playing it.", "background: black; color: aqua; font-size: large");
+    }
 }
 
 initialiseGData = function () {
@@ -706,10 +708,11 @@ g.showMessage = function (inp, message, face, faceFile = 'mc') {
  * @param {number} [defaultId] The ID of the face within the face file (0-7), to be used for messages which do not specify a face id.
  */
 g.showMessages = function (inp, messages, defaultId) {
-    if (typeof messages === "string") messages = { string: messages };
     if (!Array.isArray(messages)) messages = [messages];
+    messages = messages.map(m => typeof m === 'string' ? { string: m } : m);
     console.assert(Array.isArray(messages), "showMessages: messages must be an array (at this point)");
-    console.assert(messages.every(m => typeof m === 'object'), "showMessages: messages must be an array of objects");
+    console.log(messages);
+    console.assert(messages.every(m => typeof m === 'object'), "showMessages: messages must be an array of objects or strings");
     console.assert(messages.every(m => m.hasOwnProperty('string')), "showMessages: message missing a string");
     let commandList = [];
     for (let message of messages) {

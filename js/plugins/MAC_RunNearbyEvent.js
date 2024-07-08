@@ -1,6 +1,6 @@
 /*:
  * @author Mac15001900
- * @plugindesc v1.3.0 Allows events to run other events in various ways.
+ * @plugindesc v1.3.1 Allows events to run other events in various ways.
  * 
  * @param With an invalid target
  * @desc What should the plugin do when trying to run a non-existent event or page?
@@ -407,11 +407,13 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
     }
 
     $.shouldClearDestination = function () {
-        if (!$.getInterpreter() || !$.getInterpreter().event()) return false;
-        let list = $.getInterpreter().event().list().filter(e => e.code !== 108 && e.code !== 408); //We're accessing the list from event() instead of directly from the interpreter to get a version that (hopefully) hasn't been modified by plugins
+        let id = $.getInterpreter().eventId();
+        let event = $gameMap.event(id);
+        if (!event) return false;
+        let list = event.list().filter(e => e.code !== 108 && e.code !== 408); //We're accessing the list from event() instead of directly from the interpreter to get a version that (hopefully) hasn't been modified by plugins
         if (list.length === 2 && list[0].code === 355 && list[0].parameters[0].substr(0, 14) === 'runNearbyEvent') return false; //It runs a nearby event (old script way)
         if (list.length === 2 && list[0].code === 356 && list[0].parameters[0].substr(0, 8).toLowerCase() === 'runevent') return false; //It runs a nearby event (plugin command)
-        if ($.getInterpreter().event().event().meta[params["Force passthrough tag"]]) return false; //It has a notetag disabling stopping
+        if (event.event().meta[params["Force passthrough tag"]]) return false; //It has a notetag disabling stopping
 
         return true;
     }

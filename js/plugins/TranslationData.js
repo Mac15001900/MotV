@@ -186,7 +186,7 @@ wordBank = {
             [{ string: "Ah, and I thought I had it.", id: 0 }, { string: "I \\fiwill\\fi figure this out eventually, one way or another.", id: 4 }],
             { string: "Let's think about this more carefully. There must be some\nlogical way to do it...", id: 4, balloon: BALLOON_ID.SILENCE },
             lastGuess.length < 40 ? `So it isn't ${lastGuess}?\nThen what is it?` : null,
-            guessAmount >= 2 && g.data.wrongGuesses.at(-2).length < 55 ? { string: `Oh well, at least this one made more sense than\n ${g.data.wrongGuesses.at(-2)}.`, id: 1 } : null,
+            guessAmount >= 2 && g.data.wrongGuesses.at(-2).length < 55 ? { string: `Oh well, at least this one made more sense than\n"${g.data.wrongGuesses.at(-2)}".`, id: 1 } : null,
             guessAmount > 5 ? { string: "Well, at lest it doesn't seem like the amount of guesses is\nin any way limited.", id: 1 } : null,
             guessAmount > 15 ? { string: "I \\fireally\\fi hope all those wrong guesses won't have any\nconsequences later.", id: 5 } : null,
 
@@ -354,7 +354,7 @@ wordBank = {
             [{ string: "A już myślałam, że to mam." }, { string: "Prędej czy później jakoś to rozwiążę!" }],
             { string: "Pomyślmy, to musi mieć jakieś logiczne rozwiązanie...", id: 4, balloon: BALLOON_ID.SILENCE },
             lastGuess.length < 30 ? `Czyli to jednak nie ${lastGuess}.\nW takim razie co?` : null,
-            guessAmount >= 2 && g.data.wrongGuesses.at(-2).length < 55 ? { string: `Przynajmniej miało to trochę więcej sensu niż\n ${g.data.wrongGuesses.at(-2)}.`, id: 1 } : null,
+            guessAmount >= 2 && g.data.wrongGuesses.at(-2).length < 55 ? { string: `Przynajmniej miało to trochę więcej sensu niż\n"${g.data.wrongGuesses.at(-2)}".`, id: 1 } : null,
             guessAmount > 5 ? "No, cóż, przynajmniej nie wygląda na to, żeby ilość pojejść\nbyła jakkolwiek ogarniczona." : null,
             guessAmount > 15 ? { string: "Naprawdę mam nadzieję, że te wszystkie błędne klucze nie\nbędą w przyszłości miały żadnych negatywnych konwekwecji...", id: 5 } : null,
 

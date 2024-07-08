@@ -25,13 +25,13 @@ Dla każdej liczby naturalnej n:
 English: nexus[antepenultima] (ends with pi)
 
 qfbvx[ctyhumwbuwkpi]
-qfbvx[ct yh um w bu wk pi] - alternating colours to highlight pi
+qfbvx[ct yh um w bu wk pi] - alternating colours to highlight pi?
 
 Mistakes:
 Just ignoring "[:" trscrhosnnhnf
 
-Correctly accounting for "["   |  Ignoring "["
-n,1,n+1,1,n+2 pattern: [wsrgmlnakvzow] | [bnxatevstmjeh]
+Correctly accounting for "["   |  Ignoring "[" :
+n, 1, n+1, 1, n+2, 1, ... pattern:   [wsrgmlnakvzow] | [bnxatevstmjeh]
 Above, but at 10 it rolls back to 0: [wsrgmlnauvjog] | [bnxatevstwjoh]
 Above, but at 10 it rolls back to 1: [wsrgmlnatviof] | [bnxatevstvjnh]
 
@@ -43,6 +43,9 @@ For every natural number n, the following must be true:
 
 (some extra hint for the end?)
 16 greek flags?
+
+Additional hint:
+It might not be a rainbow, but there's still something useful at its end.
 
 No better words that antepenultima unfortunately. Only "nco" starts with pi, and the ones that end with it are:
 'antiparagraphe','adenolymphoma', 'angiokeratoma', 'angiolymphoma', 'antepenultima', 'archiblastoma', 'arthroempyema', 'blepharophyma', 'branchiostoma', 'cardiorrheuma', 'cholesteatoma', 'chondrenchyma', 'chondrolipoma', 'chondromyxoma', 

@@ -711,7 +711,6 @@ g.showMessages = function (inp, messages, defaultId) {
     if (!Array.isArray(messages)) messages = [messages];
     messages = messages.map(m => typeof m === 'string' ? { string: m } : m);
     console.assert(Array.isArray(messages), "showMessages: messages must be an array (at this point)");
-    console.log(messages);
     console.assert(messages.every(m => typeof m === 'object'), "showMessages: messages must be an array of objects or strings");
     console.assert(messages.every(m => m.hasOwnProperty('string')), "showMessages: message missing a string");
     let commandList = [];
@@ -1225,7 +1224,7 @@ Input.update = function () {
 };
 
 //Special things that happen on certain button presses
-g.buttonPressed = function (button) { //TODO-x special combo for devtools access
+g.buttonPressed = function (button) {
     switch (button) {
         case "f4":
             ConfigManager.fullscreen = !ConfigManager.fullscreen; //Note: "fullscreen", not "fullScreen"
@@ -1951,11 +1950,6 @@ void ((alias) => {
         } else alias.call(this, params);
     }
 })(Game_Interpreter.prototype.setupChoices);*/
-
-//TODO-x custom cursor!
-/*  document.body.style.cursor = file == ""
-        ? "default"
-        : `url("${base_url}${file}.png") ${x_offset} ${y_offset}, ${fallbackStyle}`;*/
 
 /*void ((alias) => {
     Graphics._testCanvasBlendModes = function () {

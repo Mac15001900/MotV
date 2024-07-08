@@ -38,13 +38,13 @@ PictureWindow.prototype.show = function (imageName, independent = true, scale = 
     let bmp = ImageManager.loadPicture(imageName);
     if (independent) g.getInterpreter().setWaitMode('indefinite');
     bmp.addLoadListener(function () {
-        let w = scale * bmp.width + this.standardPadding() * 2;
-        let h = scale * bmp.height + this.standardPadding() * 2 + (independent ? 4 : 0); //If independent, add 4 pixels for the pause sign
+        let w = Math.ceil(scale * bmp.width + this.standardPadding() * 2);
+        let h = Math.ceil(scale * bmp.height + this.standardPadding() * 2) + (independent ? 4 : 0); //If independent, add 4 pixels for the pause sign
         let fullWidth = SceneManager._screenWidth;
         let fullHeight = independent ? SceneManager._screenHeight : SceneManager._screenHeight - SceneManager._scene._messageWindow.height;
         if (w > fullWidth || h > fullHeight) console.warn("PictureWindow: Image is too large to fit on screen.");
         this.offsetX = 0;
-        this.move((fullWidth - w) / 2, (fullHeight - h) / 2, w, h);
+        this.move(Math.floor((fullWidth - w) / 2), Math.floor((fullHeight - h) / 2), w, h);
         this.adjustX();
         this.onPreviousPress = Input.isPressed('ok') || Input.isPressed('cancel') || TouchInput.isPressed();
 
@@ -84,8 +84,8 @@ PictureWindow.prototype.adjustX = function () {
     console.assert(choiceWindow instanceof Window_ChoiceList);
     this.recenter();
     if (choiceWindow.ready && this.x + this.width >= SceneManager._screenWidth - choiceWindow.width - 16) {
-        this.x -= choiceWindow.width / 2;
-        this.offsetX = -choiceWindow.width / 2;
+        this.x -= Math.floor(choiceWindow.width / 2);
+        this.offsetX = -Math.floor(choiceWindow.width / 2);
     }
 }
 

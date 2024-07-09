@@ -25,7 +25,7 @@
  * ConfigManager.markerMode dictates whether markers are shown when an assigned key is held (when false) or are toggled by that key (when true)
  */
 class MarkerManager extends Window_Base {
-    constructor(newMarker, oldMarker, colorblindMarker) {
+    constructor(newMarker, oldMarker, colorblindMarker, todoMarker) {
         let padding = Window_Base.prototype.standardPadding();
         super(0, 0, Graphics.width + padding * 2, Graphics.height + padding * 2);
         this.standardPadding = () => 0;
@@ -48,19 +48,25 @@ class MarkerManager extends Window_Base {
         let bmp = ImageManager.loadPicture(newMarker);
         bmp.addLoadListener(function () {
             this.newMarker = bmp;
-            if (this.oldMarker && this.colorblindMarker) this.ready = true;
+            if (this.oldMarker && this.colorblindMarker && this.todoMarker) this.ready = true;
         }.bind(this));
 
         let bmp2 = ImageManager.loadPicture(oldMarker);
         bmp2.addLoadListener(function () {
             this.oldMarker = bmp2;
-            if (this.newMarker && this.colorblindMarker) this.ready = true;
+            if (this.newMarker && this.colorblindMarker && this.todoMarker) this.ready = true;
         }.bind(this));
 
         let bmp3 = ImageManager.loadPicture(colorblindMarker);
-        bmp.addLoadListener(function () {
+        bmp3.addLoadListener(function () {
             this.colorblindMarker = bmp3;
-            if (this.oldMarker && this.newMarker) this.ready = true;
+            if (this.oldMarker && this.newMarker && this.todoMarker) this.ready = true;
+        }.bind(this));
+
+        let bmp4 = ImageManager.loadPicture(todoMarker);
+        bmp4.addLoadListener(function () {
+            this.todoMarker = bmp4;
+            if (this.newMarker && this.oldMarker && this.colorblindMarker) this.ready = true;
         }.bind(this));
     }
     update() {
@@ -112,12 +118,15 @@ class MarkerManager extends Window_Base {
             //Draw the marker
             let isActive = !$es[event._eventId];
             if (event.event().meta?.MarkerSync) isActive = !$es[parseInt(event.event().meta.MarkerSync)];
-            this.drawMarker(x, y, isActive);
+            this.drawMarker(x, y, isActive, MAC_DEBUG && event.event().meta?.TODO);
 
             //Draw region markers
             if (event.event().meta?.MarkerRegion) {
                 for (let [x, y] of this.markerRegions[event.eventId()]) {
-                    this.drawMarker(($gameMap.adjustX(x) + 0.5) * $gameMap.tileWidth() * this.screenScale, $gameMap.adjustY(y) * $gameMap.tileHeight() * this.screenScale + verticalOffset, isActive);
+                    this.drawMarker(
+                        ($gameMap.adjustX(x) + 0.5) * $gameMap.tileWidth() * this.screenScale,
+                        $gameMap.adjustY(y) * $gameMap.tileHeight() * this.screenScale + verticalOffset,
+                        isActive, MAC_DEBUG && event.event().meta?.TODO);
                 }
             }
         }
@@ -128,9 +137,11 @@ class MarkerManager extends Window_Base {
      * @param {Number} screenY Screen position of the bottom of the marker
      * @param {Boolean} active Whether the "active" sprite (indicating a new event) should be used
      */
-    drawMarker(screenX, screenY, active) {
-        let bmp = active ? (g.isColorblind ? this.colorblindMarker : this.newMarker) : this.oldMarker;
-        this.contents.blt(bmp, 0, 0, bmp.width, bmp.height, screenX - bmp.width / 2, screenY - bmp.height, bmp.width, bmp.height);
+    drawMarker(screenX, screenY, active, isTodo) {
+        let sprite = this.oldMarker;
+        if (isTodo) sprite = this.todoMarker;
+        else if (active) sprite = g.isColorblind ? this.colorblindMarker : this.newMarker;
+        this.contents.blt(sprite, 0, 0, sprite.width, sprite.height, screenX - sprite.width / 2, screenY - sprite.height, sprite.width, sprite.height);
     }
     /**
      * Shows event markers. If done by holding down a key, specify it as an argument, and MarkerManager will watch for it being unpressed. 
@@ -181,6 +192,7 @@ class MarkerManager extends Window_Base {
         }
     }
     isEventValid(event) {
+        if (MAC_DEBUG && event?.meta?.TODO) return true; //If we need to show a to do marker, ignore all other conditions
         let page = event.page();
         if (!page) return false; //The event has no active page
         if (event.event().meta?.NoMarker) return false; //It has a <noMarker> tag

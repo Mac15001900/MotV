@@ -64,6 +64,16 @@ Scene_Map.prototype.onMapLoaded = function () {
     if (g.markers) this.addChild(g.markers);
     g.markers.updateEvents();
     // if (g.getInterpreter()) g.getInterpreter().skipEventSeen = false;
+    if (MAC_DEBUG) { //Check if we have any TODO events
+        var todosFound = false;
+        $gameMap.events().forEach(event => {
+            if (event.event()?.meta?.TODO) {
+                console.log("TODO event found " + event._eventId, event);
+                todosFound = true;
+            }
+        });
+        if (!todosFound) console.log("No TODO events on this map");
+    }
     //Handle dynamic collisions 
     if ($dataMap.meta && $dataMap.meta.dynamicCollisions) {
         $dataMap.data = CollisionData[g.lang][$gameMap.mapId()];
@@ -177,7 +187,7 @@ macThingsInit = function () {
     }
 
     //Setting up the marker manager
-    g.markers = new MarkerManager("eventLabelNew", "eventLabelOld", "eventLabelNewCB");
+    g.markers = new MarkerManager("eventLabelNew", "eventLabelOld", "eventLabelNewCB", "eventLabelTODO");
     // g.persistentWindows.push(g.markers); //We can't do that, since it would cover all other windows
 
     //Other init stuff

@@ -45,7 +45,7 @@ let $gs;
 let $ss;
 let $es;
 
-const GAME_VERSION = "Alpha 1.0.0";
+const GAME_VERSION = "Alpha 1.1.0";
 const AUTOSAVE_DELAY = 300 * 1000; //How often to autosave (in miliseconds)
 const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try again
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 19, 22]; //How many keys are needed for each unlock stage

@@ -114,6 +114,7 @@
             MusicPool: {},
             RegExMusicCode: new RegExp(/<KoTC Music List: (\S+)>/i),
             LastSong: null,
+            lastMap: null,
         };
 
         var mainparse = JSON.parse($KDMS.Parameters['Music List Config']);
@@ -170,10 +171,10 @@ Scene_Map.prototype.onMapLoaded = function () {
             KoTCDynamicMusic()
         }, 100); //Sus
 
-    } else {
+    } else if ($gameMap.mapId() !== $KDMS.lastMap) {
         KoTCDStopMusic();
     }
-
+    $KDMS.lastMap = $gameMap.mapId();
 };
 
 function DisableKoTCDynamicMusic() {

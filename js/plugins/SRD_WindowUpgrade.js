@@ -890,7 +890,7 @@ function Window_ChoiceMessage() {
 				$gameVariables.setValue(varId, i);
 				win.close();
 				// if ($gs[26]) win.openness = 0;
-				if ($gs[26]) this.setWaitMode(''); //If the instant windows switch is on, 
+				if ($gs && $gs[26]) this.setWaitMode(''); //If the instant windows switch is on, 
 			}.bind(this));
 		}
 		const scene = SceneManager._scene;
@@ -901,7 +901,7 @@ function Window_ChoiceMessage() {
 			$gameSystem.wu_info.questionWindowData
 		);
 		scene.addWindow(win);
-		if ($gs[26]) win.openness = 255;
+		if ($gs && $gs[26]) win.openness = 255;
 		/*let timeout = setTimeout(function () {
 			win.close();
 			$gameSwitches.setValue(42, true);
@@ -909,12 +909,12 @@ function Window_ChoiceMessage() {
 		win.setCloseCallback(function () {
 			//clearTimeout(timeout);
 			scene._windowLayer.removeChild(win);
-			if (!$gs[26]) this.setWaitMode('');
+			if (!$gs || !$gs[26]) this.setWaitMode('');
 		}.bind(this));
 		// g.test = this;
 		//console.log("Current interpreter:", this);
 		this.setWaitMode('indefinite');
-		if ($gs[27]) { //If the "upcoming instant" switch is true, from now we'll do things instantly
+		if ($gs && $gs[27]) { //If the "upcoming instant" switch is true, from now we'll do things instantly
 			$gs[27] = false;
 			$gs[26] = true;
 		}

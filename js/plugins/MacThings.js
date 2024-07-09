@@ -28,7 +28,7 @@ try {
     throw new Error("The JavaScript version is too old.");
 }
 
-let MAC_DEBUG = true;
+let MAC_DEBUG = false;
 const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
@@ -1318,7 +1318,9 @@ Scene_Title.prototype.commandExit = function () {
 };
 
 Scene_Title.prototype.commandFeedback = function () {
-    window.open(this.getFeedbackUrl());
+    if (ConfigManager.fullscreen) ConfigManager.fullscreen = false;
+    // setTimeout(() => window.open(this.getFeedbackUrl()), 500);
+    window.open(this.getFeedbackUrl())
 }
 
 Scene_Title.prototype.getFeedbackUrl = function () {
@@ -1451,6 +1453,11 @@ AudioManager.createBuffer = function (folder, name) {
 
 //===================================== Debug stuff =====================================
 
+//Text skipping (this function must always exist for MessageCore to function)
+Window_Message.prototype.isFastForward = function () {
+    return !!g.textFastForward;
+}
+
 if (MAC_DEBUG) {
 
     //Frame advancing changes
@@ -1527,11 +1534,6 @@ if (MAC_DEBUG) {
 
     document.addEventListener('keydown', proccessKeyDown);
     document.addEventListener('keyup', proccessKeyUp);
-
-    //Text skipping
-    Window_Message.prototype.isFastForward = function () {
-        return !!g.textFastForward;
-    }
 
     //Skip wait commands in fast-forward
     void ((alias) => {

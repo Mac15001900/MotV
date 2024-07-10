@@ -999,6 +999,7 @@ Scene_Menu.prototype.createCommandWindow = function () {
     this._commandWindow.setHandler('gameEnd', this.commandGameEnd.bind(this));
     this._commandWindow.setHandler('cancel', this.popScene.bind(this)); //Change: added new handlers
     this._commandWindow.setHandler('export', this.commandExport.bind(this));
+    this._commandWindow.setHandler('tutorial', this.commandTutorial.bind(this));
     this.addWindow(this._commandWindow);
 };
 

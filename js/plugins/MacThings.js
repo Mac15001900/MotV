@@ -28,8 +28,8 @@ try {
     throw new Error("The JavaScript version is too old.");
 }
 
-let MAC_DEBUG = false;
-const ENEBLE_SPELLCHECK = false;
+let MAC_DEBUG = true;
+const ENEBLE_SPELLCHECK = true;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this
@@ -723,6 +723,7 @@ g.showMessages = function (inp, messages, defaultId) {
     console.assert(Array.isArray(messages), "showMessages: messages must be an array (at this point)");
     console.assert(messages.every(m => typeof m === 'object'), "showMessages: messages must be an array of objects or strings");
     console.assert(messages.every(m => m.hasOwnProperty('string')), "showMessages: message missing a string");
+
     let commandList = [];
     for (let message of messages) {
         let faceId = message.id === undefined ? defaultId : message.id;
@@ -1202,6 +1203,23 @@ Input.isReleased = function (keyName) {
     if (this._justReleased.includes(keyName)) return Graphics.frameCount - this._pressedStartTimes[keyName];
     else return 0;
 }
+
+//Custom menu options
+Window_MenuCommand.prototype.makeCommandList = function () {
+    this.addOriginalCommands();
+    this.addOptionsCommand();
+    this.addSaveCommand();
+    this.addCommand(s.exportGame, 'export', $gs[22] || MAC_DEBUG); //Handlers for these are added directly in Scene_Menu.prototype.createCommandWindow
+    this.addCommand(s.replayTutorial, 'tutorial', $gv[42] > 0);
+    this.addGameEndCommand();
+};
+
+//Replaying tutorials
+Scene_Menu.prototype.commandTutorial = function () {
+    $gameTemp.reserveCommonEvent(g.lang === 'pl' ? 16 : 21);
+    SceneManager.pop();
+}
+
 
 void ((alias) => {
     Input.initialize = function () {

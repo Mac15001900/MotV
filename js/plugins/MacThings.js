@@ -1698,6 +1698,14 @@ ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
     }
 }
 
+//Fix for tab key unselecting the game sometimes. By Caethyril, https://forums.rpgmakerweb.com/threads/170221/
+void (function (alias) {
+    Input._shouldPreventDefault = function (kc) {
+        if (kc === 9) return true;
+        return alias.apply(this, arguments);
+    };
+})(Input._shouldPreventDefault);
+
 //Fix for a rare freeze on high-refresh displays, by Kido. From https://forums.rpgmakerweb.com/index.php?threads/rpg-maker-games-graphics-will-freeze-but-sound-keeps-playing-the-problem-the-solution.151887/
 //Added directly to Graphics.render
 
@@ -1989,3 +1997,23 @@ void ((alias) => {
         // console.warn = oldWarn;
     }
 })(Graphics._testCanvasBlendModes);*/
+
+// This make Show Picture work on the title screen
+/*
+void ((alias) => {
+    Scene_Title.prototype.start = function () {
+        alias.call(this);
+        this._spriteset = new Spriteset_Base();
+        this.addChild(this._spriteset);
+        this._spriteset._blackScreen.opacity = 0;
+    }
+})(Scene_Title.prototype.start);
+*/
+
+
+
+
+
+
+
+

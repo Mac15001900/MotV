@@ -3238,7 +3238,7 @@ Input._setupEventHandlers = function () {
  */
 Input._onKeyDown = function (event) {
     if (this._shouldPreventDefault(event.keyCode)) {
-        //event.preventDefault(); //Change: TODO: trying out disabling default prevention
+        event.preventDefault();
     }
     if (event.keyCode === 144) {    // Numlock
         this.clear();
@@ -3817,11 +3817,11 @@ TouchInput._onTouchStart = function (event) {
             } else {
                 this._onTrigger(x, y);
             }
-            //event.preventDefault(); //Change: TODO: trying out disabling default prevention
+            event.preventDefault();
         }
     }
     if (window.cordova || window.navigator.standalone) {
-        //event.preventDefault();  //Change: TODO: trying out disabling default prevention
+        event.preventDefault();
     }
 };
 
@@ -3879,7 +3879,7 @@ TouchInput._onPointerDown = function (event) {
         if (Graphics.isInsideCanvas(x, y)) {
             // For Microsoft Edge
             this._onCancel(x, y);
-            //event.preventDefault();  //Change: TODO: trying out disabling default prevention
+            event.preventDefault();
         }
     }
 };

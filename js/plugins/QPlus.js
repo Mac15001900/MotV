@@ -711,12 +711,12 @@ function SimpleTilemap() {
   // Document body
 
   document.body.ondrop = function (e) {
-    //e.preventDefault(); //Change: TODO: trying out disabling default prevention
+    e.preventDefault();
     return false;
   };
 
   document.body.ondragover = function (e) {
-    //e.preventDefault(); //Change: TODO: trying out disabling default prevention
+    e.preventDefault();
     return false;
   };
 

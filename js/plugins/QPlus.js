@@ -982,7 +982,7 @@ function SimpleTilemap() {
   };
 
   Game_Map.prototype.noTilemap = function () {
-    if (!$dataMap.meta) return false; //Change: added line
+    if (!$dataMap || !$dataMap.meta) return false; //Change: added line
     return !!$dataMap.meta.noTilemap;
   };
 

@@ -5632,7 +5632,7 @@ Window_TitleCommand.prototype.makeCommandList = function () { //Change: Added a 
     this.addCommand(TextManager.options, 'options');
     this.addCommand(s.credits, 'credits');
     this.addCommand(s.feedback, 'feedback');
-    this.addCommand(s.exit, 'exit');
+    if (Utils.isNwjs()) this.addCommand(s.exit, 'exit');
 };
 
 Window_TitleCommand.prototype.isContinueEnabled = function () {

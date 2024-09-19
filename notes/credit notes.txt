@@ -61,6 +61,8 @@ Delapouite (weight lifting), [Delapouite (https://game-icons.net/1x1/delapouite/
 Delapouite (hand-stand), [Delapouite (https://game-icons.net/1x1/delapouite/body-balance.html), „Body balance icon“, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
 Delapouite (hand-stand), [Delapouite (https://game-icons.net/1x1/delapouite/jumping-rope.html), „Jumping rope icon“, https://creativecommons.org/licenses/by-sa/3.0/legalcode ]
 sbed (key icon) - https://game-icons.net/1x1/sbed/key.html, not yet used
+Flowly - the orb used for the icon, CC0, https://opengameart.org/content/pixel-orbs
+leyren - (compressed) stars background, CC0, https://opengameart.org/content/starsspace-background
 
 RPG MAKER DS+ Expansion: Retro Scifi Pack: 
 "Your game must include additional documentation that clearly indicates the use of the Resource Pack and the following copy:

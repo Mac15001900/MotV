@@ -1,9 +1,16 @@
 /*:
- * @plugindesc v1.0 Extracts all text from a game into a single file
+ * @plugindesc v1.1 Extracts all text from a game into a file
  * @author Mac15001900
  * 
+ * @param Split to files
+ * @desc Should the output be split across multiple files (with one file per map)?
+ * @type boolean
+ * @default false
+ * @on yes
+ * @off no
+ * 
  * @help 
- * This plugin extracts all text from a game into a single file, for 
+ * This plugin extracts all text from a game into a file, for 
  * spellchecking or any other purpose.
  * 
  * To use it, open the console (press F12 and select the "Console" tab),
@@ -11,7 +18,7 @@
  * 
  * Note that this will freeze your game - after the process is done, you'll
  * need to refresh it if you want to do some playtesting.
- * The file will be created in your project's main folder.
+ * The file (or folder with files) will be created in your project's main folder.
  * 
  * The extracted text contains the contents of every message command and
  * every choice command from every regular and common event in the game.
@@ -31,6 +38,7 @@
 void function () {
 
     let extractedString = "";
+    let splitToFiles = PluginManager.parameters('MAC_Text_Extractor')['Split to files'] === "true";
 
     //Converts a list of commands to a printable string
     function showList(page) {
@@ -78,17 +86,20 @@ void function () {
     }
 
     //Saves the text to a file
-    function saveExtractedText(text) {
+    function saveExtractedText(text, filename, directory) {
         var fs = require('fs');
         var path = require('path');
         var dirPath = path.dirname(process.mainModule.filename);
-        var filePath = path.join(dirPath, "extractedText.txt");
+        if (directory) dirPath = path.join(dirPath, directory);
+        var filePath = path.join(dirPath, filename);
         if (!fs.existsSync(dirPath)) {
             fs.mkdirSync(dirPath);
         }
         fs.writeFileSync(filePath, text);
-        console.log("-----------------------------------");
-        console.log("All done! Text saved to " + filePath);
+        if (!splitToFiles) {
+            console.log("-----------------------------------");
+            console.log("All done! Text saved to " + filePath);
+        }
     };
 
     //Removes or converts some special escape characters, for saving strings as plain text. Probably won't handle everything though.
@@ -112,8 +123,11 @@ void function () {
             //Show common events
             for (let id = 1; id < $dataCommonEvents.length; id++) {
                 let commonEventString = showCommonEvent(id);
-                if (commonEventString.length > 0) extractedString += commonEventString + "\n";
+                if (commonEventString.length > 0) {
+                    extractedString += commonEventString + "\n";
+                }
             }
+            if (splitToFiles && extractedString.length > 0) saveExtractedText(extractedString, "commonEvents.txt", "extractedText");
             //This delay is not actually necessary, but letting the current frame finish processing stops a bunch of ugly errors from appearing
             setTimeout(runExtractor, 50, 0);
             return;
@@ -123,7 +137,11 @@ void function () {
         if (currentId >= $dataMapInfos.length) {
             let escapedText = simpleUnescape(extractedString);
             let finalText = "Text extracted from " + $dataSystem.gameTitle + " on " + (new Date()).toLocaleString() + "\n\n\n" + escapedText;
-            saveExtractedText(finalText);
+            if (!splitToFiles) saveExtractedText(finalText, "extractedText.txt");
+            else {
+                console.log("-----------------------------------");
+                console.log('All done! Text saved to files in the "extractedText" folder');
+            }
             console.log("Note that the game will not be able to run now - refresh it if you want to keep playtesting.");
             return;
         }
@@ -138,7 +156,11 @@ void function () {
         if (!DataManager.isMapLoaded()) setTimeout(runExtractor, 25, currentId); //Data is not loaded yet. Wait 25ms and try again.
         else { // Data is loaded, and it's the right map. Show the map and try the next one.
             let mapString = showMap($dataMap);
-            if (mapString.length > 0) extractedString += "--------- Map " + $dataMapInfos[currentId].name + " (" + currentId + ") ---------\n\n" + mapString + "\n";
+            if (mapString.length > 0) {
+                let printableString = "--------- Map " + $dataMapInfos[currentId].name + " (" + currentId + ") ---------\n\n" + mapString + "\n";
+                if (splitToFiles) saveExtractedText(printableString, "Map" + String(currentId).padZero(3) + ' - ' + $dataMapInfos[currentId].name + ".txt", "extractedText");
+                else extractedString += printableString;
+            }
             console.log("Map " + $dataMapInfos[currentId].name + " extracted.");
             tryLoadingMap(currentId + 1);
             runExtractor(currentId + 1);

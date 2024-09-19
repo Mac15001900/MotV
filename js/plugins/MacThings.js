@@ -29,7 +29,7 @@ try {
 }
 
 let MAC_DEBUG = true;
-const ENEBLE_SPELLCHECK = true;
+const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
 const DEBUG_STAGE = 10; //If debug is on, game stage will be set to this
@@ -359,7 +359,9 @@ g.wrongKeyReactions = function (inp) {
         }
     }
     let previousAttempts = g.data.wrongGuesses.filter(x => x === guess).length - 1;
-    if (previousAttempts === 0) g.showMessages(inp, g.pickRandom(s.randomFailureMessages($gv[42], guess, g.data.wrongGuesses.length).filter(m => m)), 0);
+
+    if (!g.data.solved.tutorial_1 && g.data.wrongGuesses.length === 1) g.showMessages(inp, s.preTutorialFail);
+    else if (previousAttempts === 0) g.showMessages(inp, g.pickRandom(s.randomFailureMessages($gv[42], guess, g.data.wrongGuesses.length).filter(m => m)), 0);
     else if (previousAttempts === 1) g.showMessages(inp, s.secondWrong);
     else g.showMessages(inp, s.anotherWrong(previousAttempts + 1));
 }
@@ -1539,6 +1541,18 @@ if (MAC_DEBUG) {
             case 'End':
                 g.textFastForward = true;
                 break;
+            case 'v':
+                g.getInterpreter().pluginCommand("EventPatrol", ['StunEffect']);
+                break;
+            case 'b':
+                g.getInterpreter().pluginCommand("EventPatrol", ['StunEffect', 'Off']);
+                break;
+            case 'n':
+                g.getInterpreter().pluginCommand("EventPatrol", ['UpdateMap']);
+                break;
+            case 'l':
+                g.getInterpreter().pluginCommand("EventPatrol", ['SetSpeed', '8']);
+                break;
         }
     }
 
@@ -1811,7 +1825,8 @@ Game_Interpreter.prototype.command355 = function () {
     try {
         eval(script);
     } catch (err) {
-        console.log(script);
+        console.warn("Error in the following script:");
+        console.warn(script);
         throw err;
     }
     return true;

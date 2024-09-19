@@ -142,7 +142,7 @@ wordBank = {
         history: "History",
         leave: "Leave",
         fullScreen: "Fullscreen",
-        stretchMode: "Stretch to fill the screen",
+        stretchMode: "Stretch to fit the screen",
         markerMode: "Showing interactables",
         markerToggle: "Toggle",
         markerHold: "Hold",
@@ -162,6 +162,7 @@ wordBank = {
         tempVictory: "You've found every Nexus fragment in this version of the game.\n\\c[4]\{\{\WaveCongratulations!",
         remainingToNextArea: (keys) => `${keys.capitalise()} still required to unlock the next segment.`,
         keysRemaining: (keys) => `${keys.capitalise()} ${keys === 1 ? "is" : "are"} still remaining.`,
+        preTutorialFail: "Well, the format is correct at least. Now to figure out the rest.",
         randomSuccessMessages: (currentKeys) => [
             "And another fragment done.",
             "And another one!",
@@ -334,6 +335,7 @@ wordBank = {
         tempVictory: "Udało Ci się zdobyć wszystkie klucze dostępne w tej wersji gry.\n\\c[4]\{\{\WaveGratulacje!",
         remainingToNextArea: (keys) => `Do odblokowania kolejnego obszaru zdobyć trzeba jeszcze ${keys}.`,
         keysRemaining: (keys) => `Do zdobycia jeszcze ${keys}.`,
+        preTutorialFail: "O, inny błąd! Jest to jakiś postęp.",
         randomSuccessMessages: (currentKeys) => [
             "Kolejny klucz do kolekcji.",
             "I kolejny!",

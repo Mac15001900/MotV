@@ -1350,7 +1350,7 @@ Scene_Title.prototype.commandExit = function () {
 };
 
 Scene_Title.prototype.commandFeedback = function () {
-    if (ConfigManager.fullscreen) ConfigManager.fullscreen = false;
+    if (Utils.isNwjs() && ConfigManager.fullscreen) ConfigManager.fullscreen = false;
     // setTimeout(() => window.open(this.getFeedbackUrl()), 500);
     window.open(this.getFeedbackUrl())
 }

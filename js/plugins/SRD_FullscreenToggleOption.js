@@ -80,6 +80,7 @@
 			return g.fullScreen;
 		},
 		set: function (value) {
+			if (!Utils.isNwjs()) return; //Don't do any of this in browsers
 			if (value) {
 				g.fullScreen = true;
 				Graphics._requestFullScreen();
@@ -119,7 +120,7 @@
 		},
 		set: function (value) {
 			g.stretchMode = value;
-			if (g.fullScreen) {
+			if (g.fullScreen || !Utils.isNwjs()) {
 				Graphics._stretchEnabled = value;
 				Graphics._updateAllElements();
 			}

@@ -1151,6 +1151,13 @@ Scene_Title.prototype.start = function () {
         console.log("Starting lang selection");
         SceneManager.push(Scene_LangugeChoice);
     }
+    //Resize the title window depending on how many commands does it have
+    let w = this._commandWindow
+    w.height = w.fittingHeight(w._list.length);
+    w.unlockPosition();
+    w.x = 32;
+    w.y = (Graphics.boxHeight - w.height) - 32;
+
 };
 
 //Mouse highlightning options on hover, by Rehtinor

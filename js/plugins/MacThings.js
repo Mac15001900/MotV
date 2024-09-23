@@ -825,17 +825,22 @@ function copyTextToClipboard(inp, text, escapeSpecial = true, trimText = true) {
     let processedText = text;
     if (trimText) processedText = processedText.split('\n').map(line => line.trim()).join('\n');
     if (escapeSpecial) processedText = g.simpleUnescape(processedText);
-    navigator.clipboard.writeText(processedText).then(
-        () => {
-            $gs[24] = true;
-            if (inp) inp._waitMode = '';
-        },
-        () => {
-            //If the proper way failed, try the old one
-            oldCopyTextToClipboard(processedText);
-            if (inp) inp._waitMode = '';
-        },
-    );
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(processedText).then(
+            () => {
+                $gs[24] = true;
+                if (inp) inp._waitMode = '';
+            },
+            () => {
+                //If the proper way failed, try the old one
+                oldCopyTextToClipboard(processedText);
+                if (inp) inp._waitMode = '';
+            },
+        );
+    } else {
+        oldCopyTextToClipboard(processedText);
+        if (inp) inp._waitMode = '';
+    }
 }
 
 //Old text to clipboard, could be more compatible with older devices. Function by Dean Taylor taken from https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript

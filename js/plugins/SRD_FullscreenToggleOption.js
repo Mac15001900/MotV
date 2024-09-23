@@ -60,13 +60,13 @@
 	var position = String(parameters['Position']).toLowerCase();
 	var persist = String(parameters['Persist Default?']).trim().toLowerCase() === 'true';
 
-	defaultStretchValue = function () { //Checks if screen stretching should be enabled by default (depends on user's screen resolution)
+	defaultStretchValue = function () { //Checks if screen stretching should be enabled by default (depends on user's screen resolution and device)
 		const TARGET_WIDTH = 1920, TARGET_HEIGHT = 1080;
 		let w = screen.width, h = screen.height;
+		if (!Utils.isNwjs()) w = window.innerWidth, h = window.innerHeight;
 		if (w < TARGET_WIDTH || h < TARGET_HEIGHT) return true; //1080p won't fit on this screen, so we must (regretably) stretch
 		return Number.isInteger(w / TARGET_WIDTH) && Number.isInteger(h / TARGET_HEIGHT); //Also stretch if we can safely do so, because the screen is a multiple of 1080p
 	}
-
 
 	ConfigManager.fullscreen = defaultValue;
 	ConfigManager.stretchMode = defaultStretchValue();

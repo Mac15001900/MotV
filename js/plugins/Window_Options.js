@@ -54,11 +54,16 @@ Window_Options.prototype.update = function () {
 }
 
 Window_Options.prototype.windowWidth = function () {
-    return 400;
+    return 550;
+};
+
+Window_Options.prototype.statusWidth = function () {
+    return 160;
 };
 
 Window_Options.prototype.windowHeight = function () {
-    return this.fittingHeight(Math.min(this.numVisibleRows(), 13));
+    console.assert(this._list.length > 0);
+    return this.fittingHeight(this._list.length);
 };
 
 Window_Options.prototype.updatePlacement = function () {
@@ -71,8 +76,8 @@ Window_Options.prototype.makeCommandList = function () {
     this.addCommand('', '');
     this.addVolumeOptions();
     this.addCommand('', '');
-    this.addCommand(s.fullScreen, 'fullscreen');
-    this.addCommand(s.stretchMode, 'stretchMode');
+    if (Utils.isNwjs()) this.addCommand(s.fullScreen, 'fullscreen');
+    this.addCommand(Utils.isNwjs() ? s.stretchMode : s.webStretchMode, 'stretchMode');
     this.addCommand('', '');
     this.addCommand(TextManager.alwaysDash, 'alwaysDash');
     this.addCommand(s.markerMode, 'markerMode');
@@ -81,7 +86,6 @@ Window_Options.prototype.makeCommandList = function () {
     this.addCommand(s.language, 'lang', g.topLevelScene() === 'Scene_Title' || MAC_DEBUG); //We really don't want the language to change mid-game
     this.addCommand(s.colorblindMode, 'cBlind');
     if (!Utils.isMobileDevice()) this.addCommand(s.controlsOption, 'keyConfig', true);
-    //this.addCommand(s.controls, 'controls');
 };
 
 //Window_Options.prototype.addGeneralOptions = function () {};
@@ -94,7 +98,6 @@ Window_Options.prototype.addVolumeOptions = function () {
 };
 
 Window_Options.prototype.drawItem = function (index) {
-
     var rect = this.itemRectForText(index);
     var statusWidth = this.statusWidth();
     var titleWidth = rect.width - statusWidth;
@@ -112,9 +115,6 @@ Window_Options.prototype.drawItem = function (index) {
             this.drawText(text, rect.x, rect.y, rect.width, 'left');
         }*/
 
-Window_Options.prototype.statusWidth = function () {
-    return 160;
-};
 
 Window_Options.prototype.statusText = function (index) {
     var symbol = this.commandSymbol(index);

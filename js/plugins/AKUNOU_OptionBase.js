@@ -51,14 +51,14 @@
 	//-------------------------------------------------------------------------
 	// Window_Options
 	//-------------------------------------------------------------------------
-
-	Window_Options.prototype.windowWidth = function () {
-		return windowOptionsWidth;
-	};
-
-	Window_Options.prototype.windowHeight = function () {
-		return this.fittingHeight(Math.min(this.numVisibleRows(), windowOptionsNumber));
-	};
+	/*
+		Window_Options.prototype.windowWidth = function () {
+			return windowOptionsWidth;
+		};
+	
+		Window_Options.prototype.windowHeight = function () {
+			return this.fittingHeight(Math.min(this.numVisibleRows(), windowOptionsNumber));
+		};*/
 
 	var akunou8_makeCommandList = Window_Options.prototype.makeCommandList;
 	/*

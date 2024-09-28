@@ -46,3 +46,5 @@ Flag signals
 Weź n-tą literę z linijki, używając jakoś ukrytych liczb, np. rzymskich
 Blackjack: karty zawsze są w tej samej kolejności - trzeba znaleźć strategię wygrywającą wszystkie rundy, wtedy startowe ręki stają się liczbami
 Folklore classification system - https://en.wikipedia.org/wiki/Aarne%E2%80%93Thompson%E2%80%93Uther_Index. Nie wiem, co z tym zrobić, ale ma potencjał. Liczby jako podpowiedzi?
+Interaktywne: Zamienić słowo w liczbę (baza 24), podzielić przez 5, zamienić z powrotem na słowo. Zapisać obok literą "resztę".
+Interaktywne, ale zmieniające coś w pomieszczeniu, np. podświetlające podłogę? Rule discovery? Worldle with a twist? 

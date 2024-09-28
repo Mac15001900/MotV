@@ -123,6 +123,7 @@ const $dataPuzzles = {
             solution: "antepenultima",
             failure: function (guess) {
                 switch (guess) {
+                    case "nul": return "That's a shame, I really hoped that would do something.\nLooks like there are no fragments within fragments in this one.";
                     case "trscrhosnnhnf":
                         return [{ string: "No? Oh come on, everything here was pointing to pi!", id: 3, balloon: BALLOON_ID.COBWEB },
                         { string: "Well, alright, to think about it, most codes so far turned out\nto be some kind of words, even if they were a bit weird.\nMaybe I just need to do this a little bit differently?", id: 0 }];

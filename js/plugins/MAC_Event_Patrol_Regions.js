@@ -54,6 +54,7 @@
  * 
  * 
  * @help
+ * Version 1.1.0
  * 
  * This plugin adds on-map enemies that randomly patrol the region they're 
  * placed in. They will chase the player if they enter an enemy's region.
@@ -85,7 +86,7 @@
  */
 
 Imported = Imported || {}
-Imported.MAC_Event_Patrol_Regions = "0.3.0";
+Imported.MAC_Event_Patrol_Regions = "1.1.0";
 window.MAC_Event_Patrol_Regions = {}
 
 
@@ -144,10 +145,7 @@ void ((mep) => {
                         mep.tempSpeed = Number(args[1]);
                         break;
                     case 'UpdateMap':
-                        performance.mark("preparing-start")
                         mep.prepareEnemies($gameMap.events());
-                        performance.mark("preparing-end");
-                        console.log(performance.measure("preparing", "preparing-start", "preparing-end"));
                         break;
                 }
             }
@@ -192,7 +190,7 @@ void ((mep) => {
                     }
                 })(event.isMapPassable);
                 if (event._trigger !== 2) console.warn("Event with id " + event.eventId() + " has been set to patrol, but doesn't have an event touch trigger. " +
-                    "Are you sure this is what you want? (you can disable this warning by commenting out lines 191 and 192)");
+                    "Are you sure this is what you want? (you can disable this warning by commenting out lines 192 and 193)");
             }
         });
         mep.enemies = res;
@@ -384,22 +382,23 @@ void ((mep) => {
         void ((alias) => {
             Scene_Map.prototype.updateScene = function () {
                 alias.call(this);
+                if (mep.preparePlayerAnimation) {
+                    $gamePlayer.requestAnimation(mep.inRangePlayerAnimation);
+                    mep.preparePlayerAnimation = false;
+                }
                 if (mep.enemyCount > 0 && Graphics.frameCount % mep.rangeCheckDelay === 0) {
                     if ($gameVariables.value(mep.stunConditionVariable) <= 0) { //We have no charges, treat this as outside of range
                         mep.currentStunTargetId = null;
                         return;
                     }
-                    performance.mark("stun-start");
                     let enemy = mep.getClosestStunnableEnemy();
                     if (enemy && enemy.id !== mep.currentStunTargetId) { //There is an enemy in range, and it's different than the last one
-                        if (!mep.currentStunTargetId) $gamePlayer.requestAnimation(mep.inRangePlayerAnimation);
+                        if (!mep.currentStunTargetId) mep.preparePlayerAnimation = true;
                         $gameMap.event(enemy.id).requestAnimation(mep.inRangeEnemyAnimation);
                         mep.currentStunTargetId = enemy.id;
                     } else if (!enemy && mep.currentStunTargetId) { //There is no longer an enemy in range
                         mep.currentStunTargetId = null;
                     }
-                    performance.mark("stun-end");
-                    console.log(performance.measure("stun check length", "stun-start", "stun-end"));
                 }
             }
         })(Scene_Map.prototype.updateScene);

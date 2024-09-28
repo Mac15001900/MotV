@@ -28,7 +28,7 @@ try {
     throw new Error("The JavaScript version is too old.");
 }
 
-let MAC_DEBUG = true;
+let MAC_DEBUG = false;
 const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
@@ -45,11 +45,44 @@ let $gs;
 let $ss;
 let $es;
 
-const GAME_VERSION = "Alpha 1.1.0";
+const GAME_VERSION = "Alpha 1.1.0a";
 const AUTOSAVE_DELAY = 300 * 1000; //How often to autosave (in miliseconds)
 const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try again
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 19, 22]; //How many keys are needed for each unlock stage
 const PRIMES = [2n, 3n, 5n, 7n, 11n, 13n, 17n, 19n, 23n, 29n, 31n, 37n, 41n, 43n, 47n, 53n, 59n, 61n, 67n, 71n, 73n, 79n, 83n, 89n, 97n, 101n, 103n, 107n, 109n, 113n, 127n, 131n, 137n, 139n, 149n, 151n, 157n, 163n, 167n, 173n, 179n, 181n, 191n, 193n, 197n, 199n, 211n, 223n, 227n, 229n, 233n, 239n, 241n, 251n, 257n, 263n, 269n, 271n, 277n, 281n, 283n, 293n, 307n, 311n, 313n, 317n, 331n, 337n, 347n, 349n, 353n, 359n, 367n, 373n, 379n, 383n, 389n, 397n, 401n, 409n, 419n, 421n, 431n, 433n, 439n, 443n, 449n, 457n, 461n, 463n, 467n, 479n, 487n, 491n, 499n, 503n, 509n, 521n, 523n, 541n];
+
+/**
+ * Stores the ids of various special events, some of which can be language-dependent.
+ */
+g.events = {
+    PROGRESS_CUTSCENES: () => { return { pl: 215, en: 216 }[g.lang] },
+    LIFE_MAP: () => { return 6 },
+    FLOOR_RIPPLE_ANCHOR: () => { return 25 },
+}
+
+g.vars = {
+    GLOBAL_DATA: 1,
+    PLAYER_INPUT: 3,
+    EVENT_BRANCHES: 4,
+    EVENT_ARG_1: 5,
+    EVENT_ARG_2: 6,
+    EVENT_ARG_3: 7,
+    EVENT_ARG_4: 8,
+    EVENT_ARG_5: 9,
+    EVENT_INTERNAL_1: 11,
+    EVENT_INTERNAL_2: 12,
+    EVENT_INTERNAL_3: 13,
+    EVENT_INTERNAL_4: 14,
+    EVENT_INTERNAL_5: 15,
+    TEXT_INPUT_PLACEHOLDER: 21,
+    CHOICE_MESSAGE_START_INDEX: 22,
+    CHOICE_MESSAGE_FONT: 23,
+    CHOICE_MESSAGE_WIDTH: 24,
+    GAME_STAGE: 41,
+    TUTORIALS_SEEN: 42,
+    KEYS_COLLECTED: 43
+}
+
 
 var _Scene_Map_loaded = Scene_Map.prototype.onMapLoaded;
 Scene_Map.prototype.onMapLoaded = function () {
@@ -230,6 +263,7 @@ g.checkKey = function (input) {
     console.assert(typeof input === 'string' || input instanceof String, input);
     if (MAC_DEBUG && input === 'k') {
         g.data.keysTotal += 1;
+        $gv[g.vars.KEYS_COLLECTED]++;
         return 3;
     }
     let startString = "";
@@ -258,6 +292,7 @@ g.checkKey = function (input) {
         g.data.keysCurrent += 1;
         $gv[42]++;
         g.data.keysTotal += 1;
+        $gv[g.vars.KEYS_COLLECTED]++;
         g.data.lastSolved = puzzleName;
         if (!g.persistentData.keyTimes[key]) {
             g.persistentData.keyTimes[key] = Math.floor(Graphics.frameCount / 60);
@@ -338,8 +373,8 @@ g.correctKeyReactions = function (inp) {
 g.progressReactionExists = function (keysAmount, gameStage) {
     let pages = $dataMap.events[g.events.PROGRESS_CUTSCENES()].pages;
     for (let i = 0; i < pages.length; i++) {
-        if (pages[i].conditions.variableValue === keysAmount && pages[i].conditions.variableId === 41) return true;
-        if (pages[i].conditions.variableValue === gameStage && pages[i].conditions.variableId === 42) return true;
+        if (pages[i].conditions.variableValue === keysAmount && pages[i].conditions.variableId === g.vars.KEYS_COLLECTED) return true;
+        if (pages[i].conditions.variableValue === gameStage && pages[i].conditions.variableId === g.vars.GAME_STAGE) return true;
     }
     return false;
 }
@@ -352,6 +387,10 @@ g.progressReactionExists = function (keysAmount, gameStage) {
 g.wrongKeyReactions = function (inp) {
     let guess = g.data.lastGuess
     for (puzzle of $dataPuzzles[g.lang]) {
+        if (g.removePolishCharacters(puzzle.solution) === guess) {
+            g.showMessages(inp, s.addPolishCharacters, 0);
+            return;
+        }
         let failureMessage = puzzle.failure?.(guess);
         if (failureMessage) {
             g.showMessages(inp, failureMessage, 0);
@@ -364,15 +403,6 @@ g.wrongKeyReactions = function (inp) {
     else if (previousAttempts === 0) g.showMessages(inp, g.pickRandom(s.randomFailureMessages($gv[42], guess, g.data.wrongGuesses.length).filter(m => m)), 0);
     else if (previousAttempts === 1) g.showMessages(inp, s.secondWrong);
     else g.showMessages(inp, s.anotherWrong(previousAttempts + 1));
-}
-
-/**
- * Stores the ids of various special events, some of which can be language-dependent.
- */
-g.events = {
-    PROGRESS_CUTSCENES: () => { return { pl: 215, en: 216 }[g.lang] },
-    LIFE_MAP: () => { return 6 },
-    FLOOR_RIPPLE_ANCHOR: () => { return 25 },
 }
 
 function displayKeys(amount, color = false) {
@@ -401,6 +431,21 @@ function useDopełniacz(amount) {
     if (amount % 100 - amount % 10 === 10) return true;
     if ([2, 3, 4].includes(amount % 10)) return false;
     return true;
+}
+
+g.removePolishCharacters = function (text) {
+    let dict = {
+        'ą': 'a',
+        'ć': 'c',
+        'ę': 'e',
+        'ł': 'l',
+        'ń': 'n',
+        'ó': 'o',
+        'ś': 's',
+        'ź': 'z',
+        'ż': 'z',
+    };
+    return text.split('').map(c => dict[c] ?? c).join('');
 }
 
 g.encrypterPuzzle = function (text) {
@@ -1002,7 +1047,7 @@ Scene_LangugeChoice.prototype.update = function () {
 g.exportSave = function () {
     //Using a similar system to DataManager.makeSaveContents 
     let contents = {};
-    contents.system = $gameSystem;
+    contents.system = JsonEx.makeDeepCopy($gameSystem); //Making a copy so that we can modify it
     delete contents.system.wu_info; //Window_Upgrade info; we don't need to export it
     contents.timer = $gameTimer;
     contents.switches = $gameSwitches;
@@ -1894,6 +1939,8 @@ window.$windows = {
         return SceneManager._scene?._windowLayer?.children || [];
     },
 }
+
+window.$tilemap = () => g.scene().children[0].children[0].children[2];
 
 //Hide the warning about willReadFrequently. I'm not entirely sure if this affects anything, so just in case it's only changed in debug mode.
 if (MAC_DEBUG) {

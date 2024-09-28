@@ -77,10 +77,10 @@ const $dataPuzzles = {
                 }
                 if (correct === 2) return ({ string: "I think some of these words should be correct, though apprently\nnot all of them are.", id: 0 });
                 else if (correct === 3) {
-                    let wrongPart = key;
+                    let wrongPart = guess;
                     for (let i = 0; i < keyWords.length; i++) wrongPart = wrongPart.replace(keyWords[i], '');
                     wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
-                    return ({ string: "Ah, not yet, but this has got to be close! Out of these, I think\n" + wrongPart + " is the worst fit.", id: 0 })
+                    return ({ string: `Ah, not yet, but this has got to be close! Out of these, I think\n"${wrongPart}" is the worst fit.`, id: 0 })
                 } else return null;
             }
         }, {
@@ -251,7 +251,7 @@ const $dataPuzzles = {
                 }
                 if (correct === 2) return ({ string: "Niektóre z tych słów zdecydowanie mają sens,\nno ale chyba jeszcze nie wszystkie.", id: 0 });
                 else if (correct === 3) {
-                    let wrongPart = key;
+                    let wrongPart = guess;
                     for (let i = 0; i < keyWords.length; i++) wrongPart = wrongPart.replace(keyWords[i], '');
                     wrongPart = wrongPart[0].toUpperCase() + wrongPart.substring(1);
                     return ({ string: "To musi być już blisko!\n" + wrongPart + " tu chyba najmniej pasuje.", id: 0 })

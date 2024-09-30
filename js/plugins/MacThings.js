@@ -45,7 +45,7 @@ let $gs;
 let $ss;
 let $es;
 
-const GAME_VERSION = "Alpha 1.1.0a";
+const GAME_VERSION = "Alpha 1.1.0c";
 const AUTOSAVE_DELAY = 300 * 1000; //How often to autosave (in miliseconds)
 const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try again
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 19, 22]; //How many keys are needed for each unlock stage
@@ -317,15 +317,31 @@ g.processNewKey = function (inp) {
         else AudioManager.playSe({ name: "Darkness1", volume: 100, pitch: 100 });
     }
     if ($gv[41] < ROOM_UNCLOKS.length) {
-        message += s.remainingToNextArea(displayKeys(ROOM_UNCLOKS[$gv[41]] - currentKeys));
+        message += s.remainingToNextArea(ROOM_UNCLOKS[$gv[41]] - currentKeys);
     } else if (currentKeys === $dataPuzzles.getAmount()) {
         AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
         message += s.tempVictory;
         Galv.CRED.start('Credits'); //TODO Only start credits after the message?
     } else {
-        message += s.keysRemaining(displayKeys($dataPuzzles.getAmount() - currentKeys));
+        message += s.keysRemaining($dataPuzzles.getAmount() - currentKeys);
     }
     g.showMessages(inp, message);
+}
+
+/**
+ * Generates a message describing the current amount of keys found and keys needed for the next area.
+ */
+g.keyStatusMessage = function () {
+    let keys = $gv[g.vars.KEYS_COLLECTED]
+    let message = s.fragmentsCollected + keys + '\n';
+    if ($gv[g.vars.GAME_STAGE] < ROOM_UNCLOKS.length) {
+        message += s.remainingToNextArea(ROOM_UNCLOKS[keys] - g.data.keysTotal);
+    } else if (keys < $dataPuzzles.getAmount()) {
+        message += s.keysRemaining($dataPuzzles.getAmount() - keys);
+    } else {
+        message += s.allKeys;
+    }
+    return message;
 }
 
 

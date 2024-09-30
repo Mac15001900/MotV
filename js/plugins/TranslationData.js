@@ -161,8 +161,9 @@ wordBank = {
         //Puzzle related
         newAreaUnlocked: "New Vault segment has been unlocked.",
         tempVictory: "You've found every Nexus fragment in this version of the game.\n\\c[4]\{\{\WaveCongratulations!",
-        remainingToNextArea: (keys) => `${keys.capitalise()} still required to unlock the next segment.`,
-        keysRemaining: (keys) => `${keys.capitalise()} ${keys === 1 ? "is" : "are"} still remaining.`,
+        fragmentsCollected: "Nexus fragments collected so far: ",
+        remainingToNextArea: (keys) => `${displayKeys(keys).capitalise()} still required to unlock the next segment.`,
+        keysRemaining: (keys) => `${displayKeys(keys).capitalise()} ${keys === 1 ? "is" : "are"} still remaining.`,
         preTutorialFail: "Well, the format is correct at least. Now to figure out the rest.",
         randomSuccessMessages: (currentKeys) => [
             "And another fragment done.",
@@ -336,6 +337,7 @@ wordBank = {
         //Puzzle related
         newAreaUnlocked: "Nowy obszar Skarbca odbklowowany.",
         tempVictory: "Udało Ci się zdobyć wszystkie klucze dostępne w tej wersji gry.\n\\c[4]\{\{\WaveGratulacje!",
+        fragmentsCollected: "Zdobyte klucze: ",
         remainingToNextArea: (keys) => `Do odblokowania kolejnego obszaru zdobyć trzeba jeszcze ${keys}.`,
         keysRemaining: (keys) => `Do zdobycia jeszcze ${keys}.`,
         preTutorialFail: "O, inny błąd! Jest to jakiś postęp.",

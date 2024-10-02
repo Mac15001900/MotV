@@ -195,7 +195,7 @@ macThingsInit = function () {
         for (let i = 0; i < DEBUG_SWITCHES.length; i++) {
             $gs[DEBUG_SWITCHES[i]] = true;
         }
-        $gv[41] = DEBUG_STAGE;
+        $gv[g.vars.GAME_STAGE] = DEBUG_STAGE;
         $gamePlayer.defaultSpeed = () => 5;
     }
     $gamePlayer.resetSpeed();
@@ -263,7 +263,7 @@ g.checkKey = function (input) {
     console.assert(typeof input === 'string' || input instanceof String, input);
     if (MAC_DEBUG && input === 'k') {
         g.data.keysTotal += 1;
-        $gv[g.vars.KEYS_COLLECTED]++;
+        $gv[g.vars.KEYS_COLLECTED] = g.data.keysTotal;
         return 3;
     }
     let startString = "";
@@ -278,7 +278,7 @@ g.checkKey = function (input) {
     if (lowered.substr(0, 6) !== startString || lowered[lowered.length - 1] !== ']') return 0; //Invalid format
     let key = lowered.substr(6, lowered.length - 7);
     g.data.lastGuess = key;
-    $gv[11] = key;
+    $gv[g.vars.EVENT_INTERNAL_1] = key;
     let puzzleName = $dataPuzzles.getBySolution(key)?.name;
     if (!puzzleName) {
         g.data.wrongGuesses.push(key);
@@ -290,9 +290,8 @@ g.checkKey = function (input) {
     if (!g.data.solved[puzzleName]) {
         g.data.solved[puzzleName] = true;
         g.data.keysCurrent += 1;
-        $gv[42]++;
         g.data.keysTotal += 1;
-        $gv[g.vars.KEYS_COLLECTED]++;
+        $gv[g.vars.KEYS_COLLECTED] = g.data.keysTotal;
         g.data.lastSolved = puzzleName;
         if (!g.persistentData.keyTimes[key]) {
             g.persistentData.keyTimes[key] = Math.floor(Graphics.frameCount / 60);
@@ -311,13 +310,13 @@ g.processNewKey = function (inp) {
     let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
     let message = "\\fn<Chakra>"
     if (newStage > 0) {
-        $gv[41] = newStage;
+        $gv[g.vars.GAME_STAGE] = newStage;
         message += s.newAreaUnlocked + '\n';
         if (newStage > 2) AudioManager.playSe({ name: "Ice2", volume: 100, pitch: 90 });
         else AudioManager.playSe({ name: "Darkness1", volume: 100, pitch: 100 });
     }
-    if ($gv[41] < ROOM_UNCLOKS.length) {
-        message += s.remainingToNextArea(ROOM_UNCLOKS[$gv[41]] - currentKeys);
+    if ($gv[g.vars.GAME_STAGE] < ROOM_UNCLOKS.length) {
+        message += s.remainingToNextArea(ROOM_UNCLOKS[$gv[g.vars.GAME_STAGE]] - currentKeys);
     } else if (currentKeys === $dataPuzzles.getAmount()) {
         AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
         message += s.tempVictory;
@@ -332,10 +331,11 @@ g.processNewKey = function (inp) {
  * Generates a message describing the current amount of keys found and keys needed for the next area.
  */
 g.keyStatusMessage = function () {
-    let keys = $gv[g.vars.KEYS_COLLECTED]
+    let keys = $gv[g.vars.KEYS_COLLECTED];
+    let stage = $gv[g.vars.GAME_STAGE];
     let message = s.fragmentsCollected + keys + '\n';
-    if ($gv[g.vars.GAME_STAGE] < ROOM_UNCLOKS.length) {
-        message += s.remainingToNextArea(ROOM_UNCLOKS[keys] - g.data.keysTotal);
+    if (stage < ROOM_UNCLOKS.length) {
+        message += s.remainingToNextArea(ROOM_UNCLOKS[stage] - keys);
     } else if (keys < $dataPuzzles.getAmount()) {
         message += s.keysRemaining($dataPuzzles.getAmount() - keys);
     } else {
@@ -2099,9 +2099,14 @@ void ((alias) => {
     }
 })(Scene_Title.prototype.start);
 */
-
-
-
+/*
+void ((alias) => {
+    Scene_Load.prototype.onLoadSuccess = function () {
+        alias.call(this);
+        $gamePlayer.reserveTransfer(5, 20, 20);
+    }
+})(Scene_Load.prototype.onLoadSuccess);
+*/
 
 
 

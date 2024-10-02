@@ -174,3 +174,12 @@ For compounds \c[3]without carbon\c[0]:
 
 \c[3]Isotope\c[0] designations, e.g. \c[14]D\c[0] and \c[14]T\c[0], are treated on a par with the regular element symbols, 
   i.e. they are part of the same \c[14]alphabetical\c[0] order.
+
+Computer for formula names:
+
+To get the list of names:
+In English: just get them from https://en.wikipedia.org/wiki/Glossary_of_chemical_formulae
+In Polish: Go to https://pl.wikipedia.org/wiki/Zwi%C4%85zki_chemiczne_wed%C5%82ug_pierwiastk%C3%B3w, select the element with all links, and use:
+[...new Set(Array.from($0.childNodes).filter(n=>n.tagName === "P").map(n=>Array.from(n.childNodes).filter(n=>n.tagName === "A").map(link=> Array.from(link.childNodes).map(n=>n.textContent).join('').replace(/\d/g, (x=>"₀₁₂₃₄₅₆₇₈₉"[x])) + " - " + link.title)).flat())].sort().join('\n') 
+
+Entering a formula 

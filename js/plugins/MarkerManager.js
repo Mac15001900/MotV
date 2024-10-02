@@ -21,6 +21,7 @@
  * - Exit event processing and Erase event will skip running "g.onEventEnd", and therefore marking an event as seen. This is intentional behaviour and is often used to skip marking an event.
  * 
  * To override the above behaviours when needed, set the value of "$es[this.eventId()]" directly.
+ * Additionally, in debug mode a red marker will always be shown over every event with the <TODO> tag, regardless of the above conditions.
  * 
  * ConfigManager.markerMode dictates whether markers are shown when an assigned key is held (when false) or are toggled by that key (when true)
  */

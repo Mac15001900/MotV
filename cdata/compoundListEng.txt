@@ -1,0 +1,2611 @@
+Ac₂O₃|actinium(III) oxide
+AgBF₄|Silver tetrafluoroborate
+AgBr|silver bromide
+AgBrO|silver hypobromite
+AgBrO₂|silver bromite
+AgBrO₃|silver bromate
+AgBrO₄|silver perbromate
+AgCl|silver chloride
+AgCl₃Cu₂|dicopper silver trichloride
+AgClO₃|silver chlorate
+AgClO₄|silver perchlorate
+AgCN|silver cyanide
+AgCNO|silver fulminate
+AgF|silver fluoride
+AgF₂|silver(II) fluoride
+AgI|silver iodide
+AgIO|silver hypoiodite
+AgIO₂|silver iodite
+AgIO₃|silver iodate
+AgIO₄|silver periodate
+AgMnO₄|silver permanganate
+AgN₃|silver azide
+AgNO₃|silver nitrate
+AgO|silver monoxide
+AgONC|silver cyanate
+AgPF₆|silver hexafluorophosphate
+AgSNC|silver thiocyanate
+Ag₂C₂|silver acetylide
+Ag₂CO₃|silver(I) carbonate
+Ag₂C₂O₄|silver oxalate
+Ag₂Cl₂|silver(II) dichloride
+Ag₂CrO₄|silver chromate
+Ag₂Cr₂O₇|silver dichromate
+Ag₂F|silver subfluoride
+Ag₂MoO₄|silver molybdate
+Ag₂O|silver(I) oxide
+Ag₂S|silver sulfide
+Ag₂SO₄|silver sulfate
+Ag₂Se|silver selenide
+Ag₂SeO₃|silver selenite
+Ag₂SeO₄|silver selenate
+Ag₂Te|silver(I) telluride
+Ag₃Br₂|silver dibromide
+Ag₃Br₃|silver tribromide
+Ag₃Cl₃|silver(III) trichloride
+Ag₃I₃|silver(III) triiodide
+Ag₃PO₄|silver phosphate
+AlBO₃|aluminium borate
+AlBr|aluminium monobromide
+AlBr₃|aluminium tribromide
+AlCl|aluminium monochloride
+AlClF|aluminium chloride fluoride
+AlCl₂<F|aluminium chloride fluoride
+AlClO|aluminium chloride oxide
+AlCl₂H|dichloroalumane
+AlCl₃|aluminium chloride
+AlCl₂F|aluminium chloride fluoride
+AlCl₃|aluminium trichloride
+AlCl₄Cs|aluminium caesium tetrachloride
+AlCl₄K|potassium tetrachloroaluminate
+AlCl₄Na|sodium tetrachloroaluminate
+AlCl₄Rb|rubidium tetrachloroaluminate
+AlCl₆K₃|potassium hexachloroaluminate
+AlCl₆Na₃|sodium hexachloroaluminate
+AlCo|Alumanylidynecobalt
+AlF|aluminium monofluoride
+AlFO|aluminium monofluoride monoxide
+AlF₂|aluminium difluoride
+AlF₂O|aluminium difluoride oxide
+AlF₃|aluminium trifluoride
+AlF₄K|potassium tetrafluoroaluminate
+AlF₄Li|lithium tetrafluoroaluminate
+AlF₆K₃|potassium hexafluoraluminate
+AlF₆Li₃|lithium hexafluoroaluminate
+AlF₆Na₃|cryolite
+AlGaInP|aluminium-gallium-indium phosphide
+AlH₃|aluminium hydride
+AlH₄-|alumanuide ion
+Al(OH)₃|aluminium hydroxide
+AlI|aluminium monoiodide
+AlI₃|aluminium triiodide
+AlLiO₂|lithium aluminate
+AlN|aluminium nitride
+Al(NO₂)₃|aluminium nitrite
+Al(NO₃)₃|aluminium nitrate
+AlNaO₂|sodium aluminate
+AlO|aluminium monoxide
+AlOSi|aluminium silicon monoxide
+AlO₂|aluminium(IV) oxide
+AlP|aluminium monophosphide
+AlPO₄|aluminium phosphate
+AlTe|aluminium monotelluride
+AlTe₂|monoaluminium ditelluride
+Al₂BeO₄|beryllium aluminium oxide
+Al₂Br₆|dialuminium hexabromide
+Al₂(CO₃)₃|aluminium carbonate
+Al₂Cl₉K₃|potassium aluminium chloride
+Al₂CoO₄|cobalt blue
+Al₂F₆|aluminium fluoride
+Al₂I₆|aluminium iodide
+Al₂MgO₄|magnesium aluminium oxide
+Al₂O|dialuminium monoxide
+Al₂O₂|dialuminium dioxide
+Al₂O₃|aluminium oxide
+Al₂O₅Si|aluminium silicate
+Al₂SiO₅|andalusite
+Al₂O₇Si₂|metakaolinite
+Al₂S|dialuminium monosulfide
+Al₂S₃|aluminium sulfide
+Al₂(SO₄)₃|aluminium sulphate
+Al₂Se|dialuminium selenide
+Al₂Si₂O₅(OH)₄|kaolin
+Al₂Te|dialuminium telluride
+Al₃F₁₄Na₅|chiolite
+Al₄C₃|aluminium carbide
+Al₆BeO₁₀|beryllium aluminium oxide
+Al₆O₁₃Si₂|mullite
+ArClF|argon chloride fluoride
+ArClH|argon chloride hydride
+ArFH|argon fluoride hydride
+AsBrO|arsenic oxybromide
+AsBr₃|arsenic tribromide
+AsClO|arsenic monoxide monochloride
+AsCl₃|arsenic trichloride
+AsCl₃O|arsenic oxychloride
+AsCl₄F|arsenic tetrachloride fluoride
+AsF₃|arsenic trifluoride
+AsF₅|arsenic pentafluoride
+AsH₃|arsine
+AsI₃|arsenic triiodide
+AsO|arsenic monoxide
+AsO₂|arsenic dioxide
+AsP|arsenic monophosphide
+AsP₃|arsenic triphosphide
+AsTl|thallium arsenide
+As₂I₄|arsenic diiodide
+As₂O₃|arsenic trioxide
+As₂P₂|arsenic diphosphide
+As₂O₅|arsenic pentoxide
+As₂S₄|arsenic tetrasulfide
+As₂S₅|arsenic pentasulfide
+As₂Se|arsenic hemiselenide
+As₂Se₃|arsenic triselenide
+As₂Se₅|arsenic pentaselenide
+As₃O₄|arsenic tetraoxide
+As₃P|arsenic(III) phosphide
+As₄O₃|tetraarsenic trioxide
+As₄O₅|tetraarsenic pentaoxide
+As₄S₃|dimorphite
+As₄S₄|realgar
+AuB|Borylgold
+AuBO|gold monoboride monoxide
+AuBr|gold bromide
+AuBr₃|gold tribromide
+AuCN|gold cyanide
+AuCl|gold chloride
+AuCl₃|gold trichloride
+AuF₃|gold trifluoride
+AuI|gold iodide
+AuI₃|gold(III) iodide
+Au(OH)₃|gold hydroxide
+AuTe|gold telluride
+Au₂O₃|gold trioxide
+Au₂S|gold sulfide
+Au₂S₃|gold trisulfide
+Au₂(SeO₄)₃|gold triselenate
+Au₂Se₃|gold triselenide
+BAs|boron arsenide
+BBr₃|boron tribromide
+BCl₃|boron trichloride
+BF₃|boron trifluoride
+BH₃|borane
+BH₄-|borohydride ion
+BH₆N|ammonia borane
+BI₃|boron triiodide
+BN|boron nitride
+B(NO₃)₃|boron nitrate
+B(NO₃)₄−|tetranitratoborate ion
+B(OH)₃|boric acid
+BO₃₃-|orthoborate ion
+BP|boron phosphide
+BPO₄|boron phosphate
+B₂Cl₄|diboron tetrachloride
+B₂F₄|diboron tetrafluoride
+B₂H₆|diborane
+B₂Mg|magnesium diboride
+B₂H₂Se₃|diboron triselenide
+B₂O₃|diboron trioxide
+B₂S₃|diboron trisulfide
+B₃N₃H₆|borazine
+B₄C|boron carbide
+B₄CaO₇|colemanite
+B₄Na₂O₇.₁₀H₂O|borax
+Ba(AlO₂)₂|barium aluminate
+Ba(AsO₃)₂|barium arsenite
+Ba(AsO₄)₂|barium arsenate
+BaB₆|barium hexaboride
+BaBr₂|barium bromide
+Ba(BrO)₂|barium hypobromite
+Ba(BrO₂)₂|barium bromite
+Ba(BrO₃)₂|barium bromate
+Ba(BrO₃)₂·H₂O|barium bromate monohydrate
+Ba(BrO₃)₂·₂H₂O|barium bromate dihydrate
+Ba(BrO₄)₂|barium perbromate
+Ba(BrO₄)₂·₃H₂O|barium perbromate trihydrate
+Ba(BrO₄)₂·₄H₂O|barium perbromate tetrahydrate
+Ba(CHO₂)₂|barium formate
+Ba(C₂H₃O₂)₂|barium acetate
+Ba(CN)₂|barium cyanide
+BaHfO₃|barium hafnate
+BaHgI₄|barium tetraiodomercurate(II)
+Ba(HS)₂|barium hydrosulfide
+BaI₂|barium iodide
+Ba(IO)₂|barium hypoiodite
+Ba(IO₂)₂|barium iodite
+Ba(IO₃)₂|barium iodate
+Ba(IO₄)₂|barium periodate
+BaK₂(CrO₄)₂|barium potassium chromate
+BaMnO₄|barium manganate
+Ba(MnO₄)₂|barium permanganate
+BaMoO₄|barium molybdate
+BaN₆|barium azide
+Ba(NO₂)₂|barium nitrite
+Ba(NO₃)₂|barium nitrate
+Ba(NbO₃)₂|barium niobate
+BaNb₂O₆|barium metaniobate
+BaO|barium oxide
+Ba(OH)₂|barium hydroxide
+BaO₂|barium peroxide
+Ba(PO₃)₂|barium metaphosphate
+BaS|barium sulfide
+Ba(SCN)₂|barium thiocyanate
+BaS₂O₃|barium thiosulfate
+BaSiF₆|barium hexafluorosilicate
+BaSO₃|barium sulfite
+BaSO₄|barium sulfate
+BaSe|barium selenide
+Ba(SeCN)₂|barium selenocyanate
+BaSeO₃|barium selenite
+BaSeO₄|barium selenate
+BaSiO₃|barium metasilicate
+BaSi₂|barium silicide
+BaSi₂O₅|barium disilicate
+BaSnO₃|barium stannate
+BaTeO₃|barium tellurite
+BaTeO₄·₃H₂O|barium tellurate trihydrate
+BaTiO₃|barium titanate
+BaU₂O₇|barium uranium oxide
+BaWO₄|barium tungstate
+BaZrO₃|barium zirconate
+Ba₂Na(NbO₃)₅|barium sodium niobate
+Ba₂P₂O₇|barium pyrophosphate
+Ba₂V₂O₇|barium pyrovanadate
+Ba₂XeO₆|barium perxenate
+Ba₃(CrO₄)₂|barium chromate(V)
+Ba₃N₂|barium nitride
+Ba₃(PO₄)₂|barium orthophosphate
+Ba₃(VO₄)₂|barium orthovandate
+BeB₂|beryllium boride
+Be(BH₄)₂|beryllium borohydride
+BeBr₂|beryllium bromide
+Be(CHO₂)₂|beryllium formate
+BeCO₃|beryllium carbonate
+Be(C₂H₃O₂)₂|beryllium acetate
+Be(C₅H₇O₂)₂|beryllium acetylacetonate
+BeCl₂|beryllium chloride
+Be(ClO)₂|beryllium hypochlorite
+Be(ClO₃)₂|beryllium chlorate
+Be(ClO₄)₂|beryllium perchlorate
+BeF₂|beryllium fluoride
+BeI₂|beryllium iodide
+Be(NO₂)₂|beryllium nitrite
+Be(NO₃)₂|beryllium nitrate
+BeO|beryllium oxide
+Be(OH)₂|beryllium hydroxide
+BeS|beryllium sulfide
+BeSO₃|beryllium sulfite
+BeSO₄|beryllium sulfate
+Be₂C|beryllium carbide
+Be₃Al₂(SiO₃)₆|beryl
+Be₃N₂|beryllium nitride
+BiBO₃|bismuth(III) orthoborate
+BiBr₃|bismuth(III) bromide
+Bi(C₂H₃O₂)₃|bismuth(III) acetate
+BiC₆H₅O₇|bismuth(III) citrate
+BiCl₃|bismuth(III) chloride
+BiF₃|bismuth(III) fluoride
+BiI₃|bismuth(III) iodide
+Bi(NO₃)₃·₅H₂O|bismuth(III) nitrate pentahydrate
+BiOCl|bismuth(III) oxychloride
+BiOI|bismuth(III) oxyiodide
+(BiO)₂CO₃|bismuth oxycarbonate
+BiPO₄|bismuth(III) orthophosphate
+Bi(VO₃)₅|bismuth(III) metavanadate
+Bi₂Se₃|bismuth(III) selenide
+Bi₂(MoO₄)₃|bismuth(III) molybdate
+Bi₂O₃|bismuth(III) oxide
+Bi₂S₃|bismuth(III) sulfide
+Bi₂Se₃|bismuth(III) selenide
+BrCl|bromine chloride
+BrCl₃|bromine trichloride
+BrCl₅|bromine pentachloride
+BrF|bromine monofluoride
+BrF₃|bromine trifluoride
+BrF₅|bromine pentafluoride
+BrI|iodine monobromide
+BrO₃−|bromate ion
+Br₂|bromine
+Br₂O₅|dibromine pentoxide
+Br₃-|tribromide ion
+Br₅-|pentabromide ion
+|C C2 C3 C4 C5 H C7 C8 C9 C10 C15 C20
+CAgO|carbonylsilver
+CCl₂F₂|dichlorodifluoromethane
+CCl₄|carbon tetrachloride
+C(CN)₄|tetracyanomethane
+CFCl₃|trichlorofluoromethane
+CFCl₂CF₂Cl|chlorotrifluoromethane
+CHCl₃|chloroform
+CHClF₂|chlorodifluoromethane
+CH(CN)₃|cyanoform
+CHNO|isocyanic acid
+CHN₃O₆|trinitromethane
+CHO₂−|formate ion
+CH₂|methylene
+CH₂Ag|carbene silver
+CH₂CHCHCH₂|1,3-butadiene
+CH₂CO|ketene
+CH₂CHOH|ethenol
+CH₂ClCOOH|chloroacetic acid
+CH₂Cl₂|dichloromethane
+CH₂ClF|chlorofluoromethane
+CH₂(CN)₂|malononitrile
+CH₂O|formaldehyde
+CH₂(OH)₂|methanediol
+CH₂OHCH₂OH|ethylene glycol
+CH₃CCH|propyne
+CH₃CdCH₃|dimethylcadmium
+CH₃CHCHCH₃|2-butene
+CH₃CHCH₂|propene
+CH₃CHO|acetaldehyde
+CH₃CH₂Br|bromoethane
+CH₃CH₂CH₂CH₂OH|butan-1-ol
+CH₃CH₂CH₂OH|1-propanol
+CH₃CH₂CONH₂|propanamide
+CH₃CH₂COOH|propionic acid
+CH₃CH₂OCH₂CH₃|diethyl ether
+CH₃CH₂OH|ethanol
+CH₃(CH₂)₁₆COOH|stearic acid
+CH₃CN|acetonitrile
+CH₃COCH₃|acetone
+CH₃COOCH₃|methyl acetate
+CH₃COCl|acetyl chloride
+CH₃CONH₂|acetamide
+CH₃COO−|acetate ion
+CH₃COOCHCH₂|vinyl acetate
+CH₃COOCH₂C₆H₅|benzyl acetate
+CH₃COO(CH₂)₂CH(CH₃)₂|isoamyl acetate
+CH₃COOH|acetic acid
+CH₃COONa|sodium acetate
+CH₃COOK|potassium acetate
+CH₃COORb|rubidium acetate
+CH₃COOCs|caesium acetate
+(CH₃CO)₂O|acetic anhydride
+CH₃Cl|chloromethane
+CH₃HgCH₃|dimethylmercury
+CH₃I|iodomethane
+CH₃OCH₃|dimethyl ether
+CH₃NH₂|methylamine
+CH₃NO|oxaziridine
+CH₃OCs|caesium methoxide
+CH₃OH|methanol
+CH₃OK|potassium methoxide
+CH₃OLi|lithium methoxide
+CH₃ONa|sodium methoxide
+CH₃ORb|rubidium methoxide
+CH₃SCH₃|dimethyl sulfide
+CH₃SH|methanethiol
+(CH₃)₂CHOH|isopropyl alcohol
+(CH₃)₂CO|acetone
+(CH₃)₂C₂O₄|dimethyl oxalate
+(CH₃)₂NNH₂|dimethyl hydrazine
+(CH₃)₂NH|dimethylamine
+(CH₃)₂S+CH₂CH₂COO−|dimethylsulfoniopropionate
+(CH₃)₃CCl|t-butyl chloride
+(CH)₃COH|t-butyl alcohol
+(CH₃)₃COOC(CH₃)₃|di-t-butyl peroxide
+(CH₃)₃N|trimethylamine
+CH₄|methane
+CH₄N₂O₂|hydroxycarbamide
+CH₅N₃|Guanidine
+CN−|cyanide ion
+(CN)₂|cyanogen
+C(NH₂)₃NO₃|guanidine nitrate
+CNO−|cyanate ion
+CO|carbon monoxide
+COCl₂|phosgene
+CO₂|carbon dioxide
+CO₃|carbon trioxide
+CO₃₂−|carbonate ion
+CS₂|carbon disulfide
+C₂F₄|tetrafluoroethylene
+C₂H₂|acetylene
+C₂H₂O₂|glyoxal
+C₂H₃Cl|vinyl chloride
+C₂H₃NO|glycolonitrile
+C₂H₃O₂−|acetate ion
+C₂H₄|ethylene
+C₂H₄Cl₂|ethylene dichloride
+C₂H₄N₄|3-amino-1,2,4-triazole
+C₂H₄O|ethylene oxide
+C₂H₄O₂|acetic acid
+C₂H₅Br|bromoethane
+C₂H₅NH₂|ethylamine
+C₂H₅NO₂|glycine
+C₂H₅O−|ethoxide ion
+C₂H₅OH|ethanol
+(C₂H₅)₂NH|diethylamine
+C₂H₅OCs|caesium ethoxide
+C₂H₅OK|potassium ethoxide
+C₂H₅ONa|sodium ethoxide
+C₂H₅ORb|rubidium ethoxide
+C₂H₆|ethane
+C₂H₆OS|dimethyl sulfoxide
+C₂H₇NO|ethanolamine
+C₂H₇NO₂|ammonium acetate
+C₂H₇NO₃S|taurine
+C₂O₄₂−|oxalate ion
+CH₃ClO₄|Methyl perchlorate
+C₃H₃Cl₃|1,1,3-Trichloropropene
+C₃H₃O₄−|malonate ion
+C₃HN|cyanopolyyne
+C₃H₃N|azete
+C₃H₄|Propadiene
+C₃H₄N₂|imidazole
+C₃H₄N₂S|aminothiazole
+C₃H₄O₃|pyruvic acid
+C₃H₄O₄|malonic acid
+C₃H₅NO|acrylamide
+C₃H₅N₃|3-amino-1H-pyrazole
+C₃H₅N₃O₉|nitroglycerine
+C₃H₆|cyclopropane
+C₃H₆O₂|ethyl formate
+C₃H₆O₂S|2-Mercaptopropionic acid
+C₃H₆O₂S|3-Mercaptopropionic acid
+C₃H₇N|azetidine
+C₃H₇N₃|n-Propyl azide
+C₃H₇NO₂|α-alanine
+C₃H₇NO₂S|cysteine
+C₃H₇NO₃|serine
+C₃H₇P|Phosphetane
+C₃H₈|propane
+C₃H₈NO₅P|glyphosate
+C₃H₈O|propanol
+C₃H₈O₂|propylene glycol
+C₃H₈O₂|1,3-propanediol
+C₃H₈O₃|glycerol
+C₃H₉N₃|1,3,5-triazinane
+C₃N₃(OH)₃|cyanuric acid
+C₃N₁₂|cyanuric triazide
+C₄HCl₂FN₂|2,6-dichloro-5-fluoroacil
+C₄H₂|diacetylene
+C₄I₂|diiodobutadiyne
+C₄H₂BrClN₂|5-bromo-2-chloropyrimidine
+C₄H₂Cl₂N₂|2,4-dichloropyrimidine
+C₄H₃Cl₂N₃|2-amino-4,6-dichloropyrimidine
+C₄H₃FN₂O₂|fluorouracil
+C₄H₄|vinylacetylene
+C₄H₄FN₃O|flucytosine
+C₄H₄N₂O₂|uracil
+C₄H₄N₄|diaminomaleonitrile
+C₄H₄N₄|3-aminopyrazole-4-carbonitrile
+C₄H₄N₄|1,3,5,7-tetrazocine
+C₄H₄O|furan
+C₄H₅FO₂|Methyl 2-fluoroacrylate
+C₄H₅N₃O|cytosine
+C₄H₆N₂|fomepizole
+C₄H₆N₂|1-methylimidazole
+C₄H₆N₂|4-methylimidazole
+C₄H₆N₂S|methimazole
+C₄H₆N₄O|2,4-diamino-6-hydroxypyrimidine
+C₄H₆O₂|1,4-Butynediol
+C₄H₆O₂|gamma-Butyrolactone
+C₄H₆O₂|crotonic acid
+C₄H₆O₂|diacetyl
+C₄H₆O₂|diepoxybutane
+C₄H₆O₂|1,4-Dioxene
+C₄H₆O₂|isocrotonic acid
+C₄H₆O₂|methacrylic acid
+C₄H₆O₂|methyl acrylate
+C₄H₆O₂|succinaldehyde
+C₄H₆O₂|vinyl acetate
+C₄H₆O₃|propylene carbonate
+C₄H₆O₄|succinic acid
+C₄H₇BrO₂|2-bromobutyric acid
+C₄H₇KO₃|potassium oxybate
+C₄H₇NaO₃|sodium oxybate
+(C₄H₇NO)n|Poly(N-vinylacetamide)|Poly(N-vinylacetamide)
+C₄H₇NO₂|1-Aminocyclopropanecarboxylic acid
+C₄H₇NO₃|aceturic acid
+C₄H₇NO₄|aspartic acid
+C₄H₈|cyclobutane
+C₄H₈N₂O₃|asparagine
+C₄H₈O|tetrahydrofuran
+C₄H₈O₂|ethyl acetate
+C₄H₈O₃|gamma-Hydroxybutyric acid
+C₄H₉ClHg|n-Butylmercuric chloride
+C₄H₉Li|n-butyllithium
+C₄H₉NO₂|γ-aminobutyric acid
+C₄H₉NO₃|threonine
+C₄H₉Na|n-Butylsodium
+C₄H₉OH|butyl alcohol
+C₄H₁₀|butane
+C₄H₁₀O|diethyl ether
+C₄H₁₀O₂|1,2-Butanediol
+C₄H₁₀O₂|1,3-Butanediol
+C₄H₁₀O₂|1,4-Butanediol
+C₄H₁₀O₂|2,3-Butanediol
+C₄H₁₀O₂|tert-Butyl hydroperoxide
+C₄H₁₀O₂|Dimethoxyethane
+C₄H₁₀O₂|2-Ethoxyethanol
+C₄H₁₀O₂|1-Methoxy-2-propanol
+C₄H₁₀O₃|diethylene glycol
+C₄H₁₁NO₂|diethanolamine
+C₅H₃BrN₂O₂|2-bromo-5-nitropyridine
+C₅H₃Br₂N|3,5-dibromopyridine
+C₅H₃ClN₂O₂|2-chloro-5-nitropyridine
+C₅H₃ClN₄|6-chloropurine
+C₅H₄NCOOH|niacin
+C₅H₄N₂O₂|pyrazinoic acid
+C₅H₄N₂O₄|orotic acid
+C₅H₄N₄O|allopurinol
+C₅H₄N₄O₂|xanthine
+C₅H₄N₄S|mercaptopurine
+C₅H₄O|cyclopentadienone
+C₅H₄O₂|furfural
+C₅H₄O₂S|b-thiophenic acid
+C₅H₅−|cyclopentadienyl anion
+C₅H₅BrN₂|2-amino-5-bromopyridine
+C₅H₅ClN₂|2-amino-4-chloropyridine
+C₅H₅IN₂|2-amino-5-iodopyridine
+C₅H₅N|pyridine
+C₅H₅NO|2-pyridone
+C₅H₅N₃O|pyrazinamide
+C₅H₅N₃O₂|2-amino-nitropyridine
+C₅H₅N₅|adenine
+C₅H₅N₅O|guanine
+C₅H₆BNO₂|3-pyridinylboronic acid
+C₅H₆N₂|1,2-diazepine
+C₅H₆N₂OS|methylthiouracil
+C₅H₆N₂O₂|thymine
+C₅H₆O|cyclopentenone
+C₅H₆O₅|α-Ketoglutaric acid
+C₅H₇N₃|3,4-diaminopyridine
+C₅H₈O₂|gamma-Valerolactone
+C₅H₉NO|3-Dimethylaminoacrolein
+C₅H₉NO₂|allylglycine
+C₅H₉NO₂|proline
+C₅H₉NO₄|glutamic acid
+C₅H₁₀|cyclopentane
+C₅H₁₀N₂O₃|glutamine
+C₅H₁₀O₂|pivalic acid
+C₅H₁₀O₂|valeric acid
+C₅H₁₀O₂|3-Methylbutanoic acid
+C₅H₁₀O₄|deoxyribose
+C₅H₁₁NO₂|valine
+C₅H₁₁NO₂S|methionine
+C₅H₁₂|pentane
+C₅H₁₂O₂|neopentyl glycol
+C₅H₁₂O₄|pentaerythritol
+C₅H₁₂O₅|xylitol
+C₅H₁₃N|N,N-diethylmethylamine
+C₆F₅COOH|pentafluorobenzoic acid
+C₆H₂Cl₃NO|2,6-Dichloroquinone-4-chloroimideGibbs reagent
+C₆H₃Br₃O|2,4,6-Tribromophenol
+C₆H₃Cl₃O|2,4,6-Trichlorophenol
+C₆H₄BrNO₂|5-bromonicotinic acid
+C₆H₄ClNO₂|2-chloronicotinic acid
+C₆H₄ClN₃|4-Chlorophenyl azide
+C₆H₄ClNO₂|6-chloro-2-pyridinecarboxylic acid
+C₆H₄N₄|tricyanoaminopropene
+C₆H₄O₂|orthobenzoquinone
+C₆H₅Br|bromobenzene
+C₆H₅CHO|benzaldehyde
+C₆H₅CH₂OH|benzyl alcohol
+C₆H₅Cl|chlorobenzene
+C₆H₅COCl|benzoyl chloride
+C₆H₅COO−|benzoate ion
+C₆H₅COOH|benzoic acid
+C₆H₅F|fluorobenzene
+C₆H₅I|iodobenzene
+C₆H₅NO₂|picolinic acid
+C₆H₅NO₃|4-nitrophenol
+C₆H₅OH|phenol
+C₆H₅O₇₃−|citrate ion
+C₆H₅NO₄|Citrazinic acid
+(C₆H₅)₄Ge|tetraphenylgermane
+(C₆H₅)₂O|diphenyl ether
+(C₆H₅)₃N|triphenylamine
+(C₆H₅)₃P|triphenylphosphine
+C₆H₆|benzene
+C₆H₆BClO₂|4-chlorophenylboronic acid
+C₆H₆BFO₂|4-fluorophenylboronic acid
+C₆H₆ClN|2-Chloromethylpyridine
+C₆H₆IN|4-iodoaniline
+C₆H₆N₂O|nicotinamide
+C₆H₆N₂O₂|6-aminonicotinic acid
+C₆H₆N₄|2,2',2-Nitrilotriacetonitrile
+C₆H₆O|phenol
+C₆H₆O₂|catechol
+C₆H₆O₃|hydroxymethylfurfural
+C₆H₇BO₂|phenylboronic acid
+C₆H₇CsO₆|caesium ascorbate
+C₆H₇KO₆|potassium ascorbate
+C₆H₇LiO₆|lithium ascorbate
+C₆H₇N₃O|isoniazid
+C₆H₇NaO₆|sodium ascorbate
+C₆H₇RbO₆|rubidium ascorbate
+C₆H₈N₂|2-amino-3-methylpyridine
+C₆H₈N₂O₂S|ethyl 2-aminothiazole-4-carboxylate
+C₆H₈O₇|citric acid
+C₆H₉N₃O₂|histidine
+C₆H₉N₃O₃|metronidazole
+C₆H₁₀O₂|(2R)-2-Methylpent-4-enoic acid
+C₆H₁₀O₃|4-acetylbutyric acid
+C₆H₁₀O₄|aceburic acid
+C₆H₁₀O₄|adipic acid
+C₆H₁₀O₄|conduritol
+C₆H₁₀O₄|dianhydrohexitol
+C₆H₁₀O₄|ethylidene diacetate
+C₆H₁₀O₄|glucal
+C₆H₁₁NO₂|cycloleucine
+C₆H₁₂|cyclohexane
+C₆H₁₂N₄O₃|Streptolidine
+C₆H₁₂OS|4-Mercapto-4-methyl-2-pentanone
+C₆H₁₂O₃|4-Hydroxy-4-methylpentanoic acid
+C₆H₁₂O₆|fructose
+C₆H₁₃NO|N-ethylmorpholine
+C₆H₁₃NO₂|aminocaproic acid
+C₆H₁₄|hexane
+C₆H₁₄N₂O₂|lysine
+C₆H₁₄N₄O₂|arginine
+C₆H₁₄O₂|1,6-hexanediol
+C₆H₁₄O₃|dipropylene glycol
+C₆H₁₄O₃|trimethylolpropane
+C₆H₁₄O₄|triethylene glycol
+C₆H₁₅NO₃|triethanolamine
+C₆H₇N₃O₃|2-Oxohistidine
+C₆N₄|tetracyanoethylene
+C₇H₄ClFO|2-Chloro-6-fluorobenzaldehyde
+C₇H₅BrO|3-Bromobenzaldehyde
+C₇H₅Br₃O|2,4,6-tribromoanisole
+C₇H₅Cl₂NS|Chlorthiamide
+C₇H₅Cl₃O|2,4,6-trichloroanisole
+C₇H₅F₃O|2,4,6-trifluoroanisole
+C₇H₅FO₂|2-fluorobenzoic acid
+C₇H₅FO₂|3-Fluorobenzoic acid
+C₇H₅FO₂|4-fluorobenzoic acid
+C₇H₅NO₄|quinolinic acid
+C₇H₅NS₂|2-mercaptobenzothiazole
+C₇H₅N₃O₂|7-nitroindazole
+C₇H₆ClF|2-Chloro-6-fluorotoluene
+C₇H₆N₂|7-azaindole
+C₇H₆N₂|Benzimidazole
+C₇H₆O|tropone
+C₇H₆O₂|benzoic acid
+C₇H₆O₃|salicylic acid
+C₇H₆O₄|protocatechuic acid
+C₇H₆O₅|gallic acid
+C₇H₇BO₄|4-carboxyphenylboronic acid
+C₇H₇NO₂|4-aminobenzoic acid
+C₇H₇NO₃|mesalazine
+C₇H₇N₃|benomyl metabolite
+C₇H₈|toluene
+C₇H₈ClN₃O₄S₂|hydrochlorothiazide
+C₇H₈N₄O₂|theophylline
+C₇H₈N₄O₂|theobromine
+C₇H₉BO₂|4-methylphenylboronic acid
+C₇H₉BO₃|4-boronoanisole
+C₇H₁₀N₂|4-dimethylaminopyridine
+C₇H₁₁NO₅|N-Acetylglutamic acid
+C₇H₁₂O₄|diethyl malonate
+C₇H₁₂N₂O₄|aceglutamide
+C₇H₁₄O₃|n-Butyl lactate
+C₇H₁₄O₆|bornesitol
+C₇H₁₆|heptane
+C₈H₄F₃IO₂|Togni reagent II
+C₈H₅F₃N₂OS|riluzole
+C₈H₅NO₂|isatin
+C₈H₆BrN|5-bromoindole
+C₈H₆ClN|4-chloroindole
+C₈H₆Cl₂O₃|2,4-dichlorophenoxyacetic acid
+C₈H₆N₂O|4-quinazolinol
+C₈H₆N₂O₂|indazolium-3-carboxylate
+C₈H₇Cl|2-Chlorostyrene
+C₈H₇N|indole
+C₈H₇NO|indol-4-ol
+C₈H₈|cubane
+C₈H₈N₂OS|2-amino-6-methoxybenzothiazole
+C₈H₈O₃|4-hydroxyphenylacetic acid
+C₈H₈O₄|vanillic acid
+C₈H₉NO₂|acetaminophen
+C₈H₉NO₂|aminomethylbenzoic acid
+C₈H₉NO₂|hydroxydanaidal
+C₈H₉NO₂|methyl anthranilate
+C₈H₁₀IN|4-Iodo-N,N-dimethylaniline
+C₈H₁₀N₄O₂|caffeine
+C₈H₁₁NO|tyramine
+C₈H₁₁N₅O₃|aciclovir
+C₈H₁₆|(1R,3R)-1,2,3-Trimethylcyclopentane
+C₈H₁₆O₂|cyclohexanedimethanol
+C₈H₁₆O₆|pinpollitol
+C₈H₁₆O₆|viscumitol
+C₈H₁₆O₆|Eleutheroside C
+C₈H₁₈|octane
+C₉H₆BrN|4-bromoisoquinoline
+C₉H₆N₂|5-cyanoindole
+C₉H₆O₃|umbelliferone
+C₉H₆OS|thiochromone
+C₉H₇NO|8-hydroxyquinoline
+C₉H₇NO₂|indole-2-carboxylic acid
+C₉H₈N₂|5-aminoisoquinoline
+C₉H₈O₂|cinnamic acid
+C₉H₈O₄|aspirin
+C₉H₉N|methylketol
+C₉H₉NO|4-methoxyindole
+C₉H₉NO₃|hippuric acid
+C₉H₉NO₆|Stizolobic acid
+C₉H₁₀O|chavicol
+C₉H₁₀O₃|paeonol
+C₉H₁₁NO₂|phenylanine
+C₉H₁₀O|cinnamyl alcohol
+C₉H₁₁NO₃|tyrosine
+C₉H₁₁NO₄|L-DOPA
+C₉H₁₂O₃|4-Ipomeanol
+C₉H₁₃N₅O₃|S2242
+C₉H₁₄O₃|Boonein
+C₉H₁₇NO₂|gabapentin
+C₉H₁₈N₂O₂|1-boc-piperazine
+C₉H₂₀|nonane
+C₉H₂₀N₂O₂S₂|Mono-BOC-cystamine
+C₉H₂₀N₂S|N,N'-Di-n-butylthiourea
+C₁₀H₄Br₅NO|Pentabromopseudilin
+C₁₀H₇NO₂|quinaldic acid
+C₁₀H₇NO₄|6-Hydroxykynurenic acid
+C₁₀H₇N₃S|tiabendazole
+C₁₀H₈|azulene
+C₁₀H₈|naphthalene
+C₁₀H₈O₃|hymecromone
+C₁₀H₉NO₂|indole-3-acetic acid
+C₁₀H₉N₅O|kinetin
+C₁₀H₉NO₂|5-methoxyindole-3-carboxaldehyde
+C₁₀H₁₀N₂O|edaravone
+C₁₀H₁₀N₃NaO₅|Suosan
+C₁₀H₁₀O₂|safrole
+C₁₀H₁₀O₄|ferulic acid
+C₁₀H₁₁N₃O₃S|sulfamethoxazole
+C₁₀H₁₂N₂|tryptamine
+C₁₀H₁₂O|anethole
+C₁₀H₁₂O|estragole
+C₁₀H₁₂O₂|hinokitiol
+C₁₀H₁₂O₂|eugenol
+C₁₀H₁₂O₂|isoeugenol
+C₁₀H₁₂O₂|pseudoisoeugenol
+C₁₀H₁₂O₃|coniferyl alcohol
+C₁₀H₁₃N₅O₄|adenosine
+C₁₀H₁₄ClNS|N-tert-Butylbenzenesulfinimidoyl chloride
+C₁₀H₁₄Cl₂O₄Ti|Titanium bis(acetylacetonate)dichloride
+C₁₀H₁₄O|mentha spicata herb oil
+C₁₀H₁₅Br|1-Bromoadamantane
+C₁₀H₁₅ON|ephedrine
+C₁₀H₁₆|limonene
+C₁₀H₁₆O|camphor
+C₁₀H₁₇NO₃|boc-4-piperidone
+C₁₀H₁₈N₂O₈|Fructose-asparagine
+C₁₀H₁₈N₄O₂S|Biotin hydrazide
+C₁₀H₁₉NO₃|1-boc-4-piperidinol
+C₁₀H₂₀N₂O₂|boc-4-aminopiperidine
+C₁₀H₂₀O₂|Paramenthane hydroperoxide
+C₁₀H₂₂|decane
+C₁₁H₈O₂|menadione
+C₁₁H₁₀O|β-Naphthol methyl ether
+C₁₁H₁₁NO₂|3-indolepropionic acid
+C₁₁H₁₂N₂O₂|tryptophan
+C₁₁H₁₂O₃|myristicin
+C₁₁H₁₃NO₆|Caramboxin or Diroximel fumarate
+C₁₁H₁₄N₂O|5-methoxytryptamine
+C₁₁H₁₄O₂|methyl eugenol
+C₁₁H₁₄O₂|methyl isoeugenol
+C₁₁H₁₆O₂|Jasmolone
+C₁₁H₁₉NO₄|boc-isonipecotic acid
+C₁₁H₂₁N₅O₅|L-Arginine L-pyroglutamate
+C₁₁H₂₄|undecane
+C₁₂H₁₁NO₅|Macromomycin B
+C₁₂H₄Cl₆|2,2',3,3',4,4'-Hexachlorobiphenyl
+C₁₂H₄N₄|tetracyanoquinodimethane
+C₁₂H₈O₄|methoxsalen
+C₁₂H₁₀|biphenyl
+C₁₂H₁₀ClN₂O₅S|furosemide
+C₁₂H₁₁N₃O₂|Furonazide
+C₁₂H₁₁N₅|6-benzylaminopurine
+C₁₂H₁₁N₇|triamterene
+C₁₂H₁₃NO₂|indole-3-butyric acid
+(C₁₂H₁₄CaO₁₂)n|calcium alginate
+C₁₂H₁₄O₄|apiole
+C₁₂H₁₄O₄|dillapiole
+C₁₂H₁₅NO|1-benzyl-4-piperidone
+C₁₂H₁₆N₂|N,N-Dimethyltryptamine
+C₁₂H₁₆O₃|asarone
+C₁₂H₁₆O₃|elemicin
+C₁₂H₁₆O₃|isoelemicin
+C₁₂H₁₆O₃|oudenone
+C₁₂H₁₆O₄|2,4,5-Trimethoxypropiophenone
+C₁₂H₁₆O₇|arbutin
+C₁₂H₁₇N₅O₄S|thiamine nitrate
+C₁₂H₁₈N₄O₂|E1210
+C₁₂H₁₈O|propofol
+C₁₂H₁₈O₄|Allixin or 1,6-Hexanediol diacrylate
+C₁₂H₁₉N₃O₇|D-Fructose-L-histidine
+C₁₂H₂₁N₃O₈|Aspartylglucosamine
+C₁₂H₂₂O₄|1,1'-Dihydroxydicyclohexyl peroxide
+C₁₂H₂₂O₁₁|maltose
+C₁₂H₂₅N|Stenusin
+C₁₂H₂₆|dodecane
+C₁₃H₂₀|Tetracyclopropylmethane
+C₁₃H₁₀O|benzophenone
+C₁₃H₁₂F₂N₆O|fluconazole
+C₁₃H₁₂O|β-ionone
+C₁₃H₁₂O₂|monobenzone
+C₁₃H₁₄N₂O|harmaline
+C₁₃H₁₆N₂O₂|melatonin
+C₁₃H₁₈O₂|ibuprofen
+C₁₃H₂₈|tridecane
+C₁₄H₁₀|anthracene
+C₁₄H₁₀|phenanthrene
+C₁₄H₁₀O₁₄|benzoyl peroxide
+C₁₄H₁₁Cl₃N₂O₃|RI-1
+C₁₄H₁₁NO₃|Isooncodine
+C₁₄H₁₂O₃|resveratrol
+C₁₄H₁₃F₄N₃O₂S|Flufenacet
+C₁₄H₁₄Cl₂N₂O|enilconazole
+C₁₄H₁₆N₂O₄|SCH 900271
+C₁₄H₁₇F₃N₃O₂|TDBzcholine
+C₁₄H₁₈N₂O₅|aspartame
+C₁₄H₁₈N₄O₃|trimethoprim
+C₁₄H₁₈O₆|Bis(2-methoxyethyl) phthalate
+C₁₄H₂₀O₅|Integrasone
+C₁₄H₃₀|tetradecane
+C₁₅H₁₀O₄|daidzein
+C₁₅H₁₀O₅|apigenin
+C₁₅H₁₀O₆|luteolin
+C₁₅H₁₀O₇|quercetin
+C₁₅H₁₂N₂O|carbamazepine
+C₁₅H₁₂N₂O₂|phenytoin
+C₁₅H₁₃NO₄|Darienine
+C₁₅H₁₈O₂|Curzerenone
+C₁₅H₁₈O₃|Arglabin
+C₁₅H₂₄O|nectaryl
+C₁₅H₃₂|pentadecane
+C₁₆H₁₃NO₄|Virstatin
+C₁₆H₁₄O₃|ketoprofen
+C₁₆H₁₉NO₄|Norscopolamine
+C₁₆H₁₉NO₅|Peyonine
+C₁₆H₂₂FN₅O₃S|LY3372689
+C₁₆H₂₈N₂O₆Zn|zinc acexamate
+C₁₆H₃₀N₄O₄S|Biotin PEG2 amine
+C₁₆H₃₄|hexadecane
+C₁₇H₁₃ClN₄|alprazolam
+C₁₇H₁₄F₃N₃O₂S|celecoxib
+C₁₇H₁₄N₂|Olivacine
+C₁₇H₁₄O₃|5-Methyl-7-methoxyisoflavone
+C₁₇H₁₄N₂O₅S|Calmagite
+C₁₇H₁₅NO₃|Noroliveroline
+C₁₇H₁₆N₂O₃S|TSQ, 6-methoxy-(8-p-toluenesulfonamido)quinoline
+C₁₇H₁₈N₂O₆|nifedipine
+C₁₇H₁₉N₃O₃S|omeprazole
+C₁₇H₂₁NO₄|cocaine
+C₁₇H₂₂O₂|cicutoxin
+C₁₇H₂₂O₂|oenanthotoxin
+C₁₇H₂₄O|falcarinol
+C₁₇H₂₄O₉|Eleutheroside B
+C₁₇H₃₀O₈|Glyceryl octyl ascorbic acid
+C₁₇H₃₆|heptadecane
+C₁₈H₁₂Cl₂N₂O|boscalid
+C₁₈H₁₆N₂OS|INH1
+C₁₈H₁₇NO₃|Oliveroline
+C₁₈H₁₇NO₇|Clovamide
+C₁₈H₂₂O₂|estrone
+C₁₈H₂₃NO₆|Tazopsine
+C₁₈H₂₄O₂|estradiol
+C₁₈H₂₄O₃|estriol
+C₁₈H₂₄O₄|estetrol
+C₁₈H₂₇NO₃|capsaicin
+C₁₈H₃₂O₂|linoleic acid
+C₁₈H₃₆O₂|stearic acid
+C₁₈H₃₈|octadecane
+C₁₉H₁₀Br₂O₉S|Bromopyrogallol red
+C₁₉H₁₂N₂O|6-Formylindolo(3,2-b)carbazole
+C₁₉H₁₄N₂O₄|C286
+C₁₉H₁₄O₆|Landomycinone
+C₁₉H₁₅ClO₄|Coumachlor
+C₁₉H₁₆ClNO₄|indometacin
+C₁₉H₂₂N₂|Eburnamenine
+C₁₉H₂₂N₂O|Normacusine B
+C₁₉H₂₄N₂O|Eburnamine
+C₁₉H₂₆O₂|androstenedione
+C₁₉H₂₈O₂|dehydroepiandrosterone
+C₁₉H₂₈O₂|testosterone
+C₁₉H₃₀O₂|androstenediol
+C₁₉H₃₀O₂|dihydrotestosterone
+C₁₉H₄₀|nonadecane
+C₂₀H₁₇NO₆|Sibiricine
+C₂₀H₁₉N|N,N-Dibenzylaniline
+C₂₀H₂₀N₄AgS₂O₈|Tetrakis(pyridine)silver(II) peroxydisulfate
+C₂₀H₂₂N₂O|Kopsanone
+C₂₀H₂₂N₂O₂|Pleiocarpamine
+C₂₀H₂₂O₇|Saudin
+C₂₀H₂₃BrN₈O|BX-912
+C₂₀H₂₃NO₄|Thebacon
+C₂₀H₂₄O₂N₂|quinine
+C₂₀H₂₅NO|Diphepanol
+C₂₀H₂₆O₃|Crotogoudin
+C₂₀H₂₇NO₁₁|amygdalin
+C₂₀H₂₈O₂|tretinoin
+C₂₀H₃₀O₃|Neotripterifordin
+C₂₀H₃₂O₅|prostacyclin
+C₂₀H₃₂O₅|prostaglandin E2
+C₂₀H₃₄O₅|dinoprost
+C₂₀H₄₂|eicosane
+C₂₁H₁₆FN₇|AMG 319
+C₂₁H₁₈FN₅O₅S|Avutometinib
+C₂₁H₁₉ClN₄O₂|Setanaxib
+C₂₁H₂₀O₆|curcumin
+C₂₁H₂₂N₂O₄|Picralinal
+C₂₁H₂₂O₄|Taxamairin A
+C₂₁H₂₃FN₂O₄|Z-FA-FMK
+C₂₁H₂₄FN₆O₆P|Rovafovir etalafenamide
+C₂₁H₂₅NO₄|Yuanhunine
+C₂₁H₂₆O₄|Canniprene
+C₂₁H₂₇N₅|D75-4590
+C₂₁H₃₀O₂|progesterone
+C₂₁H₃₀O₂|tetrahydrocannabinol
+C₂₁H₃₆N₇O₁₆P₃S|Coenzyme A
+C₂₁H₃₉NO₃|N-Oleoylsarcosine
+C₂₁H₄₄N₂|N-Oleyl-1,3-propanediamine
+C₂₂H₂₃ClN₂O₂|loratadine
+C₂₂H₂₆O₇|L-165041
+C₂₂H₂₈N₂O|fentanyl
+C₂₂H₃₀O₈|Neurolenin B
+C₂₃H₁₃Cl₂Na₃O₉S|Chrome Azurol S
+C₂₃H₁₉ClF₃NO₃|cyhalothrin
+C₂₃H₂₄O₄S|Kadethrin
+C₂₃H₂₈N₂O|Iferanserin
+C₂₃H₂₈N₂O₄|Pleiocarpine
+C₂₃H₃₈N₂OS|Laucysteinamide A
+C₂₃H₄₁NO₂|Terminaline
+C₂₄H₁₇F₆NO₃|Tarocin A
+C₂₄H₂₉FN₆|Ralimetinib
+C₂₄H₄₅CrO₆|Chromium(III) 2-ethylhexanoate
+C₂₅H₃₀O₈|Kadsurin
+C₂₅H₃₆O₆|Pseudopterosin A
+C₂₆H₃₂N₆O₁₁|Mirubactin
+C₂₆H₃₇N₃O|Tarocin B
+C₂₆H₃₈O₆|Pseudopterosin E
+C₂₇H₂₇Cl₂N₅O₃S|JD5037
+C₂₇H₃₃N₃O₅|Andrimid
+C₂₇H₅₀O₆|Axona
+C₂₈H₂₆ClN₅O|Basic Black 2
+C₂₈H₃₇NO₈|Nargenicin
+C₂₈H₄₂N₄O₆|Kukoamine A
+C₂₈H₄₇NO₃|Pingbeinine
+C₂₉H₄₂N₁₀O₉|Argadin
+C₂₉H₄₀N₂O₆|Dihydromaltophilin
+C₃₀H₁₉NO₉|Dynemicin A
+C₃₀H₄₂O₁₁|Decinnamoyltaxinine J
+C₃₀H₄₆O₆|Retigeric acid B
+C₃₃H₂₈O₉|Rubicordifolin
+C₃₃H₃₈O₁₁|Triptofordin C-2
+C₃₄H₄₆O₁₈|Eleutheroside D
+C₃₅H₄₂O₁₄|Taxinine M
+C₃₅H₆₀O₆|Eleutheroside A
+C₃₆N₂O₆|Cepharanoline
+C₃₇H₄₄O₁₃|Taxagifine
+C₃₇H₄₈N₂O₈|Cytotrienin A
+C₃₇H₅₉N₅O₆|Caldoramide
+C₃₇H₆₄O₆|Chamuvarinin
+C₃₈H₆₅NO₂₉|lacto-n-difucohexaose II
+C₃₉H₄₈N₂O₉|Kidamycin
+C₄₀H₄₈N₆O₁₀|Bouvardin
+C₄₀H₅₃NO₁₄|Cosmomycin B
+C₄₀H₅₆|lycopene
+C₄₀H₆₀BNaO₁₄|Aplasmomycin
+C₄₁H₅₀N₂O₁₀|Neopluramycin
+C₄₁H₅₀N₂O₁₁|Hedamycin
+C₄₄H₅₅NO₁₆|Milataxel
+C₄₄H₆₉N₁₅O₉S|adrenorphin
+C₄₈H₅₆N₁₀O₁₂S₆|Thiocoraline
+C₅₂H₄₈MoN₄P₄|Bis(dinitrogen)bis(1,2-bis(diphenylphosphino)ethane)molybdenum(0)
+C₅₅H₇₄IN₃O₂₁S₄|calicheamicin
+C₅₈H₈₄N₁₂O₂₆|Mannopeptimycin glycopeptide
+C₅₉H₈₀N₄O₂₂S₄|esperamicin
+C₅₉H₁₀₃N₃O₁₈|Niphimycin
+C₆₀|Buckminsterfullerene
+C₆₁H₆₀N₁₄O₁₈S₅|Nocathiacin I
+C₆₂H₈₉CoN₁₃O₁₅P|hydroxocobalamin
+C₆₃H₈₈CoN₁₄O₁₄P|Vitamin B12
+C₆₃H₈₈CoN₁₄O₁₄P|cyanocobalamin
+C₆₃H₉₁CoN₁₃O₁₄P|methylcobalamin
+C₇₂H₁₀₀CoN₁₈O₁₇P|adenosylcobalamin
+C₇₆H₅₂O₄₆|Tannic acid
+C₇₇H₁₀₁N₁₇O₂₆|Surotomycin
+C₇₇H₁₂₀N₁₈O₂₆S|alpha-Endorphin
+C₇₉H₁₄₅N₁₇O₁₇|Paenibacterin
+C₈₃H₁₃₁N₁₉O₂₇S|gamma-Endorphin
+C₁₃₁H₂₀₀N₃₀O₄₃S₂|amidorphin
+C₁₅₈H₂₅₁N₃₉O₄₆S|beta-Endorphin
+C₁₆₁H₂₃₆N₄₂O₄₈|leumorphin
+C₁₆₄H₂₅₆Na₂O₆₈S₂|maitotoxin
+C₁₇₂H₂₈₄ClN₅₃O₄₁|JV-1-36
+CaAl₂O₄|calcium aluminate
+CaB₆|calcium boride
+CaBr₂|calcium bromide
+Ca(BrO)₂|calcium hypobromite
+Ca(BrO₂)₂|calcium bromite
+Ca(BrO₃)₂|calcium bromate
+Ca(BrO₄)₂|calcium perbromate
+Ca(CN)₂|calcium cyanide
+CaCO₃|calcium carbonate
+CaC₂|calcium carbide
+Ca(CHO₂)₂|calcium formate
+Ca(C₂H₃O₂)₂|calcium acetate
+CaC₂O₄|calcium oxalate
+CaCN₂|calcium cyanamide
+CaCl₂|calcium chloride
+Ca(ClO)₂|calcium hypochlorite
+Ca(ClO₂)₂|calcium chlorite
+Ca(ClO₃)₂|calcium chlorate
+Ca(ClO₄)₂|calcium perchlorate
+CaF₂|fluorite
+CaH₂|calcium hydride
+CaHPO₄|dicalcium phosphate
+Ca(H₂PO₂)₂|calcium hypophosphite
+Ca(HS)₂|calcium hydrosulfide
+CaI₂|calcium iodide
+Ca(IO)₂|calcium hypoiodite
+Ca(IO₂)₂|calcium iodite
+Ca(IO₃)₂|calcium iodate
+Ca(IO₄)₂|calcium periodate
+CaMoO₄|calcium molybdate
+Ca(NO₂)₂|calcium nitrite
+Ca(NO₃)₂|calcium nitrate
+Ca(NO₃)₂ · ₄H₂O|Calcium nitrate tetrahydrate
+Ca(NbO₃)₂|calcium metaniobate
+CaO|quicklime
+Ca(OH)₂|calcium hydroxide
+CaO₂|calcium peroxide
+CaP|calcium monophosphide
+CaS|calcium sulfide
+CaSO₃|calcium sulfite
+CaSO₄|calcium sulfate
+CaSO₄ · ₀.₅H₂O|plaster of paris
+CaSe|calcium selenide
+CaSeO₃|calcium selenite
+CaSeO₄|calcium selenate
+CaSiO₃|calcium metasilicate
+CaTe|calcium telluride
+CaTeO₃|calcium tellurite
+CaTeO₄|calcium tellurate
+CaTiO₃|calcium titanate
+Ca(VO₃)₂|calcium metavanadate
+Ca(VO₄)₂|calcium orthovanadate
+CaWO₄|calcium tungstate
+Ca₃(AsO₄)₂|calcium arsenate
+Ca₃N₂|calcium nitride
+Ca₃P₂|calcium phosphide
+Ca₃(PO₄)₂|tricalcium phosphate
+Ca₄(PO₄)₂O|tetracalcium phosphate
+Ca₅(PO₄)₃F|calcium fluorophosphate
+Ca₅(PO₄)₃(OH)|hydroxyapatite
+CdBr₂|cadmium bromide
+Cd(CN)₂|cadmium cyanide
+CdCO₃|cadmium carbonate
+Cd(C₂H₃O₂)₂|cadmium acetate
+CdC₂O₄|cadmium oxalate
+CdCl₂|cadmium chloride
+CdCrO₄|cadmium chromate
+CdF₂|cadmium fluoride
+CdI₂|cadmium iodide
+Cd(IO₃)₂|cadmium iodate
+CdMoO₄|cadmium molybdate
+Cd(NO₃)₂|cadmium nitrate
+Cd(N₃)₂|cadmium azide
+CdO|cadmium oxide
+Cd(OH)₂|cadmium hydroxide
+CdS|cadmium sulfide
+CdSO₃|cadmium sulfite
+CdSO₄|cadmium sulfate
+CdSb|cadmium antimonide
+CdSe|cadmium selenide
+CdSeO₃|cadmium selenite
+CdSiO₃|cadmium metasilicate
+Cd(TaO₃)₂|cadmium metatantalate
+CdTe|cadmium telluride
+CdTeO₄|cadmium tellurate
+CdTiO₃|cadmium titanate
+CdWO₄|cadmium tungstate
+CdZrO₃|cadmium metazirconate
+Cd₂Nb₂O₇|cadmium niobate
+Cd₃As₂|cadmium arsenide
+Cd₃P₂|cadmium phosphide
+Cd₃(PO₄)₂|cadmium phosphate
+CeB₆|cerium boride
+CeBr₃|cerium(III) bromide
+CeC|cerium carbide
+CeCl₃|cerium(III) chloride
+CeF₃|cerium(III) fluoride
+CeF₄|cerium(IV) fluoride
+CeI₂|cerium(II) iodide
+CeI₃|cerium(III) iodide
+CeN|cerium nitride
+CeO₂|cerium(IV) oxide
+CeS|cerium(II) sulfide
+Ce(SO₄)₂|cerium(IV) sulfate
+CeSi₂|cerium silicide
+Ce₂C₃|cerium(III) carbide
+Ce₂O₃|cerium(III) oxide
+Ce₂S₃|cerium(III) sulfide
+CF₃Cl|chlorotrifluoromethane
+CF₄|tetrafluoromethane
+ClF|chlorine fluoride
+ClF₃|chlorine trifluoride
+ClF₅|chlorine pentafluoride
+ClOClO₃|chlorine perchlorate
+ClO₂|chlorine dioxide
+ClO₃F|chlorine trioxide fluoride
+Cl₂|chlorine
+Cl₂O₃|chlorine trioxide
+Cl₂O₆|chlorine hexoxide
+Cl₂O₇|chlorine heptoxide
+Cl₂O₈|Chlorine octaoxide
+CoAl₂O₄|cobalt(II) aluminate
+CoAs|cobalt arsenide
+CoAs₂|cobalt(II) arsenide
+CoB|cobalt(II) boride
+CoBr₂|cobalt(II) bromide
+Co(CN)₂|cobalt(II) cyanide
+Co(C₂H₃O₂)₂|cobalt(II) acetate
+Co(C₂H₃O₂)₃|cobalt(III) acetate
+CoC₂O₄|cobalt(II) oxalate
+Co(ClO₄)₂|cobalt(II) perchlorate
+CoCl₂|cobalt(II) chloride
+CoCrO₄|cobalt(II) chromate
+CoCr₂O₄|cobalt(II) chromite
+CoF₂|cobalt(II) fluoride
+CoF₃|cobalt(III) fluoride
+Co(IO₃)₂|cobalt(II) iodate
+CoI₂|cobalt(II) iodide
+CoMoO₄|cobalt(II) molybdate
+Co(NO₃)₂|cobalt(II) nitrate
+Co(NO₃)₃|cobalt(III) nitrate
+CoO|cobalt(II) oxide
+Co(OH)₂|cobalt(II) hydroxide
+Co(OH)₃|cobalt(III) hydroxide
+CoS|cobalt(II) sulfide
+CoS₂|cobalt disulfide
+CoSb|cobalt antimonide
+CoSe|cobalt(II) selenide
+CoSeO₃|cobalt(II) selenite
+CoTe|cobalt(II) telluride
+CoTiO₃|cobalt(II) titanate
+CoWO₄|cobalt(II) tungstate
+Co₂B|cobalt boride
+Co(C₁₈H₃₃O₂)₂|Cobalt oleate
+Co₂SO₄|cobalt(II) sulfate
+Co₂S₃|cobalt(III) sulfide
+Co₂SiO₄|cobalt(II) orthosilicate
+Co₂SnO₄|cobalt(II) stannate
+Co₂TiO₄|cobalt(II) titanite
+Co₃(AsO₄)₂|cobalt arsenate
+Co₃(Fe(CN)₆)₂|cobalt(II) ferricyanide
+CrBr₂|chromium(II) bromide
+CrBr₃|chromium(III) bromide
+CrCl₂|chromium(II) chloride
+CrCl₃|chromium(III) chloride
+CrCl₄|chromium(IV) chloride
+CrF₂|chromium(II) fluoride
+CrF₃|chromium(III) fluoride
+CrF₄|chromium(IV) fluoride
+CrF₅|chromium(V) fluoride
+CrF₆|chromium(VI) fluoride
+CrI₂|chromium(II) iodide
+CrI₃|chromium(III) iodide
+Cr(NO₃)₃|chromium(III) nitrate
+Cr(NO₂)₃|chromium(III) nitrite
+Cr(OH)₃|chromium(III) hydroxide
+CrO₂|chromium(IV) oxide
+CrO₃|chromium(VI) oxide
+CrO₄₂−|chromate ion
+CrO₂Cl₂|chromium(VI) oxychloride
+CrPO₄|chromium(III) phosphate
+CrSb|chromium antimonide
+CrSe|chromium(II) selenide
+CrSi₂|chromium(II) silicide
+CrVO₄|chromium(III) orthovanadate
+Cr₂O₃|chromium(III) oxide
+Cr₂(SO₄)₃|chromium(III) sulfate
+Cr₂S₃|chromium(III) sulfide
+Cr₂Se₃|chromium(III) selenide
+Cr₂(TeO₄)₃|chromium(III) tellurate
+Cr₂Te₃|chromium(III) telluride
+Cr₃As₂|chromium(II) arsenide
+Cr₃C₂|chromium(II) carbide
+Cr₃Sb₂|chromium(II) antimonide
+CsBO₂|caesium borate
+CsBr|caesium bromide
+CsBrO|caesium hypobromite
+CsBrO₂|caesium bromite
+CsBrO₃|caesium bromate
+CsBrO₄|caesium perbromate
+CsBr₃|caesium tribromide
+CsCN|caesium cyanide
+CsCNO|caesium cyanate
+CsCNO|caesium fulminate
+CsC₂H₃O₂|caesium acetate
+CsCl|caesium chloride
+CsClO|caesium hypochlorite
+CsClO₂|caesium chlorite
+CsClO₃|caesium chlorate
+CsClO₄|caesium perchlorate
+CsF|caesium fluoride
+CsH|caesium hydride
+CsHS|caesium hydrosulfide
+CsI|caesium iodide
+CsIO|caesium hypoiodite
+CsIO₂|caesium iodite
+CsIO₃|caesium iodate
+CsIO₄|caesium periodate
+CsI₃|caesium triiodide
+CsNH₂|caesium amide
+CsNO₂|caesium nitrite
+CsNO₃|caesium nitrate
+CsN₃|caesium azide
+CsNbO₃|caesium niobate
+Cs₂NbO₃|caesium metaniobate
+CsOH|caesium hydroxide
+CsO₂|caesium superoxide
+Cs₂O₂|caesium peroxide
+Cs₂S|caesium sulfide
+CsSCN|caesium thiocyanate
+CsSeO₄|caesium selenate
+CsTaO₃|caesium metatantalate
+Cs₂CO₃|caesium carbonate
+CsHCO₃|caesium bicarbonate
+CsH₂PO₃|monocaesium phosphite
+CsH₂PO₄|monocaesium phosphate
+CsHSO₃|caesium bisulfite
+CsHSO₄|caesium hydrogen sulfate
+Cs₂C₂O₄|caesium oxalate
+Cs₂CrO₄|caesium chromate
+Cs₂Cr₂O₇|caesium dichromate
+Cs₂HPO₄|caesium hydrogen orthophosphate
+Cs₂MoO₄|caesium molybdate
+Cs₂O|caesium oxide
+Cs₂SO₃|caesium sulfite
+Cs₂SO₄|caesium sulfate
+Cs₂SiO₃|caesium metasilicate
+Cs₂TeO₄|caesium tellurate
+Cs₂TiO₃|caesium titanate
+Cs₂WO₄|caesium orthotungstate
+Cs₂HPO₃|dicaesium phosphite
+Cs₂HPO₄|dicaesium phosphate
+Cs₃PO₃|tricaesium phosphite
+Cs₃PO₄|caesium orthophosphate
+Cs₃VO₄|caesium orthovanadate
+CuBr|copper(I) bromide
+Cu(BrO₃)₂ · ₆H₂O|copper(II) bromate hexahydrate
+CuBr₂|copper(II) bromide
+CuC₂O₄|copper oxalate
+Cu(CH₃COO)|copper(I) acetate
+Cu(CH₃COO)₂|copper(II) acetate
+CuCl|copper(I) chloride
+Cu(ClO₃)₂ · ₆H₂O|copper(II) chlorate hexahydrate
+CuCl₂|copper(II) chloride
+CuF|copper(I) fluoride
+CuF₂|copper(II) fluoride
+CuFeS₂|copper iron sulfide
+CuFe₂O₄|copper(II) iron(II) oxide
+CuFe₂S₃|copper iron sulfide
+[Cu(H₂O)₄]SO₄ · H₂O|blue vitriol
+CuI|copper(I) iodide
+CuIO₃|copper(I) iodate
+Cu(IO₃)₂|copper(II) iodate
+CuMoO₄|copper(II) orthomolybdate
+Cu(NO₃)₂|copper(II) nitrate
+Cu(NO₃)₂ · ₃H₂O|copper(II) nitrate trihydrate
+Cu(NO₃)₂ · ₆H₂O|copper(II) nitrate hexahydrate
+Cu(NbO₃)₂|copper(II) orthoniobate
+CuO|copper(II) oxide
+Cu₂O|copper(I) oxide
+Cu(OH)₂|copper(II) hydroxide
+Cu₂(OH)₂CO₃|basic copper carbonate
+CuS|copper(II) sulfide
+CuSCN|copper(I) thiocyanate
+CuSO₄|copper(II) sulfate
+CuSO₄ · ₅H₂O|copper(II) sulfate pentahydrate
+CuSe|copper(II) selenide
+CuSeO₃ · ₂H₂O|copper(II) selenite dihydrate
+CuSeO₄ · ₅H₂O|copper(II) selenate pentahydrate
+CuSiO₃|copper(II) metasilicate
+CuTe|copper(II) telluride
+CuTeO₃|copper(II) tellurite
+CuTiO₃|copper(II) metatitanate
+Cu(VO₃)₂|copper(II) metavanadate
+CuWO₄|copper(II) orthotungstate
+Cu₂CO₃(OH)₂|malachite
+Cu₂S|copper(I) sulfide
+Cu₂Se|copper(I) selenide
+Cu₂Te|copper(I) telluride
+Cu₃As|copper(I) arsenide
+Cu₃P|copper(I) phosphide
+Cu₃(PO₄)₂|copper(II) phosphate
+Cu₃Sb|copper(III) antimonide
+Cu₉S₅|copper sulfide
+DBr|deuterium bromide
+DI|deuterium iodide
+DLi|lithium deuteride
+DNa|sodium deuteride
+D₂O|heavy water
+D₃O+|trideuterioxonium ion
+DyBr₃|dysprosium(III) bromide
+DyCl₂|dysprosium(II) chloride
+DyCl₃|dysprosium(III) chloride
+DySi₂|dysprosium(II) silicide
+Dy₂O₃|dysprosium(III) oxide
+Dy₂S₃|dysprosium(III) sulfide
+ErCl₃|erbium(III) chloride
+ErF|erbium monofluoride
+ErF₂|erbium difluoride
+ErF₃|erbium trifluoride
+ErI₃|erbium triiodide
+ErI₄Na|erbium sodium tetraiodide
+ErO|erbium monoxide
+EuCl₂|europium(II) chloride
+EuCl₃|europium(III) chloride
+EuF|europium monofluoride
+EuF₃|europium trifluoride
+EuI₂|europium diiodide
+EuNbO₂|europium niobium dioxide
+EuNb₂O₆|europium diniobium hexaoxide
+EuO|europium monoxide
+EuO₂V|monoeuropium monovandium dioxide
+EuO₃Ti|europium titanium trioxide
+EuO₃V|europium metavanadate
+EuO₄W|europium tungsten tetraoxide
+EuS|europium monosulfide
+EuSO₄|europium(II) sulfate
+EuS₂|europium disulfide
+Eu₂O|dieuropium monoxide
+Eu₂O₂|dieuropium dioxide
+Eu₂O₃|europium(III) oxide
+Eu₂S|dieuropium monosulfide
+Eu₂S₂|dieuropium disulfide
+Eu₂(SO₄)₃|europium(III) sulfate
+FGa|gallium monofluoride
+FGaO|gallium monofluoride monoxide
+FGd|gadolinium monofluoride
+FGe|germanium monofluoride
+FHo|holmium monofluoride
+FI|iodine monofluoride
+FI₂|monofluorodiiodine
+FIn|indium monofluoride
+FLa|lanthanum monofluoride
+FLi|lithium fluoride
+FLiO|lithium hypofluorite
+FLi₂|dilithium monofluoride
+FMg|magnesium monofluoride
+FMn|monomanganese monofluoride
+FMnO₃|manganese fluoride trioxide
+FMo|molybdenum monofluoride
+FN|fluoroimidogen
+FNO|nitrosyl fluoride
+FNO₂|nitryl fluoride
+FNO₃|fluorine nitrate
+FNS|thiazyl fluoride
+FNa|sodium fluoride
+FNa₂|disodium monofluoride
+FNd|neodymium monofluoride
+FO|oxygen monofluoride
+FOTh|thorium monofluoride monoxide
+FOTi|titanium fluoride oxide
+FO₂|dioxygen monofluoride
+FO₃S|fluorosulfate radical
+FP|phosphorus monofluoride
+FPS|phosphenothious fluoride
+FPS₂|phosphenodithioic fluoride
+FPb|lead monofluoride
+FPu|plutonium monofluoride
+FRb|rubidium fluoride
+FS|monosulfur monofluoride
+FSc|scandium monofluoride
+FSm|samarium monofluoride
+FSn|tin monofluoride
+FSr|strontium monofluoride
+FTh|thorium monofluoride
+FTi|titanium fluoride
+FTl|thallium monofluoride
+FW|tungsten monofluoride
+FXe|xenon monofluoride
+FY|yttrium monofluoride
+FZr|zirconium fluoride
+F₂|fluorine
+F₂Fe|ferrous fluoride
+F₂Ga|gallium difluoride
+F₂Gd|gadolinium difluoride
+F₂Ge|germanium difluoride
+F₂GeO|difluorogermanone
+F₂Hg|mercury fluoride
+F₂Hg₂|mercury fluoride
+F₂Ho|holmium difluoride
+F₂IP|difluoroiodophosphine
+F₂K₂|dipotassium difluoride
+F₂Kr|krypton difluoride
+F₂La|lanthanum difluoride
+F₂Li₂|lithium fluoride
+F₂Mg|magnesium fluoride
+F₂Mn|manganese difluoride
+F₂Mo|molybdenum difluoride
+F₂MoO₂|molybdenum difluoride dioxide
+F₂N|difluoroamino radical
+F₂N₂O|nitrosodifluoroamine
+F₂Na₂|disodium difluoride
+F₂Nd|neodymium difluoride
+F₂Ni|nickel difluoride
+F₂O|oxygen difluoride
+F₂OS|thionyl fluoride
+F₂OSi|difluorooxosilane
+F₂OTi|titanium fluoride oxide
+F₂O₂|perfluoroperoxide
+F₂O₂S|sulfuryl fluoride
+F₂O₂W|tungsten difluoride dioxide
+F₂O₅S₃|peroxydisulfuryl difluoride
+F₂P|phosphorus difluoride
+F₂Pb|lead difluoride
+F₂Pt|platinum difluoride
+F₂Pu|plutonium difluoride
+F₂S|sulfur difluoride
+F₂SW|tungsten difluoride monosulfide
+F₂S₂|difluorodisulfane
+F₂S₂|thiothionyl fluoride
+F₂S₂|thiothionyl fluoride
+F₂S₂W|tungsten difluoride disulfide
+F₂Sc|scandium difluoride
+F₂Se|selenium difluoride
+F₂Si|difluorosilylene
+F₂Sn|tin difluoride
+F₂Sr|strontium fluoride
+F₂Th|thorium difluoride
+F₂Ti|titanium difluoride
+F₂Tl₂|dithallium difluoride
+F₂W|tungsten difluoride
+F₂Xe|xenon difluoride
+F₂Y|yttrium difluoride
+F₂Zn|zinc difluoride
+F₂Zr|zirconium fluoride
+F₃Fe|iron trifluoride
+F₃Ga|gallium trifluoride
+F₃Gd|gadolinium trifluoride
+F₃Ho|holmium trifluoride
+F₃La|lanthanum trifluoride
+F₃Li₃|trilithium trifluoride
+F₃Lu|lutetium trifluoride
+F₃Mn|manganese trifluoride
+F₃Mo|molybdenum trifluoride
+F₃MoO|molybdenum trifluoride oxide
+F₃MoS|molybdenum trifluoride sulfide
+F₃N|nitrogen trifluoride
+F₃NO|nitrogen trifluoride oxide
+F₃NO₂S|difluoroaminosulfonyl fluoride
+F₃NO₃S|difluoraminooxysulfonyl fluoride
+F₃NS|thiazyl trifluoride
+F₃NaSn|sodium trifluorostannate
+F₃Nd|neodymium trifluoride
+F₃OP|phosphoryl fluoride
+F₃OTa|tantalum monoxide trifluoride
+F₃OV|vanadium trifluoride oxide
+F₃P|phosphorus trifluoride
+F₃PS|thiophosphoryl fluoride
+F₃Pr|praseodymium trifluoride
+F₃Pu|plutonium trifluoride
+F₃Rh|rhodium fluoride
+F₃S|sulfur trifluoride
+F₃SW|tungsten trifluoride monosulfide
+F₃Sb|antimony trifluoride
+F₃Sc|scandium fluoride
+F₃Si|trifluorosilyl radical
+F₃Sm|samarium trifluoride
+F₃Tb|terbium trifluoride
+F₃Th|thorium trifluoride
+F₃Ti|titanium trifluoride
+F₃Tl|thallium trifluoride
+F₃Tm|thulium trifluoride
+F₃W|tungsten trifluoride
+F₃Y|yttrium trifluoride
+F₃Yb|ytterbium trifluoride
+F₃Zr|zirconium trifluoride
+F₄Ge|germanium tetrafluoride
+F₄Ge₂|digermanium tetrafluoride
+F₄Hf|hafnium fluoride
+F₄Mg₂|dimagnesium tetrafluoride
+F₄Mg₂|magnesium fluoride
+F₄Mo|molybdenum tetrafluoride
+F₄MoO|molybdenum tetrafluoride oxide
+F₄MoS|molybdenum tetrafluoride monosulfide
+F₄N₂|tetrafluorohydrazine
+F₄Na₂Sn|disodium tetrafluorostannate
+F₄OOs|osmium oxide tetrafluoride
+F₄OP₂|diphosphorus tetrafluoride oxide
+F₄ORe|rhenium tetrafluoride oxide
+F₄OS|sulfur tetrafluoride oxide
+F₄OW|tungsten tetrafluoride oxide
+F₄OXe|xenon tetrafluoride oxide
+F₄P₂|diphosphorus tetrafluoride
+F₄Pb|lead tetrafluoride
+F₄Pt|platinum tetrafluoride
+F₄Pu|plutonium tetrafluoride
+F₄S|sulfur tetrafluoride
+F₄SW|tungsten tetrafluoride monosulfide
+F₄Se|selenium tetrafluoride
+F₄Si|silicon tetrafluoride
+F₄Sn₂|ditin tetrafluoride
+F₄Ti|titanium fluoride
+F₄U|uranium tetrafluoride
+F₄W|tungsten tetrafluoride
+F₄Xe|xenon tetrafluoride
+F₄Zr|zirconium tetrafluoride
+F₅I|iodine pentafluoride
+F₅Mo|molybdenum pentafluoride
+F₅ORe|rhenium monoxide pentafluoride
+F₅P|phosphorus pentafluoride
+F₅Pu|plutonium pentafluoride
+F₅S|disulfur decafluoride
+F₅Sb|antimony pentafluoride
+F₅Ta|tantalum pentafluoride
+F₅U|uranium pentafluoride
+F₅W|tungsten pentafluoride
+F₆Fe₂|diiron hexafluoride
+F₆La₂|lanthanum trifluoride dimer
+F₆Mo|molybdenum hexafluoride
+F₆NP₃|nitridotriphosphorous hexafluoride
+F₆Os|osmium hexafluoride
+F₆Pu|plutonium hexafluoride
+F₆Re|rhenium hexafluoride
+F₆S|sulfur hexafluoride
+F₆Se|selenium hexafluoride
+F₆Si₂|hexafluorodisilane
+F₆Sn₃|tritin hexafluoride
+F₆Te|tellurium hexafluoride
+F₆U|uranium hexafluoride
+F₆W|tungsten hexafluoride
+F₆Xe|xenon hexafluoride
+F₇I|iodine fluoride
+F₇NS|pentafluorosulfanyldifluoroamine
+F₇Re|rhenium heptafluoride
+F₈Si₃|octafluorotrisilane
+F₁₀Mo₂|molybdenum fluoride
+F₁₀S₂|sulfur fluoride
+F₁₅Mo₃|molybdenum fluoride
+FeAsS|iron arsenic sulfide
+FeBr₂|iron(II) bromide
+FeBr₃|iron(III) bromide
+FeBr₃ · ₆H₂O|iron(III) bromide hexahydrate
+FeCO₃|siderite
+FeC₂O₄|iron oxalate
+FeC₅O₅|iron pentacarbonyl
+FeC₁₀H₁₀|ferrocene
+FeCl₂|iron(II) chloride
+FeCl₃|iron(III) chloride
+FeCr₂O₄|chromite (ore)
+FeF₂|iron fluoride
+FeF₂ · ₄H₂O|iron(II) fluoride tetrahydrate
+FeI|iron monoiodide
+FeI₂|iron diiodide
+FeI₂ · ₄H₂O|iron(II) iodide tetrahydrate
+FeI₃|iron(III) iodide
+FeMoO₄|iron(II) orthomolybdate
+FeO|iron monoxide
+FeO₂|iron dioxide
+FeO₂H|goethite
+FeO₂H · nH₂O|limonite
+Fe(OH)₂|iron(II) hydroxide
+Fe(OH)₃|iron(III) hydroxide
+Fe(SCN)₃|iron(III) Thiocyanate
+FeO₄S|ferrous sulfate
+FeO₄Se|iron(II) selenate
+FeO₈H₄P₂|iron(II) dihydrogen phosphate
+FeP|iron(III) phosphide
+FePO₄|iron(III) phosphate
+FeS|iron sulfide
+Fe₂S₃|iron sulfide
+FeS₂|pyrite
+FeSe|iron(II) selenide
+FeTe|iron(II) telluride
+FeTiO₃|iron(II) metatitanate
+FeVO₄|iron(III) orthovanadate
+FeWO₄|iron(II) orthotungstate
+FeZrO₃|iron(II) metazirconate
+Fe₂I₂|diiron diiodide
+Fe₂I₄|diiron tetraiodide
+Fe₂O₃|iron oxide
+Fe₂O₃|venetian red
+Fe₂O₁₂S₃|ferric sulfate
+Fe₂O₁₂W₃|iron(III) orthotungstate
+Fe₂P|diiron phosphide
+Fe₂SiO₄|fayalite
+Fe₃H₂Na₂O₄₅Si|chrysotile
+Fe₃O₄|iron(II,III) oxide
+Fe₃P|iron(tri) phosphide
+Fe₄(P₂O₇)₃|iron(III) pyrophosphate
+Fe₇Si₈O₂₄H₂|amosite
+GaAs|gallium(III) arsenide
+GaAsO₄|gallium(III) orthoarsenate
+GaBr₃|gallium(III) bromide
+Ga(C₂H₃O₂)₃|gallium(III) acetate
+GaCl₂|gallium(II) chloride
+GaCl₃|gallium trichloride
+Ga(ClO₄)₃|gallium(III) perchlorate
+GaI₂|gallium(II) iodide
+GaI₃|gallium(III) iodide
+GaN|gallium(III) nitride
+Ga(OH)₃|gallium(III) hydroxide
+GaPO₄|gallium(III) orthophosphate
+GaSb|gallium(III) antimonide
+GaTe|gallium(II) telluride
+Ga₂O₃|gallium(III) oxide
+Ga₂(SO₄)₃·₁₈H₂O|gallium(III) sulfate octadecahydrate
+Ga₂S₃|gallium(III) sulfide
+Ga₂Te₃|gallium(III) telluride
+GeBr₄|germanium(IV) bromide
+GeH₃COOH|2-germaacetic acid
+GeI₂|germanium(II) iodide
+GeI₄|germanium(IV) iodide
+GeO|germanium(II) oxide
+HArF|argon fluorohydride
+HAt|hydrogen astatide
+HBr|hydrogen bromide
+HBrO|hypobromous acid
+HBrO₂|bromous acid
+HBrO₃|bromic acid
+HBrO₄|perbromic acid
+HCCH|acetylene
+HCN|hydrocyanic acid
+HCNO|fulminic acid
+HCONH₂|formamide
+HCOO−|formate ion
+HCOOH|formic acid
+HCOONH₄|ammonium formate
+HCO₃−|hydrogen carbonate ion
+HC₃H₅O₃|lactic acid
+HC₅H₅N+|pyridinium ion
+HC₆H₇O₆|ascorbic acid
+HC₉H₇O₄|acetylsalicylic acid
+HC₁₂H₁₇ON₄SCl₂|thiamine hydrochloride
+HCl|hydrochloric acid
+HClO|hypochlorous acid
+HClO₂|chlorous acid
+HClO₃|chloric acid
+HClO₄|perchloric acid
+HDO|semiheavy water
+HF|hydrofluoric acid
+HI|hydroiodic acid
+HIO|hypoiodous acid
+HIO₂|iodous acid
+HIO₃|iodic acid
+HIO₄|periodic acid
+HNCO|isocyanic acid
+HNO|nitroxyl
+HNO₂|nitrous acid
+HNO₃|nitric acid
+HN₃|hydrazoic acid
+HOBr|hypobromous acid
+HOCl|hypochlorous acid
+HOF|hypofluorous acid
+HOOCCOOH|oxalic acid
+HPO₄₂−|hydrogen phosphate ion
+HSO₃−|hydrogen sulfite ion
+HSO₄−|hydrogen sulfate
+HTO|partially tritiated water
+H₂|hydrogen
+H₂C(CH)CN|acrylonitrile
+H₂CO|formaldehyde
+H₂CO₃|carbonic acid
+H₂CSO|sulfine
+H₂C₂O₄|oxalic acid
+H₂C₄H₄O₆|tartaric acid
+H₂C₈H₄O₄|phthalic acid
+H₂CrO₄|chromic acid
+H₂NCH₂COOH|glycine
+H₂N₂O₂|hyponitrous acid
+H₂NNH₂|hydrazine
+H₂O|water
+H₂O₂|hydrogen peroxide
+H₂O₂Si|Oxosilanol
+H₂PO₄−|dihydrogen phosphate ion
+H₂S|hydrogen sulfide
+H₂SO₃|sulfurous acid
+H₂SO₄|sulfuric acid
+H₂S₂O₂|thiosulfurous acid
+H₂S₂O₃|thiosulfuric acid
+H₂S₂O₄|dithionous acid
+H₂S₂O₅|disulfurous acid
+H₂S₂O₆|dithionic acid
+H₂S₂O₇|disulfuric acid
+H₂S₂O₈|peroxydisulfuric acid
+H₂SeO₃|selenous acid
+H₂SeO₄|selenic acid
+H₂SiO₃|silicic acid
+H₂TeO₃|tellurous acid
+H₂TiO₃|titanic acid
+H₃AsO₄|arsenic acid
+H₃CCH₂CH₃|propane
+H₃N+CH₂COO−|zwitterion
+H₃O+|hydronium ion
+H₃PO₂|hypophosphorous acid
+H₃PO₃|phosphorous acid
+H₃PO₄|phosphoric acid
+H₄XeO₆|perxenic acid
+H₆TeO₆|telluric acid
+HfBr₄|hafnium(IV) bromide
+HfF₄|hafnium(IV) fluoride
+HfOCl₂ · ₈H₂O|hafnium(IV) oxychloride octahydrate
+HfOH(C₂H₃O₂)₃|hafnium(IV) acetate, basic
+Hf(SO₄)₂|hafnium(IV) sulfate
+Hg(BrO₃)₂ · ₂H₂O|mercury(II) bromate dihydrate
+Hg₂Br₂|mercury(I) bromide
+HgBr₂|mercury(II) bromide
+Hg(C₂H₃O₂)₂|mercury(II) acetate
+Hg(C₇H₅O₂)₂ · H₂O|mercury(II) benzoate monohydrate
+HgClO₄ · ₄H₂O|mercury(I) perchlorate tetrahydrate
+Hg(ClO₄)₂ · ₃H₂O|mercury(II) perchlorate trihydrate
+HgCl₂|mercury(II) chloride
+Hg(IO₃)₂|mercury(II) iodate
+HgI₂|mercury(II) iodide
+Hg(NO₃)₂ · H₂O|mercury(II) nitrate monohydrate
+Hg(CNO)₂|mercury(II) fulminate
+HgNa|sodium amalgam
+HgO|mercury(II) oxide
+Hg(OH)₂|mercury(II) hydroxide
+HgS|mercury(II) sulfide
+Hg(SCN)₂|mercury(II) thiocyanate
+HgSe|mercury(II) selenide
+HgSeO₃|mercury(II) selenite
+HgTe|mercury(II) telluride
+HgTeO₃|mercury(II) tellurite
+HgWO₄|mercury(II) tungstate
+Hg₂Br₂|mercury(I) bromide
+Hg₂Cl₂|mercury(I) chloride
+Hg₂I₂|mercury(I) iodide
+Hg₃(AsO₄)₂|mercury(II) orthoarsenate
+Hg₃(PO₄)₂|mercury(II) phosphate
+IBr|iodine monobromide
+IBr₃|iodine tribromide
+ICl|Iodine monochloride
+ICl₃|iodine(III) chloride
+IO₃|trioxidoiodine
+IO₃−|iodate ion
+I₂|iodine
+I−|iodide ion
+I₃−|triiodide ion
+I₅−|pentaiodide ion
+I₂O₅|iodine pentoxide
+InAs|indium(III) arsenide
+InBr|indium(I) bromide
+InBrI₂|indium(III) bromodiiodide
+InBr₂I|indium(III) dibromoiodide
+InBr₃|indium(III) bromide
+InCl|indium(I) chloride
+InCl₂|indium(II) chloride
+InCl₃|indium(III) chloride
+InCl₃·₄H₂O|indium(III) chloride tetrahydrate
+InI|indium(I) iodide
+In(IO₃)₃|indium(III) iodate
+InI₂|indium(II) iodide
+InI₃|indium(III) iodide
+In(NO₃)₃·₄.₅H₂O|indium(III) nitrate tetrahemihydrate
+In(OH)₃|indium(III) hydroxide
+InP|indium(III) phosphide
+InPO₄|indium(III) orthophosphate
+InS|indium(II) sulfide
+InSb|indium(III) antimonide
+InTe|indium(II) telluride
+In₂O₃|indium(III) oxide
+In₂(SO₄)₃·H₂O|indium(III) sulfate monohydrate
+In₂S₃|indium(III) sulfide
+In₂Se₃|indium(III) selenide
+In₂Te₃|indium(III) telluride
+IrBr₃|iridium(III) bromide
+KAl(SO₄)₂|potassium alum
+KAsO₂|potassium arsenite
+KH₂AsO₄|potassium dihydrogen arsenate
+KBr|potassium bromide
+KBrO|potassium hypobromite
+KBrO₂|potassium bromite
+KBrO₃|potassium bromate
+KBrO₄|potassium perbromate
+KCN|potassium cyanide
+KCNO|potassium cyanate
+KCNO|potassium fulminate
+KCNS|potassium thiocyanate
+KCl|potassium chloride
+KClO|potassium hypochlorite
+KClO₂|potassium chlorite
+KClO₃|potassium chlorate
+KClO₄|potassium perchlorate
+K₂CrO₄|potassium chromate
+K₂Cr₂O₇|potassium dichromate
+K₂HAsO₄|dipotassium hydrogen arsenate
+K₂HPO₃|dipotassium phosphite
+K₂HPO₄|dipotassium phosphate
+K₃AsO₄|potassium arsenate
+K₃C₆H₅O₇|potassium citrate
+K₃PO₃|tripotassium phosphite
+K₃PO₄|tripotassium phosphate
+KF|potassium fluoride
+KOF|potassium hypofluorite
+KH|potassium hydride
+KHCO₃|potassium bicarbonate
+KHS|potassium hydrosulfide
+KHSO₃|potassium bisulfite
+KHSO₄|potassium bisulfate
+KH₂PO₃|monopotassium phosphite
+KH₂PO₄|monopotassium phosphate
+KI|potassium iodide
+KIO|potassium hypoiodite
+KIO₂|potassium iodite
+KIO₃|potassium iodate
+KIO₄|potassium periodate
+KMnO₄|potassium permanganate
+KNO₃|potassium nitrate
+KNO₂|potassium nitrite
+K₂CO₃|potassium carbonate
+K₂MnO₄|potassium manganate
+K₂N₂O₂|potassium hyponitrite
+KNbO₃|potassium niobate
+K₂O|potassium oxide
+K₂O₂|potassium peroxide
+K₂S|potassium sulfide
+K₂S₂O₃|potassium thiosulfate
+K₂S₂O₅|potassium metabisulfite
+K₂S₂O₈|potassium persulfate
+K₂SO₃|potassium sulfite
+K₂SO₄|potassium sulfate
+KOH|potassium hydroxide/caustic potash
+LaBr₃|lanthanum(III) bromide
+LaCl₃|lanthanum(III) chloride
+LaI₃|lanthanum(III) iodide
+La₂O₃|lanthanum(III) oxide
+La(OH)₃|lanthanum hydroxide
+LaPO₄|lanthanum(III) phosphate
+LaPO₄·₀.₅H₂O|lanthanum(III) phosphate crystal hemihydrate
+LiAlH₄|lithium aluminium hydride
+Li(AlSi₂O₆)|keatite
+LiBH₄|lithium borohydride
+LiBr|lithium bromide
+LiBr·₂H₂O|lithium bromide dihydrate
+LiBrO|lithium hypobromite
+LiBrO₂|lithium bromite
+LiBrO₃|lithium bromate
+LiBrO₄|lithium perbromate
+LiCl|lithium chloride
+LiClO|lithium hypochlorite
+LiClO₂|lithium chlorite
+LiClO₃|lithium chlorate
+LiClO₄|lithium perchlorate
+LiCN|lithium cyanide
+LiCNO|lithium cyanate
+LiC₂H₅O|lithium ethoxide
+LiF|lithium fluoride
+LiH|lithium hydride
+LiHCO₃|lithium bicarbonate
+LiHS|lithium hydrosulfide
+LiHSO₃|lithium bisulfite
+LiHSO₄|lithium hydrogen sulfate
+LiH₂AsO₄|lithium dihydrogen arsenate
+LiH₂PO₃|monolithium phosphite
+LiH₂PO₄|monolithium phosphate
+LiI|lithium iodide
+LiIO|lithium hypoiodite
+LiIO₂|lithium iodite
+LiIO₃|lithium iodate
+LiIO₄|lithium periodate
+LiNa|lithium sodium
+LiNaNO₂|lithium sodium nitroxylate
+LiNbO₃|lithium niobate
+LiNO₂|lithium nitrite
+LiNO₃|lithium nitrate
+LiNO₃·H₂O|lithium nitrate monohydrate
+LiOH|lithium hydroxide
+LiTaO₃|lithium tantalate
+LiVO₃·₂H₂O|lithium metavanadate dihydrate
+Li₂HAsO₄|dilithium hydrogen arsenate
+Li₂B₄O₇·₅H₂O|lithium tetraborate pentahydrate
+Li₂CO₃|lithium carbonate
+Li₂CrO₄|lithium chromate
+Li₂CrO₄·₂H₂O|lithium chromate dihydrate
+Li₂Cr₂O₇|lithium dichromate
+Li₂HPO₃|dilithium phosphite
+Li₂HPO₄|dilithium phosphate
+Li₂MoO₄|lithium molybdate
+Li₂MoO₄|lithium orthomolybdate
+Li₂NbO₃|lithium metaniobate
+Li₂N₂O₂|lithium hyponitrite
+Li₂O|lithium oxide
+Li₂O₂|lithium peroxide
+Li₂S|lithium sulfide
+Li₂SO₃|lithium sulfite
+Li₂SO₄|lithium sulfate
+Li₂SeO₃|lithium selenite
+Li₂SeO₄|lithium selenate
+Li₂SiO₃|lithium metasilicate
+Li₂TeO₃|lithium tellurite
+Li₂TeO₄|lithium tellurate
+Li₂TiO₃|lithium titanate
+Li₂TiO₃|lithium metatitanate
+Li₂WO₄|lithium tungstate
+Li₂WO₄|lithium orthotungstate
+Li₂ZrO₃|lithium metazirconate
+Li₃AsO₄|trilithium arsenate
+Li₃PO₃|trilithium phosphite
+Li₃PO₄|trilithium phosphate
+MgBr₂|magnesium bromide
+Mg(BrO)₂|magnesium hypobromite
+Mg(BrO₂)₂|magnesium bromite
+Mg(BrO₃)₂|magnesium bromate
+Mg(BrO₄)₂|magnesium perbromate
+Mg(AlO₂)₂|magnesium aluminate
+As₂Mg₃|magnesium arsenide
+MgCO₃|magnesium carbonate
+MgC₂O₄|magnesium oxalate
+Mg(ClO)₂|magnesium hypochlorite
+Mg(ClO₂)₂|magnesium chlorite
+Mg(ClO₃)₂|magnesium chlorate
+Mg(ClO₃)₂·xH₂O|magnesium chlorate hydrate
+Mg(ClO₄)₂|magnesium perchlorate
+MgCl₂|magnesium chloride
+MgCrO₄|magnesium chromate
+MgCrO₄·₅H₂O|magnesium chromate pentahydrate
+MgF₂|magnesium fluoride
+MgHPO₄|dimagnesium phosphate
+MgI₂|magnesium iodide
+Mg(IO)₂|magnesium hypoiodite
+Mg(IO₂)₂|magnesium iodite
+Mg(IO₃)₂|magnesium iodate
+Mg(IO₄)₂|magnesium periodate
+MgMoO₄|magnesium molybdate
+MgNH₄PO₄·₆H₂O|magnesium ammonium phosphate hexahydrate
+Mg(NO₂)₂|magnesium nitrite
+Mg(NO₃)₂|magnesium nitrate
+Mg(NO₃)₂·₆H₂O|magnesium nitrate hexahydrate
+MgNaAl₅(Si₄O₁₀)₃(OH)₆|montmorillonite (clay)
+MgO|magnesium oxide
+Mg(OH)₂|magnesium hydroxide
+MgPo|magnesium polonide
+MgS|magnesium sulfide
+MgSO₃|magnesium sulfite
+MgSO₄|magnesium sulfate
+MgSe|magnesium selenide
+MgSeO₃|magnesium selenite
+MgSeO₄|magnesium selenate
+MgSiO₃|magnesium metasilicate
+MgTiO₃|magnesium metatitanate
+Mg(VO₃)₂|magnesium metavanadate
+MgWO₄|magnesium tungstate
+Mg₂Al(AlSiO₅)(OH)₄|amesite
+Mg₂P₂O₇|magnesium pyrophosphate
+Mg₂SiO₄|forsterite
+Mg₃As₂|magnesium arsenide
+Mg₃Bi₂|magnesium bismuthide
+Mg₃P₂|magnesium phosphide
+Mg₃(Si₂O₅)(OH)₄|chrysotile
+Mg₃(Si₄O₁₀)(OH)₂|talc
+Mg₃(VO₄)₂|magnesium orthovanadate
+MnAs|manganese(III) arsenide
+MnBi|manganese(III) bismuthide
+MnBr₂|manganese(II) bromide
+MnBr₂·₄H₂O|manganese(II) bromide tetrahydrate
+Mn(CHO₂)₂|manganese(II) formate
+Mn(CHO₂)₂·₂H₂O|manganese(II) formate dihydrate
+MnCO₃|manganese(II) carbonate
+MnCl₂|manganese(II) chloride
+MnF₂|manganese(II) fluoride
+MnI₂|manganese(II) iodide
+MnMoO₄|manganese(II) orthomolybdate
+Mn(NO₃)₂|manganese(II) nitrate
+Mn(NO₃)₂·₄H₂O|manganese(II) nitrate tetrahydrate
+MnO|manganese(II) oxide
+Mn(OH)₂|manganese hydroxide
+MnOOH|manganite
+MnO₂|manganese dioxide
+MnO₄−|permanganate ion
+MnPb₈(Si₂O₇)₃|barysilate
+MnS|manganese sulfide
+MnTe|manganese(II) telluride
+MnZrO₃|manganese(II) metazirconate
+Mn₂O₃|manganese(III) oxide
+Mn₃As₂|manganese(II) arsenide
+Mn₃O₄|manganese(II,III) oxide
+Mn₃P₂|manganese(II) phosphide
+Mn₃Sb₂|manganese(II) antimonide
+MoBr₂|molybdenum(II) bromide
+MoBr₃|molybdenum(III) bromide
+MoCl₂|molybdenum(II) chloride
+MoCl₃|molybdenum(III) chloride
+MoCl₅|molybdenum(V) chloride
+MoO₂|molybdenum(IV) oxide
+MoO₃|Molybdenum trioxide
+MoO₄₂−|molybdate ion
+MoSe₂|molybdenum(IV) selenide
+MoS₂|molybdenum sulfide
+NCl₃|nitrogen trichloride
+NHCl₂|dichloramine
+NH₂Cl|monochloramine
+NH₂−|amide ion
+NH₂CH₂CH₂NH₂|ethylenediamine
+NH₂CH₂CN|aminoacetonitrile
+NH₂COOH|carbamic acid
+NH₂CONH₂|urea
+NH₂C₆H₄SO₃H|sulfanilic Acid
+NH₂OH|hydroxylamine
+(NH₂)₂CO|urea
+(NH₂)₂CO·HClO₄|urea perchlorate
+NH₃|ammonia
+NH₄+|ammonium ion
+(NH₄)₃N|ammonium nitride
+NH₄Br|ammonium bromide
+NH₄CO₂NH₂|ammonium carbamate
+(NH₄)₂CO₃|ammonium carbonate
+NH₄Cl|ammonium chloride
+NH₄ClO₄|Ammonium perchlorate
+NH₄HS|ammonium hydrosulfide
+(NH₄)H₂AsO₄|ammonium dihydrogen arsenate
+NH₄NO₃|ammonium nitrate
+NH₄OCONH₂|ammonium carbamate
+NH₄OH|ammonium hydroxide
+(NH₄)₂Ce(NO₃)₆|ammonium cerium(IV) nitrate
+(NH₄)₃PO₄|ammonium phosphate
+(NH₄)₂CrO₄|ammonium chromate
+(NH₄)₂Hg(SCN)₄|mercury(II) ammonium thiocyanate
+(NH₄)₂[PtCl₆]|ammonium hexachloroplatinate(IV)
+(NH₄)₂[Pt(SCN)₆]|ammonium hexathiocyanoplatinate(IV)
+(NH₄)₂SO₄|ammonium sulfate
+NI₃|nitrogen triiodide
+NO|nitric oxide
+NOCl|nitrosyl chloride
+NOBr|nitrosyl bromide
+NOI|nitrosyl iodide
+NO₂|nitrogen dioxide
+NO₂−|nitrite ion
+NO₂Cl|nitryl chloride
+NO₃−|nitrate ion
+NO₄-|peroxynitrate ion
+N₂|nitrogen
+N₂H₂|diazene
+N₂H₄|hydrazine
+N₂O|nitrous oxide
+N₂O₃|dinitrogen trioxide
+N₂O₄|dinitrogen tetroxide
+N₂O₅|dinitrogen pentaoxide
+N₃−|azide
+N₄H₄|trans-tetrazene
+NaAlSi₃O₃|albite
+NaAsO₂|sodium metaarsenite
+NaH₂AsO₄|sodium dihydrogen arsenate
+NaAu(CN)₂|sodium dicyanoaurate(I)
+Na₂Cr₂O₇ · ₂H₂O|Sodium dichromate dihydrate
+Na[B(NO₃)₄]|sodium tetranitratoborate(III)
+NaBr|sodium bromide
+NaBrO|sodium hypobromite
+NaBrO₂|sodium bromite
+NaBrO₃|sodium bromate
+NaBrO₄|sodium perbromate
+NaCN|sodium cyanide
+NaCNO|sodium fulminate
+NaC₆F₅COO|pentafluorobenzoate
+NaC₆H₅COO|sodium benzoate
+NaC₆H₇O₇|monosodium citrate
+NaCa₂(Al₅Si₅O₂₀) · ₆H₂O|thomsonite
+NaCl|sodium chloride
+NaClO₂|sodium chlorite
+NaClO₃|sodium chlorate
+NaClO₄|sodium perchlorate
+NaF|sodium fluoride
+NaOF|sodium hypofluorite
+NaH|sodium hydride
+NaHCOO|sodium formate
+NaHCO₃|sodium bicarbonate
+NaHS|sodium hydrosulfide
+NaHSO₃|sodium bisulfite
+NaHSO₄|sodium bisulfate
+NaH₂PO₃|monosodium phosphite
+NaH₂PO₄|monosodium phosphate
+NaI|sodium iodide
+NaIO|sodium hypoiodite
+NaIO₂|sodium iodite
+NaIO₃|sodium iodate
+NaIO₄|sodium periodate
+NaNH₂C₆H₄SO₃|sodium sulfanilate
+NaNO₂|sodium nitrite
+NaNO₃|sodium nitrate
+NaNbO₃|sodium metaniobate
+NaNbO₃ · ₇H₂O|sodium metaniobate heptahydrate
+NaOCl|sodium hypochlorite
+NaOCN|sodium cyanate
+NaOH|sodium hydroxide
+NaO₂As(CH₃)₂ · ₃H₂O|sodium salt of cacodylic acid
+NaSeO₃|sodium selenite
+NaTaO₃|sodium metatantalate
+NaVO₃|sodium metavanadate
+Na₂CO₃|sodium carbonate
+Na₂C₂O₄|sodium oxalate
+Na₂C₆H₆O₇|disodium citrate
+Na₂HAsO₄|disodium hydrogen arsenate
+Na₂HPO₃|disodium phosphite
+Na₂HPO₄|disodium phosphate
+Na₂MoS₄|sodium thiomolybdate
+Na₂N₂O₂|sodium hyponitrite
+Na₂O₂|sodium peroxide
+Na₂O|sodium oxide
+Na₂S|sodium monosulfide
+Na₂SO₃|sodium sulfite
+Na₂SO₄|sodium sulfate
+Na₂S₂O₃|sodium thiosulfate
+Na₂S₂O₅|sodium disulfite
+Na₂S₂O₈|sodium persulfate
+Na₂S₄|sodium tetrasulfide
+Na₂SeO₃|sodium selenite
+Na₂SeO₄|sodium selenate
+Na₂TeO₃|sodium tellurite
+Na₂TeO₄|sodium tellurate
+Na₂TiO₃|sodium metatitanate
+Na₂U₂O₇|Sodium Diurinate
+Na₂Zn(OH)₄|sodium zincate
+Na₂ZnO₂|sodium zincate
+Na₂ZrO₃|sodium metazirconate
+Na₃AlF₆|cryolite
+Na₃AsO₄|sodium arsenate
+Na₃[Co(CO₃)₃]|sodium tricarbonatocobaltate(III)
+Na₃VO₄|sodium orthovanadate
+Na₃C₆H₅O₇|trisodium citrate
+Na₃PO₃|trisodium phosphite
+Na₃PO₄|trisodium phosphate
+Na₄V₂O₇|sodium pyrovanadate
+NbBr₅|niobium(V) bromide
+NbCl₃|niobium(III) chloride
+NbCl₅|niobium(V) chloride
+NbI₅|niobium(V) iodide
+Nb₂O₃|niobium(III) oxide
+NdAsO₄|Neodymium arsenate
+Nd(CH₃COO)₃|neodymium acetate
+NdCl₂|neodymium(II) chloride
+NdI₂|neodymium(II) iodide
+NdI₃|neodymium(III) iodide
+Nd(OH)₃|neodymium hydroxide
+Nd₂O₃|neodymium(III) oxide
+NiAs|nickel(III) arsenide
+NiAsS|nickel arsenic sulfide
+NiBr₂|nickel(II) bromide
+NiBr₂ · ₃H₂O|nickel(II) bromide trihydrate
+NiBr₂ · ₆H₂O|nickel(II) bromide hexahydrate
+Ni(CO)₃|nickel(II) carbonate
+Ni(CO)₄|nickel tetracarbonyl
+NiC₂O₄ · ₂H₂O|nickel(II) oxalate dihydrate
+NiCl₂|nickel(II) chloride
+NiFe₂O₄|nickel(II) iron(III) oxide
+NiI₂|nickel(II) iodide
+Ni(H₂PO)₂ · ₆H₂O|nickel(II) hypophosphite hexahydrate
+NiMoO₄|nickel(II) orthomolybdate
+Ni(NO₃)₂ · ₆H₂O|nickel(II) nitrate hexahydrate
+NiOOH|nickel oxo-hydroxide
+NiO|nickel(II) oxide
+Ni(OH)₂|nickel(II) hydroxide
+NiS|nickel(II) sulfide
+NiSO₄|nickel sulfate
+NiS₂|nickel sulfide
+NiSb|nickel antimonide
+NiSe|nickel(II) selenide
+NiTiO₃|nickel(II) metatitanate
+Ni(VO₃)₂|nickel(II) metavanadate
+NiWO₄|nickel(II) orthotungstate
+Ni₂SiO₄|nickel(II) orthosilicate
+Ni₃(PO₄)₂|nickel(II) orthophosphate
+Ni₃Sb₂|nickel(II) antimonide
+O|oxygen
+OV|Vanadium(II) Oxide
+O₂|dioxygen
+O₂−|superoxide ion
+O₂₂−|peroxide ion
+OF₂|oxygen difluoride
+O₂F₂|dioxygen difluoride
+O₂Ti|titanium dioxide
+O₂U|uranium oxide
+OH−|hydroxide ion
+O₃|ozone
+O₃−|ozonide ion
+O₃U|Uranium Trioxide
+PCl₃|phosphorus trichloride
+PCl₅|phosphorus pentachloride
+POCl₃|phosphoryl chloride
+P₂I₄|diphosphorus tetraiodide
+P₂O₅|phosphorus pentoxide
+P₂S₃|diphosphorus trisulfide
+P₂Se₃|diphosphorus triselenide
+P₃N₅|triphosphorus pentanitride
+PH₃|phosphine
+POCl₃|phosphoryl chloride
+PbCl₂|lead(II) chloride
+PbCl₄|lead(IV) chloride
+PbHAsO₄|lead hydrogen arsenate
+PbI₂|lead(II) iodide
+Pb(IO₃)₂|lead(II) iodate
+Pb(N₃)₂|lead(II) nitride
+Pb(NO₃)₂|lead(II) nitrate
+Pb(OH)₂|lead(II) hydroxide
+Pb(OH)₄|lead(IV) hydroxide
+PbC₂O₄|lead oxalate
+PbCO₃|lead carbonate
+PbCrO₄|lead chromate
+PbF₂|lead(II) fluoride
+PbO|lead(II) oxide
+PbO₂|lead dioxide
+PbS|lead(II) sulfide
+PbSO₄|lead(II) sulfate
+Pb₂|diplumbyne
+PoBr₂|polonium dibromide
+PoCl₂|polonium dichloride
+PoCl₄|polonium tetrachloride
+PoF₆|polonium hexafluoride
+PoH₂|polonium hydride
+PoO|polonium monoxide
+PoO₂|polonium dioxide
+PoO₃|polonium trioxide
+RaCl₂|radium chloride
+RbBr|rubidium bromide
+RbBrO|rubidium hypobromite
+RbBrO₂|rubidium bromite
+RbBrO₃|rubidium bromate
+RbBrO₄|rubidium perbromate
+RbCl|rubidium chloride
+RbClO|rubidium hypochlorite
+RbClO₂|rubidium chlorite
+RbClO₃|rubidium chlorate
+RbClO₄|rubidium perchlorate
+RbCN|rubidium cyanide
+RbCNO|rubidium cyanate
+RbCNO|rubidium fulminate
+RbF|rubidium fluoride
+RbH|rubidium hydride
+RbH₂PO₃|monorubidium phosphite
+RbH₂PO₄|monorubidium phosphate
+RbHS|rubidium hydrosulfide
+RbI|rubidium iodide
+RbIO|rubidium hypoiodite
+RbIO₂|rubidium iodite
+RbIO₃|rubidium iodate
+RbIO₄|rubidium periodate
+RbOH|rubidium hydroxide
+Rb₂O|rubidium oxide
+Rb₂O₂|rubidium peroxide
+Rb₂CO₃|rubidium carbonate
+Rb₂S|rubidium sulfide
+Rb₂SO₃|rubidium sulfite
+Rb₂SO₄|rubidium sulfate
+Rb₂HPO₃|dirubidium phosphite
+Rb₂HPO₄|dirubidium phosphate
+Rb₃PO₃|trirubidium phosphite
+Rb₃PO₄|trirubidium phosphate
+RbHCO₃|rubidium bicarbonate
+RbHSO₃|rubidium bisulfite
+RbHSO₄|rubidium bisulfate
+RbNbO₃|rubidium niobate
+RbNO₂|rubidium nitrite
+RbNO₃|rubidium nitrate
+RnF₂|radon difluoride
+RuCl₃|ruthenium(III) chloride
+RuF₆|ruthenium hexafluoride
+RuO₄|ruthenium tetroxide
+SCN−|thiocyanate
+SF₄|sulfur tetrafluoride
+SF₆|sulfur hexafluoride
+SOF₂|thionyl difluoride
+SO₂|sulfur dioxide
+SO₂Cl₂|sulfuryl chloride
+SO₂F₂|sulfuryl difluoride
+SO₂OOH−|peroxymonosulfurous acid (aqueous)
+SO₃|sulfur trioxide
+SO₃₂−|sulfite ion
+SO₄₂−|sulfate ion
+S₂Br₂|sulfur(II) bromide
+S₂O₃₂−|thiosulfate ion
+S₂O₇₂−|disulfate ion
+SbBr₃|antimony(III) bromide
+SbCl₃|antimony(III) chloride
+SbCl₅|antimony(V) chloride
+SbI₃|antimony(III) iodide
+SbPO₄|antimony(III) phosphate
+Sb₂OS₂|antimony oxysulfide
+Sb₂O₃|antimony(III) oxide
+Sb₂O₅|antimony(V) oxide
+Sb₂S₃|antimony(III) sulfide
+Sb₂Se₃|antimony(III) selenide
+Sb₂Se₅|antimony(V) selenide
+Sb₂Te₃|antimony(III) telluride
+Sc₂O₃|scandium oxide
+SeBr₄|selenium(IV) bromide
+SeCl|selenium(I) chloride
+SeCl₄|selenium(IV) chloride
+SeOCl₂|selenium(IV) oxychloride
+SeOF₂|selenyl difluoride
+SeO₂|selenium(IV) oxide
+SeO₄₂−|selenate ion
+SeTe|selenium(IV) telluride
+SiBr₄|silicon(IV) bromide
+SiC|silicon carbide
+SiCl₄|silicon(IV) chloride
+SiH₄|silane
+SiI₄|silicon(IV) iodide
+SiO₂|silicon(IV) dioxide
+SiO₄₄−|silicate ion
+Si₂O₇₆−|disilicate ion
+Si₃N₄|silicon nitride
+Si₆O₁₈₁₂−|cyclosilicate ion
+SnBrCl₃|tin(IV) bromotrichloride
+SnBr₂|tin(II) bromide
+SnBr₂Cl₂|tin(IV) dibromodichloride
+SnBr₃Cl|tin(IV) tribromochloride
+SnBr₄|tin(IV) bromide
+Sn(CH₃COO)₂|tin(II) acetate
+Sn(CH₃COO)₄|tin(IV) acetate
+SnCl₂|tin(II) chloride
+SnCl₂I₂|tin(IV) dichlorodiiodide
+SnCl₄|tin(IV) chloride
+Sn(CrO₄)₂|tin(IV) chromate
+SnI₄|tin(IV) iodide
+Sn(OH)₂|tin(II) hydroxide
+Sn(OH)₄|tin(IV) hydroxide
+SnO|tin(II) oxide
+SnO₂|tin(IV) oxide
+SnO₃₂−|stannate ion
+SnS|tin(II) sulfide
+SnS₂|tin(IV) sulfide
+Sn(SO₄)₂·₂H₂O|tin(IV) sulfate dihydrate
+SnSe|tin(II) selenide
+SnSe₂|tin(IV) selenide
+SnTe|tin(II) telluride
+SnTe₄|tin(IV) telluride
+Sn(VO₃)₂|tin(II) metavanadate
+Sn₃Sb₄|tin(IV) antimonide
+SrBr₂|strontium bromide
+SrBr₂·₆H₂O|strontium bromide hexahydrate
+SrCO₃|strontium carbonate
+SrCl₂|strontium chloride
+Sr(ClO)₂|strontium hypochlorite
+Sr(ClO₂)₂|strontium chlorite
+Sr(ClO₃)₂|strontium chlorate
+Sr(ClO₄)₂|strontium perchlorate
+SrC₂O₄|strontium oxalate
+SrF₂|strontium fluoride
+SrHfO₃|strontium hafnate
+Sr(HS)₂|strontium hydrosulfide
+SrI₂|strontium iodide
+SrI₂·₆H₂O|strontium iodide hexahydrate
+Sr(IO)₂|strontium hypoiodite
+Sr(IO₂)₂|strontium iodite
+Sr(IO₃)₂|strontium iodate
+Sr(IO₄)₂|strontium periodate
+Sr(MnO₄)₂|strontium permanganate
+SrMoO₄|strontium orthomolybdate
+Sr(NbO₃)₂|strontium metaniobate
+SrO|strontium oxide
+Sr(OH)₂|strontium hydroxide
+Sr₂RuO₄|strontium ruthenate
+SrS|strontium sulfide
+SrSeO₃|strontium selenite
+SrSeO₄|strontium selenate
+SrTeO₃|strontium tellurite
+SrTeO₄|strontium tellurate
+SrTiO₃|strontium metatitanate
+Chemical formula|Name|CAS number
+T₂O|tritium oxide
+TaBr₃|tantalum(III) bromide
+TaBr₅|tantalum(V) bromide
+TaCl₅|tantalum(V) chloride
+TaI₅|tantalum(V) iodide
+TaO₃−|tantalate ion
+TcO₄−|pertechnetate ion
+TeBr₂|tellurium(II) bromide
+TeBr₄|tellurium(IV) bromide
+TeCl₂|tellurium(II) chloride
+TeCl₄|tellurium(IV) chloride
+TeI₂|tellurium(II) iodide
+TeI₄|tellurium(IV) iodide
+TeO₂|tellurium(IV) oxide
+TeO₄−|tellurate ion
+TeY|yttrium telluride
+Th(CO₃)₂|thorium carbonate
+Th(NO₃)₄|thorium nitrate
+ThO₂|thorium(IV) oxide
+Th(SO₄)₂|thorium(IV) sulfate
+TiBr₄|titanium(IV) bromide
+TiCl₂I₂|titanium(IV) dichlorodiiodide
+TiCl₃I|titanium(IV) trichloroiodide
+TiCl₄|titanium tetrachloride
+TiH₂|titanium hydride
+TiO₂|titanium dioxide
+TiO₃₂−|titanate ion
+TlBr|thallium(I) bromide
+TlBr₃|thallium(III) bromide
+Tl(CHO₂)|thallium(I) formate
+TlC₂H₃O₂|thallium(I) acetate
+Tl(C₃H₃O₄)|thalliium(I) malonate
+TlCl|thallium(I) chloride
+TlCl₃|thallium(III) chloride
+TlF|thallium(I) fluoride
+TlI|thallium(I) iodide
+TlIO₃|thallium(I) iodate
+TlI₃|thallium(III) iodide
+TiI₄|titanium(IV) iodide
+TiO(NO₃)₂ · xH₂O|titanium(IV) oxynitrate hydrate
+TlNO₃|thallium(I) nitrate
+TlOH|thallium(I) hydroxide
+TlPF₆|thallium(I) hexafluorophosphate
+TlSCN|thallium thiocyanate
+Tl₂MoO₄|thallium(I) orthomolybdate
+Tl₂SeO₃|thallium(I) selenite
+Tl₂TeO₃|thallium(I) tellurite
+Tl₂WO₄|thallium(I) orthotungstate
+Tl₃As|thallium(I) arsenide
+TmCl₃|thulium(III) chloride
+Tm(NO₃)₃|thulium(III) nitrate
+Tm₂(SO₄)₃|thullium(III) sulfate
+UBr₂|uranium dibromide
+UBr₃|uranium tribromide
+UBr₅|uranium pentabromide
+UC₂|uranium carbide
+UCl₃|uranium trichloride
+UCl₄|uranium tetrachloride
+UF₄|uranium(IV) fluoride
+UF₆|uranium(VI) fluoride
+UI₃|uranium(III) iodide
+UN|uranium nitride
+UO₂|uranium dioxide
+UO₂(CH₃COO)₂|uranyl acetate
+UO₂Cl₂|uranyl chloride
+UO₂(HCOO)₂|uranyl formate
+UO₂(NO₃)₂|uranyl nitrate
+UO₂SO₄|uranyl sulfate
+UO₃|uranium trioxide
+U₃O₈|triuranium octoxide
+USe₂|uranium diselenide
+US₂|uranium sulfide
+UTe₂|uranium ditelluride
+VBr₂|vanadium(II) bromide
+VBr₃|vanadium(III) bromide
+VCl₂|vanadium(II) chloride
+VCl₃|vanadium(III) chloride
+VI₃|vanadium(III) iodide
+VN|vanadium nitride
+VOC₂O₄|vanadyl oxalate
+VOSO₄|vanadium oxysulfate
+V₂O₃|vanadium(III) oxide
+V₂O₅|vanadium pentoxide
+V₂O₇₄−|divanadate ion
+WBr₂|tungsten(II) bromide
+WBr₃|tungsten(III) bromide
+WBr₄|tungsten(IV) bromide
+WBr₅|tungsten(V) bromide
+WBr₆|tungsten(VI) bromide
+W(CO)₆|tungsten(VI) carbonyl
+WCl₂|tungsten(II) chloride
+WCl₃|tungsten(III) chloride
+WCl₄|tungsten(IV) chloride
+WCl₅|tungsten(V) chloride
+WCl₆|tungsten(VI) chloride
+WF₄|tungsten(IV) fluoride
+WF₅|tungsten(V) fluoride
+WF₆|tungsten(VI) fluoride
+WI₂|tungsten(II) iodide
+WI₄|tungsten(IV) iodide
+WOBr₃|tungsten(V) oxytribromide
+WOBr₄|tungsten(VI) oxytetrabromide
+WOCl₃|tungsten(V) oxytrichloride
+WOCl₄|tungsten(VI) oxytetrachloride
+WOF₄|tungsten(VI) oxytetrafluoride
+WO₂|tungsten(IV) oxide
+WO₂Br₂|tungsten(VI) dioxydibromide
+WO₂Cl₂|tungsten(VI) dioxydichloride
+WO₂I₂|tungsten(VI) dioxydiiodide
+WO₃|tungsten(VI) oxide
+WO₄₂−|tungstate ion
+WS₂|tungsten(IV) sulfide
+WS₃|tungsten(VI) sulfide
+WSe₂|tungsten(IV) selenide
+WTe₂|tungsten(IV) telluride
+WC|tungsten carbide
+XeBr₂|Xenon dibromide
+Xe(C₆F₆)₂|Bis(pentafluorophenyl)xenon
+XeCl|Xenon monochloride
+XeCl₂|Xenon dichloride
+XeCl₄|Xenon tetrachloride
+XeF|Xenon monofluoride
+XeF₂|Xenon difluoride
+XeF₄|Xenon tetrafluoride
+XeF₆|Xenon hexafluoride
+XeO₂|Xenon dioxide
+XeO₃|Xenon trioxide
+XeO₄|Xenon tetroxide
+XeOF₂|Xenon oxydifluoride
+XeO₂F₂|Xenon dioxydifluoride
+XePtF₆|Xenon hexafluoroplatinate
+XeRhF₆|Xenon hexafluororhodate
+YAs|yttrium arsenide
+YB₆|yttrium boride
+YBr₃|yttrium bromide
+YC₂|yttrium carbide
+YCl₃|yttrium chloride
+YF₃|yttrium fluoride
+YP|yttrium phosphide
+YSb|yttrium antimonide
+YVO₄|yttrium vanadate
+Y₂O₃|yttria
+Y₂S₃|yttrium sulfide
+YbBr₂|ytterbium(II) bromide
+YbBr₃|ytterbium(III) bromide
+YbCl₂|ytterbium(II)chloride
+YbCl₃|ytterbium(III) chloride
+YbCl₃·₆H₂O|ytterbium(III) chloride hexahydrate
+Yb(ClO₄)₃|ytterbium(III) perchlorate
+YbF₂|ytterbium(II) fluoride
+YbF₃|ytterbium(III) fluoride
+YbI₂|ytterbium(II) iodide
+YbI₃|ytterbium(III) iodide
+YbPO₄|ytterbium(III) phosphate
+YbSe|ytterbium(II) selenide
+YbSi₂|ytterbium(II) silicide
+Yb₂O₃|ytterbium(III) oxide
+Yb₂S₃|ytterbium(III) sulfide
+Yb₂Se₃|ytterbium(III) selenide
+YbTe|ytterbium(II) telluride
+Zn(AlO₂)₂|zinc aluminate
+Zn(AsO₂)₂|zinc arsenite
+ZnBr₂|zinc bromide
+Zn(CN)₂|zinc cyanide
+ZnCO₃|zinc carbonate
+Zn(C₈H₁₅O₂)₂|zinc caprylate
+Zn(ClO₃)₂|zinc chlorate
+ZnCl₂|zinc chloride
+ZnCr₂O₄|zinc chromite
+ZnF₂|zinc fluoride
+Zn(IO₃)₂|zinc iodate
+ZnI₂|zinc iodide
+ZnMoO₄|zinc orthomolybdate
+Zn(NO₂)₂|zinc nitrite
+Zn(NO₃)₂|zinc nitrate
+Zn(NbO₃)₂|zinc metaniobate
+ZnO|zinc(II) oxide
+ZnO₂|zinc peroxide
+Zn(OH)₂|zinc hydroxide
+Zn(OH)₄₂−|zincate ion
+ZnS|zinc sulfide
+Zn(SCN)₂|zinc thiocyanate
+Zn(SeCN)₂|zinc selenocyanate
+ZnSO₃|zinc sulfite
+ZnS₂O₃|zinc thiosulfate
+ZnSO₄|zinc sulfate
+ZnSb|zinc antimonide
+ZnSe|zinc selenide
+ZnSeO₃|zinc selenite
+ZnSeO₄|zinc selenate
+ZnSnO₃|zinc stannate
+Zn(TaO₃)₂|zinc metatantalate
+ZnTe|zinc telluride
+ZnTeO₃|zinc tellurite
+ZnTeO₄|zinc tellurate
+ZnTiO₃|zinc metatitanate
+Zn(VO₃)₂|zinc metavanadate
+ZnWO₄|zinc orthotungstate
+ZnZrO₃|zinc metazirconate
+Zn₂P₂O₇|zinc pyrophosphate
+Zn₂SiO₄|zinc orthosilicate
+Zn₃(AsO₄)₂|zinc arsenate
+Zn₃As₂|zinc arsenide
+Zn₃N₂|zinc nitride
+Zn₃P₂|zinc phosphide
+Zn₃(PO₄)₂|zinc phosphate
+Zn₃Sb₂|zinc antimonide
+ZrB₂|zirconium boride
+ZrBr₄|zirconium bromide
+ZrC|zirconium carbide
+ZrCl₄|zirconium tetrachloride
+ZrF₄|zirconium fluoride
+ZrI₄|zirconium(IV) iodide
+ZrN|zirconium nitride
+Zr(NO₃)₄|zirconium(IV) nitrate
+Zr(OH)₄|zirconium hydroxide
+ZrO₂|baddeleyite
+ZrO₃₂−|zirconate ion
+ZrP₂|zirconium phosphide
+ZrS₂|zirconium sulfide
+ZrSi₂|zirconium silicide
+ZrSiO₄|zirconium(IV) silicate
+Zr(SO₄)₂|zirconium(IV) sulfate
+Zr₃(PO₄)₄|zirconium phosphate

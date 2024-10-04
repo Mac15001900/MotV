@@ -104,8 +104,10 @@ class MarkerManager extends Window_Base {
         this.contents.clear();
         if (!this.enabled || !this.ready) return;
         let events = this.validEvents.filter(e => e.isNearTheScreen(this.screenScale) || e.event().meta.MarkerRegion);
-        let verticalOffset = this.MIN_VERTICAL_OFFSET + Math.floor((this.MAX_VERTICAL_OFFSET - this.MIN_VERTICAL_OFFSET) * 2 * (Graphics.frameCount % 120) / 120);
-        if (verticalOffset > this.MAX_VERTICAL_OFFSET) verticalOffset = this.MAX_VERTICAL_OFFSET - (verticalOffset - this.MAX_VERTICAL_OFFSET);
+        let offsetProgress = (Graphics.frameCount % 120) / 120; //At what point in time is the animation (from 0 to 1)
+        let smoothProgress = (Math.sin(offsetProgress * Math.PI * 2) + 1) / 2; //Vartical position in the animation, from 0 to 1
+        let range = this.MAX_VERTICAL_OFFSET - this.MIN_VERTICAL_OFFSET;
+        let verticalOffset = this.MIN_VERTICAL_OFFSET + range * smoothProgress;
         for (let event of events) {
             let x = event.screenX() * this.screenScale;
             let y = (event.screenY() + event.shiftY()) * this.screenScale - $gameMap.tileHeight() * this.screenScale + verticalOffset;

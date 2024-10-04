@@ -665,7 +665,6 @@ function Scene_InputDialog() {
           SceneManager._scene._textBox.addAllEventListener();
           if ($gs[g.switches.MOLECULE_INPUT]) {
             let box = SceneManager._scene._textBox._textBox;
-            console.log(box);
             box.oninput = () => box.value = box.value.replace(/\d/g, (x => "₀₁₂₃₄₅₆₇₈₉"[x]));
           }
         }
@@ -1003,7 +1002,6 @@ function Scene_InputDialog() {
 
   Scene_InputDialog.prototype.cancelResult = function () {
     $gameVariables.setValue(RS.InputDialog.Params.variableID, String("")); //Change: made sure to create some output
-    console.log("Cancelling...", $gv[3]);
     if (SceneManager._stack.length > 0) {
       TouchInput.clear();
       Input.clear();

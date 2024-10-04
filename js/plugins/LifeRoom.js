@@ -82,6 +82,8 @@ BoardManager.prototype.setCell = function (x, y, value) {
 
 BoardManager.prototype.setCellFromEvent = function (event, value) {
     this.setCell(event.x - this.x, event.y - this.y, value);
+    if ($gameMap.mapId() === 6 && !$gs[144] && this.countCells() === this.values.length * this.values[0].length)
+        MAC_RunNearbyEvent.run("[All lamps on scene]");
 }
 
 BoardManager.prototype.updateObjects = function () {

@@ -106,10 +106,10 @@ ToastWindow.prototype.drawBackground = function (x, y, width, height) {
  * @param {Number} [g] Green value of the background color. 0-255
  * @param {Number} [b] Blue value of the background color. 0-255
  */
-ToastWindow.prototype.enqueueToast = function (text, time = this.BASIC_DURATION, r, g, b) {
+ToastWindow.prototype.enqueueToast = function (text, time, r, g, b) {
     this.queue.push({
         text: text,
-        time: time + this.FADEIN_TIME + this.FADEOUT_START,
+        time: (time ?? this.BASIC_DURATION) + this.FADEIN_TIME + this.FADEOUT_START,
         color: r === undefined ? this.baseColor : `rgba(${r}, ${g}, ${b}, `,
     });
     if (this.queue.length === 1 && this.framesLeft < 0) this.startToast(this.queue.shift());

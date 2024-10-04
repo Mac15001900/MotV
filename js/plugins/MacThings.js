@@ -92,6 +92,7 @@ g.switches = {
     IS_ENGLISH: 11,
     IS_POLISH: 12,
     IMPORTING_GAME: 23,
+    CLIPBOARD_SUCCESSFUL: 24,
     MOLECULE_INPUT: 28,
     MAP_INTERNAL_31: 1,
     MAP_INTERNAL_32: 2,
@@ -717,7 +718,6 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
             case -2: break;
             case -1:
                 copyTextToClipboard(inp, imageTexts[x + "-" + y]);
-                g.showMessage(inp, s.clipboardMessage);
                 break;
             case 0: self.moveLeft(); break;
             case 1: self.moveRight(); break;
@@ -931,7 +931,7 @@ g.simpleUnescape = function (string) {
  * @param {Boolean} escapeSpecial Whether all RM text codes (e.g. \c[4]) should be removed
  * @param {Boolean} trimText Whether each line of the text should be trimmed
  */
-function copyTextToClipboard(inp, text, escapeSpecial = true, trimText = true) {
+function copyTextToClipboard(inp, text, escapeSpecial = true, trimText = true, showToast = true) {
     if (inp) inp._waitMode = 'indefinite';
     let processedText = text;
     if (trimText) processedText = processedText.split('\n').map(line => line.trim()).join('\n');
@@ -939,19 +939,28 @@ function copyTextToClipboard(inp, text, escapeSpecial = true, trimText = true) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(processedText).then(
             () => {
-                $gs[24] = true;
-                if (inp) inp._waitMode = '';
+                g.clipboardDone(inp, true, showToast);
             },
             () => {
                 //If the proper way failed, try the old one
                 oldCopyTextToClipboard(processedText);
-                if (inp) inp._waitMode = '';
+                g.clipboardDone(inp, $gs[24], showToast);
             },
         );
     } else {
         oldCopyTextToClipboard(processedText);
-        if (inp) inp._waitMode = '';
+        g.clipboardDone(inp, $gs[24], showToast);
     }
+
+}
+
+g.clipboardDone = function (inp, succeeded, showToast) {
+    $gs[g.switches.CLIPBOARD_SUCCESSFUL] = succeeded;
+    if (showToast) {
+        if (succeeded) g.topRightToast.enqueueToast(s.clipboardMessage);
+        else g.topRightToast.enqueueToast(s.clipboardFailMessage, null, 255, 25, 25);
+    }
+    if (inp) inp._waitMode = '';
 }
 
 //Old text to clipboard, could be more compatible with older devices. Function by Dean Taylor taken from https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript

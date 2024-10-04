@@ -1707,7 +1707,6 @@ C₂₁H₂₃N₇O₂S|Pazopanib
 C₂₁H₂₄FN₃O₄|Moksyfloksacyna
 C₂₁H₂₄F₃N₃S|Trifluoperazyna
 C₂₁H₂₅ClN₂O₃|Cetyryzyna
-C₂₁H₂₅ClN₂O₃|Lewocetyryzyna
 C₂₁H₂₅ClN₂O₄S|Tianeptyna
 C₂₁H₂₅N|Melitracen
 C₂₁H₂₅N|Terbinafina

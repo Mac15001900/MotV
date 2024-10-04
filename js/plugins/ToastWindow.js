@@ -53,6 +53,7 @@ ToastWindow.prototype.initialize = function (position, r = 0, g = 255, b = 255) 
     this.framesLeft = -1; //For how many frames should we keep displaying the current toast
     this.fadeInLeft = 0; //How many frames of fading in are left
     this.closeListeners = []; //Listeners to be called whenever the window runs out of toasts
+    this.previousToast = null;
 }
 
 ToastWindow.prototype.update = function () {
@@ -66,6 +67,7 @@ ToastWindow.prototype.update = function () {
     }
 
     if (this.framesLeft === 0) {
+        this.previousToast = this.text;
         this.contents.clear();
         this.contentsOpacity = 0;
         if (this.queue.length > 0) this.startToast(this.queue.shift());
@@ -73,6 +75,7 @@ ToastWindow.prototype.update = function () {
             this.framesLeft = -1;
             for (let listener of this.closeListeners) listener(this);
         }
+        this.previousToast = null;
     } else if (this.framesLeft < this.FADEOUT_START) {
         this.contentsOpacity = 255 * this.framesLeft / this.FADEOUT_START;
     }
@@ -107,6 +110,7 @@ ToastWindow.prototype.drawBackground = function (x, y, width, height) {
  * @param {Number} [b] Blue value of the background color. 0-255
  */
 ToastWindow.prototype.enqueueToast = function (text, time, r, g, b) {
+    if (this.queue.length > 0 && this.queue.at(-1).text === text) return; //Reject multiple repeats of toasts
     this.queue.push({
         text: text,
         time: (time ?? this.BASIC_DURATION) + this.FADEIN_TIME + this.FADEOUT_START,

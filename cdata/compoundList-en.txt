@@ -935,6 +935,7 @@ C₂₁H₂₂N₂O₄|Picralinal
 C₂₁H₂₂O₄|Taxamairin A
 C₂₁H₂₃FN₂O₄|Z-FA-FMK
 C₂₁H₂₄FN₆O₆P|Rovafovir etalafenamide
+C₂₁H₂₅ClN₂O₃|Cetirizine
 C₂₁H₂₅NO₄|Yuanhunine
 C₂₁H₂₆O₄|Canniprene
 C₂₁H₂₇N₅|D75-4590
@@ -1007,6 +1008,7 @@ C₆₃H₈₈CoN₁₄O₁₄P|Vitamin B12
 C₆₃H₈₈CoN₁₄O₁₄P|cyanocobalamin
 C₆₃H₉₁CoN₁₃O₁₄P|methylcobalamin
 C₇₂H₁₀₀CoN₁₈O₁₇P|adenosylcobalamin
+C₇₂H₁₀₄Na₈O₄₈S₈|Sugammadex Sodium
 C₇₆H₅₂O₄₆|Tannic acid
 C₇₇H₁₀₁N₁₇O₂₆|Surotomycin
 C₇₇H₁₂₀N₁₈O₂₆S|alpha-Endorphin
@@ -1608,6 +1610,7 @@ Fe₂I₂|diiron diiodide
 Fe₂I₄|diiron tetraiodide
 Fe₂O₃|iron oxide
 Fe₂O₃|venetian red
+Fe₂O₄Zn|Calamine
 Fe₂O₁₂S₃|ferric sulfate
 Fe₂O₁₂W₃|iron(III) orthotungstate
 Fe₂P|diiron phosphide

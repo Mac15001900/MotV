@@ -183,3 +183,10 @@ In Polish: Go to https://pl.wikipedia.org/wiki/Zwi%C4%85zki_chemiczne_wed%C5%82u
 [...new Set(Array.from($0.childNodes).filter(n=>n.tagName === "P").map(n=>Array.from(n.childNodes).filter(n=>n.tagName === "A").map(link=> Array.from(link.childNodes).map(n=>n.textContent).join('').replace(/\d/g, (x=>"₀₁₂₃₄₅₆₇₈₉"[x])) + " - " + link.title)).flat())].sort().join('\n') 
 
 Entering a formula 
+
+Entries into the files:
+En:
+Fe₂O₄Zn|Calamine
+C₂₁H₂₅ClN₂O₃|Cetirizine
+C₇₂H₁₀₄Na₈O₄₈S₈|Sugammadeks Sodium
+Pl: None, they're already there

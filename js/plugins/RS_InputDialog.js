@@ -663,6 +663,11 @@ function Scene_InputDialog() {
       if ((SceneManager._scene instanceof Scene_InputDialog)) {
         if (SceneManager._scene._textBox) {
           SceneManager._scene._textBox.addAllEventListener();
+          if ($gs[g.switches.MOLECULE_INPUT]) {
+            let box = SceneManager._scene._textBox._textBox;
+            console.log(box);
+            box.oninput = () => box.value = box.value.replace(/\d/g, (x => "₀₁₂₃₄₅₆₇₈₉"[x]));
+          }
         }
       }
     }

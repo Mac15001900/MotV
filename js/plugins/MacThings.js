@@ -28,7 +28,7 @@ try {
     throw new Error("The JavaScript version is too old.");
 }
 
-let MAC_DEBUG = false;
+let MAC_DEBUG = true;
 const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
@@ -81,6 +81,23 @@ g.vars = {
     GAME_STAGE: 41,
     TUTORIALS_SEEN: 42,
     KEYS_COLLECTED: 43
+}
+
+g.switches = {
+    TRUE: 1,
+    DEBUG: 2,
+    FALSE: 3,
+    BLOCK_UPDATES: 4,
+    IS_COLORBLIND: 10,
+    IS_ENGLISH: 11,
+    IS_POLISH: 12,
+    IMPORTING_GAME: 23,
+    MOLECULE_INPUT: 28,
+    MAP_INTERNAL_31: 1,
+    MAP_INTERNAL_32: 2,
+    MAP_INTERNAL_33: 3,
+    MAP_INTERNAL_34: 4,
+    MAP_INTERNAL_35: 5,
 }
 
 
@@ -492,6 +509,39 @@ g.calculatorPuzzle = function (text) { //Factorisation for testing: https://www.
     return res.join('\n');
 }
 
+g.moleculesPuzzle = function (formula) {
+    //If the data file is not yet loaded (or the wrong language is loaded) load it first
+    if (!g.moleculeData || g.moduleDataLang !== g.lang) {
+        g.loadTextFile("cdata/compoundList-" + g.lang + ".txt", (data) => g.moleculeData = g.parseMoleculeData(data));
+        g.moduleDataLang = g.lang;
+        return null;
+    }
+    if (!formula) return;//You can also call this function just to make it start loading the file
+
+    let name = g.moleculeData[formula];
+    if (!name) return s.unknownFormula;
+
+    let propertyText = g.isAnomalous(formula) ? "\\c[42]" + s.isAnomalous + "\\c[0]" : s.isNotAnomalous;
+    return `\\{\\fb${name.capitalise()}\n\\}\\fb${s.formula.capitalise()}: ${formula}\n${s.anomalousProperties}: ${propertyText}`
+}
+
+g.isAnomalous = function (formula) {
+    return ["Fe₂O₄Zn", "C₁₂H₁₈O", "C₂₁H₂₅ClN₂O₃", "C₇₂H₁₀₄Na₈O₄₈S₈"].includes(formula);
+}
+
+g.parseMoleculeData = function (data) {
+    let res = {};
+    data.split('\n').map(line => line.split('|')).forEach(([formula, name]) => res[formula] = name);
+    return res;
+}
+
+g.loadTextFile = function (filePath, callback) {
+    var request = new XMLHttpRequest();
+    request.open("GET", filePath);
+    request.overrideMimeType('text/plain');
+    request.onload = () => callback(request.responseText);
+    request.send();
+}
 
 //===================================== Event functions =====================================
 
@@ -1127,7 +1177,7 @@ g.importSave = function (compressedString) {
     switch (contents.version) {
         //Any version-specific logic will go here
     }
-    const tempSwitches = [132, 138]; //Switches that are meant to be temporary, and it makes more sense to turn them off when importing a game.
+    const tempSwitches = [g.switches.MOLECULE_INPUT, 132, 138]; //Switches that are meant to be temporary, and it makes more sense to turn them off when importing a game.
     for (let s of tempSwitches) {
         $gameSwitches.setValue(s, false);
     }
@@ -1598,7 +1648,7 @@ if (MAC_DEBUG) {
         if (!($gs && $gs[4])) this.requestUpdate();
     };
 
-    //Custom key behaviours
+    //Custom debug-related key behaviours
     proccessKeyDown = function (event) {
         switch (event.key) {
             case 'h': if ($gs[4]) SceneManager.update(true); break;
@@ -1609,7 +1659,7 @@ if (MAC_DEBUG) {
                 if (!$gs[4]) SceneManager.requestUpdate();
                 break;
             case 'q':
-                SceneManager.exit();
+                if (!g.scene() instanceof Scene_InputDialog) SceneManager.exit();
                 break;
             case 'End':
                 g.textFastForward = true;

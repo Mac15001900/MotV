@@ -1,5 +1,5 @@
 /*:
- * @plugindesc v1.1 Extracts all text from a game into a file
+ * @plugindesc v1.2 Extracts all text from a game into a file
  * @author Mac15001900
  * 
  * @param Split to files
@@ -21,7 +21,8 @@
  * The file (or folder with files) will be created in your project's main folder.
  * 
  * The extracted text contains the contents of every message command and
- * every choice command from every regular and common event in the game.
+ * every choice command from every regular and common event in the game,
+ * as well as from events in troops.
  * There is some processing to remove text codes (so "\c[4]Hi" becomes "Hi"),
  * but it might not handle every code that plugins can add.
  * 
@@ -53,11 +54,11 @@ void function () {
     }
 
     //Converts a regular event to a printable string
-    function showEvent(event) {
-        if (!event || event.meta["NoExtraction"]) return "";
+    function showEvent(event, isTroop = false) {
+        if (!event || event.meta && event.meta["NoExtraction"]) return "";
         let pageStrings = event.pages.map(showList).filter(s => s.length > 0);
         if (pageStrings.length === 0) return "";
-        return "--- Event " + event.name + " (" + event.id + ") ---\n\n" + pageStrings.join("\n-----\n\n");
+        return (isTroop ? "--- Troop " : "--- Event ") + event.name + " (" + event.id + ") ---\n\n" + pageStrings.join("\n-----\n\n");
     }
 
     //Converts a common event to a printable string
@@ -76,6 +77,18 @@ void function () {
         for (let id = 0; id < mapData.events.length; id++) {
             let eventString = showEvent(mapData.events[id]);
             if (eventString.length > 0) res += eventString + "\n";
+        }
+        return res;
+    }
+
+    //Converts troop events to a printable string
+    function showTroopEvents() {
+        let res = "";
+        for (let id = 1; id < $dataTroops.length; id++) {
+            let troop = $dataTroops[id];
+            let eventString = showEvent(troop, true);
+            if (eventString.length > 0) res += eventString + "\n";
+            // if (eventString.length > 0) res += `--- Troop event: ${troop.name} (${troop.id}) ---\n${eventString}\n`;
         }
         return res;
     }
@@ -128,6 +141,10 @@ void function () {
                 }
             }
             if (splitToFiles && extractedString.length > 0) saveExtractedText(extractedString, "commonEvents.txt", "extractedText");
+            //Show troop events
+            let troopText = showTroopEvents();
+            extractedString += troopText + '\n';
+            if (splitToFiles && troopText.length > 0) saveExtractedText(troopText, "troopEvents.txt", "extractedText");
             //This delay is not actually necessary, but letting the current frame finish processing stops a bunch of ugly errors from appearing
             setTimeout(runExtractor, 50, 0);
             return;

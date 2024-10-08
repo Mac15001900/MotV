@@ -1,5 +1,5 @@
 /*:
- * @plugindesc (v1.0) Adds a blackjack minigame
+ * @plugindesc (v1.1) Adds a blackjack minigame
  * @author Mac15001900
  * 
  * @param Mechanics
@@ -179,6 +179,15 @@
  * @max 255
  * @min -255
  * 
+ * @param Window opacity
+ * @parent Graphics
+ * @desc Opacity of the background of each window (between 0 and 255). Set "-1" to leave as engine's default.
+ * @type number
+ * @max 255
+ * @min -1
+ * @default -1
+ * 
+ * 
  * @param Background
  * @parent Graphics
  * @type select
@@ -203,6 +212,12 @@
  * @param Background image
  * @parent Background
  * @desc If using an image background, the image that will appear there.
+ * @type file
+ * @dir img/pictures
+ * 
+ * @param Scene background
+ * @parent Graphics
+ * @desc Background for the entire scene.
  * @type file
  * @dir img/pictures
  * 
@@ -556,7 +571,8 @@
  *
  * You can change any plugin parameters during the game by using the
  * BlackjackParam command, followed by the name of the parameter and the new
- * value, using '_'  instead of spaces.
+ * value, using '_'  instead of spaces. Note that the name has to be exactly the
+ * same as it appears in Plugin Manager, including capitalistion.
  *
  * Any parameters that use the Note format (allowing you to type multiple lines)
  * must be enclosed in "quotation marks".
@@ -790,6 +806,9 @@ void function ($) {
         $.backgroundColor2 = params["Background colour 2"];
         $.backgroundImage = params["Background image"];
 
+        $.sceneBackround = params["Scene background"];
+        $.windowOpacity = numberValue(params["Window opacity"]);
+
     }
 
     ////--------------------- Main window ---------------------
@@ -856,6 +875,8 @@ void function ($) {
             case "None":
                 break;
         }
+
+        if ($.windowOpacity >= 0) this.opacity = $.windowOpacity;
 
         if (!this.image) return; //We're not ready to draw anything else yet
         //Draw the player's hand
@@ -1250,6 +1271,7 @@ void function ($) {
         Window_Base.prototype.initialize.call(this, x, y, width, height);
         this.contents.fontSize = $.infoWindowFontSize;
         this.textRows = [];
+        if ($.windowOpacity >= 0) this.opacity = $.windowOpacity;
     }
 
     Window_BlackjackInfo.prototype.refresh = function () {
@@ -1279,6 +1301,7 @@ void function ($) {
         this.options = []; //A list of strings, each representing an option for the user to choose from
         this.enabledOptions = []; //A list of booleans for each options, indicating whether it's enabled
         Window_HorzCommand.prototype.initialize.call(this, x, y);
+        if ($.windowOpacity >= 0) this.opacity = $.windowOpacity;
         this.refresh();
     }
 
@@ -1309,6 +1332,29 @@ void function ($) {
         if (Array.isArray(disableOptions)) {
             disableOptions.forEach(i => this.enabledOptions[i] = false);
         }
+    }
+
+    ////--------------------- Background window ---------------------
+    function Window_BlackjackBackground() {
+        this.initialize.apply(this, arguments);
+    };
+
+    Window_BlackjackBackground.prototype = Object.create(Window_Base.prototype);
+    Window_BlackjackBackground.prototype.constructor = Window_BlackjackBackground;
+    Window_BlackjackBackground.prototype.initialize = function (image) {
+        let padding = Window_Base.prototype.standardPadding();
+        Window_Base.prototype.initialize.call(this, 0, 0, Graphics.width + padding * 2, Graphics.height + padding * 2);
+        this.standardPadding = () => 0;
+        this.padding = 0;
+        let bmp = ImageManager.loadPicture(image);
+        bmp.addLoadListener(function () {
+            this.background = bmp;
+            this.refresh();
+        }.bind(this));
+    }
+
+    Window_BlackjackBackground.prototype.refresh = function () {
+        this.contents.blt(this.background, 0, 0, this.background.width, this.background.height, 0, 0, Graphics.width, Graphics.height);
     }
 
     ////--------------------- Setting updateTone ---------------------
@@ -1342,7 +1388,18 @@ void function ($) {
             startTime: Graphics.frameCount,
             roundResults: [],
         };
-        Scene_MenuBase.prototype.create.call(this);
+
+        // Deconstructing Scene_MenuBase.prototype.create to add our own background
+        Scene_Base.prototype.create.call(this);
+        this.createBackground();
+        this.updateActor();
+        if ($.sceneBackround) {
+            this.addExtraWindowLayer();
+            this.backgroundWindow = new Window_BlackjackBackground($.sceneBackround);
+            this._extraWindowLayer.addChild(this.backgroundWindow);
+        }
+        this.createWindowLayer();
+
         this.game = Game;
         this.game.initialize($.luck);
         this.inAnimation = false;

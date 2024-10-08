@@ -73,7 +73,7 @@
 	ConfigManager.markerMode = false; //True when toggling, false when holding
 
 	const PREFERRED_WINDOW_SIZES = [[1920, 1080], [1280, 720], [640, 360]];
-	const ADJUST_WINDOW_SIZE = true;
+	const ADJUST_WINDOW_SIZE = false; //TODO temporarily turned this off
 
 	Object.defineProperty(ConfigManager, 'fullscreen', {
 		get: function () {

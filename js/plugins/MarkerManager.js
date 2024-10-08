@@ -105,7 +105,7 @@ class MarkerManager extends Window_Base {
         if (!this.enabled || !this.ready) return;
         let events = this.validEvents.filter(e => e.isNearTheScreen(this.screenScale) || e.event().meta.MarkerRegion);
         let offsetProgress = (Graphics.frameCount % 120) / 120; //At what point in time is the animation (from 0 to 1)
-        let smoothProgress = (Math.sin(offsetProgress * Math.PI * 2) + 1) / 2; //Vartical position in the animation, from 0 to 1
+        let smoothProgress = (Math.sin(offsetProgress * Math.PI * 2) + 1) / 2; //Vertical position in the animation, from 0 to 1
         let range = this.MAX_VERTICAL_OFFSET - this.MIN_VERTICAL_OFFSET;
         let verticalOffset = this.MIN_VERTICAL_OFFSET + range * smoothProgress;
         for (let event of events) {

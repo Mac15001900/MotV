@@ -5,6 +5,7 @@
  * @param Templates
  * @desc Templates for the TemplateExplode command
  * @type struct<ExplosionTemplate>[]
+ * @default []
  * 
  * @param Max particle variable
  * @desc The maximum number of particles from a single effect will be capped at the value of this variable.
@@ -984,8 +985,8 @@ void function ($) {
 
     function worldToScreen(pos) {
         let tw = $gameMap.tileWidth();
-        if ($gameScreen._zoomScale !== 1) {
-            let scale = $gameScreen._zoomScale;
+        let scale = $gameScreen.zoomScale();
+        if ((Imported["SumRndmDde Camera Core"] || Imported.Galv_ScreenZoom || Imported.Eli_Zoom) && scale !== 1) {
             let screenWidthInTiles = Graphics.boxWidth / tw;
             let screenHeightInTiles = Graphics.boxHeight / tw;
             let screenCenterX = $gameMap._displayX + screenWidthInTiles / 2; //The tile coordinates of the screen center
@@ -993,8 +994,12 @@ void function ($) {
             let dx = screenCenterX - pos[0];
             let dy = screenCenterY - pos[1];
             return [Math.round(Graphics.boxWidth / 2 - dx * scale * tw), Math.round(Graphics.boxHeight / 2 - dy * scale * tw)];
+        } else if (Imported.MBS_MapZoom) { //One of two zoom plugins that do things in a sensible way
+            return [Math.round($gameMap.adjustX(pos[0]) * $gameMap.zoom.x * tw), Math.round($gameMap.adjustY(pos[1]) * $gameMap.zoom.y * tw)];
+        } else if (Imported["CT_Bolt Zoom"]) { //And the second one
+            return [Math.round($gameMap.adjustX(pos[0]) * $gameMap.zoomData.scale.x * tw), Math.round($gameMap.adjustY(pos[1]) * $gameMap.zoomData.scale.y * tw)];
         } else {
-            return [Math.round($gameMap.adjustX(pos[0]) * tw), Math.round($gameMap.adjustY(pos[1]) * tw)];
+            return [Math.round($gameMap.adjustX(pos[0]) * scale * tw), Math.round($gameMap.adjustY(pos[1]) * scale * tw)];
         }
     }
 

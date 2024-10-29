@@ -1,6 +1,6 @@
 /*:
  * @author Mac15001900
- * @plugindesc v1.3.2 Allows events to run other events in various ways.
+ * @plugindesc v1.3.3 Allows events to run other events in various ways.
  * 
  * @param With an invalid target
  * @desc What should the plugin do when trying to run a non-existent event or page?
@@ -190,7 +190,7 @@
 
 
 var Imported = Imported || {}
-Imported.MAC_RunNearbyEvent = "1.1";
+Imported.MAC_RunNearbyEvent = "1.3.3";
 window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/other plugins
 
 (function ($) {
@@ -407,6 +407,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
     }
 
     $.shouldClearDestination = function () {
+        if (!$gamePlayer.canPass($gamePlayer.x, $gamePlayer.y, $gamePlayer.direction())) return true; //If we can't keep moving, we should definitely stop
         let id = $.getInterpreter().eventId();
         let event = $gameMap.event(id);
         if (!event || !event.page()) return false;

@@ -42,6 +42,11 @@
  * @off Disabled
  * @default false
  * 
+ * @param Round limit
+ * @desc How many rounds can be played in a single game. Use 0 for unlimited.
+ * @type number
+ * @default 0
+ * 
  * @param Outputs
  * @desc What variables will the results of the game be written to.
  * 
@@ -412,6 +417,12 @@
  * @type note
  * @default " tokens and start a new round"
  * 
+ * @param Rounds remaining description
+ * @parent Info window text
+ * @desc Text in the info window that describes the number of rounds remaining. It will be appended to the wager description.
+ * @type note
+ * @default "\nRounds remaining: "
+ * 
  * @param Exit description
  * @parent Info window text
  * @desc Text in the info window that describes what the "Exit" option does.
@@ -645,7 +656,7 @@
 
 
 var Imported = Imported || {}
-Imported.MAC_Blackjack = "1.0";
+Imported.MAC_Blackjack = "1.1";
 window.MAC_Blackjack = {};
 
 void function ($) {
@@ -742,6 +753,7 @@ void function ($) {
         $.cardRows = numberValue(params["Card rows"]);
         $.cardAmount = $.cardRows * $.cardRowLength;
         $.cardPadding = numberValue(params["Card padding"]); //How many pixels from the edge are cards drawn
+        $.roundLimit = numberValue(params["Round limit"]) || Infinity;
 
         $.roundEndTexts = {}
         $.roundEndTexts[GameResult.WIN] = JSON.parse(params["Round end text for win"]);
@@ -754,6 +766,7 @@ void function ($) {
         $.infoTexts = {};
         $.infoTexts.wager = w => JSON.parse(params["Wager description part 1"]) + w + JSON.parse(params["Wager description part 2"]);
         $.infoTexts.exit = JSON.parse(params["Exit description"]);
+        $.infoTexts.roundsRemaining = $.roundLimit < Infinity ? JSON.parse(params["Rounds remaining description"]) : '';
         $.infoTexts.hit = JSON.parse(params["Hit description"]);
         $.infoTexts.stand = JSON.parse(params["Stand description"]);
         $.infoTexts.double = JSON.parse(params["Double description"]);
@@ -1334,6 +1347,37 @@ void function ($) {
         }
     }
 
+    /* //Mouse behaviour has really weird bugs with this in a blank project (without Rehtinor's mouse selection tweaks)
+    //Tweaking how mouse is handled
+    Window_BlackjackChoice.prototype.hitTest = function (x, y) {
+        var cx = x - this.padding;
+        var topIndex = this.topIndex();
+        for (var i = 0; i < this.maxPageItems(); i++) {
+            var index = topIndex + i;
+            if (index < this.maxItems()) {
+                var rect = this.itemRect(index);
+                var right = rect.x + rect.width;
+                if (cx >= rect.x && cx < right) {
+                    return index;
+                }
+            }
+        }
+        return -1;
+    }
+
+    Window_BlackjackChoice.prototype.update = function () {
+        if (this.isOpenAndActive() && TouchInput.isMoved()) {
+            var _x = this.canvasToLocalX(TouchInput.x);
+            var _y = this.canvasToLocalY(TouchInput.y);
+            if (_x > 0 && _x <= this.width) {
+                if (_y > 0 && _y < this.height) {
+                    this.onTouch(false);
+                }
+            }
+        }
+        Window_HorzCommand.prototype.update.call(this);
+    }*/
+
     ////--------------------- Background window ---------------------
     function Window_BlackjackBackground() {
         this.initialize.apply(this, arguments);
@@ -1401,7 +1445,7 @@ void function ($) {
         this.createWindowLayer();
 
         this.game = Game;
-        this.game.initialize($.luck);
+        this.game.initialize($.luck, $.roundLimit);
         this.inAnimation = false;
 
         this.helpWindow = new Window_BlackjackInfo($.PADDING, 0, Graphics.boxWidth - $.PADDING * 2, Graphics.boxHeight);
@@ -1431,8 +1475,8 @@ void function ($) {
     Scene_Blackjack.prototype.setupChoices = function () {
         switch (this.game.phase) {
             case GamePhase.PICK_WAGER:
-                if ($.wagerOptions.length === 1) this.choiceWindow.setOptions([String($.wagerOptions[0]), $.terms.quit], this.game.tokens);
-                else if ($.wagerOptions.length > 1) this.choiceWindow.setOptions($.wagerOptions.map(String).concat($.terms.quit), this.game.tokens);
+                if ($.wagerOptions.length === 1) this.choiceWindow.setOptions([String($.wagerOptions[0]), $.terms.quit], this.game.isOver() ? -1 : this.game.tokens);
+                else if ($.wagerOptions.length > 1) this.choiceWindow.setOptions($.wagerOptions.map(String).concat($.terms.quit), this.game.isOver() ? -1 : this.game.tokens);
                 else console.error("MAC_Blackjack: No wager options found");
                 break;
             case GamePhase.FIRST_TURN:
@@ -1563,8 +1607,9 @@ void function ($) {
     Scene_Blackjack.prototype.getHelpText = function (optionIndex, gamePhase) {
         switch (gamePhase) {
             case GamePhase.PICK_WAGER:
+                let roundLimitText = $.roundLimit < Infinity ? $.infoTexts.roundsRemaining + this.game.getRoundsLeft() + '/' + $.roundLimit : '';
                 if (optionIndex === $.wagerOptions.length) return $.infoTexts.exit;
-                else return $.infoTexts.wager($.wagerOptions[optionIndex]);
+                else return $.infoTexts.wager($.wagerOptions[optionIndex]) + roundLimitText;
             case GamePhase.FIRST_TURN:
             case GamePhase.OTHER_TURN:
                 switch (optionIndex) {
@@ -1610,7 +1655,12 @@ void function ($) {
     let Game = {};
     $.game = Game;
 
-    Game.initialize = function (luck = 0) {
+    /**
+     * Initialises a new game.
+     * @param {Number} luck Value from -100 to 100 that determines the player's luck
+     * @param {Number} roundLimit How many rounds (at most) can the game last. Use a falsey value for no limit
+     */
+    Game.initialize = function (luck = 0, roundLimit) {
         this.luck = luck;
         this.tokens = $.arguments.tokens;
         this.wager = 0;
@@ -1620,6 +1670,7 @@ void function ($) {
         this.shuffleArray(this.deck);
         this.discard = [];
         this.phase = GamePhase.PICK_WAGER;
+        this.roundsLeft = roundLimit || Infinity;
     }
 
     Game.startRound = function (wager) {
@@ -1628,6 +1679,7 @@ void function ($) {
         this.playerHand = [this.drawCard(), this.drawCard()];
         this.dealerHand = this.makeDealerHand();
         this.phase = GamePhase.FIRST_TURN;
+        this.roundsLeft--;
     }
 
     Game.makeDealerHand = function () {
@@ -1688,6 +1740,14 @@ void function ($) {
         }
         this.handleResult(res);
         return res;
+    }
+
+    Game.getRoundsLeft = function () {
+        return this.roundsLeft;
+    }
+
+    Game.isOver = function () {
+        return this.roundsLeft <= 0;
     }
 
     //Checks if adding card1 to a given hand is better than adding card2 ("better" meaning simply that hand value would be larger, without going bust)

@@ -991,6 +991,10 @@ function Scene_InputDialog() {
 
   Scene_InputDialog.prototype.okResult = function () {
     var text = this._textBox.getText() || '';
+    if ($gs[g.switches.DISABLE_EMPTY_INPUT] && text === '') {
+      if (!AudioManager.isPlaying($dataSystem.sounds[3])) SoundManager.playBuzzer();
+      return;
+    }
     if (text.match(/^([\d]+)$/g)) text = Number(RegExp.$1);
     $gameVariables.setValue(RS.InputDialog.Params.variableID, String(text)); //Change: coerced output to string
     if (SceneManager._stack.length > 0) {
@@ -1001,12 +1005,16 @@ function Scene_InputDialog() {
   };
 
   Scene_InputDialog.prototype.cancelResult = function () {
+    if ($gs[g.switches.DISABLE_EMPTY_INPUT]) {
+      if (!AudioManager.isPlaying($dataSystem.sounds[3])) SoundManager.playBuzzer();
+      return;
+    }
     $gameVariables.setValue(RS.InputDialog.Params.variableID, String("")); //Change: made sure to create some output
     if (SceneManager._stack.length > 0) {
       TouchInput.clear();
       Input.clear();
       this.popScene();
-    };
+    }
   };
 
   //============================================================================

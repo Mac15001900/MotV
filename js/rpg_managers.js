@@ -371,7 +371,7 @@ DataManager.saveGameWithoutRescue = function (savefileId, data) {
     else {
         var json = JsonEx.stringify(this.makeSaveContents());
         if (json.length >= 200000) {
-            console.warn('Save data too big! Size: ' + json.length);
+            if (MAC_DEBUG) console.warn('Save data too big! Size: ' + json.length); //Change: Disabled this warning outside of debug mode
         }
         StorageManager.save(savefileId, json);
     }

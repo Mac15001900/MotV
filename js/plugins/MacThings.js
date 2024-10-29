@@ -28,7 +28,7 @@ try {
     throw new Error("The JavaScript version is too old.");
 }
 
-let MAC_DEBUG = true;
+let MAC_DEBUG = false;
 const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
@@ -94,6 +94,7 @@ g.switches = {
     IMPORTING_GAME: 23,
     CLIPBOARD_SUCCESSFUL: 24,
     MOLECULE_INPUT: 28,
+    DISABLE_EMPTY_INPUT: 29,
     MAP_INTERNAL_31: 1,
     MAP_INTERNAL_32: 2,
     MAP_INTERNAL_33: 3,
@@ -274,11 +275,12 @@ initialiseGData = function () {
 /**
  * Checks whether a key entered by the player is correct. Stores the resulting guess in g.data.lastSolved if correct
  * @param {String} input Player input
- * @returns 0 if the format is invalid, 1 if the key is incorrect, 2 if the key is correct but was already found before, 3 if the key is correct and new
+ * @returns -1 if nothing was entered, 0 if the format is invalid, 1 if the key is incorrect, 2 if the key is correct but was already found before, 3 if the key is correct and new
  */
 g.checkKey = function (input) {
-    if (input === 0) return 0;
+    if (input === 0) return -1;
     console.assert(typeof input === 'string' || input instanceof String, input);
+    if (input.length === 0) return -1;
     if (MAC_DEBUG && input === 'k') {
         g.data.keysTotal += 1;
         $gv[g.vars.KEYS_COLLECTED] = g.data.keysTotal;
@@ -610,7 +612,7 @@ autosave = function (message, synchronous = false, index = 1) {
     } else {
         console.warn("Saving failed");
         scheduleAutosave(false);
-        g.topRightToast.enqueueToast(s.autosavingFailed, 120);
+        g.topRightToast?.enqueueToast(s.autosavingFailed, 120);
     }
     //g.topRightToast.skipToast(); //Re-enable this line if bringing back "Autosaving..." toast
 }
@@ -618,7 +620,6 @@ autosave = function (message, synchronous = false, index = 1) {
 //Will attempt to autosave on window close.
 window.onunload = () => {
     if (!g.getInterpreter().isRunning()) {
-        g.data.test = "On unload!";
         autosaveAttempt(true);
     }
 };
@@ -1285,8 +1286,14 @@ Scene_Title.prototype.start = function () {
 
 };
 
+//Adding a way to check if a sound is playing
+AudioManager.isPlaying = function (soundName) {
+    let name = soundName.name ?? soundName;
+    return this._staticBuffers.some(s => s && s._reservedSeName === name && s.isPlaying());
+};
+
 //Mouse highlightning options on hover, by Rehtinor
-(function () {
+void (function () {
 
     TouchInput._onMouseMove = function (event) { //Removed the "this._mousePressed" check, just doing this every time
         var x = Graphics.pageToCanvasX(event.pageX);
@@ -1352,7 +1359,7 @@ Window_MenuCommand.prototype.makeCommandList = function () {
 Scene_Menu.prototype.commandTutorial = function () {
     $gameTemp.reserveCommonEvent(g.lang === 'pl' ? 16 : 21);
     SceneManager.pop();
-}
+};
 
 
 void ((alias) => {
@@ -1939,6 +1946,11 @@ g.resizeTo = function (width = 1920, height = 1080) {
     window.resizeBy(dw, dh);
 }
 
+g.command = function (text) {
+    let words = text.split(" ");
+    g.getInterpreter().pluginCommand(words[0], words.slice(1));
+}
+
 /**
  * Synchronously create "typoEn" and "typoPl" objects from Typo.js, for experimenting with the library's functions
  */
@@ -2166,8 +2178,3 @@ void ((alias) => {
     }
 })(Scene_Load.prototype.onLoadSuccess);
 */
-
-
-
-
-

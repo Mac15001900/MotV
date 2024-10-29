@@ -1,15 +1,15 @@
 [
 null,
 {"id":1,"expanded":true,"name":"MAP001","order":1,"parentId":0,"scrollX":498,"scrollY":636.5},
-{"id":2,"expanded":false,"name":"Underbedroom","order":3,"parentId":3,"scrollX":828.3636363636364,"scrollY":466.1818181818182},
-{"id":3,"expanded":true,"name":"Level1-2","order":2,"parentId":1,"scrollX":3934,"scrollY":1478},
+{"id":2,"expanded":false,"name":"Underbedroom","order":3,"parentId":3,"scrollX":498,"scrollY":636.5},
+{"id":3,"expanded":true,"name":"Level1-2","order":2,"parentId":1,"scrollX":3146,"scrollY":2030.5},
 {"id":4,"expanded":false,"name":"Entry","order":6,"parentId":1,"scrollX":1131,"scrollY":943},
-{"id":5,"expanded":true,"name":"Testmap","order":7,"parentId":0,"scrollX":754,"scrollY":422},
+{"id":5,"expanded":true,"name":"Testmap","order":7,"parentId":0,"scrollX":1238,"scrollY":628.5},
 {"id":6,"expanded":false,"name":"Life room","order":4,"parentId":3,"scrollX":754,"scrollY":484.6666666666667},
 {"id":7,"expanded":false,"name":"Tester map","order":8,"parentId":5,"scrollX":759.3333333333334,"scrollY":427.3333333333333},
 {"id":8,"expanded":true,"name":"Entry copy","order":9,"parentId":5,"scrollX":857.3333333333334,"scrollY":800.6666666666666},
 {"id":9,"expanded":false,"name":"Life room 2","order":5,"parentId":6,"scrollX":828.3636363636364,"scrollY":466.1818181818182},
 {"id":10,"expanded":true,"name":"Patrol stesstest","order":10,"parentId":5,"scrollX":1938.8571428571427,"scrollY":1565.142857142857},
 {"id":11,"expanded":true,"name":"Large map template","order":11,"parentId":10,"scrollX":2262,"scrollY":2366},
-{"id":12,"expanded":true,"name":"E&A testing","order":12,"parentId":5,"scrollX":1233.8181818181818,"scrollY":690.5454545454546}
+{"id":12,"expanded":true,"name":"E&A testing","order":12,"parentId":5,"scrollX":490,"scrollY":628.5}
 ]

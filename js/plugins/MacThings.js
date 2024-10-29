@@ -28,7 +28,7 @@ try {
     throw new Error("The JavaScript version is too old.");
 }
 
-let MAC_DEBUG = false;
+let MAC_DEBUG = true;
 const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
@@ -546,13 +546,39 @@ g.loadTextFile = function (filePath, callback) {
     request.send();
 }
 
+g.convertBase = function (number, base) {
+    return BigInt(number).toString(base);
+}
+
+g.baseShowcaseMessage = function (base) {
+    const values = [10, 100, 92410];
+    const MAX_BASE = 20;
+    let displayValues = values.map(v => g.convertBase(v, base));
+
+    let res = "\n" + displayValues.join("\n");
+    res += "\n\n";
+    for (let i = 1; i <= MAX_BASE; i++) {
+        if (i <= base) {
+            if (g.isColorblind) res += "\\i[161]";
+            else res += "\\i[165]";
+        } else {
+            res += "\\i[160]";
+        }
+
+        if (i % 5 === 0) res += "\n"
+    }
+
+    return g.padToLength(res, 100, 'both', true);
+}
+
 //===================================== Event functions =====================================
 
 runNearbyEvent = function (inp, dx, dy) {
     let events = $gameMap._events;
     let { x, y } = events[inp.eventId()];
     let targetId = $gameMap.eventIdXy(x + dx, y + dy);
-    if (targetId === 0) throw new Error(`No event found at x:${x + dx}, y:${y + dy}.`);
+    // if (targetId === 0) throw new Error(`No event found at x:${x + dx}, y:${y + dy}.`);
+    if (targetId === 0) console.warn(`No event found at x:${x + dx}, y:${y + dy}.`);
     else {
         let targetEvent = $gameMap._events[targetId];
         inp.setupChild(targetEvent.list(), targetEvent.eventId());

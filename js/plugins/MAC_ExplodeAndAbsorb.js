@@ -1,5 +1,5 @@
 /*:
- * @plugindesc (v0.4)Adds an effect with resources that explode out and are then collected.
+ * @plugindesc (v0.6)Adds an effect with resources that explode out and are then collected.
  * @author Mac15001900, commissioned by TheAM-Dol
  * 
  * @param Templates
@@ -29,7 +29,7 @@
  * @default 10
  * 
  * @help
- * RC version (v0.4)
+ * RC version (v0.6)
  * 
  * Creates fancy effects for visually collecting resources.
  * 
@@ -42,6 +42,7 @@
  * IconExplode 56 100 0 -1 60 on Flash1 ExplodePickup true
  * 
  * Arguments in [brackets] are optional
+ * The amount can be negative (which replaces the '+' with a '-' in the counter)
  * Source and target can be either event ids, 0 for the current event or
  * -1 for the player
  * Wait time is specified in frames.
@@ -63,6 +64,9 @@
  * 
  * Example:
  * TemplateExplode Basic 1000 2 -1 90-180
+ * 
+ * To wait for all currently active effects to end, use the 
+ * "WaitForExplosions" command.
  * 
  * ------------------------ Using variables and switches ------------------------
  *
@@ -279,7 +283,7 @@ void function ($) {
                     window.test = new ResourceEmitter(...args.map(numberValue));
                     addBelowWindowLayer(test);
                     break;
-                case 'iconexplode': {//[icon index-value], value (particle number), source, target, absorption wait time, number ticker on/off, Explode SFX, Absorb SFX, physics mode, direction
+                case 'iconexplode': {//icon id, value (particle number), source, target, absorption wait time, number ticker on/off, Explode SFX, Absorb SFX, physics mode, direction
                     let config = JsonEx.makeDeepCopy(defaultConfig);
                     config.timing[AnimationStage.IDLE] = numberValue(args[4]) || 60;
                     config.useCounter = booleanValue(args[5]) || false;
@@ -388,7 +392,7 @@ void function ($) {
     void ((alias) => {
         Game_Interpreter.prototype.updateWaitMode = function () {
             if (this._waitMode === 'explodeEffect') return $.effects.length > 0;
-            else alias.call(this);
+            else return alias.call(this);
         }
     })(Game_Interpreter.prototype.updateWaitMode);
 
@@ -504,14 +508,6 @@ void function ($) {
         }
     }
 
-
-    void ((alias) => {
-        Scene_Map.prototype.stop = function () {
-            if (!SceneManager.isNextScene(Scene_Menu)) console.log("Leaving map"); //this.children.forEach(c => { if (c instanceof ResourceEmitter) c.terminate(); });
-            alias.call(this);
-        }
-    })(Scene_Map.prototype.stop);
-
     void ((alias) => {
         Scene_Map.prototype.onMapLoaded = function () {
             alias.call(this);
@@ -525,7 +521,7 @@ void function ($) {
         }
     })(Scene_Map.prototype.onMapLoaded);
 
-    //These might be overkill, but should ensure that the container definitely get cleanup up, regardless of how we leave the map scene
+    //These might be overkill, but should ensure that the container definitely get cleaned up, regardless of how we leave the map scene
     void ((alias) => {
         Scene_Gameover.prototype.start = function () {
             alias.call(this);
@@ -1225,7 +1221,7 @@ void function ($) {
     * @param {String|Number} string A number or variable indentifier (in the form v42 or v0042)
     * @returns The string converted to a number
     */
-    numberValue = function (string) {
+    function numberValue(string) {
         if (!string) return 0;
         if (string[0] === 'v') return $gameVariables.value(Number(string.replace(/^v0*/, '')));
         else return Number(string);
@@ -1236,7 +1232,7 @@ void function ($) {
     * @param {String|Boolean} string A boolean or switch indentifier (in the form s42 or s0042)
     * @returns The string converted to a boolean
     */
-    booleanValue = function (string) {
+    function booleanValue(string) {
         if (typeof string === "boolean") return string;
         if (!string || string.length === 0) return false;
         if (string[0] === 's') return $gameSwitches.value(Number(string.replace(/^s0*/, '')));
@@ -1248,7 +1244,7 @@ void function ($) {
     * @param {String} string A list of comma-separated numbers. Whitespace, as well as "[" and "]" characters are ignored.
     * @returns The string converted to a list of numbers
     */
-    numberListValue = function (string) {
+    function numberListValue(string) {
         if (!string) return [];
         return string.replace(/[\[\]\s\n]/g, "").split(",").filter(s => s.length > 0).map(numberValue);
     }
@@ -1258,13 +1254,13 @@ void function ($) {
     * @param {String} string Two numeric values, seprated by '-'. If the argument is not a string, it's returned unchanged.
     * @returns The string converted to a list of numbers
     */
-    rangeValue = function (string) {
+    function rangeValue(string) {
         if (!string) return undefined;
         if (typeof string !== "string") return string;
         return string.split("-").map(numberValue);
     }
 
-    idValue = function (inp, string) {
+    function idValue(inp, string) {
         let id = numberValue(string);
         if (id === 0) return inp.eventId();
         else return id;

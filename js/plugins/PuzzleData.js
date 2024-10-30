@@ -145,7 +145,7 @@ const $dataPuzzles = {
             solution: "overcezared",
         }, {
             name: "obliczacz", //File: interaktywne
-            solution: "exponenatialisness",
+            solution: "exponentialisness",
         }, {
             name: "kalkulacja",
             solution: "sequenceness",
@@ -162,7 +162,7 @@ const $dataPuzzles = {
                 if (guess === "🚀🥝🌈") return "Well, I did have to convert that X emoji earlier\\..\\..\\..\nI guess I need to somehow do the same for the others?"
             },
             success: {
-                string: { string: 'Well, emojis are certainly a one of the things I really did\nnot expect to see here.', id: 1 },
+                string: 'Well, emojis are certainly a one of the things I really did\nnot expect to see here.',
                 id: 1,
             },
         },

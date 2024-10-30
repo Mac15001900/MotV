@@ -229,7 +229,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
      * @param {Game_Interpreter} [inp] Interpreter to use. If not specified, will use the map's main interpreter.
      * @param {Number} [page] The page of the target event to run. Uses indexes as shown in the editor, i.e. starting at 1. Will run the currently active page if not specified.
      * @param {Boolean} [supressErrors] If true, invalid target errors will be suppressed and nothing will happen if the target event doesn't exist. If false or omitted, those errors will follow plugin settings.
-     * @returns {Boolean} True iff the event was successfully run.
+     * @returns {Boolean} True iff the event was successfully ran.
      */
     $.run = function (arg, inp, pageId, supressErrors) {
         inp ||= $.getInterpreter(); //If not specified we'll just grab the main intepreter

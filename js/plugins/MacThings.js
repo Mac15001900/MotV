@@ -550,25 +550,28 @@ g.convertBase = function (number, base) {
     return BigInt(number).toString(base);
 }
 
-g.baseShowcaseMessage = function (base) {
+g.baseShowcaseMessage = function (base, replaceIcons = false) {
     const values = [10, 100, 92410];
     const MAX_BASE = 20;
-    let displayValues = values.map(v => g.convertBase(v, base));
+    const WINDOW_WIDTH = 21; //Width of the window, in number of spaces
+    const ICON_OFFSET = 4; //How many space to add before the icons
+    const ICON_FILLER = Array(ICON_OFFSET).fill(' ').join('');
+
+    const ICON_ON = replaceIcons ? '◉' : (g.isColorblind ? "\\i[161]" : "\\i[165]");
+    const ICON_OFF = replaceIcons ? '◎' : "\\i[160]";
+
+    let displayValues = values.map(v => g.convertBase(v, base).toUpperCase());
 
     let res = "\n" + displayValues.join("\n");
-    res += "\n\n";
+    res += "\n\n" + ICON_FILLER;
     for (let i = 1; i <= MAX_BASE; i++) {
-        if (i <= base) {
-            if (g.isColorblind) res += "\\i[161]";
-            else res += "\\i[165]";
-        } else {
-            res += "\\i[160]";
-        }
+        if (i <= base) res += ICON_ON;
+        else res += ICON_OFF;
 
-        if (i % 5 === 0) res += "\n"
+        if (i % 5 === 0) res += "\n" + ICON_FILLER;
     }
 
-    return g.padToLength(res, 100, 'both', true);
+    return g.padToLength(res, WINDOW_WIDTH, 'both', true);
 }
 
 //===================================== Event functions =====================================

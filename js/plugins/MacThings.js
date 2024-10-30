@@ -28,7 +28,7 @@ try {
     throw new Error("The JavaScript version is too old.");
 }
 
-let MAC_DEBUG = true;
+let MAC_DEBUG = false;
 const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
@@ -124,7 +124,6 @@ Scene_Map.prototype.onMapLoaded = function () {
                 todosFound = true;
             }
         });
-        if (!todosFound) console.log("No TODO events on this map");
     }
     //Handle dynamic collisions 
     if ($dataMap.meta && $dataMap.meta.dynamicCollisions) {
@@ -501,7 +500,7 @@ g.encrypterPuzzle = function (text) {
 g.calculatorPuzzle = function (text) { //Factorisation for testing: https://www.alpertron.com.ar/ECM.HTM
     text = text + "";
     if (text.length > 50) return s.maximumLengthIs + ' 50 ' + s.characters;
-    if (Array.from(text).find(c => !s.encryptList.includes(c))) return s.allowedCharactersAre + ": " + s.encryptList;
+    if (Array.from(text).find(c => !s.encryptList.includes(c))) return s.allowedCharactersAre + ": " + s.encryptList + " ";
 
     let values = text.split("").map(c => s.encryptList.indexOf(c) + 1);
     let sum = 1n;
@@ -1344,6 +1343,29 @@ void (function () {
         Window_Selectable_update.call(this);
     }
 })();
+
+//Making holding the mouse cause repeated inputs
+Window_Selectable.prototype.processTouch = function () {
+    if (this.isOpenAndActive()) {
+        if (TouchInput.isRepeated() && this.isTouchedInsideFrame()) { //Changes from isTriggered to isRepeated
+            this._touching = true;
+            this.onTouch(true);
+        } else if (TouchInput.isCancelled()) {
+            if (this.isCancelEnabled()) {
+                this.processCancel();
+            }
+        }
+        if (this._touching) {
+            if (TouchInput.isPressed()) {
+                this.onTouch(false);
+            } else {
+                this._touching = false;
+            }
+        }
+    } else {
+        this._touching = false;
+    }
+};
 
 //Custom mouse cursor graphic
 document.body.style.cursor = `url("img/pictures/cursorBlue.png") 4 5, auto`;

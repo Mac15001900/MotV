@@ -1,0 +1,6 @@
+Zoom plugin commands / scirpt calls:
+
+SRD: g.command("IconExplode 81 100 -1 -1 60 on Flash1 ExplodePickup on 10-20")
+Galv: Galv.ZOOM.center(3, 120);
+EliZoom: g.command("ZoomChar -1 3 600")
+CTB Zoom: g.command("zoom start 3")

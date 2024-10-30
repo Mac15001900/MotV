@@ -157,3 +157,12 @@ c * [ * (x * [e + y) * (b + ] * xc) * ([xx * cqny * cqny * cqny * yba / yy + cac
 
 
 Sidney Lumet, 1957
+
+Additional clue: an interactive thingy showing off how different bases work
+
+92410 - a number that has a lot of letters
+To find it:
+test = value => [...Array(20).keys()].map(k=> g.convertBase(value,k+10))
+countLetters = l => l.map(n=> [...n].filter(c=>!"0123456789".includes(c)).length).reduce((a,b)=>a+b,0)
+Math.max(...[...Array(100000).keys()].map(test).map(countLetters))
+[...Array(100000).keys()].map(test).map(countLetters).indexOf(<The result from previous line>)

@@ -93,6 +93,7 @@ Cursor-FS - CC0 by Loyalty_Freak_Music
 Coffe brewing - CC0 by oggers
 Metal click - CC0 by SinusPi
 Chest open and close - CC0 by Nox_Sound
+Gentle coin sound - https://freesound.org/people/DrMinky/sounds/166184/
 
 Loading animation (CC0): loading.io
 

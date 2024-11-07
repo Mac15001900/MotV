@@ -45,7 +45,7 @@ let $gs;
 let $ss;
 let $es;
 
-const GAME_VERSION = "Alpha 1.1.0c";
+const GAME_VERSION = "Alpha 1.1.0d";
 const AUTOSAVE_DELAY = 300 * 1000; //How often to autosave (in miliseconds)
 const AUTOSAVE_RETRY = 5 * 1000; //If autosave fails, wait this long to try again
 const ROOM_UNCLOKS = [1, 2, 3, 5, 7, 10, 13, 16, 19, 22]; //How many keys are needed for each unlock stage
@@ -348,7 +348,7 @@ g.processNewKey = function (inp) {
 
 /**
  * Generates a message describing the current amount of keys found and keys needed for the next area.
- */
+*/
 g.keyStatusMessage = function () {
     let keys = $gv[g.vars.KEYS_COLLECTED];
     let stage = $gv[g.vars.GAME_STAGE];
@@ -367,8 +367,8 @@ g.keyStatusMessage = function () {
 /*Key reactions: 
 If failed: reaction to specific puzzle if present, otherwise random failure reaction
 If succeeded: 
-    If progression reaction exists: reaction to specific puzzle if present, then progression reaction.
-    Otheriwse: reaction to specific puzzle if present, otherwise random success reaction.
+If progression reaction exists: reaction to specific puzzle if present, then progression reaction.
+Otheriwse: reaction to specific puzzle if present, otherwise random success reaction.
 */
 
 /**
@@ -377,26 +377,31 @@ If succeeded:
  * If progress reaction exists: reaction to specific puzzle if present, then progress reaction.
  * Otheriwse: reaction to specific puzzle if present, if not then random success reaction.
  * @param {Game_Interpreter} inp Current game interpreter
- */
+*/
 g.correctKeyReactions = function (inp) {
     let currentKeys = g.data.keysTotal;
     let newStage = ROOM_UNCLOKS.indexOf(currentKeys) + 1;
     let puzzle = $dataPuzzles.get(g.data.lastSolved);
+    let remaining = $dataPuzzles.getRemaining();
     $gv[21] = !!puzzle.success; //Set the switch that indicates whether there was a special reaction to this puzzle
 
-    if (g.progressReactionExists(currentKeys, newStage > 0 ? newStage : null)) {
-        //We need to both show a message, and after it's done run an event. So we'll make them event commands
-        let commandList = [];
-        if (puzzle.success) {
-            $gv[12] = puzzle.success;
-            commandList.push({ "code": 355, "indent": 0, "parameters": ["g.showMessages(this, $gv[12], 0);"] });
-        }
-        commandList.push({ "code": 355, "indent": 0, "parameters": ["MAC_RunNearbyEvent.run(g.events.PROGRESS_CUTSCENES(), this);"] });
-        inp.setupChild(commandList, 0);
-    } else {
-        if (puzzle.success) g.showMessages(inp, puzzle.success, 0);
-        else g.showMessages(inp, g.pickRandom(s.randomSuccessMessages(currentKeys)), Math.random() < 0.66 ? 0 : 1);
+    let commandList = [];
+    if (puzzle.success) {
+        $gv[12] = puzzle.success;
+        commandList.push({ "code": 355, "indent": 0, "parameters": ["g.showMessages(this, $gv[12], 0);"] });
     }
+    if (g.progressReactionExists(currentKeys, newStage > 0 ? newStage : null)) {
+        commandList.push({ "code": 355, "indent": 0, "parameters": ["MAC_RunNearbyEvent.run(g.events.PROGRESS_CUTSCENES(), this);"] });
+    }
+    if (remaining.length === 1 && remaining[0].lastRemaining) {
+        $gv[13] = remaining[0].lastRemaining;
+        commandList.push({ "code": 355, "indent": 0, "parameters": [`g.showMessages(this, $gv[13], 0);`] });
+    }
+    if (commandList.length === 0) {
+        commandList.push({ "code": 355, "indent": 0, "parameters": ["g.showMessages(this, g.pickRandom(s.randomSuccessMessages(currentKeys)), Math.random() < 0.66 ? 0 : 1);"] });
+    }
+
+    inp.setupChild(commandList, 0);
 }
 
 /**

@@ -394,4 +394,10 @@ const $dataPuzzles = {
     getAmount: function () {
         return $dataPuzzles[g.lang].length;
     },
+    getRemaining: function () {
+        return $dataPuzzles[g.lang].filter(p => !g.data.solved[p.name]);
+    },
+    getRemainingAmount: function () {
+        return this.getRemaining().length;
+    }
 }

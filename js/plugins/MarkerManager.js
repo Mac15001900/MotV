@@ -93,7 +93,7 @@ class MarkerManager extends Window_Base {
                 this.unhiding = false;
             }
         }
-        if (g.getInterpreter().isRunning() && !g.getInterpreter().event().event().meta?.MarkerNoHide && this.contentsOpacity > 0 && !this.hiding) {
+        if (g.getInterpreter().isRunning() && !g.getInterpreter().event()?.event()?.meta?.MarkerNoHide && this.contentsOpacity > 0 && !this.hiding) {
             this.hiding = true;
             this.unhiding = false;
         }

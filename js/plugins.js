@@ -39,7 +39,7 @@ var $plugins =
 {"name":"VideoWindow","status":true,"description":"Adds a VideoWindow for displaying non-fullscreen videos nicely","parameters":{}},
 {"name":"MarkerManager","status":true,"description":"","parameters":{}},
 {"name":"LifeRoom","status":true,"description":"","parameters":{}},
-{"name":"MAC_RunNearbyEvent","status":true,"description":"v1.3.3 Allows events to run other events in various ways.","parameters":{"With an invalid target":"Show a warning in console","Max chain length":"500","Events with trigger \"none\"":"Disabled","Lock ran events":"false","Enable region events":"true","Region tag name":"Region","Enable terrain events":"true","Terrain tag name":"Terrain","Mouse movement passthrough":"true","Force passthrough tag":"NoStop"}},
+{"name":"MAC_RunNearbyEvent","status":true,"description":"v1.3.4 Allows events to run other events in various ways.","parameters":{"With an invalid target":"Show a warning in console","Max chain length":"500","Events with trigger \"none\"":"Disabled","Lock ran events":"true","Enable region events":"true","Region tag name":"Region","Enable terrain events":"true","Terrain tag name":"Terrain","Mouse movement passthrough":"true","Force passthrough tag":"NoStop"}},
 {"name":"PuzzleData","status":true,"description":"Manages puzzle-related data.","parameters":{}},
 {"name":"ShakeScreen","status":true,"description":"Simply shakes the screen","parameters":{}},
 {"name":"StringExtractor","status":false,"description":"Extracts all strings into a file","parameters":{}},

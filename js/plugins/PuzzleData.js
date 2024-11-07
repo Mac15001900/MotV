@@ -204,7 +204,7 @@ const $dataPuzzles = {
             name: "grobowiec_2",
             solution: "activized ballistocardiogram",
             success: {
-                string: "And apparently that \\fiis\\fi a real word. I really didn't\nexpect it to be.",
+                string: "And apparently that \\fiis\\fi a real word. I really didn't expect it \nto be.",
                 id: 1,
             }
 

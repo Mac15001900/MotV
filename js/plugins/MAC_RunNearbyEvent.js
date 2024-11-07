@@ -1,7 +1,7 @@
 /*:
  * @author Mac15001900
- * @plugindesc v1.3.3 Allows events to run other events in various ways.
- * 
+ * @plugindesc v1.3.4 Allows events to run other events in various ways.
+ *
  * @param With an invalid target
  * @desc What should the plugin do when trying to run a non-existent event or page?
  * @type select
@@ -9,12 +9,12 @@
  * @option Show a warning in console
  * @option Throw an error
  * @default Show a warning in console
- * 
+ *
  * @param Max chain length
  * @desc The maximum allowed length for a chain of events calling each other.
  * @type number
  * @default 1000
- * 
+ *
  * @param Events with trigger "none"
  * @desc Removes triggers from some events so that the player can't manually activate them at all, for use with this plugin.
  * @type select
@@ -24,27 +24,27 @@
  * @option When "Through" is on, trigger is "action button" and priority is above or below characters
  * @value Through
  * @default Notetag
- * 
+ *
  * @param Lock ran events
  * @desc Should events ran with this plugin be locked (i.e. stop moving and turn towards the player)?
  * @type boolean
  * @default false
  * @on Yes
  * @off No
- * 
+ *
  * @param Enable region events
  * @desc Allows regions to act like events, running an event with <Region:id> when interacted with.
  * @type boolean
  * @default true
  * @on Enable
  * @off Disable
- * 
+ *
  * @param Region tag name
  * @desc The name of the notetag used to mark the event that's ran after interacting with a region
  * @type text
  * @default Region
  * @parent Enable region events
- * 
+ *
  * @param Enable terrain events
  * @desc Allows terrain tags to act like events, running an event with <Terrain:id> when interacted with.
  * @type boolean
@@ -57,140 +57,140 @@
  * @type text
  * @default Terrain
  * @parent Enable terrain events
-* 
+*
  * @param Mouse movement passthrough
  * @desc Stops mouse movement from being interrupted by touch events that run inactive events.
  * @type boolean
  * @default true
  * @on Enable
  * @off Disable
- * 
+ *
  * @param Force passthrough tag
  * @desc The name of the notetag used to force mouse movement passthrough for an event.
  * @type text
  * @default NoStop
  * @parent Mouse movement passthrough
- * 
- * 
+ *
+ *
  * @help
- * This plugin provides a command "RunEvent [id|name|tag|offset]", which allows 
- * you to run another event, specified either by an offset from the current 
- * event, a target event id, name or notetag. 
+ * This plugin provides a command "RunEvent [id|name|tag|offset]", which allows
+ * you to run another event, specified either by an offset from the current
+ * event, a target event id, name or notetag.
  * It also allows you to use regions to create very large events.
- * 
+ *
  * ------------------------- RunEvent: specifying by ID -------------------------
- * 
- * You can specify the target event by ID. It's useful for one-off situations, 
- * when the target event is far away or doesn't have a predictable position. 
+ *
+ * You can specify the target event by ID. It's useful for one-off situations,
+ * when the target event is far away or doesn't have a predictable position.
  * You can use a number, or use a variable by adding the letter v before its id.
- * 
+ *
  * Examples:
  * RunEvent 42
  * RunEvent v10
- * 
+ *
 * --------------------- RunEvent: specifying by name or tag ---------------------
 
  * You can also specify the target event by providing its name or a notetag.
  * This works similarly to specifying the ID, but is a bit more readable.
  * The first event with the given name or the given notetag present will be run.
- * 
+ *
  * To use a name, enclose it in [square brackets].
  * To use a notetag, enclose it in <angle brackets>, same as inside the event.
- * 
+ *
  * Examples:
  * RunEvent [Steve]
  * RunEvent <Gate>
  * RunEvent <Very special and rather long tag:hi!>
- * 
+ *
  * ----------------------- RunEvent: specifying by offset -----------------------
- * 
- * You can specify the relation in space of the target event relative to the 
+ *
+ * You can specify the relation in space of the target event relative to the
  * current event.
- * This is useful for creating reusable events that always run an event 
+ * This is useful for creating reusable events that always run an event
  * next to them and can be copy-pasted anywhere.
  * For example: "up" will run the event directly above the current event.
- * 
+ *
  * The allowed words are:
  * up, down, left, right - specify a direction
  * north, south, east, west - alternatives to the above
  * facing - the direction the player is current facing
  * this - runs the same event that used the command
- * 
+ *
  * All of those can be freeely combined using dashes '-'
  *
  * Examples:
  * RunEvent left
  * RunEvent left-left-up
  * RunEvent this
- * RunEvent left-north-up-right-facing-down-south 
+ * RunEvent left-north-up-right-facing-down-south
  * (Ok, I'm not sure why you'd use that last one, but you can)
- * 
+ *
  * Note: this uses the current positions of both events, which might be different
  * than in the editor if they move.
- * 
+ *
  * ---------------------- RunEvent: running a specific page ---------------------
- * 
+ *
  * Additionally, you can specify the page of the event you'd like to run, e.g.
  * "RunEvent left 3" will run the 3rd page of the event on the left, ignoring
  * any conditions that page has. This can also be specified with a variable, e.g.
  * "RunEvent left v42".
  * If you don't specify a page the currently active one will be used.
- * 
+ *
  * --------------------------- RunEvent: script call ----------------------------
- * 
+ *
  * The same functionality is also provided with a script call:
  * MAC_RunNearbyEvent.run(eventId|offset string, interpreter, [pageId])
- * 
- * Examples: 
+ *
+ * Examples:
  * MAC_RunNearbyEvent.run(42, this)
  * MAC_RunNearbyEvent.run("left-left-up", this, 3)
- * 
+ *
  * ------------------------------- Region events --------------------------------
- * 
- * You can also create very large events by using regions. Simply add a 
- * <Region:id> notetag to an event (e.g. <Region:42>), and it will run whenever 
- * the player interacts with that region. Priority and trigger settings are 
- * preserved, so you can have regions that do something on player touch, or when 
+ *
+ * You can also create very large events by using regions. Simply add a
+ * <Region:id> notetag to an event (e.g. <Region:42>), and it will run whenever
+ * the player interacts with that region. Priority and trigger settings are
+ * preserved, so you can have regions that do something on player touch, or when
  * interacted with etc. They will not block the player from moving, however.
- * 
- * Regular events take priority over region events; if one exists, no region event
- * will run.
- * 
- * Also note that you can't interact with "Same as characters" events when standing
- * on their tile. This doesn't usually come up in RM, but here it often does.
- * This also means that "same as player" events with a "player touch" trigger will
- * only trigger on touch if they're on top of impassable tiles - otheriwse the
- * player will just walk onto them without triggering them.
- * 
+ *
+ * Regular events take priority over region events; if one exists, no region
+ * event will run.
+ *
+ * Also note that you can't interact with "Same as characters" events when
+ * standing on their tile. This doesn't usually come up in RM, but here it often
+ * does. This also means that "same as player" events with a "player touch"
+ * trigger will only trigger on touch if they're on top of impassable tiles -
+ * - otheriwse the player will just walk onto them without triggering them.
+ *
  * ------------------------------- Terrain events -------------------------------
- * 
+ *
  * Similarly to region events, you can also create events that trigger when the
  * player interacts with a tile of a given terrain tag, using a <Terrain:id>
  * notetag.
  *
- * If there are any, region events will priority over terrain events.
- * 
+ * If there are any, region events will take priority over terrain events.
+ *
  * ------------------------- Mouse movement passthrough -------------------------
- * 
+ *
  * When using mouse movement, by default the player will stop when they run over
  * any "Player Touch" event that's not empty (has some commands). You probably
  * don't want that to happen if that event only runs another event, which *is*
  * empty. This option will make sure the player keeps moving in this situation.
- * 
- * If an event does something else as well (like setting a switch), but you still
- * don't want it to stop the player, you can add a <NoStop> notetag.
- *   
+ *
+ * If an event does something else as well (like setting a switch), but you
+ * still don't want it to stop the player, you can add a <NoStop> notetag.
+ *  
  * --------------------------------- Licence ------------------------------------
- * 
- * This plugin is available under the MIT Licence. You're free to use it in any 
- * games, commercial or not, or use the code in your own plugins. Credit is 
+ *
+ * This plugin is available under the MIT Licence. You're free to use it in any
+ * games, commercial or not, or use the code in your own plugins. Credit is
  * appreciated but not required.
- * 
+ *
 */
 
 
 var Imported = Imported || {}
-Imported.MAC_RunNearbyEvent = "1.3.3";
+Imported.MAC_RunNearbyEvent = "1.3.4";
 window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/other plugins
 
 (function ($) {
@@ -214,7 +214,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
         }
     };
     /**
-     * 
+     *
      * @returns The current main (i.e. non-parallel) interpreter
      */
     $.getInterpreter = function () {
@@ -224,7 +224,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
     }
     /**
      * Runs a target event, specified either by an offset from current event or a target event id.
-     * @param {String|Number} arg Direction instructions, composed of dash-separated words, e.g. "left-left-up". Alternatively, the ID of the target event, 
+     * @param {String|Number} arg Direction instructions, composed of dash-separated words, e.g. "left-left-up". Alternatively, the ID of the target event,
      * it's name enclosed in [square brackets], or the notetag enclosed in <angle brackets>
      * @param {Game_Interpreter} [inp] Interpreter to use. If not specified, will use the map's main interpreter.
      * @param {Number} [page] The page of the target event to run. Uses indexes as shown in the editor, i.e. starting at 1. Will run the currently active page if not specified.
@@ -297,7 +297,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
             let commandList = page ? page.list : event.list();
             if (params["Lock ran events"] === "true") {
                 event.lock();
-                commandList = [...commandList, { "code": 355, "indent": 0, "parameters": ["this.event().unlock();"] }];
+                commandList = [...commandList, { "code": 355, "indent": 0, "parameters": ["$gameMap.event(this.eventId()).unlock();"] }];
             }
             if (inp.isRunning()) {
                 inp.setupChild(commandList, event.eventId()); //The meat of this function - starting the event
@@ -357,10 +357,10 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
     }
 
     if (params["Lock ran events"]) { //Making sure the events unlock when they end via "exit event processing"
-        //Aliasing exiting event processing 
+        //Aliasing exiting event processing
         void ((alias) => {
             Game_Interpreter.prototype.command115 = function () {
-                this.event().unlock();
+                $gameMap.event(this.eventId()).unlock();
                 return alias.call(this);
             }
         })(Game_Interpreter.prototype.command115);
@@ -407,7 +407,10 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
     }
 
     $.shouldClearDestination = function () {
-        if (!$gamePlayer.canPass($gamePlayer.x, $gamePlayer.y, $gamePlayer.direction())) return true; //If we can't keep moving, we should definitely stop
+        if ($gameTemp.isDestinationValid()) {
+            let nextDirection = $gamePlayer.findDirectionTo($gameTemp.destinationX(), $gameTemp.destinationY());
+            if (!$gamePlayer.canPass($gamePlayer.x, $gamePlayer.y, nextDirection)) return true; //If we can't keep moving, we should definitely stop
+        }
         let id = $.getInterpreter().eventId();
         let event = $gameMap.event(id);
         if (!event || !event.page()) return false;

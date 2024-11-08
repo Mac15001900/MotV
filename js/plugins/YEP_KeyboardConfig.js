@@ -827,18 +827,25 @@ Window_KeyConfig.prototype.drawItem = function (index) {
 Window_KeyConfig.prototype.drawItemRect = function (index) {
 	var rect = this.itemRect(index);
 	var color = this.getRectColor(index);
+	var key = Window_KeyConfig._refId[this.commandName(index)];
+	var action = this.configCopy[key];
+	this.drawRect(rect.x - 2, rect.y - 2, rect.width + 4, rect.height + 4, "#ffffff");
 	this.drawRect(rect.x + 1, rect.y + 1, rect.width - 2, rect.height - 2, color);
 };
 
 Window_KeyConfig.prototype.getRectColor = function (index) {
-	if (index > 167) return this.gaugeBackColor();
+	if (index > 167) return "#07086b";
 	var key = Window_KeyConfig._refId[this.commandName(index)];
 	var action = this.configCopy[key];
 	// var action = Input.keyMapper[key];
-	if (action !== undefined) {
-		return g.isColorblind ? "#cfa000" : this.textColor(Yanfly.Param.KeyConfigAssignColor); //Using a darker color in colorblind mode to make the cursor more visible
+	if (this.visualName(index).trim().length === 0) {
+		return "#00005B";
+	} else if (action !== undefined) {
+		// return g.isColorblind ? "#cfa000" : this.textColor(Yanfly.Param.KeyConfigAssignColor); //Using a darker color in colorblind mode to make the cursor more visible
+		// return g.isColorblind ? "#cfa000" : "#0A0AE6"; //Using a darker color in colorblind mode to make the cursor more visible
+		return "#0A0AE6";
 	} else {
-		return this.gaugeBackColor();
+		return "#07086b"//this.gaugeBackColor();
 	}
 };
 
@@ -872,7 +879,8 @@ Window_KeyConfig.prototype.drawItemAction = function (index) {
 	if (action === undefined) return;
 	this.resetFontSettings();
 	this.contents.fontSize -= 8;
-	var color = this.textColor(Yanfly.Param.KeyConfigActionColor);
+	// var color = this.textColor(Yanfly.Param.KeyConfigActionColor);
+	var color = this.textColor(42);
 	this.changeTextColor(color);
 	this.changePaintOpacity(true);
 	var rect = this.itemRectForText(index);
@@ -1132,7 +1140,8 @@ Window_KeyAction.prototype.drawItem = function (index) {
 	var rect = this.itemRectForText(index);
 	var align = this.itemTextAlign();
 	this.resetTextColor();
-	if (this._list[index].ext === this.keyActionName) this.changeTextColor(g.isColorblind ? "#cfa000" : this.textColor(Yanfly.Param.KeyConfigAssignColor));
+	if (this._list[index].ext === this.keyActionName) this.changeTextColor(this.textColor(42));
+	// if (this._list[index].ext === this.keyActionName) this.changeTextColor(g.isColorblind ? "#cfa000" : this.textColor(Yanfly.Param.KeyConfigAssignColor));
 	// if (this._list[index].ext === this.keyActionName) this.changeTextColor(this.textColor(g.isColorblind ? 1 : Yanfly.Param.KeyConfigAssignColor));
 	this.changePaintOpacity(this.isCommandEnabled(index));
 	this.drawText(this.commandName(index), rect.x, rect.y, rect.width, align);
@@ -1327,7 +1336,7 @@ Scene_KeyConfig.prototype.commandExit = function () {
 		ConfigManager.applyKeyConfig();
 		SoundManager.playSave();
 	} else {
-		SoundManager.playEquip();
+		// SoundManager.playEquip();
 	}
 	this.popScene();
 };

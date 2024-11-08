@@ -338,6 +338,7 @@ g.processNewKey = function (inp) {
         message += s.remainingToNextArea(ROOM_UNCLOKS[$gv[g.vars.GAME_STAGE]] - currentKeys);
     } else if (currentKeys === $dataPuzzles.getAmount()) {
         AudioManager.playMe({ name: "Victory1", volume: 100, pitch: 100 });
+        AudioManager.playBgm({ name: "Credits", volume: 100, pitch: 100 })
         message += s.tempVictory;
         Galv.CRED.start('Credits'); //TODO Only start credits after the message?
     } else {

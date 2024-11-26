@@ -155,11 +155,11 @@ class MarkerManager extends Window_Base {
     enable(key) {
         if (!this.ready) return;
         this.enabled = true;
-        this.unhiding = true;
         this.hiding = false;
         this.disableOnHide = false;
         this.watchedKey = key;
         this.updateEvents();
+        if (!g.getInterpreter().isRunning()) this.unhiding = true;
     }
     disable() {
         this.unhiding = false;

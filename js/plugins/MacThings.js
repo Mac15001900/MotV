@@ -1456,6 +1456,10 @@ g.buttonPressed = function (button) {
             ConfigManager.fullscreen = !ConfigManager.fullscreen; //Note: "fullscreen", not "fullScreen"
             if (g.scene() instanceof Scene_Options) $windows.get(Window_Options).refresh();
             break;
+        case "f3":
+            ConfigManager.stretchMode = !ConfigManager.stretchMode;
+            if (g.scene() instanceof Scene_Options) $windows.get(Window_Options).refresh();
+            break;
         case "fps": Graphics._switchFPSMeter(); break;
         // case "frame": g.scene().update(); break; 
         case "marker":

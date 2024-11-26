@@ -58,6 +58,7 @@ wordBank = {
             rightText: "Move Right →",
             downText: "Move Down ↓",
             fullscreenText: "Toggle fulscreen mode on/off",
+            stretchText: "Toggle screen stretch mode on/off",
             fastForwardText: "Skip through text",
             fpsText: "Toggle FPS counter on/off",
             markerText: "Highlight interactable objects",
@@ -76,6 +77,7 @@ wordBank = {
             downKey: "↓",
             fastForwardKey: "Skip",
             fullscreenKey: "⛶",
+            stretchKey: "<< >>",
             fpsKey: "FPS",
             markerKey: "▼",
 
@@ -239,6 +241,7 @@ wordBank = {
             rightText: "Idź w prawo →",
             downText: "Idź w dół ↓",
             fullscreenText: "Wł/wył. pełny ekran",
+            stretchText: "Wł/wył. dopasowanie do rozmiaru ekranu",
             fastForwardText: "Przewijanie tekstu",
             fpsText: "Licznik FPS",
             markerText: "Pokaż interaktywne obiekty",
@@ -257,6 +260,7 @@ wordBank = {
             downKey: "↓",
             fastForwardKey: ">>",
             fullscreenKey: "⛶",
+            stretchKey: "<< >>",
             fpsKey: "FPS",
             markerKey: "▼",
 

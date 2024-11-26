@@ -485,7 +485,7 @@ ConfigManager.defaultMap = {
 	27: 'escape', 32: 'ok', 37: 'left', 38: 'up', 39: 'right',
 	40: 'down', 45: undefined, 46: 'escape', 65: 'left', 68: 'right', 70: 'marker', 74: 'ok', 75: 'escape',
 	77: 'escape', 83: 'down', 87: 'up', 88: 'escape', 90: 'ok', 96: 'escape', 98: 'down',
-	100: 'left', 102: 'right', 104: 'up', 110: 'escape', 113: 'fps', 115: 'f4',
+	100: 'left', 102: 'right', 104: 'up', 110: 'escape', 113: 'fps', 114: 'f3', 115: 'f4',
 }
 
 ConfigManager.discardMap = { //Potentially still needed if we ever use YEP_ButtonCommonEvents
@@ -903,6 +903,7 @@ Window_KeyConfig.prototype.actionKey = function (action) {
 		case 'right': return s.controls.rightKey;
 		case 'down': return s.controls.downKey;
 		case 'f4': return s.controls.fullscreenKey;
+		case 'f3': return s.controls.stretchKey;
 		case 'fps': return s.controls.fpsKey;
 		case 'marker': return s.controls.markerKey;
 		case 'quit': return "Quit";
@@ -1130,6 +1131,7 @@ Window_KeyAction.prototype.makeCommandList = function () {
 	this.addCommand(s.controls.shiftText, 'ok', true, 'shift');
 	this.addCommand(s.controls.markerText, 'ok', true, 'marker');
 	this.addCommand(s.controls.fullscreenText, 'ok', true, 'f4');
+	this.addCommand(s.controls.stretchText, 'ok', true, 'f3');
 	// this.addCommand(s.controls.fastForwardText, 'ok', true, 'pagedown');
 	this.addCommand(s.controls.fpsText, 'ok', true, 'fps');
 	if (Imported.YEP_ButtonCommonEvents) this.addButtonCommonEvents();

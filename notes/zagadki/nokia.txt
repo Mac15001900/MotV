@@ -6,9 +6,20 @@ Na ekranie wyświetla się trochę cyfr:
 
 55555882229999[666665544426629999297777999933]
 
+Nowe:
+klucz[niezniszczalne]
+55 555 88 222 9999 [ 66 444 33 9999 66 444 7777 9999 222 9999 2 555 66 33 ]
+
+
 ----------------- English -----------------
 
 nexus[nokiaforever]
 n    e    x    u    s    [    n    o    k    i    a    f    o    r    e    v    e    r    ]
 66 33 99 88 7777 [ 66 666 55 444 2 333 666 777 33 888 33 777 ]
 663399887777[666665544423336667773388833777]
+
+New: nexus[indestructible]
+n  e  x  u  s      i   n  d e  s    t r   u  c   t i   b  l   e
+66 33 99 88 7777 [ 444 66 3 33 7777 8 777 88 222 8 444 22 555 33 ] 
+
+Extra clue: "Before T9"

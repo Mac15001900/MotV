@@ -96,18 +96,22 @@ const $dataPuzzles = {
         {
             name: "dalton",
             solution: "deuteranopia",
+            success: "Phew, that one was quite a journey.",
         }, {
             name: "sekwencja",
             solution: "accumulatron",
+            success: "This was certainly a welcomed break from those more complex one.",
         }, {
             name: "pierwiastki",
             solution: "periodycalness",
+            success: "I guess I should have expected something like this given \nthe theme of that room.",
         },
 
         //Bedroom
         {
             name: "liczby pierwsze",
             solution: "eulerishness",
+            success: { string: "This puzzle was nice, but the best thing about it was \ndefinitely the cool hideout hidden under the bed!", id: 1 },
         }, {
             name: "parzystość",
             solution: "now you're thinking with parity",
@@ -178,6 +182,7 @@ const $dataPuzzles = {
         }, {
             name: "gradient", //No notes file for this one. See the gimp and tiled image files
             solution: "newtonish",
+            success: ""
         }, {
             name: "nakładanie",
             solution: "First Great Unification",
@@ -194,12 +199,33 @@ const $dataPuzzles = {
         {
             name: "game_of_life",
             solution: "is this life",
+            success: [{
+                string: "Well, dear puzlle, you ask an interesting question.",
+                id: 1,
+            }, {
+                string: "We typically only defined life in the \ncontext of biology, but various virtual processes can often \nexhibit very similar properties.",
+                id: 0,
+            }, {
+                string: `But can you call them "life" because of that? That would mostly \ndepend on your exact definition of that word.`,
+                id: 0,
+            }, {
+                string: '...',
+                id: 4,
+            }, {
+                string: `I wish this Vault teleported someone else in here already. \nI'm starting to talk to puzzle solutions.`,
+                id: 1,
+            }]
         }, {
             name: "podłoga",
+            success: "I got a bit of a headache from looking at that floor so much,\nbut at least it's over now.",
             solution: "turquooise",
         }, {
             name: "grobowiec_1",
             solution: "jazz flux band cork vest whip game",
+            success: {
+                string: "I certainly didn't expect to have to deal with rebuses here.",
+                id: 1,
+            },
         }, {
             name: "grobowiec_2",
             solution: "activized ballistocardiogram",
@@ -367,18 +393,40 @@ const $dataPuzzles = {
         {
             name: "game_of_life",
             solution: "czy to życie",
+            success: [{
+                string: "Ciekawe pytanie zadajesz, zagadko.",
+                id: 1,
+            }, {
+                string: "Zazwyczaj definiujemy życie tylko w kontekście biologii, ale \nwirtualne procesy potrafią mieć z nim wiele wspólnych cech.",
+                id: 0,
+            }, {
+                string: `Czy jednak można je przez to nazwać "życiem"? No cóż, droga \nzagadko, zależy to głównie od twojej definicji życia.`,
+                id: 0,
+            }, {
+                string: '...',
+                id: 4,
+            }, {
+                string: 'Mógłby ten cały skarbiec przyteleportować tu jeszcze kogoś.\nZaczynam rozmawiać z rozwiązaniami zagadek.',
+                id: 1,
+            }]
         }, {
             name: "podłoga",
+            success: "Trochę mnie boli głowa od patrzenia się w tą podłogę, ale na \nszczęście to już za mną.",
             solution: "krynszpany",
         }, {
             name: "grobowiec_1",
             solution: "boja druk figa hart menu opis wiza",
+            success: {
+                string: "Rozwiązałam tu już dość dużo różnego rodzaju zagadek, ale nie\nspodziewałam się \firebusów\fi.",
+                id: 1,
+            },
         }, {
             name: "grobowiec_2",
             solution: "delator cukrzenia",
         }, {
             name: "mors",
             solution: "iksytonawiasy",
+            success: "Well, that was fun to spot.\nAnd I really didn't expect to learn more about Morse code of\nall things, but now I know that '-.--.' can be stand for any\ntype of bracket. The more you know.",
             lastRemaining: {
                 string: "No dobra, tylko gdzie niby jest ten jeden pozostały klucz?\nChyba musi być ukryty inaczej niż pozostałe.",
                 id: 0,

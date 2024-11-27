@@ -28,7 +28,7 @@ try {
     throw new Error("The JavaScript version is too old.");
 }
 
-let MAC_DEBUG = false;
+let MAC_DEBUG = true;
 const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;

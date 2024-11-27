@@ -183,7 +183,7 @@ const $dataPuzzles = {
             solution: "First Great Unification",
         }, {
             name: "nokia",
-            solution: "nokiaforever",
+            solution: "indestructible",
             success: {
                 string: "I really didn't expect that particular ability to ever be\nuseful again.",
                 id: 1,
@@ -356,7 +356,7 @@ const $dataPuzzles = {
             solution: "wielkaunifikacjahaseł",
         }, {
             name: "nokia",
-            solution: "nokianazawsze",
+            solution: "niezniszczalne",
             success: {
                 string: "Zdecydowanie nie spodziewałam się, że ta umiejętność jeszcze\nkiedykolwiek mi się w życiu przyda.",
                 id: 1,

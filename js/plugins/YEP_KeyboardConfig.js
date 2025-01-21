@@ -833,6 +833,7 @@ Window_KeyConfig.prototype.drawItemRect = function (index) {
 	this.drawRect(rect.x + 1, rect.y + 1, rect.width - 2, rect.height - 2, color);
 };
 
+//#F9A03F - carrot orange, might work well if we need another colour
 Window_KeyConfig.prototype.getRectColor = function (index) {
 	if (index > 167) return "#07086b";
 	var key = Window_KeyConfig._refId[this.commandName(index)];

@@ -409,7 +409,7 @@ window.MAC_RunNearbyEvent = {}; //Global object for accesibility by scripts/othe
     $.shouldClearDestination = function () {
         if ($gameTemp.isDestinationValid()) {
             let nextDirection = $gamePlayer.findDirectionTo($gameTemp.destinationX(), $gameTemp.destinationY());
-            if (!$gamePlayer.canPass($gamePlayer.x, $gamePlayer.y, nextDirection)) return true; //If we can't keep moving, we should definitely stop
+            if (!$gamePlayer.canPass($gamePlayer.x, $gamePlayer.y, nextDirection) && nextDirection === $gamePlayer.direction()) return true; //If we can't keep moving, we should definitely stop
         }
         let id = $.getInterpreter().eventId();
         let event = $gameMap.event(id);

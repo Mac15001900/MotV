@@ -90,6 +90,7 @@ const $dataPuzzles = {
         }, {
             name: "rotowanie",
             solution: "rotatious",
+            success: "You can definitely say that puzzle was indeed rather rotatius.",
         },
 
         //Laboratory
@@ -100,7 +101,7 @@ const $dataPuzzles = {
         }, {
             name: "sekwencja",
             solution: "accumulatron",
-            success: "This was certainly a welcomed break from those more complex one.",
+            success: "This was certainly a welcomed break from those more complex ones.",
         }, {
             name: "pierwiastki",
             solution: "periodycalness",
@@ -115,13 +116,15 @@ const $dataPuzzles = {
         }, {
             name: "parzystość",
             solution: "now you're thinking with parity",
+            success: "There's something rather ironic about the solution telling you \nhow to find it.",
             failure: function (guess) {
-                if (guess === "nowyou'reth") return "That appears to look like something, but the closing bracket\ndoesn't really fit properly here. There must be something I'm\nmissing...";
+                if (guess === "nowyou'reth") return "That appears to look like something, but the closing bracket\ndoesn't really fit here properly. There must be something I'm\nmissing...";
                 else if (guess === "nowthu'rety") return [{ string: "Well, that's clearly not it." }, { string: "I think I might have slightly messed up around those spaces...", id: 1 }];
             }
         }, {
             name: "sudoku",
             solution: "reverseness",
+            success: { string: "While it initially didn't appear to, I guess in the end it \\fiwas\\fi \njust a regular, simple sudoku.", id: 1 },
         }, {
             name: "framuga",
             solution: "antepenultima",
@@ -150,6 +153,7 @@ const $dataPuzzles = {
         }, {
             name: "obliczacz", //File: interaktywne
             solution: "exponentialisness",
+            success: "Well, that sure \\fiwas\\fi very exponential.",
         }, {
             name: "kalkulacja",
             solution: "sequenceness",
@@ -159,6 +163,7 @@ const $dataPuzzles = {
         }, {
             name: "kalibracja",
             solution: "interspace",
+            success: { string: "Not only did I manage to solve this one, I even did it without \nanything exploding!", id: 1 },
         }, {
             name: "komunikacja",
             solution: "rocket kiwi rainbow",
@@ -182,10 +187,11 @@ const $dataPuzzles = {
         }, {
             name: "gradient", //No notes file for this one. See the gimp and tiled image files
             solution: "newtonish",
-            success: ""
+            success: "I guess Newton was really into colours, wasn't he? Developing\n the basics of colour theory and whatnot. \nStill, of all possible adjectives to describe this puzzle, \nI don't think \"newtonish\" ranks very high.",
         }, {
             name: "nakładanie",
             solution: "First Great Unification",
+            success: "",
         }, {
             name: "nokia",
             solution: "indestructible",
@@ -306,6 +312,7 @@ const $dataPuzzles = {
         }, {
             name: "sekwencja",
             solution: "akumulatron",
+            success: "To była dość przyjemna odmiana od tych wszystkich trudniejszych \nzagadek.",
         }, {
             name: "pierwiastki",
             solution: "pierwiastekcotam",
@@ -315,6 +322,7 @@ const $dataPuzzles = {
         {
             name: "liczby pierwsze",
             solution: "eulerowsko",
+            success: { string: "Ta zagadka była przyjemna, ale jej najlepszą częścią \nzdecydowanie była ta tajna kryjówka pod łóżkiem!", id: 1 },
         }, {
             name: "parzystość",
             solution: "terazmyśliszparzystością",
@@ -325,6 +333,7 @@ const $dataPuzzles = {
         }, {
             name: "sudoku",
             solution: "zaznaczacz",
+            success: { string: "Wydawać by się mogło inaczej, ale koniec końców to też było \nzwykłe, dość proste sudoku.", id: 1 },
         }, {
             name: "framuga",
             solution: "odcyrklowywanie",
@@ -345,6 +354,7 @@ const $dataPuzzles = {
         {
             name: "zaszyftowywacz", //File: interaktywne
             solution: "zacezarowane",
+            success: { string: "No, zdecydowanie było to dość mocno zacezarowane.", id: 1 },
         }, {
             name: "obliczacz", //File: interaktywne
             solution: "wykładniczowością",
@@ -377,6 +387,7 @@ const $dataPuzzles = {
         }, {
             name: "gradient",
             solution: "banachowo",
+
         }, {
             name: "nakładanie",
             solution: "wielkaunifikacjahaseł",
@@ -423,10 +434,12 @@ const $dataPuzzles = {
         }, {
             name: "grobowiec_2",
             solution: "delator cukrzenia",
+
+            lastRemaining: "Już tylko ta ostatnia!",
         }, {
             name: "mors",
             solution: "iksytonawiasy",
-            success: "Well, that was fun to spot.\nAnd I really didn't expect to learn more about Morse code of\nall things, but now I know that '-.--.' can be stand for any\ntype of bracket. The more you know.",
+            success: "To było dość ciekawe. No i nie wiedziałam, że '-.--.' może \noznaczać dowolny rodzaj nawiasu.",
             lastRemaining: {
                 string: "No dobra, tylko gdzie niby jest ten jeden pozostały klucz?\nChyba musi być ukryty inaczej niż pozostałe.",
                 id: 0,

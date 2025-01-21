@@ -8,27 +8,10 @@
  *
  * @help This plugin does things. Hopefully.
  */
-
-//===================================== JavaScript upgrades =====================================
-
-String.prototype.capitalise = function () {
-    return this[0].toUpperCase() + this.substring(1);
-}
-
-/*Array.prototype.pickRandom = function () {
-    return this[Math.floor(Math.random() * this.length)];
-}*/
-
 //===================================== Initialisation =====================================
+//#region Definitions
 
-//Make sure we have a modern enough version of JavaScript (tbh I'm not sure if this test will even run on an older version, but it won't hurt)
-try {
-    let test = BigInt(1);
-} catch (e) {
-    throw new Error("The JavaScript version is too old.");
-}
-
-let MAC_DEBUG = true;
+let MAC_DEBUG = false;
 const ENEBLE_SPELLCHECK = false;
 const DEVICE_TARGET = "Web";
 const VERBOSE_LOGS = false;
@@ -102,6 +85,14 @@ g.switches = {
     MAP_INTERNAL_35: 5,
 }
 
+// #endregion
+//#region Initialisation
+//Make sure we have a modern enough version of JavaScript (tbh I'm not sure if this test will even run on an older version, but it won't hurt)
+try {
+    let test = BigInt(1);
+} catch (e) {
+    throw new Error("The JavaScript version is too old.");
+}
 
 var _Scene_Map_loaded = Scene_Map.prototype.onMapLoaded;
 Scene_Map.prototype.onMapLoaded = function () {
@@ -268,7 +259,16 @@ initialiseGData = function () {
     return res;
 }
 
+//Loading multiple fonts at start-up
+Graphics._createGameFontLoader = function () {
+    this._createFontLoader('GameFont');
+    this._createFontLoader('Chakra');
+    this._createFontLoader('Antar');
+    this._createFontLoader('Segment');
+};
 
+//#endregion
+//#region Key collection
 //=====================================Puzzle logic=====================================
 
 /**
@@ -364,6 +364,8 @@ g.keyStatusMessage = function () {
     return message;
 }
 
+//#endregion 
+//#region Key reactions
 
 /*Key reactions: 
 If failed: reaction to specific puzzle if present, otherwise random failure reaction
@@ -489,6 +491,9 @@ g.removePolishCharacters = function (text) {
     return text.split('').map(c => dict[c] ?? c).join('');
 }
 
+//#endregion
+//#region Puzzle mechanics
+
 g.encrypterPuzzle = function (text) {
     text = text + "";
     if (text.length > 100) return s.maximumLengthIs + ' 100 ' + s.characters;
@@ -543,14 +548,6 @@ g.parseMoleculeData = function (data) {
     return res;
 }
 
-g.loadTextFile = function (filePath, callback) {
-    var request = new XMLHttpRequest();
-    request.open("GET", filePath);
-    request.overrideMimeType('text/plain');
-    request.onload = () => callback(request.responseText);
-    request.send();
-}
-
 g.convertBase = function (number, base) {
     return BigInt(number).toString(base);
 }
@@ -578,7 +575,8 @@ g.baseShowcaseMessage = function (base, replaceIcons = false) {
 
     return g.padToLength(res, WINDOW_WIDTH, 'both', true);
 }
-
+//#endregion
+//#region Event functions
 //===================================== Event functions =====================================
 
 runNearbyEvent = function (inp, dx, dy) {
@@ -604,6 +602,49 @@ rumble = function (duration, strength) {
     if (pad && pad.vibrationActuator && pad.vibrationActuator.playEffect) pad.vibrationActuator.playEffect("dual-rumble", { duration: duration, strongMagnitude: strength, weakMagnitude: strength });
 }
 
+/**
+ * Shows a series of messages in sequence. Each message consists of a string, and optionally a face image or an attached balloon.
+ * @param {Game_Interpreter} inp Interpreter to show the messages with
+ * @param {Object[]|Object|String} messages An array of message objects to be displayed. Alternatively a single message object or just a string.
+ * @param {string} messages[].string The text to display
+ * @param {number} [messages[].id] The ID of face within the face file (0-7). Ommit in order to not use a face image.
+ * @param {string} [messages[].face] The face file to use ("mc" when ommited)
+ * @param {number} [messages[].balloon] The balloon id to display before the message, (shown above the player) (1-15)
+ * @param {number} [defaultId] The ID of the face within the face file (0-7), to be used for messages which do not specify a face id.
+ */
+g.showMessages = function (inp, messages, defaultId) {
+    if (!Array.isArray(messages)) messages = [messages];
+    messages = messages.map(m => typeof m === 'string' ? { string: m } : m);
+    console.assert(Array.isArray(messages), "showMessages: messages must be an array (at this point)");
+    console.assert(messages.every(m => typeof m === 'object'), "showMessages: messages must be an array of objects or strings");
+    console.assert(messages.every(m => m.hasOwnProperty('string')), "showMessages: message missing a string");
+
+    let commandList = [];
+    for (let message of messages) {
+        let faceId = message.id === undefined ? defaultId : message.id;
+        let face = message.face ?? (faceId == null ? "" : "mc"); //"mc" is the default face, unless no id is present, which implies not using a face at all
+
+        if (message.balloon) commandList.push({ code: 213, indent: 0, parameters: [-1, message.balloon, false] });
+        commandList.push({ code: 101, indent: 0, parameters: [face, faceId ?? 0, 0, 2] });
+        for (let line of message.string.split('\n')) {
+            commandList.push({ code: 401, indent: 0, parameters: [line] });
+        }
+    }
+
+    inp ??= g.getInterpreter();
+    if (inp.isRunning()) {
+        inp.setupChild(commandList, 0);
+    } else {
+        inp.setup(commandList, 0);
+    }
+}
+
+//Calls showPicture with some parameters filled in with reasonable defaults
+g.showPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
+    $gameScreen.showPicture(id, name, 1, x, y, scale, scale, 255, 0);
+}
+//#endregion
+//#region Autosave system
 //===================================== Autosave system =====================================
 
 /*
@@ -658,43 +699,8 @@ window.onunload = () => {
     }
 };
 
-//===================================== Space Panic minigame =====================================
-
-testPanic = function (inp) {
-    inp.setWaitMode('indefinite'); //this.setWaitMode(''); to end this
-    document.getElementById("GameCanvas").style.visibility = 'hidden';
-    document.getElementById("GameCanvas").style.display = 'none';
-    let frame = document.createElement('iframe');
-    frame.id = 'testFrame';
-    frame.src = "spacePanic/index.html";
-    frame.style = "width: 1920px; height: 1080px; border: none; z-index: 9005, ";
-    //let canvas = frame.contentWindow.document.getElementById();
-    frame.style.visibility = 'visible'; //TODO toggle 'display' instead?
-    frame.onload = "this.focus()";
-    document.body.appendChild(frame);
-
-    let gameElements = ["GameCanvas", "GameVideo", "UpperCanvas", "modeTextBack", "ErrorPrinter"]
-    for (let i = 0; i < gameElements.length; i++) {
-        const element = document.getElementById(gameElements[i]);
-        element.style.pointerEvents = "none";
-    }
-    document.body.style.margin = "-8px"; //It's 8px by default
-
-    //this._centerElement(this._video);
-}
-
-testPanic2 = function () {
-    let frame = document.getElementById("testFrame");
-    let nodes = frame.contentDocument.body.childNodes; //TODO this is a bit janky
-    let canvas = nodes[nodes.length - 1];
-    canvas.width = this._width;
-    canvas.height = this._height;
-    canvas.style.zIndex = 2;
-}
-
-
-
-
+//#endregion
+//#region Multi image display
 //===================================== Multi image display =====================================
 
 g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
@@ -775,8 +781,18 @@ g.MultiDisplay = function (rows, columns, wrap, filename, description, text) {
         imageTexts[x + "-" + y] = text;
     }
 }
-
+//#endregion
+//#region Utility
 //=====================================Misc utility functions=====================================
+
+//=========================== JavaScript upgrades ===========================
+
+String.prototype.capitalise = function () {
+    return this[0].toUpperCase() + this.substring(1);
+}
+
+//===========================================================================
+
 
 //Gets the currently active interpreter (or the map's default if none are active)
 g.getInterpreter = function () {
@@ -832,65 +848,40 @@ g.screenHeight = function () {
     return Graphics.height;
 }
 
-//Calls showPicture with some parameters filled in with reasonable defaults
-g.showPicture = function (name, id = 1, scale = 100, x = 960, y = 375) {
-    $gameScreen.showPicture(id, name, 1, x, y, scale, scale, 255, 0);
-}
-
 //Picks a random element from a non-sparse array
 g.pickRandom = function (array) {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-/**
- * Shows a single message, with a face if one is specified. Will not queue up multiple messages
- * @deprecated Use g.showMessages instead
- */
-g.showMessage = function (inp, message, face, faceFile = 'mc') {
-    console.assert(typeof message === 'string', "showMessage: message must be a string");
-    if (face !== undefined) $gameMessage.setFaceImage(faceFile, face);
-    $gameMessage.setBackground(0);
-    $gameMessage.setPositionType(2);
-    $gameMessage.add(message);
-    inp.setWaitMode('message');
+//Checks if two arrays are equal
+g.arraysEqual = function (a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
+
+    for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
 }
 
-/**
- * Shows a series of messages in sequence. Each message consists of a string, and optionally a face image or an attached balloon.
- * @param {Game_Interpreter} inp Interpreter to show the messages with
- * @param {Object[]|Object|String} messages An array of message objects to be displayed. Alternatively a single message object or just a string.
- * @param {string} messages[].string The text to display
- * @param {number} [messages[].id] The ID of face within the face file (0-7). Ommit in order to not use a face image.
- * @param {string} [messages[].face] The face file to use ("mc" when ommited)
- * @param {number} [messages[].balloon] The balloon id to display before the message, (shown above the player) (1-15)
- * @param {number} [defaultId] The ID of the face within the face file (0-7), to be used for messages which do not specify a face id.
- */
-g.showMessages = function (inp, messages, defaultId) {
-    if (!Array.isArray(messages)) messages = [messages];
-    messages = messages.map(m => typeof m === 'string' ? { string: m } : m);
-    console.assert(Array.isArray(messages), "showMessages: messages must be an array (at this point)");
-    console.assert(messages.every(m => typeof m === 'object'), "showMessages: messages must be an array of objects or strings");
-    console.assert(messages.every(m => m.hasOwnProperty('string')), "showMessages: message missing a string");
-
-    let commandList = [];
-    for (let message of messages) {
-        let faceId = message.id === undefined ? defaultId : message.id;
-        let face = message.face ?? (faceId == null ? "" : "mc"); //"mc" is the default face, unless no id is present, which implies not using a face at all
-
-        if (message.balloon) commandList.push({ code: 213, indent: 0, parameters: [-1, message.balloon, false] });
-        commandList.push({ code: 101, indent: 0, parameters: [face, faceId ?? 0, 0, 2] });
-        for (let line of message.string.split('\n')) {
-            commandList.push({ code: 401, indent: 0, parameters: [line] });
-        }
-    }
-
-    inp ??= g.getInterpreter();
-    if (inp.isRunning()) {
-        inp.setupChild(commandList, 0);
-    } else {
-        inp.setup(commandList, 0);
-    }
+g.loadTextFile = function (filePath, callback) {
+    var request = new XMLHttpRequest();
+    request.open("GET", filePath);
+    request.overrideMimeType('text/plain');
+    request.onload = () => callback(request.responseText);
+    request.send();
 }
+
+//Adding a way to check if a sound is playing
+AudioManager.isPlaying = function (soundName) {
+    let name = soundName.name ?? soundName;
+    return this._staticBuffers.some(s => s && s._reservedSeName === name && s.isPlaying());
+};
+
+//#endregion
+//#region Text utils
+//===================================== Text utils ===================================== 
 
 //Adds extra spaces to make sure the text is of certain width
 g.padToLength = function (string, targetLength, side = 'both', onlyFirstLine = false) {
@@ -930,24 +921,6 @@ g.breakString = function (string, length = 100) {
     return res.join('\n');
 }
 
-//Checks if two arrays are equal
-g.arraysEqual = function (a, b) {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length !== b.length) return false;
-
-    for (var i = 0; i < a.length; ++i) {
-        if (a[i] !== b[i]) return false;
-    }
-    return true;
-}
-
-
-/*var _Window_Base_convertEscapeCharacters = Window_Base.prototype.convertEscapeCharacters;
-Window_Base.prototype.convertEscapeCharacters = function (text) {
-    _Window_Base_convertEscapeCharacters.call(this, eval('`' + text + '`'));
-}*/
-
 //Removes or converts some special escape characters, for saving strings as plain text. Might not handle everything
 g.simpleUnescape = function (string) {
     return Window_Base.prototype.convertEscapeCharacters(string)
@@ -957,6 +930,9 @@ g.simpleUnescape = function (string) {
         .replace(/\x1b\w\[(\d+)\]/g, '') //Replaces single-character \x[n] codes
         .replace(/\x1b\S/g, ''); //Replaces single-character \x codes
 }
+//#endregion
+//#region Clipboard
+//===================================== Clipboard ===================================== 
 
 /**
  * Puts the provided text into the user's clipboard, optionally doing some processing on it. Sets $gs[24] to true on success and to false otherwise.
@@ -1029,7 +1005,8 @@ function oldCopyTextToClipboard(text) {
 
 
 
-
+//#endregion
+//#region Translation & CB
 //=====================================  Translation system (and colorblindness) =====================================
 
 /*SceneManager.push(Scene_MenuBase)
@@ -1152,6 +1129,8 @@ Scene_LangugeChoice.prototype.update = function () {
         this.popScene();
     }
 }
+//#endregion
+//#region Save import/export
 //===================================== Save exporting / importing =====================================
 
 g.exportSave = function () {
@@ -1251,11 +1230,6 @@ Scene_Menu.prototype.commandExport = function () {
     SceneManager.pop();
 }
 
-
-
-//===================================== Custom windows =====================================
-
-
 //===================================== Loading spinner =====================================
 
 //Creating the spinner
@@ -1283,48 +1257,9 @@ Graphics.endLoading = function () {
     }
 };
 
-//=====================================Various engine changes=====================================
-
-//Loading multiple fonts at start-up
-Graphics._createGameFontLoader = function () {
-    this._createFontLoader('GameFont');
-    this._createFontLoader('Chakra');
-    this._createFontLoader('Antar');
-    this._createFontLoader('Segment');
-};
-
-
-//Clears up things when going back to main menu
-var _Scene_Title_start = Scene_Title.prototype.start;
-Scene_Title.prototype.start = function () {
-    _Scene_Title_start.call(this);
-    if (VERBOSE_LOGS) console.log("Scene title started");
-    if (g) {
-        g.gameInitialised = false;
-        if (g.autosaveTimeout) clearTimeout(g.autosaveTimeout);
-        if ($KDMS.NextSongTimeout) clearTimeout($KDMS.NextSongTimeout);
-        if ($KDMS.NextSongTimeout2) clearTimeout($KDMS.NextSongTimeout2);
-        if ($KDMS.NextSongTimeout3) clearTimeout($KDMS.NextSongTimeout3);
-    }
-    //Language stuff
-    if (g.lang === "none") {
-        console.log("Starting lang selection");
-        SceneManager.push(Scene_LangugeChoice);
-    }
-    //Resize the title window depending on how many commands does it have
-    let w = this._commandWindow
-    w.height = w.fittingHeight(w._list.length);
-    w.unlockPosition();
-    w.x = 32;
-    w.y = (Graphics.boxHeight - w.height) - 32;
-
-};
-
-//Adding a way to check if a sound is playing
-AudioManager.isPlaying = function (soundName) {
-    let name = soundName.name ?? soundName;
-    return this._staticBuffers.some(s => s && s._reservedSeName === name && s.isPlaying());
-};
+//#endregion
+//#region Input
+//=====================================Input changes=====================================
 
 //Mouse highlightning options on hover, by Rehtinor
 void (function () {
@@ -1353,7 +1288,7 @@ void (function () {
 //Making holding the mouse cause repeated inputs
 Window_Selectable.prototype.processTouch = function () {
     if (this.isOpenAndActive()) {
-        if (TouchInput.isRepeated() && this.isTouchedInsideFrame()) { //Changes from isTriggered to isRepeated
+        if (TouchInput.isRepeated() && this.isTouchedInsideFrame()) { //Changed isTriggered to isRepeated
             this._touching = true;
             this.onTouch(true);
         } else if (TouchInput.isCancelled()) {
@@ -1401,23 +1336,6 @@ Input.isReleased = function (keyName) {
     if (this._justReleased.includes(keyName)) return Graphics.frameCount - this._pressedStartTimes[keyName];
     else return 0;
 }
-
-//Custom menu options
-Window_MenuCommand.prototype.makeCommandList = function () {
-    this.addOriginalCommands();
-    this.addOptionsCommand();
-    this.addSaveCommand();
-    this.addCommand(s.exportGame, 'export', $gs[22] || MAC_DEBUG); //Handlers for these are added directly in Scene_Menu.prototype.createCommandWindow
-    this.addCommand(s.replayTutorial, 'tutorial', $gv[42] > 0);
-    this.addGameEndCommand();
-};
-
-//Replaying tutorials
-Scene_Menu.prototype.commandTutorial = function () {
-    $gameTemp.reserveCommonEvent(g.lang === 'pl' ? 16 : 21);
-    SceneManager.pop();
-};
-
 
 void ((alias) => {
     Input.initialize = function () {
@@ -1472,6 +1390,103 @@ g.buttonPressed = function (button) {
 
 Graphics._onKeyDown = () => { }; //Removed the default actions, since they're handled above
 
+//#endregion
+//#region Feedback
+//=====================================Feedback=====================================
+Scene_Title.prototype.commandFeedback = function () {
+    if (Utils.isNwjs() && ConfigManager.fullscreen) ConfigManager.fullscreen = false;
+    // setTimeout(() => window.open(this.getFeedbackUrl()), 500);
+    window.open(this.getFeedbackUrl())
+}
+
+Scene_Title.prototype.getFeedbackUrl = function () {
+    const puzzleData = encodeURI(JSON.stringify(g.persistentData));
+    const screenData = encodeURI(JSON.stringify(this.buildScreenInfo()));
+    const device = encodeURI(g.lang === "pl" && DEVICE_TARGET === "Web" ? "Przeglądarkowy" : DEVICE_TARGET);
+    switch (g.lang) {
+        case "en":
+            //baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120=";
+            return `https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.1796237400=${device}&entry.508621120=${puzzleData}&entry.1935065278=${screenData}`;
+        case "pl":
+            //baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLScI6sZmdHN3ZXCd-SYpnyVLUZTQiQKRWIlHqeqdBjEQ13dM0w/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120="
+            return `https://docs.google.com/forms/d/e/1FAIpQLScI6sZmdHN3ZXCd-SYpnyVLUZTQiQKRWIlHqeqdBjEQ13dM0w/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.273184204=${device}&entry.508621120=${puzzleData}&entry.1426691407=${screenData}`
+        default:
+            console.error("Language is not set, but the feedback form was requested.");
+            return "";
+    }
+}
+
+Scene_Title.prototype.buildScreenInfo = function () {
+    let res = {};
+    const fields = ["width", "height", "availHeight", "availWidth", "availLeft", "availTop", "colorDepth", "isExtended"]
+    for (field of fields) {
+        if (screen[field]) res[field] = screen[field];
+    }
+    res.angle = screen.orientation.angle;
+    res.type = screen.orientation.type;
+    res.windowWidth = window.innerWidth;
+    res.windowHeight = window.innerHeight;
+    res.isMobile = Utils.isMobileDevice();
+    res.isFullscreen = g.fullScreen;
+    return res;
+}
+
+//#endregion
+//#region Misc engine changes
+//=====================================Various engine changes=====================================
+
+//Clears up things when going back to main menu
+var _Scene_Title_start = Scene_Title.prototype.start;
+Scene_Title.prototype.start = function () {
+    _Scene_Title_start.call(this);
+    if (VERBOSE_LOGS) console.log("Scene title started");
+    if (g) {
+        g.gameInitialised = false;
+        if (g.autosaveTimeout) clearTimeout(g.autosaveTimeout);
+        if ($KDMS.NextSongTimeout) clearTimeout($KDMS.NextSongTimeout);
+        if ($KDMS.NextSongTimeout2) clearTimeout($KDMS.NextSongTimeout2);
+        if ($KDMS.NextSongTimeout3) clearTimeout($KDMS.NextSongTimeout3);
+    }
+    //Language stuff
+    if (g.lang === "none") {
+        console.log("Starting lang selection");
+        SceneManager.push(Scene_LangugeChoice);
+    }
+    //Resize the title window depending on how many commands does it have
+    let w = this._commandWindow
+    w.height = w.fittingHeight(w._list.length);
+    w.unlockPosition();
+    w.x = 32;
+    w.y = (Graphics.boxHeight - w.height) - 32;
+
+};
+
+//Hack for stopping the game interpreter from processing unless we tell it to. Required by SRD_WindowUpgrade
+var _Game_Interpreter_updateWaitMode = Game_Interpreter.prototype.updateWaitMode;
+Game_Interpreter.prototype.updateWaitMode = function () {
+    if (this._waitMode === 'indefinite') {
+        return true;
+    }
+    return _Game_Interpreter_updateWaitMode.apply(this, arguments);
+};
+
+//Custom menu options
+Window_MenuCommand.prototype.makeCommandList = function () {
+    this.addOriginalCommands();
+    this.addOptionsCommand();
+    this.addSaveCommand();
+    this.addCommand(s.exportGame, 'export', $gs[22] || MAC_DEBUG); //Handlers for these are added directly in Scene_Menu.prototype.createCommandWindow
+    this.addCommand(s.replayTutorial, 'tutorial', $gv[42] > 0);
+    this.addGameEndCommand();
+};
+
+//Replaying tutorials
+Scene_Menu.prototype.commandTutorial = function () {
+    $gameTemp.reserveCommonEvent(g.lang === 'pl' ? 16 : 21);
+    SceneManager.pop();
+};
+
+
 //Marks the event as seen whenever it's launched
 var _Game_Interpreter_setup = Game_Interpreter.prototype.setup;
 Game_Interpreter.prototype.setup = function (list, eventId) {
@@ -1517,15 +1532,6 @@ DataManager.makeSavefileInfo = function () {
 //Sets the number of available saves to (effectively) 10
 DataManager.maxSavefiles = () => 11;
 
-//Hack for stopping the game interpreter from processing unless we tell it to. Required by SRD_WindowUpgrade
-var _Game_Interpreter_updateWaitMode = Game_Interpreter.prototype.updateWaitMode;
-Game_Interpreter.prototype.updateWaitMode = function () {
-    if (this._waitMode === 'indefinite') {
-        return true;
-    }
-    return _Game_Interpreter_updateWaitMode.apply(this, arguments);
-};
-
 //Reduce the opacity of the message window
 Window_Message.prototype.standardBackOpacity = function () {
     return 225; //Default: 192
@@ -1536,44 +1542,6 @@ Scene_Title.prototype.commandExit = function () {
     this._commandWindow.close();
     SceneManager.exit();
 };
-
-Scene_Title.prototype.commandFeedback = function () {
-    if (Utils.isNwjs() && ConfigManager.fullscreen) ConfigManager.fullscreen = false;
-    // setTimeout(() => window.open(this.getFeedbackUrl()), 500);
-    window.open(this.getFeedbackUrl())
-}
-
-Scene_Title.prototype.getFeedbackUrl = function () {
-    const puzzleData = encodeURI(JSON.stringify(g.persistentData));
-    const screenData = encodeURI(JSON.stringify(this.buildScreenInfo()));
-    const device = encodeURI(g.lang === "pl" && DEVICE_TARGET === "Web" ? "Przeglądarkowy" : DEVICE_TARGET);
-    switch (g.lang) {
-        case "en":
-            //baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120=";
-            return `https://docs.google.com/forms/d/e/1FAIpQLSeB2BCgy6fW80FLxp71hGyL7smmxJWhUWZ4fXwPyPHoK1k6ew/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.1796237400=${device}&entry.508621120=${puzzleData}&entry.1935065278=${screenData}`;
-        case "pl":
-            //baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLScI6sZmdHN3ZXCd-SYpnyVLUZTQiQKRWIlHqeqdBjEQ13dM0w/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.508621120="
-            return `https://docs.google.com/forms/d/e/1FAIpQLScI6sZmdHN3ZXCd-SYpnyVLUZTQiQKRWIlHqeqdBjEQ13dM0w/viewform?usp=pp_url&entry.517893396=Alpha+1.1.0&entry.273184204=${device}&entry.508621120=${puzzleData}&entry.1426691407=${screenData}`
-        default:
-            console.error("Language is not set, but the feedback form was requested.");
-            return "";
-    }
-}
-
-Scene_Title.prototype.buildScreenInfo = function () {
-    let res = {};
-    const fields = ["width", "height", "availHeight", "availWidth", "availLeft", "availTop", "colorDepth", "isExtended"]
-    for (field of fields) {
-        if (screen[field]) res[field] = screen[field];
-    }
-    res.angle = screen.orientation.angle;
-    res.type = screen.orientation.type;
-    res.windowWidth = window.innerWidth;
-    res.windowHeight = window.innerHeight;
-    res.isMobile = Utils.isMobileDevice();
-    res.isFullscreen = g.fullScreen;
-    return res;
-}
 
 //Player default speed thingy
 Game_Player.prototype.defaultSpeed = function () {
@@ -1598,7 +1566,6 @@ SoundManager.playSystemSound = function (n) {
 SoundManager.preventNext = function () {
     this._preventNext = true;
 }
-
 
 //Eval expressions inside ${}
 _Window_Base_convertEscapeCharacters = Window_Base.prototype.convertEscapeCharacters;
@@ -1670,7 +1637,80 @@ AudioManager.createBuffer = function (folder, name) {
         return new WebAudio(url);
     }
 };
+//#endregion
+//#region Engine fixes
+//===================================== Engine fixes =====================================
 
+//Fixes the blurring when going fullscreen, by KisaiTenshi. From https://forums.rpgmakerweb.com/index.php?threads/how-to-remove-blur.47504/
+ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
+    //let doSmoothing = false;
+    //if (["img/faces/", "img/pictures/"].indexOf(folder) >= 0) doSmoothing = true;
+
+    if (filename) {
+        var path = folder + encodeURIComponent(filename) + '.png';
+        var bitmap = this.loadNormalBitmap(path, hue || 0);
+        //if(VERBOSE_LOGS) console.log("disabling smoothing for " + path);
+        bitmap.smooth = false; //TODO: choose when to smooth
+        return bitmap;
+    } else {
+        return this.loadEmptyBitmap();
+    }
+}
+
+//Fix for tab key unselecting the game sometimes. By Caethyril, https://forums.rpgmakerweb.com/threads/170221/
+void (function (alias) {
+    Input._shouldPreventDefault = function (kc) {
+        if (kc === 9) return true;
+        return alias.apply(this, arguments);
+    };
+})(Input._shouldPreventDefault);
+
+//Fix for a rare freeze on high-refresh displays, by Kido. From https://forums.rpgmakerweb.com/index.php?threads/rpg-maker-games-graphics-will-freeze-but-sound-keeps-playing-the-problem-the-solution.151887/
+//Added directly to Graphics.render
+
+//Fix for inaccurate playtime on high-refresh displays, by Caethyril. From: https://forums.rpgmakerweb.com/index.php?threads/using-gamesystem-playtimetext-for-accurate-playtime.131810/
+//Added directly to Graphics.render and SceneManager.updateScene
+
+//#endregion
+//#region Optimisations
+//===================================== Optimisations =====================================
+
+//Always return GameFont (instead of checking for other locales we don't use)
+Window_Base.prototype.standardFontFace = function () {
+    return 'GameFont';
+}
+
+//Cache the mobile safari querry
+Utils._mobileSafari = Utils.isMobileSafari();
+Utils.isMobileSafari = function () {
+    return Utils._mobileSafari;
+}
+
+//Cache the mobile device querry
+Utils._mobileDevice = Utils.isMobileDevice();
+Utils.isMobileDevice = function () {
+    return Utils._mobileDevice;
+}
+
+
+/**
+ * Returns the width of the specified text.
+ *
+ * @method measureTextWidth
+ * @param {String} text The text to be measured
+ * @return {Number} The width of the text in pixels
+ */
+/*
+Bitmap.prototype.measureTextWidth = function (text) {
+    var context = this._context;
+    context.save();
+    context.font = this._makeFontNameText();
+    var width = context.measureText(text).width;
+    context.restore();
+    return width;
+};*/
+//#endregion
+//#region Debugging
 //===================================== Debug stuff =====================================
 
 //Text skipping (this function must always exist for MessageCore to function)
@@ -1827,7 +1867,8 @@ if (MAC_DEBUG) {
         this.requestUpdate();
     };
 }
-
+//#endregion
+//#region Typo checking
 //===================================== Typo checking =====================================
 
 g.setupSpellcheck = function () {
@@ -1893,78 +1934,9 @@ if (MAC_DEBUG || DataManager.isEventTest()) {
         }
     }(Game_Message.prototype.add);
 }
-
-//===================================== Engine fixes =====================================
-
-//Fixes the blurring when going fullscreen, by KisaiTenshi. From https://forums.rpgmakerweb.com/index.php?threads/how-to-remove-blur.47504/
-ImageManager.loadBitmap = function (folder, filename, hue, smooth) {
-    //let doSmoothing = false;
-    //if (["img/faces/", "img/pictures/"].indexOf(folder) >= 0) doSmoothing = true;
-
-    if (filename) {
-        var path = folder + encodeURIComponent(filename) + '.png';
-        var bitmap = this.loadNormalBitmap(path, hue || 0);
-        //if(VERBOSE_LOGS) console.log("disabling smoothing for " + path);
-        bitmap.smooth = false; //TODO: choose when to smooth
-        return bitmap;
-    } else {
-        return this.loadEmptyBitmap();
-    }
-}
-
-//Fix for tab key unselecting the game sometimes. By Caethyril, https://forums.rpgmakerweb.com/threads/170221/
-void (function (alias) {
-    Input._shouldPreventDefault = function (kc) {
-        if (kc === 9) return true;
-        return alias.apply(this, arguments);
-    };
-})(Input._shouldPreventDefault);
-
-//Fix for a rare freeze on high-refresh displays, by Kido. From https://forums.rpgmakerweb.com/index.php?threads/rpg-maker-games-graphics-will-freeze-but-sound-keeps-playing-the-problem-the-solution.151887/
-//Added directly to Graphics.render
-
-//Fix for inaccurate playtime on high-refresh displays, by Caethyril. From: https://forums.rpgmakerweb.com/index.php?threads/using-gamesystem-playtimetext-for-accurate-playtime.131810/
-//Added directly to Graphics.render and SceneManager.updateScene
-
-
-//===================================== Optimisations =====================================
-
-//Always return GameFont (instead of checking for other locales we don't use)
-Window_Base.prototype.standardFontFace = function () {
-    return 'GameFont';
-}
-
-//Cache the mobile safari querry
-Utils._mobileSafari = Utils.isMobileSafari();
-Utils.isMobileSafari = function () {
-    return Utils._mobileSafari;
-}
-
-//Cache the mobile device querry
-Utils._mobileDevice = Utils.isMobileDevice();
-Utils.isMobileDevice = function () {
-    return Utils._mobileDevice;
-}
-
-
-/**
- * Returns the width of the specified text.
- *
- * @method measureTextWidth
- * @param {String} text The text to be measured
- * @return {Number} The width of the text in pixels
- */
-/*
-Bitmap.prototype.measureTextWidth = function (text) {
-    var context = this._context;
-    context.save();
-    context.font = this._makeFontNameText();
-    var width = context.measureText(text).width;
-    context.restore();
-    return width;
-};*/
-
-//===================================== Dev tools =====================================
+//#endregion
+//#region Misc dev tools
+//===================================== Other dev tools =====================================
 
 //Finds the differences between two objects
 g.compareObjects = function (obj1, obj2) {
@@ -2117,8 +2089,45 @@ if (MAC_DEBUG) {
     };
 }
 
-//===================================== Temp experiments =====================================
+//#endregion
+//#region Space Panic
+//===================================== Space Panic minigame =====================================
 
+testPanic = function (inp) {
+    inp.setWaitMode('indefinite'); //this.setWaitMode(''); to end this
+    document.getElementById("GameCanvas").style.visibility = 'hidden';
+    document.getElementById("GameCanvas").style.display = 'none';
+    let frame = document.createElement('iframe');
+    frame.id = 'testFrame';
+    frame.src = "spacePanic/index.html";
+    frame.style = "width: 1920px; height: 1080px; border: none; z-index: 9005, ";
+    //let canvas = frame.contentWindow.document.getElementById();
+    frame.style.visibility = 'visible'; //TODO toggle 'display' instead?
+    frame.onload = "this.focus()";
+    document.body.appendChild(frame);
+
+    let gameElements = ["GameCanvas", "GameVideo", "UpperCanvas", "modeTextBack", "ErrorPrinter"]
+    for (let i = 0; i < gameElements.length; i++) {
+        const element = document.getElementById(gameElements[i]);
+        element.style.pointerEvents = "none";
+    }
+    document.body.style.margin = "-8px"; //It's 8px by default
+
+    //this._centerElement(this._video);
+}
+
+testPanic2 = function () {
+    let frame = document.getElementById("testFrame");
+    let nodes = frame.contentDocument.body.childNodes; //TODO this is a bit janky
+    let canvas = nodes[nodes.length - 1];
+    canvas.width = this._width;
+    canvas.height = this._height;
+    canvas.style.zIndex = 2;
+}
+
+//#endregion
+//#region Experiments
+//===================================== Temp experiments =====================================
 
 /** Provides an approximation of the user's physical screen size, in inches*/
 function computeDisplaySize() {
@@ -2239,3 +2248,24 @@ void ((alias) => {
     }
 })(Scene_Load.prototype.onLoadSuccess);
 */
+/*
+Window_Command.prototype.drawItem = function (index) {
+    var rect = this.itemRectForText(index);
+    var align = this.itemTextAlign();
+    this.resetTextColor();
+    if (!this.isCommandEnabled(index)) {
+        this.changeTextColor("red");
+        debugger;
+    }
+    // this.changePaintOpacity(this.isCommandEnabled(index));
+    this.drawText(this.commandName(index), rect.x, rect.y, rect.width, align);
+};
+
+Window_Base.prototype.changePaintOpacity = function (enabled) {
+    if (enabled) this.resetTextColor();
+    else this.changeTextColor("red");
+}
+*/
+
+
+//#endregion
